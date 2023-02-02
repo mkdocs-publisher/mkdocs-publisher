@@ -26,7 +26,7 @@ repos:
       - id: lint-python
         name: lint Python
         description: Lint python code.
-        entry: poetry run flake8 --max-line-length 99
+        entry: poetry run flake8
         language: system
         types:
           - python
