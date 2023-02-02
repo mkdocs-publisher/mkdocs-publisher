@@ -1,0 +1,48 @@
+repos:
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: check-json
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
+      - id: check-toml
+      - id: detect-private-key
+      - id: no-commit-to-branch
+
+  - repo: local
+    hooks:
+      - id: format
+        name: format Python code
+        description: Pre-format python code.
+        entry: poetry run black
+        language: system
+        types:
+          - python
+
+      - id: lint-python
+        name: lint Python
+        description: Lint python code.
+        entry: poetry run flake8 --max-line-length 99
+        language: system
+        types:
+          - python
+
+      - id: sort-imports
+        name: sort Python imports
+        description: Sort python imports.
+        entry: poetry run isort
+        language: system
+        types:
+          - python
+
+      - id: type-check
+        name: type check Python annotations
+        description: Pyright type annotation checking.
+        entry: poetry run pyright
+        language: system
+        types:
+          - python

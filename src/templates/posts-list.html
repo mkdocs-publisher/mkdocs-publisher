@@ -1,0 +1,25 @@
+{% for post in posts %}
+## {{ post.title }}
+
+<div class="post-extra">
+    <div class="col">
+        <p class="post-date">{{ post.date }}</p>
+    </div>
+    <div class="col">
+    {% for tag in post.tags %}
+        <p class="post-tag">#{{ tag }}</p>
+    {% endfor %}
+    </div>
+</div>
+
+{{ post.teaser }}
+
+{{ post.is_short }}
+
+{% if post.is_teaser %}
+<div class="post-link">
+    <a href="/{{ post.slug }}">{{ teaser_link_text }}</a>
+</div>
+{% endif %}
+
+{% endfor %}

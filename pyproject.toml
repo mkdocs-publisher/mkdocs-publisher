@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "mkdocs-blogger"
+version = "0.1.0"
+description = "Blog plugin for mkdocs"
+authors = ["Maciej Kusz <maciej.kusz@gmail.com>"]
+license = "BSD"
+readme = "README.md"
+keywords = ["mkdocs", "mkdocs-plugin"]
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+python-frontmatter = "^1.0.0"
+mkdocs = "^1.4.2"
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
+black = "^22.12.0"
+pyright = "^1.1.291"
+flake8 = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 99
+
+[tool.isort]
+py_version=39
+profile = "black"
+line_length = 99
+force_single_line = true
+verbose = true
+src_paths = [
+    "src",
+    "tests",
+]
+
+[tool.pyright]
+extraPaths = [
+    "dev",
+    "src",
+]
+include = [
+    "dev",
+    "src",
+    "tests",
+]
+reportMissingImports = false
+reportMissingTypeStubs = false
+typeCheckingMode = "basic"
+
+[tool.poetry.plugins."mkdocs.plugins"]
+blogger = "src.plugin:BloggerPlugin"
