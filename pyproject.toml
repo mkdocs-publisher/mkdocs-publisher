@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "mkdocs-blogger"
 version = "0.1.0"
-description = "Blog plugin for mkdocs"
+description = "Blogging plugin for MkDocs"
 authors = ["Maciej Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
 readme = "README.md"
-keywords = ["mkdocs", "mkdocs-plugin"]
+keywords = ["mkdocs", "mkdocs-plugin", "blog", "blogging"]
 packages = [{include = "src"}]
 
 [tool.poetry.dependencies]

@@ -80,11 +80,20 @@ class BloggerPlugin(BasePlugin):
 
         return new_files
 
-    def on_page_read_source(self, *, page: Page, config: Config):
-
+    def on_page_markdown(self, markdown: str, *, page: Page, config: Config, files: Files):
         modifiers.prev_next_link_remove(
             page=page, blog_posts=self.blog_posts, posts_index_files=self.posts_index_files
         )
+
+        # Modify page update date
+        update_date: datetime = page.meta.get(
+            "update", page.meta.get("date", datetime.strptime(page.update_date, "%Y-%m-%d"))
+        )
+        page.update_date = update_date.strftime("%Y-%m-%d")
+
+        from pprint import pprint
+
+        pprint(vars(page))
 
     def on_post_build(self, *, config: Config) -> None:
 
