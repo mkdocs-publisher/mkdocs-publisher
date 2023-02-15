@@ -9,9 +9,10 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 
-from src.structures import BlogPost
+from src.plugin.config import BlogInPluginConfig
+from src.plugin.structures import BlogPost
 
-log = logging.getLogger(f"mkdocs.plugins.{__name__}")
+log = logging.getLogger("mkdocs.plugins.blog-in")
 
 
 def blog_post_slug_modifier(
@@ -37,7 +38,9 @@ def blog_post_slug_modifier(
 
 
 def blog_post_nav_sorter(
-    blog_posts: Dict[datetime, BlogPost], config_nav: OrderedDict, posts_dir: Path
+    blog_posts: Dict[datetime, BlogPost],
+    config_nav: OrderedDict,
+    posts_dir: Path,
 ):
     """Reorder blog posts in config navigation section from newest to oldest."""
 
@@ -49,29 +52,23 @@ def blog_post_nav_sorter(
 
 def blog_post_nav_remove(
     nav: Navigation,
-    posts_dir: str,
+    blog_posts: str,
+    config: BlogInPluginConfig,
 ) -> None:
     """Remove blog posts pages and section from direct navigation."""
 
     log.info("Remove blog posts pages and section from direct navigation")
-    nav.pages = [p for p in nav.pages if not p.file.src_uri.startswith(posts_dir)]
-
     nav.items = [
-        i for i in nav.items if not (isinstance(i, Section) and i.title.lower() == posts_dir)
+        i for i in nav.items if not (isinstance(i, Section) and i.title.lower() == blog_posts)
     ]
 
-
-def prev_next_link_remove(
-    page: Page, blog_posts: Dict[datetime, BlogPost], posts_index_files: Dict[str, Path]
-):
-    """Remove next/prev page links from given pages."""
-    index_files_titles = posts_index_files.keys()
-    blog_posts_titles = [blog_posts[date].title for date in sorted(blog_posts, reverse=True)]
-
-    prev_pages_list = [max(index_files_titles), blog_posts_titles[0]]
-    next_pages_list = [min(index_files_titles), blog_posts_titles[-1]]
-
-    if page.title in prev_pages_list:
-        page.previous_page = None
-    elif page.title in next_pages_list:
-        page.next_page = None
+    log.info("Remove blog index from navigation menu")
+    for item in nav.items:
+        if isinstance(item, Section) and item.title == config.index_name:
+            children = []
+            for section_item in item.children:
+                if not (
+                    isinstance(section_item, Page) and str(section_item.title).startswith("index-")
+                ):
+                    children.append(section_item)
+            item.children = children

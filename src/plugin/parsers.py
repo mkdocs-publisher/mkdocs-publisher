@@ -7,9 +7,9 @@ from typing import Dict
 
 import frontmatter
 
-from src.structures import BlogPost
+from src.plugin.structures import BlogPost
 
-log = logging.getLogger(f"mkdocs.plugins.{__name__}")
+log = logging.getLogger("mkdocs.plugins.blog-in")
 
 
 def parse_markdown_files(
@@ -54,9 +54,6 @@ def parse_markdown_files(
                     # Add new post to blog posts collection
                     blog_posts[blog_post.date] = blog_post
                     log.debug(f"New blog posts: {blog_post.title}")
-        elif file_path.is_dir():
-            if str(path) != str(posts_dir):
-                config_nav[str(path).title()] = []
 
 
 def create_blog_post_teaser(blog_posts: Dict[datetime, BlogPost], teaser_marker: str):

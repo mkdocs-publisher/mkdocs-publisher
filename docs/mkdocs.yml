@@ -1,0 +1,42 @@
+site_name: MkDocs-Blogger
+site_url: https://mkusz.github.io/mkdocs-blogger
+site_author: Maciej 'maQ' Kusz
+site_description: Blogging plugin for MkDocs
+copyright: >
+  &copy; 2023 Maciej 'maQ' Kusz
+
+repo_url: https://github.com/mkusz/mkdocs-blogger
+
+use_directory_urls: true
+strict: true
+
+extra:
+  homepage: https://mkusz.github.io/mkdocs-blogger
+
+watch:
+  - overrides
+
+theme:
+  name: material
+  language: en
+  custom_dir: overrides
+
+  palette:
+    primary: black
+    accent: red
+
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.footer  # Prev/Next page
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: "!!python/name:materialx.emoji.twemoji"
+      emoji_generator: "!!python/name:materialx.emoji.to_svg"
+
+plugins:
+  - search
+  - blogger
