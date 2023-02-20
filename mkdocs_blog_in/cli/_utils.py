@@ -6,8 +6,8 @@ from mkdocs import utils
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 
-from src.plugin.blog import BlogInPlugin
-from src.plugin.config import BlogInPluginConfig
+from mkdocs_blog_in.blog import BlogInPlugin
+from mkdocs_blog_in.config import BlogInPluginConfig
 
 
 def mkdocs_cfg() -> MkDocsConfig:

@@ -9,10 +9,10 @@ from typing import cast
 import frontmatter
 import jinja2
 
-from src import templates
-from src.plugin.config import BlogInPluginConfig
-from src.plugin.structures import BlogPost
-from src.plugin.structures import Translation
+from mkdocs_blog_in import templates
+from mkdocs_blog_in.config import BlogInPluginConfig
+from mkdocs_blog_in.structures import BlogPost
+from mkdocs_blog_in.structures import Translation
 
 log = logging.getLogger("mkdocs.plugins.blog-in")
 
@@ -70,7 +70,6 @@ def create_blog_post_pages(
 
     # Reorder tags alphabetically
     tags_chunks = {tag: tags_chunks[tag] for tag in sorted(tags_chunks)}
-
     config_nav[translation.blog_navigation_name] = {}
 
     for key, single_posts_chunk in posts_chunks.items():

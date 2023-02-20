@@ -7,7 +7,7 @@ from typing import Dict
 
 import frontmatter
 
-from src.plugin.structures import BlogPost
+from mkdocs_blog_in.structures import BlogPost
 
 log = logging.getLogger("mkdocs.plugins.blog-in")
 

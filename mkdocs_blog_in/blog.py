@@ -14,13 +14,13 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
-from src.plugin import modifiers
-from src.plugin import parsers
-from src.plugin import rendereres
-from src.plugin.config import BlogInPluginConfig
-from src.plugin.structures import BlogPost
-from src.plugin.structures import Translation
-from src.plugin.translate import Translate
+from mkdocs_blog_in import modifiers
+from mkdocs_blog_in import parsers
+from mkdocs_blog_in import rendereres
+from mkdocs_blog_in.config import BlogInPluginConfig
+from mkdocs_blog_in.structures import BlogPost
+from mkdocs_blog_in.structures import Translation
+from mkdocs_blog_in.translate import Translate
 
 log = logging.getLogger("mkdocs.plugins.blog-in")
 
@@ -35,7 +35,6 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
 
         # Create a language translation object with overrides from config
         self.translation = Translate(config=self.config).translation
-
         # New config navigation
         config_nav = OrderedDict()
 

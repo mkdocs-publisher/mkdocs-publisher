@@ -11,8 +11,8 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 
-from src.plugin.structures import BlogPost
-from src.plugin.structures import Translation
+from mkdocs_blog_in.structures import BlogPost
+from mkdocs_blog_in.structures import Translation
 
 log = logging.getLogger("mkdocs.plugins.blog-in")
 
