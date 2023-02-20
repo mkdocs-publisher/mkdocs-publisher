@@ -1,14 +1,13 @@
 import importlib.resources
 import logging
 from dataclasses import fields
-from typing import Optional
 from typing import cast
 
 import yaml
 
-from src.plugin import lang as lang_resources
-from src.plugin.config import BlogInPluginConfig
-from src.plugin.structures import Translation
+from mkdocs_blog_in import lang as lang_resources
+from mkdocs_blog_in.config import BlogInPluginConfig
+from mkdocs_blog_in.structures import Translation
 
 log = logging.getLogger("mkdocs.plugins.blog-in")
 
@@ -17,7 +16,7 @@ class Translate:
     def __init__(self, config: BlogInPluginConfig):
         self._config: BlogInPluginConfig = config
         self._lang: str = self._config.lang
-        self._translation: Optional[Translation] = None
+        self._translation: Translation = cast(Translation, None)
 
         self._read_lang()
 
@@ -47,4 +46,4 @@ class Translate:
 
     @property
     def translation(self) -> Translation:
-        return cast(self._translation, Translation)  # type: ignore
+        return self._translation

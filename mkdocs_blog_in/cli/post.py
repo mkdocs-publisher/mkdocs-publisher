@@ -3,8 +3,8 @@ from pathlib import Path
 import click
 import frontmatter
 
-# from src.cli._utils import blog_in_cfg
-# from src.cli._utils import mkdocs_cfg
+# from _utils import blog_in_cfg
+# from _utils import mkdocs_cfg
 
 
 @click.group

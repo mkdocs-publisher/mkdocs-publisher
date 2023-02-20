@@ -43,6 +43,10 @@ This list is unordered so functionalities can be added in whenever upcoming vers
 
 ## Version history
 
+### 0.3.0
+
+- fixed: for wrong directory structure in site-packages after install
+
 ### 0.2.0
 
 - added: sub pages for archive, categories, blog
