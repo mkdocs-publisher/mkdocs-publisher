@@ -1,17 +1,17 @@
-site_name: MkDocs-Blogger
+site_name: MkDocs-blog-in
 site_url: https://mkusz.github.io/mkdocs-blogger
 site_author: Maciej 'maQ' Kusz
 site_description: Blogging plugin for MkDocs
 copyright: >
   &copy; 2023 Maciej 'maQ' Kusz
 
-repo_url: https://github.com/mkusz/mkdocs-blogger
+repo_url: https://github.com/mkusz/mkdocs-blog-in
 
 use_directory_urls: true
 strict: true
 
 extra:
-  homepage: https://mkusz.github.io/mkdocs-blogger
+  homepage: https://mkusz.github.io/mkdocs-blog-in
 
 watch:
   - overrides
@@ -39,4 +39,4 @@ markdown_extensions:
 
 plugins:
   - search
-  - blogger
+  - blog

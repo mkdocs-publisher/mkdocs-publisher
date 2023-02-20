@@ -12,6 +12,7 @@ import jinja2
 from src import templates
 from src.plugin.config import BlogInPluginConfig
 from src.plugin.structures import BlogPost
+from src.plugin.structures import Translation
 
 log = logging.getLogger("mkdocs.plugins.blog-in")
 
@@ -22,15 +23,10 @@ def create_blog_post_pages(
     config_nav: OrderedDict,
     docs_dir: Path,
     config: BlogInPluginConfig,
+    translation: Translation,
 ) -> None:
     """Create blog posts index files."""
 
-    # TODO: Add templates from override
-    # TODO: This file needs some serious refactor and cleanup
-
-    # templates = jinja2.Environment(loader=jinja2.FileSystemLoader("templates/"))
-    # print(templates.list_templates())
-    # template = templates.get_template("index.html")
     log.info("Creating blog posts index files")
 
     posts_chunks: Dict[str, list] = {}
@@ -75,7 +71,7 @@ def create_blog_post_pages(
     # Reorder tags alphabetically
     tags_chunks = {tag: tags_chunks[tag] for tag in sorted(tags_chunks)}
 
-    config_nav[config.index_name] = {}
+    config_nav[translation.blog_navigation_name] = {}
 
     for key, single_posts_chunk in posts_chunks.items():
         file_name = f"{key}.md"
@@ -85,42 +81,49 @@ def create_blog_post_pages(
             single_posts_chunk=single_posts_chunk,
             file_path=file_path,
             config=config,
-            page_title="Blog",  # TODO: make it config value
+            translation=translation,
+            page_title=translation.blog_page_title,
         )
 
-        temp_files[f"{config.index_name}/{key}"] = file_path
+        temp_files[f"{translation.blog_navigation_name}/{key}"] = file_path
         log.debug(f"Creating blog post chunk file: {file_path}")
 
-        config_nav[config.index_name][key] = f"{file_name}"
+        config_nav[translation.blog_navigation_name][key] = f"{file_name}"
+
+    _create_pages(
+        posts_chunks=archive_chunks,
+        temp_files=temp_files,
+        config_nav=config_nav[translation.blog_navigation_name],
+        docs_dir=docs_dir,
+        sub_dir=Path(config.archive_subdir),
+        navigation_name=translation.archive_navigation_name,
+        page_title=translation.archive_page_title,
+        config=config,
+        translation=translation,
+    )
 
     _create_pages(
         posts_chunks=categories_chunks,
         temp_files=temp_files,
-        config_nav=config_nav[config.index_name],
+        config_nav=config_nav[translation.blog_navigation_name],
         docs_dir=docs_dir,
-        sub_dir=Path(config.categories_dir),
-        sub_dir_name=config.categories_name,
+        sub_dir=Path(config.categories_subdir),
+        navigation_name=translation.categories_navigation_name,
+        page_title=translation.categories_page_title,
         config=config,
+        translation=translation,
     )
 
     _create_pages(
         posts_chunks=tags_chunks,
         temp_files=temp_files,
-        config_nav=config_nav[config.index_name],
+        config_nav=config_nav[translation.blog_navigation_name],
         docs_dir=docs_dir,
-        sub_dir=Path(config.tags_dir),
-        sub_dir_name=config.tags_name,
+        sub_dir=Path(config.tags_subdir),
+        navigation_name=translation.tags_navigation_name,
+        page_title=translation.tags_page_title,
         config=config,
-    )
-
-    _create_pages(
-        posts_chunks=archive_chunks,
-        temp_files=temp_files,
-        config_nav=config_nav[config.index_name],
-        docs_dir=docs_dir,
-        sub_dir=Path(config.archive_dir),
-        sub_dir_name=config.archive_name,
-        config=config,
+        translation=translation,
     )
 
 
@@ -130,12 +133,14 @@ def _create_pages(
     config_nav: OrderedDict,
     docs_dir: Path,
     sub_dir: Path,
-    sub_dir_name: str,
+    navigation_name: str,
+    page_title: str,
     config: BlogInPluginConfig,
+    translation: Translation,
 ):
-    config_nav[sub_dir_name] = {}
+    config_nav[navigation_name] = {}
 
-    pages_dir = docs_dir / config.posts_dir / sub_dir
+    pages_dir = docs_dir / config.blog_dir / sub_dir
 
     if not pages_dir.exists():
         pages_dir.mkdir()
@@ -148,26 +153,33 @@ def _create_pages(
             single_posts_chunk=single_posts_chunk,
             file_path=file_path,
             config=config,
-            page_title=f"{sub_dir_name} - {key}",
+            translation=translation,
+            page_title=f"{page_title} - {key}",
         )
 
-        temp_files[f"{sub_dir_name}/{key}"] = file_path
+        temp_files[f"{sub_dir}/{key}"] = file_path
         log.debug(f"Creating blog post chunk file: {file_path}")
 
-        config_nav[sub_dir_name][key] = f"{config.posts_dir}/{sub_dir}/{file_name}"
+        config_nav[navigation_name][key] = f"{config.blog_dir}/{sub_dir}/{file_name}"
 
 
 def _render_and_write_page(
     single_posts_chunk: list,
     file_path: Path,
     config: BlogInPluginConfig,
+    translation: Translation,
     page_title: str,
 ):
+    # TODO: Add templates from override
+    # templates = jinja2.Environment(loader=jinja2.FileSystemLoader("templates/"))
+    # print(templates.list_templates())
+    # template = templates.get_template("index.html")
     index_template = importlib.resources.read_text(templates, "posts-list.html")
 
     context = {
         "posts": single_posts_chunk,
         "config": config,
+        "translation": translation,
     }
     template = jinja2.Environment(loader=jinja2.BaseLoader()).from_string(index_template)
 

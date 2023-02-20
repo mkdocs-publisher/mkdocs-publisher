@@ -1,6 +1,5 @@
 import logging
 from collections import OrderedDict
-from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -20,6 +19,8 @@ from src.plugin import parsers
 from src.plugin import rendereres
 from src.plugin.config import BlogInPluginConfig
 from src.plugin.structures import BlogPost
+from src.plugin.structures import Translation
+from src.plugin.translate import Translate
 
 log = logging.getLogger("mkdocs.plugins.blog-in")
 
@@ -28,8 +29,12 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
     def __init__(self):
         self.blog_posts: Dict[datetime, BlogPost] = {}
         self.temp_files: Dict[str, Path] = {}
+        self.translation: Translation = cast(Translation, None)
 
     def on_config(self, config: MkDocsConfig) -> Config:
+
+        # Create a language translation object with overrides from config
+        self.translation = Translate(config=self.config).translation
 
         # New config navigation
         config_nav = OrderedDict()
@@ -38,7 +43,7 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
             blog_posts=self.blog_posts,
             config_nav=config_nav,
             docs_dir=Path(str(config.docs_dir)),
-            posts_dir=Path(self.config.posts_dir),
+            blog_dir=Path(self.config.blog_dir),
         )
 
         parsers.create_blog_post_teaser(
@@ -51,12 +56,12 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
             config_nav=config_nav,
             docs_dir=Path(str(config.docs_dir)),
             config=self.config,
+            translation=self.translation,
         )
 
         modifiers.blog_post_nav_sorter(
             blog_posts=self.blog_posts,
             config_nav=config_nav,
-            posts_dir=Path(self.config.posts_dir),
         )
 
         # Override nav section
@@ -65,9 +70,7 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
         return config
 
     def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation:
-        modifiers.blog_post_nav_remove(
-            nav=nav, blog_posts=self.config.posts_dir, config=self.config
-        )
+        modifiers.blog_post_nav_remove(nav=nav, translation=self.translation)
 
         return nav
 
@@ -91,23 +94,7 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
         self, context: Dict[str, Any], *, page: Page, config: MkDocsConfig, nav: Navigation
     ) -> Optional[Dict[str, Any]]:
 
-        # TODO: move str names into config
-        if page.title == "index":
-            page.title = "Home"
-            if page.next_page is not None and str(page.next_page.title).startswith("index-"):
-                next_page_copy = cast(Page, deepcopy(page.next_page))
-                next_page_copy.title = "Next posts"
-                page.next_page = next_page_copy
-        if str(page.title).startswith("index") or (
-            page.previous_page is not None and str(page.previous_page.title).startswith("index")
-        ):
-            previous_page_copy = cast(Page, deepcopy(page.previous_page))
-            previous_page_copy.title = "Previous posts"
-            page.previous_page = previous_page_copy
-            if page.next_page is not None and str(page.next_page.title).startswith("index-"):
-                next_page_copy = cast(Page, deepcopy(page.next_page))
-                next_page_copy.title = "Next posts"
-                page.next_page = next_page_copy
+        modifiers.blog_post_nav_next_prev_change(page=page, translation=self.translation)
 
         return context
 

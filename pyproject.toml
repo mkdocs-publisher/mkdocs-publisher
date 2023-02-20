@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "mkdocs-blog-in"
-version = "0.1.0"
-description = "Blogg plugin for MkDocs"
+version = "0.2.0"
+description = "Blogging plugin for MkDocs"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
 readme = "README.md"
 keywords = ["mkdocs", "mkdocs-plugin", "blog", "blogging"]
 packages = [{include = "src"}]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Environment :: Web Environment",
     "Intended Audience :: Developers",
@@ -78,4 +78,4 @@ typeCheckingMode = "basic"
 blog = "src.plugin.blog:BlogInPlugin"
 
 [tool.poetry.scripts]
-blog = "src.cli.command:app"
+mkdocs-blog-in = "src.cli.command:app"
