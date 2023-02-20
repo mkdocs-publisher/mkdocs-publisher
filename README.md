@@ -1,4 +1,7 @@
-# mkdocs-blogger
+# mkdocs-blog-in
+
+[![PyPI version](https://badge.fury.io/py/mkdocs-blog-in.svg)](https://badge.fury.io/py/mkdocs-blog-in)
+
 This plugin change behaviour of MkDocs, so it allows to use it as a blogging platform.
 
 > **Note**
