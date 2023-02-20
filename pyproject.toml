@@ -1,12 +1,34 @@
 [tool.poetry]
-name = "mkdocs-blogger"
-version = "0.1.0"
+name = "mkdocs-blog-in"
+version = "0.2.0"
 description = "Blogging plugin for MkDocs"
-authors = ["Maciej Kusz <maciej.kusz@gmail.com>"]
+authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
 readme = "README.md"
 keywords = ["mkdocs", "mkdocs-plugin", "blog", "blogging"]
 packages = [{include = "src"}]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Documentation",
+    "Topic :: Text Processing",
+]
+homepage = "https://github.com/mkusz/mkdocs-blog-in"
+repository = "https://github.com/mkusz/mkdocs-blog-in"
+documentation = "https://mkusz.github.io/mkdocs-blog-in"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/mkusz/mkdocs-blog-in/issues"
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -18,6 +40,7 @@ isort = "^5.12.0"
 black = "^22.12.0"
 pyright = "^1.1.291"
 flake8 = "^6.0.0"
+mkdocs-material = "^9.0.11"
 
 [build-system]
 requires = ["poetry-core"]
@@ -52,4 +75,7 @@ reportMissingTypeStubs = false
 typeCheckingMode = "basic"
 
 [tool.poetry.plugins."mkdocs.plugins"]
-blogger = "src.plugin:BloggerPlugin"
+blog = "src.plugin.blog:BlogInPlugin"
+
+[tool.poetry.scripts]
+mkdocs-blog-in = "src.cli.command:app"

@@ -7,21 +7,21 @@ from typing import Dict
 
 import frontmatter
 
-from src.structures import BlogPost
+from src.plugin.structures import BlogPost
 
-log = logging.getLogger(f"mkdocs.plugins.{__name__}")
+log = logging.getLogger("mkdocs.plugins.blog-in")
 
 
 def parse_markdown_files(
     blog_posts: Dict[datetime, BlogPost],
     config_nav: OrderedDict,
     docs_dir: Path,
-    posts_dir: Path,
+    blog_dir: Path,
 ):
-    """Parse all markdown files and extract blog posts from `posts_dir` (default: 'posts').
+    """Parse all markdown files and extract blog posts from `blog_dir` (default: 'posts').
     BlogPost object is created and filled with content and metadata of the post.
     """
-    log.info(f"Parsing blog posts from '{posts_dir}' directory")
+    log.info(f"Parsing blog posts from '{blog_dir}' directory")
     for file_path in docs_dir.glob("**/*"):
         file_path = Path(file_path)
         path = Path(file_path).relative_to(docs_dir)
@@ -33,7 +33,7 @@ def parse_markdown_files(
                     for line in post.content.split("\n"):
                         if line.startswith("# "):
                             config_nav[line[2:]] = str(path)
-                elif str(parents[0]) == str(posts_dir):
+                elif str(parents[0]) == str(blog_dir):
                     post_meta = dict(post)
 
                     # Convert tags format
@@ -48,15 +48,12 @@ def parse_markdown_files(
                     post_data["content"] = post.content
                     post_data["path"] = str(path)
                     if "slug" in post_meta and post_meta["slug"].strip() != "":
-                        post_data["slug"] = f"{posts_dir}/{post_meta['slug']}"
+                        post_data["slug"] = f"{blog_dir}/{post_meta['slug']}"
                     blog_post: BlogPost = BlogPost(**post_data)
 
                     # Add new post to blog posts collection
                     blog_posts[blog_post.date] = blog_post
                     log.debug(f"New blog posts: {blog_post.title}")
-        elif file_path.is_dir():
-            if str(path) != str(posts_dir):
-                config_nav[str(path).title()] = []
 
 
 def create_blog_post_teaser(blog_posts: Dict[datetime, BlogPost], teaser_marker: str):

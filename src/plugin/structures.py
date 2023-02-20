@@ -23,3 +23,23 @@ class BlogPost:
     @property
     def as_dict(self) -> dict:
         return asdict(self)
+
+
+@dataclass
+class Translation:
+    teaser_link_text: str
+    blog_page_title: str
+    blog_navigation_name: str
+    recent_blog_posts_navigation_name: str
+    archive_page_title: str
+    archive_navigation_name: str
+    categories_page_title: str
+    categories_navigation_name: str
+    tags_page_title: str
+    tags_navigation_name: str
+    newer_posts: str
+    older_posts: str
+
+    @property
+    def as_dict(self) -> dict:
+        return asdict(self)
