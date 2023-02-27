@@ -1,9 +1,16 @@
 from dataclasses import asdict
 from dataclasses import dataclass
+from dataclasses import field
 from datetime import datetime
+from pathlib import Path
+from typing import Dict
 from typing import List
 from typing import Optional
 from typing import Union
+
+from mkdocs.config.defaults import MkDocsConfig
+
+from mkdocs_blog_in.config import BlogInPluginConfig
 
 
 @dataclass
@@ -43,3 +50,38 @@ class Translation:
     @property
     def as_dict(self) -> dict:
         return asdict(self)
+
+
+@dataclass
+class CachedFile:
+    file_name: str
+    file_size: int
+    creation_date: int
+
+    @property
+    def as_dict(self) -> dict:
+        return asdict(self)
+
+
+@dataclass
+class BlogConfig:
+    mkdocs_config: MkDocsConfig = field(init=False)
+    plugin_config: BlogInPluginConfig = field(init=False)
+    translation: Translation = field(init=False)
+    temp_dir: Path = field(init=False)
+    docs_dir: Path = field(init=False)
+    blog_dir: Path = field(init=False)
+    site_dir: Path = field(init=False)
+    blog_posts: Dict[datetime, BlogPost] = field(init=False, default_factory=lambda: dict())
+    temp_files: Dict[str, Path] = field(init=False, default_factory=lambda: dict())
+
+    def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogInPluginConfig):
+        from mkdocs_blog_in.translate import Translate
+
+        self.mkdocs_config = mkdocs_config
+        self.plugin_config = plugin_config
+        self.temp_dir = Path.cwd() / "temp"
+        self.docs_dir = Path(mkdocs_config.docs_dir)
+        self.blog_dir = Path(plugin_config.blog_dir)
+        self.site_dir = Path(mkdocs_config.site_dir)
+        self.translation = Translate(config=plugin_config).translation

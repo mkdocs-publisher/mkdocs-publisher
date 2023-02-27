@@ -40,10 +40,68 @@ This list is unordered so functionalities can be added in whenever upcoming vers
 - [ ] extend categories functionality like: possibility to add multiple categories (like tags), configurable limit of categories (with checks) and configurable list of categories
 - [ ] add configurable date format
 - [ ] image optimization (pngquant and jpeg-quantsmooth + mozjpeg) with cache
+- [ ] fix live reload issue
+
+## Image optimization
+
+Image optimization is needed for optimal web speed loading that is needed for better scoring on search engines (part of propper SEO). The best image optimization that redeuce image file size but not image quality.
+
+Since 2 most used image formats are PNG and JPEG, this plugin offers image optimization option. Tools used for image optimization were chosen to fulfill both main image optimization purposes: high quality with small file size.
+
+### PNG
+
+External tools:
+- `pngquant` - image compression by color space manipulation
+- `oxipng` - lossless compression optimizer
+
+#### Why using both tools?
+
+The reason is very simple. Both tools are operating in 2 different aspects of PNG image. `pngquant` reduce file size by reducing color palette to 8-bit with alpha channel and `oxipng` is optimizing image data compression algorithm without touching image data. Unfortunatelly ther is no single tool that allows to perform both optimization.
+
+#### Installation
+
+- MacOS:
+
+```commandline
+brew install pngquant oxipng
+```
+
+- Ubuntu:
+
+[TODO]
+
+- Windows:
+
+[TODO]
+
+```commandline
+pngquant --strip --speed 1 --ext .png -f file_name.png
+oxipng -Z --strip all file_name.png
+```
+
+### JPEG
+
+```commandline
+
+brew install mozjpeq
+
+```
+
+```commandline
+
+djpeg -targa -outfile file_name.jpg file_name.tga
+cjpeg -targa -optimise -quality 85 -dct float -outfile file_name.jpg file_name.tga
+
+```
 
 ## Version history
 
-### 0.3.0
+### 0.4.0
+
+- changed: internal file structure refactor with new global plugin config (BlogInConfig class) that will help with further development and small fixes and improvments,
+-
+
+### 0.3.0 - 2023.02.20
 
 - fixed: for wrong directory structure in site-packages after install
 

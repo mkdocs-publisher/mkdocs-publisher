@@ -1,9 +1,6 @@
 import logging
 from collections import OrderedDict
 from copy import deepcopy
-from datetime import datetime
-from pathlib import Path
-from typing import Dict
 from typing import cast
 
 from mkdocs.structure.files import Files
@@ -11,18 +8,15 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 
-from mkdocs_blog_in.structures import BlogPost
-from mkdocs_blog_in.structures import Translation
+from mkdocs_blog_in.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.plugins.blog-in")
 
 
-def blog_post_slug_modifier(
-    blog_posts: Dict[datetime, BlogPost], files: Files, site_dir: Path
-) -> Files:
+def blog_post_slug_modifier(blog_config: BlogConfig, files: Files) -> Files:
     """Modify File object destination file paths and url to defined blog post slug."""
 
-    blog_posts = {post.path: post for post in blog_posts.values()}  # type: ignore
+    blog_posts = {post.path: post for post in blog_config.blog_posts.values()}  # type: ignore
     new_files = Files([])
 
     log.info("Modify blog posts url addresses based on slug")
@@ -32,7 +26,7 @@ def blog_post_slug_modifier(
             file.name = slug.split("/")[-1]  # type: ignore
             file.url = f"{slug}/"
             file.dest_uri = f"{slug}/index.html"
-            file.abs_dest_path = str(site_dir / file.dest_uri)
+            file.abs_dest_path = str(blog_config.site_dir / file.dest_uri)
             log.debug(f"Blog post: {blog_posts[file.src_uri].title} url is: {file.url}")
         new_files.append(file)
 
@@ -40,20 +34,22 @@ def blog_post_slug_modifier(
 
 
 def blog_post_nav_sorter(
-    blog_posts: Dict[datetime, BlogPost],
+    blog_config: BlogConfig,
     config_nav: OrderedDict,
 ):
     """Reorder blog posts in config navigation section from newest to oldest."""
 
     log.info("Reorder blog posts from newest to oldest")
     config_nav["_blog_posts_"] = []
-    for date in sorted(blog_posts, reverse=True):
-        config_nav["_blog_posts_"].append({blog_posts[date].title: blog_posts[date].path})
+    for date in sorted(blog_config.blog_posts, reverse=True):
+        config_nav["_blog_posts_"].append(
+            {blog_config.blog_posts[date].title: blog_config.blog_posts[date].path}
+        )
 
 
 def blog_post_nav_remove(
+    blog_config: BlogConfig,
     nav: Navigation,
-    translation: Translation,
 ) -> None:
     """Remove blog posts pages and section from direct navigation."""
 
@@ -63,7 +59,10 @@ def blog_post_nav_remove(
     ]
     log.info("Remove blog index from navigation menu")
     for item in nav.items:
-        if isinstance(item, Section) and item.title == translation.blog_navigation_name:
+        if (
+            isinstance(item, Section)
+            and item.title == blog_config.translation.blog_navigation_name
+        ):
             children = []
             for section_item in item.children:
                 if not (
@@ -73,22 +72,22 @@ def blog_post_nav_remove(
             item.children = children
 
 
-def blog_post_nav_next_prev_change(page: Page, translation: Translation):
+def blog_post_nav_next_prev_change(blog_config: BlogConfig, page: Page):
     """Change blog post next/prev navigation"""
 
     if page.title == "index":
-        page.title = translation.recent_blog_posts_navigation_name
+        page.title = blog_config.translation.recent_blog_posts_navigation_name
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):
             next_page_copy = cast(Page, deepcopy(page.next_page))
-            next_page_copy.title = translation.older_posts
+            next_page_copy.title = blog_config.translation.older_posts
             page.next_page = next_page_copy
     if str(page.title).startswith("index") or (
         page.previous_page is not None and str(page.previous_page.title).startswith("index")
     ):
         previous_page_copy = cast(Page, deepcopy(page.previous_page))
-        previous_page_copy.title = translation.newer_posts
+        previous_page_copy.title = blog_config.translation.newer_posts
         page.previous_page = previous_page_copy
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):
             next_page_copy = cast(Page, deepcopy(page.next_page))
-            next_page_copy.title = translation.older_posts
+            next_page_copy.title = blog_config.translation.older_posts
             page.next_page = next_page_copy
