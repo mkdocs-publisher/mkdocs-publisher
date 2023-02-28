@@ -8,11 +8,30 @@ from typing import cast
 
 import frontmatter
 import jinja2
+from mkdocs.structure.files import File
+from mkdocs.structure.files import Files
 
 from mkdocs_blog_in import templates
 from mkdocs_blog_in.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.plugins.blog-in")
+
+
+def create_mkdocs_blog_files(
+    blog_config: BlogConfig,
+    files: Files,
+):
+    for temp_file in blog_config.temp_files.values():
+        try:
+            file = File(
+                path=str(Path(temp_file).relative_to(blog_config.temp_dir)),
+                src_dir=str(blog_config.temp_dir),
+                dest_dir=str(blog_config.site_dir),
+                use_directory_urls=blog_config.mkdocs_config.use_directory_urls,
+            )
+            files.append(file)
+        except ValueError:
+            pass
 
 
 def create_blog_post_pages(
@@ -68,7 +87,7 @@ def create_blog_post_pages(
 
     for key, single_posts_chunk in posts_chunks.items():
         file_name = f"{key}.md"
-        file_path = blog_config.docs_dir / file_name
+        file_path = blog_config.temp_dir / file_name
 
         _render_and_write_page(
             single_posts_chunk=single_posts_chunk,
@@ -120,10 +139,13 @@ def _create_pages(
 ):
     config_nav[navigation_name] = {}
 
-    pages_dir = blog_config.docs_dir / blog_config.blog_dir / sub_dir
+    # pages_dir = blog_config.docs_dir / blog_config.blog_dir / sub_dir
 
-    if not pages_dir.exists():
-        pages_dir.mkdir()
+    blog_temp_dir = blog_config.temp_dir / blog_config.blog_dir
+    blog_temp_dir.mkdir(exist_ok=True)
+
+    pages_dir = blog_temp_dir / sub_dir
+    pages_dir.mkdir(exist_ok=True)
 
     for key, single_posts_chunk in posts_chunks.items():
         file_name = f"{key}.md"

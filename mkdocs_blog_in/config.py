@@ -9,6 +9,8 @@ class BlogInPluginConfig(Config):
     posts_per_page = config_options.Type(int, default=5)
 
     # Directories
+    cache_dir = config_options.Type(str, default=".cache")
+    temp_dir = config_options.Type(str, default=".temp")
     blog_dir = config_options.Type(str, default="blog")
     archive_subdir = config_options.Type(str, default="archive")
     categories_subdir = config_options.Type(str, default="categories")

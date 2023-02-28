@@ -68,6 +68,7 @@ class BlogConfig:
     mkdocs_config: MkDocsConfig = field(init=False)
     plugin_config: BlogInPluginConfig = field(init=False)
     translation: Translation = field(init=False)
+    cache_dir: Path = field(init=False)
     temp_dir: Path = field(init=False)
     docs_dir: Path = field(init=False)
     blog_dir: Path = field(init=False)
@@ -80,8 +81,15 @@ class BlogConfig:
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
-        self.temp_dir = Path.cwd() / "temp"
+        self.cache_dir = Path.cwd() / plugin_config.cache_dir
+        self.temp_dir = Path.cwd() / plugin_config.temp_dir
         self.docs_dir = Path(mkdocs_config.docs_dir)
         self.blog_dir = Path(plugin_config.blog_dir)
         self.site_dir = Path(mkdocs_config.site_dir)
         self.translation = Translate(config=plugin_config).translation
+
+        self.create_dirs()
+
+    def create_dirs(self):
+        self.cache_dir.mkdir(exist_ok=True)
+        self.temp_dir.mkdir(exist_ok=True)

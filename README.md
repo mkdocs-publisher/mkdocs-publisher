@@ -40,7 +40,6 @@ This list is unordered so functionalities can be added in whenever upcoming vers
 - [ ] extend categories functionality like: possibility to add multiple categories (like tags), configurable limit of categories (with checks) and configurable list of categories
 - [ ] add configurable date format
 - [ ] image optimization (pngquant and jpeg-quantsmooth + mozjpeg) with cache
-- [ ] fix live reload issue
 
 ## Image optimization
 
@@ -99,7 +98,7 @@ cjpeg -targa -optimise -quality 85 -dct float -outfile file_name.jpg file_name.t
 ### 0.4.0
 
 - changed: internal file structure refactor with new global plugin config (BlogInConfig class) that will help with further development and small fixes and improvments,
--
+- fix: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory (docs subdirecotory that is under constant watch)
 
 ### 0.3.0 - 2023.02.20
 
