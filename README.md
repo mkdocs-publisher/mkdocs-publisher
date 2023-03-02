@@ -1,8 +1,34 @@
 # mkdocs-blog-in
 
 [![PyPI version](https://badge.fury.io/py/mkdocs-blog-in.svg)](https://badge.fury.io/py/mkdocs-blog-in)
+[![Github All Releases](https://img.shields.io/github/downloads/mkusz/mkdocs-blog-in/total.svg)]()
 
-This plugin change behaviour of MkDocs, so it allows to use it as a blogging platform.
+Blogging platform plugin for [MkDocs](https://www.mkdocs.org/).
+
+## Another blogging plugin for MkDocs? But why?
+
+The simplest answer is: because I couldn't find one good enough (and free).
+
+The flip side of the same coin was that I wanted to migrate my personal blog related to [testing](https://testerembyc.pl) (sorry only in Polish, but you can try to use google translator) from [Nikola](https://getnikola.com/) that works quite well, but sometimes is overlly complicated, has almost none search functionality and markdown files are not the default one (but it's possible to use them). Why markdown format is so important? Becasue I love [Obsidian](https://obsidian.md) as a tool for gathering knowledge and this format is a crucial part of that tool.
+
+At the time when this plugin was created, there was no free and qood alternatives. The only one that could be good enought was hidden behind a paid wall and was a part of a theme [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/blog/). Some of the ideas for this plugin and functionalities came from documentation of the Material for MkDocs theme, Nikola and other plugins.
+
+Existing alternatives (with my comment):
+
+- [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/blog/) - complex solution but paid,
+- [mkdocs-blogging-plugin](https://github.com/liang2kl/mkdocs-blogging-plugin) - works, but very simple solution for very simple blog (limited tags usage, thame files modification neede, limited use of frontmatter, limited number of features),
+- [mkdocs-blog-plugin](https://github.com/fmaida/mkdocs-blog-plugin) - no longer maintained and very simple,
+- [python-mkblog](https://github.com/derJD/python-mkblog) - no longer maintained and very simple,
+- [mkdocs-blog](https://github.com/andyoakley/mkdocs-blog) - no longer maintained and very simple,
+- [material theme modification](https://www.dirigible.io/blogs/2021/11/2/material-blogging-capabilities/) - it's not a plugin, but comples theme modification, it's hard to extend and configure.
+
+As you can see, there are just 2 still maintained plugins for blogging in MkDocs:
+1. Material for MkDocs - complex but paid,
+2. mkdosc-blogging-plugin - much simpler than Material for MkDocs.
+
+At this moment (v0.4.0) of this plugin, it's functionality is somewhere in between those 2 (but closer to more complex solution). Since this is plugin that I will be using for my blog, it will be maintainted at least as long as my blog will be alive. I know that there is still a huge list of improvemnts I want to add (especially a documentation) but it's just a matter of time.
+
+If you have an idea for some new functionality (or found a bug), please report and issue with a proper label.
 
 > **Note**
 > As a base for any development, mkdocs-material theme was used.
@@ -31,15 +57,20 @@ List of included features (more documentation is needed):
 
 This list is unordered so functionalities can be added in whenever upcoming version:
 
-- [ ] add cli tool for creating an empty blog post and page
+- [ ] add cli tool for creating an empty blog posts and pages
 - [ ] add templates overrides (same mechanism as in mkdocs-material theme) with cli tool to copy a template
-- [ ] add social media preview
+- [ ] add social media preview (image metadata key to match RSS plugin defaults)
 - [ ] add unittests
+- [ ] add reading time
 - [ ] add page/post meta to publish state like: draft, published, hidden
-- [ ] create documentation
+- [ ] add author/authors per page metadata (with predefined default in mkdocs.yaml)
 - [ ] extend categories functionality like: possibility to add multiple categories (like tags), configurable limit of categories (with checks) and configurable list of categories
 - [ ] add configurable date format
-- [ ] image optimization (pngquant and jpeg-quantsmooth + mozjpeg) with cache
+- [ ] image optimization (pngquant and mozjpeg) with cache
+- [ ] file size optimization with cache
+- [ ] create documentation
+- [ ] documentation: integration with MkDocs RSS plugin
+- [ ] add concurency in file optimization
 
 ## Image optimization
 
@@ -55,7 +86,7 @@ External tools:
 
 #### Why using both tools?
 
-The reason is very simple. Both tools are operating in 2 different aspects of PNG image. `pngquant` reduce file size by reducing color palette to 8-bit with alpha channel and `oxipng` is optimizing image data compression algorithm without touching image data. Unfortunatelly ther is no single tool that allows to perform both optimization.
+The reason is very simple. Both tools are operating in 2 different aspects of PNG image. `pngquant` reduce file size by reducing color palette to 8-bit with alpha channel and `oxipng` is optimizing image data compression algorithm without touching image data. Unfortunatelly there is no single tool that allows to perform both optimization.
 
 #### Installation
 
@@ -63,19 +94,6 @@ The reason is very simple. Both tools are operating in 2 different aspects of PN
 
 ```commandline
 brew install pngquant oxipng
-```
-
-- Ubuntu:
-
-[TODO]
-
-- Windows:
-
-[TODO]
-
-```commandline
-pngquant --strip --speed 1 --ext .png -f file_name.png
-oxipng -Z --strip all file_name.png
 ```
 
 ### JPEG
@@ -86,10 +104,11 @@ brew install mozjpeq
 
 ```
 
+### SVG
+
 ```commandline
 
-djpeg -targa -outfile file_name.jpg file_name.tga
-cjpeg -targa -optimise -quality 85 -dct float -outfile file_name.jpg file_name.tga
+brew install svgo
 
 ```
 
@@ -97,8 +116,11 @@ cjpeg -targa -optimise -quality 85 -dct float -outfile file_name.jpg file_name.t
 
 ### 0.4.0
 
-- changed: internal file structure refactor with new global plugin config (BlogInConfig class) that will help with further development and small fixes and improvments,
-- fix: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory (docs subdirecotory that is under constant watch)
+- added: png image optimization (using: pngquant and oxipng)
+- added: jpg image optimization (using: mozjpeg)
+- added: svg image optimization (using: svgo)
+- changed: internal file structure refactor with new global plugin config (BlogInConfig class) that will help with further development and small fixes and improvments
+- fix: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
 
 ### 0.3.0 - 2023.02.20
 

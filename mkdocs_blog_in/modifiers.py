@@ -51,13 +51,13 @@ def blog_post_nav_remove(
     blog_config: BlogConfig,
     nav: Navigation,
 ) -> None:
-    """Remove blog posts pages and section from direct navigation."""
+    """Remove blog posts pages, subindexes and section from direct navigation."""
 
-    log.info("Remove blog posts pages and section from direct navigation")
+    log.info("Removing blog posts pages and section from direct navigation")
     nav.items = [
         i for i in nav.items if not (isinstance(i, Section) and i.title.lower() == "_blog_posts_")
     ]
-    log.info("Remove blog index from navigation menu")
+    log.info("Removing blog sub index pages from navigation menu")
     for item in nav.items:
         if (
             isinstance(item, Section)

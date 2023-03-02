@@ -9,11 +9,13 @@ from typing import Optional
 from mkdocs.config import Config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
+from mkdocs.plugins import event_priority
 from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
 from mkdocs_blog_in import creators
+from mkdocs_blog_in import minifiers
 from mkdocs_blog_in import modifiers
 from mkdocs_blog_in import parsers
 from mkdocs_blog_in import utils
@@ -74,29 +76,9 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
             files=files,
         )
 
-        cache_files = [str(file.name) for file in self.blog_config.cache_dir.iterdir()]
-        try:
-            cache_files.remove(".cache_metadata.json")
-        except ValueError:
-            pass
-
-        # print(cache_files)
-        # for file in files:
-        #
-        #     if file.is_media_file():
-        #         if Path(file.src_path).name in cache_files:
-        #             cache_file_path = Path(config.docs_dir).parent / Path("cache") / Path(file.src_path).name
-        #             print(f"{file} - {Path(file.src_path).suffix}")
-        #             print(file.src_path)
-        #             print(file.abs_src_path)
-        #             file.abs_src_path = cache_file_path
-        #             print(file)
-        #             print((Path(config.docs_dir) / Path(file.src_path)).stat())
-        #             print(Path(cache_file_path))
-        # print(f"{file} - {Path(file.src_path).suffix}")
-
         return new_files
 
+    @event_priority(-100)  # Run after all other plugins
     def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files):
         # Modify page update date
         # TODO: move date format to config
@@ -105,6 +87,7 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
         )
         page.update_date = update_date.strftime("%Y-%m-%d")
 
+    @event_priority(-100)  # Run after all other plugins
     def on_page_context(
         self, context: Dict[str, Any], *, page: Page, config: MkDocsConfig, nav: Navigation
     ) -> Optional[Dict[str, Any]]:
@@ -113,10 +96,18 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
 
         return context
 
+    @event_priority(-100)  # Run after all other plugins
+    def on_post_build(self, *, config: MkDocsConfig) -> None:
+
+        if self.blog_config.plugin_config.minify.enabled:
+            minifiers.post_build_files_minification(blog_config=self.blog_config)
+
+    @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:
 
         utils.remove_dir(directory=self.blog_config.temp_dir)
 
+    @event_priority(-100)  # Run after all other plugins
     def on_shutdown(self) -> None:
 
         utils.remove_dir(directory=self.blog_config.temp_dir)

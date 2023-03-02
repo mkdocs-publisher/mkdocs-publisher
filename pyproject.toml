@@ -78,6 +78,6 @@ typeCheckingMode = "basic"
 
 [tool.poetry.plugins."mkdocs.plugins"]
 blog = "mkdocs_blog_in.blog:BlogInPlugin"
-#
+
 [tool.poetry.scripts]
 mkdocs-blog-in = "mkdocs_blog_in.cli.command:app"

@@ -54,9 +54,26 @@ class Translation:
 
 @dataclass
 class CachedFile:
-    file_name: str
-    file_size: int
-    creation_date: int
+    original_file_hash: str = field(default="")
+    original_file_path: Path = field(default_factory=lambda: Path(""))
+    cached_file_name: Path = field(default_factory=lambda: Path(""))
+
+    def __init__(
+        self,
+        original_file_hash: str = "",
+        original_file_path: str = "",
+        cached_file_name: str = "",
+    ):
+        self.original_file_hash = original_file_hash
+        self.original_file_path = Path(original_file_path)
+        self.cached_file_name = Path(cached_file_name)
+
+    def based_on(self, file: Path, directory: Path):
+        import mkdocs_blog_in.utils as utils
+
+        self.original_file_path = file
+        self.original_file_hash = utils.calculate_file_hash(file=directory / file)
+        self.cached_file_name = utils.get_hashed_file_name(file=file)
 
     @property
     def as_dict(self) -> dict:
@@ -73,6 +90,7 @@ class BlogConfig:
     docs_dir: Path = field(init=False)
     blog_dir: Path = field(init=False)
     site_dir: Path = field(init=False)
+    cached_files: Dict[str, CachedFile] = field(init=False, default_factory=lambda: dict())
     blog_posts: Dict[datetime, BlogPost] = field(init=False, default_factory=lambda: dict())
     temp_files: Dict[str, Path] = field(init=False, default_factory=lambda: dict())
 
@@ -81,8 +99,8 @@ class BlogConfig:
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
-        self.cache_dir = Path.cwd() / plugin_config.cache_dir
-        self.temp_dir = Path.cwd() / plugin_config.temp_dir
+        self.cache_dir = Path(plugin_config.minify.cache_dir)
+        self.temp_dir = Path(plugin_config.temp_dir)
         self.docs_dir = Path(mkdocs_config.docs_dir)
         self.blog_dir = Path(plugin_config.blog_dir)
         self.site_dir = Path(mkdocs_config.site_dir)
