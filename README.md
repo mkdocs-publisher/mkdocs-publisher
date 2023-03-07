@@ -38,6 +38,55 @@ If you have an idea for some new functionality (or found a bug), please report a
 
 If you have found any issue, have an idea for a feature, please submit an issue.
 
+## Image optimization
+
+Image optimization is needed for optimal web speed loading that is needed for better scoring on search engines (part of propper SEO). The best image optimization that redeuce image file size but not image quality.
+
+Since 2 most used image formats are PNG and JPEG, this plugin offers image optimization option. Tools used for image optimization were chosen to fulfill both main image optimization purposes: high quality with small file size.
+
+### MacOS installation
+
+- PNG
+
+```commandline
+brew install pngquant oxipng
+```
+
+- JPEG
+
+```commandline
+
+brew install mozjpeq
+
+```
+
+- SVG
+
+```commandline
+
+brew install svgo
+
+```
+
+
+
+## HTML, JS, CSS optimization
+
+```commandline
+
+brew install node
+npm install -g html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
+
+```
+
+## Plugin development
+
+```commandline
+
+poetry add --editable ../mkdocs-publisher/
+
+```
+
 ## Features
 
 List of included features (more documentation is needed):
@@ -71,65 +120,6 @@ This list is unordered so functionalities can be added whenever in upcoming vers
 - [ ] documentation: integration with MkDocs RSS plugin
 - [x] image optimization with cache
 - [x] add concurrency in file optimization
-
-## Image optimization
-
-Image optimization is needed for optimal web speed loading that is needed for better scoring on search engines (part of propper SEO). The best image optimization that redeuce image file size but not image quality.
-
-Since 2 most used image formats are PNG and JPEG, this plugin offers image optimization option. Tools used for image optimization were chosen to fulfill both main image optimization purposes: high quality with small file size.
-
-### PNG
-
-External tools:
-- `pngquant` - image compression by color space manipulation
-- `oxipng` - lossless compression optimizer
-
-#### Why using both tools?
-
-The reason is very simple. Both tools are operating in 2 different aspects of PNG image. `pngquant` reduce file size by reducing color palette to 8-bit with alpha channel and `oxipng` is optimizing image data compression algorithm without touching image data. Unfortunatelly there is no single tool that allows to perform both optimization.
-
-#### Installation
-
-- MacOS:
-
-```commandline
-brew install pngquant oxipng
-```
-
-### JPEG
-
-```commandline
-
-brew install mozjpeq
-
-```
-
-### SVG
-
-```commandline
-
-brew install svgo
-
-```
-
-### HTML, JS, CSS
-
-For all of this files you have to have NPM already installed
-
-```commandline
-
-npm install -g html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
-
-```
-
-## Development
-
-```commandline
-
-poetry add --editable ../mkdocs-blog-in/
-
-```
-
 
 ## Version history
 
