@@ -6,6 +6,12 @@ from typing import Any
 from typing import Dict
 from typing import Optional
 
+import utils
+from blog import creators
+from blog import modifiers
+from blog import parsers
+from blog.config import BlogInPluginConfig
+from blog.structures import BlogConfig
 from mkdocs.config import Config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
@@ -14,18 +20,10 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
-from mkdocs_blog_in import creators
-from mkdocs_blog_in import minifiers
-from mkdocs_blog_in import modifiers
-from mkdocs_blog_in import parsers
-from mkdocs_blog_in import utils
-from mkdocs_blog_in.config import BlogInPluginConfig
-from mkdocs_blog_in.structures import BlogConfig
-
-log = logging.getLogger("mkdocs.plugins.blog-in")
+log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
 
-class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
+class BlogPlugin(BasePlugin[BlogInPluginConfig]):
     def __init__(self):
         self.blog_config = BlogConfig()  # Empty instance
         self.temp_files: Dict[str, Path] = {}
@@ -95,12 +93,6 @@ class BlogInPlugin(BasePlugin[BlogInPluginConfig]):
         modifiers.blog_post_nav_next_prev_change(blog_config=self.blog_config, page=page)
 
         return context
-
-    @event_priority(-100)  # Run after all other plugins
-    def on_post_build(self, *, config: MkDocsConfig) -> None:
-
-        if self.blog_config.plugin_config.minify.enabled:
-            minifiers.post_build_files_minification(blog_config=self.blog_config)
 
     @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:

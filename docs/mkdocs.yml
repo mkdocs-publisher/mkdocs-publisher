@@ -40,3 +40,4 @@ markdown_extensions:
 plugins:
   - search
   - blog
+  - minifier

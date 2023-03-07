@@ -1,4 +1,4 @@
-# mkdocs-blog-in
+# mkdocs_publishing
 
 [![PyPI version](https://badge.fury.io/py/mkdocs-blog-in.svg)](https://badge.fury.io/py/mkdocs-blog-in)
 [![Github All Releases](https://img.shields.io/github/downloads/mkusz/mkdocs-blog-in/total.svg)]()
@@ -55,22 +55,23 @@ List of included features (more documentation is needed):
 
 ## Todo's
 
-This list is unordered so functionalities can be added in whenever upcoming version:
+This list is unordered so functionalities can be added whenever in upcoming version:
 
 - [ ] add cli tool for creating an empty blog posts and pages
 - [ ] add templates overrides (same mechanism as in mkdocs-material theme) with cli tool to copy a template
 - [ ] add social media preview (image metadata key to match RSS plugin defaults)
 - [ ] add unittests
 - [ ] add reading time
+- [ ] add obsidian templates and preconfig for new vault
 - [ ] add page/post meta to publish state like: draft, published, hidden
 - [ ] add author/authors per page metadata (with predefined default in mkdocs.yaml)
 - [ ] extend categories functionality like: possibility to add multiple categories (like tags), configurable limit of categories (with checks) and configurable list of categories
 - [ ] add configurable date format
-- [ ] image optimization (pngquant and mozjpeg) with cache
 - [ ] file size optimization with cache
 - [ ] create documentation
 - [ ] documentation: integration with MkDocs RSS plugin
-- [ ] add concurency in file optimization
+- [x] image optimization with cache
+- [x] add concurrency in file optimization
 
 ## Image optimization
 
@@ -112,15 +113,38 @@ brew install svgo
 
 ```
 
+### HTML, JS, CSS
+
+For all of this files you have to have NPM already installed
+
+```commandline
+
+npm install -g html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
+
+```
+
+## Development
+
+```commandline
+
+poetry add --editable ../mkdocs-blog-in/
+
+```
+
+
 ## Version history
 
 ### 0.4.0
 
-- added: png image optimization (using: pngquant and oxipng)
-- added: jpg image optimization (using: mozjpeg)
-- added: svg image optimization (using: svgo)
+- added: png image minifier (using: pngquant and oxipng)
+- added: jpg image minifier (using: mozjpeg)
+- added: svg image minifier (using: svgo)
+- added: html file minifier (using: html-minifier)
+- added: css file minifier (using: postcss with plugins: cssnano, svgo)
+- added: js file minifier (using: uglifyjs)
 - changed: internal file structure refactor with new global plugin config (BlogInConfig class) that will help with further development and small fixes and improvments
 - fix: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
+- change: project rename
 
 ### 0.3.0 - 2023.02.20
 

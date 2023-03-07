@@ -8,13 +8,12 @@ from typing import cast
 
 import frontmatter
 import jinja2
+from blog import templates
+from blog.structures import BlogConfig
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
-from mkdocs_blog_in import templates
-from mkdocs_blog_in.structures import BlogConfig
-
-log = logging.getLogger("mkdocs.plugins.blog-in")
+log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
 
 def create_mkdocs_blog_files(

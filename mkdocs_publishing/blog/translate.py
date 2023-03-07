@@ -4,12 +4,11 @@ from dataclasses import fields
 from typing import cast
 
 import yaml
+from blog import lang as lang_resources
+from blog.config import BlogInPluginConfig
+from blog.structures import Translation
 
-from mkdocs_blog_in import lang as lang_resources
-from mkdocs_blog_in.config import BlogInPluginConfig
-from mkdocs_blog_in.structures import Translation
-
-log = logging.getLogger("mkdocs.plugins.blog-in")
+log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
 
 class Translate:
@@ -28,7 +27,6 @@ class Translate:
                 f"There is no translation for '{self._config.lang}' language, "
                 f"so default language ('en') will be used"
             )
-            # TODO: print list of existing translations
             lang_yaml = importlib.resources.read_text(
                 lang_resources, f"{self._config.lang.default}.yaml"  # type: ignore
             )
@@ -39,7 +37,7 @@ class Translate:
         }
         # Inject overrides from mkdocs.yml config
         for key in translation_keys:
-            value = self._config.get(key, None)
+            value = self._config.translation.get(key, None)
             if value is not None:
                 translation_data[key] = value
         self._translation = Translation(**translation_data)

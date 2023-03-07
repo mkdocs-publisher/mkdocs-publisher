@@ -6,10 +6,7 @@ from typing import List
 from typing import Optional
 from uuid import uuid4
 
-from mkdocs_blog_in.structures import BlogConfig
-from mkdocs_blog_in.structures import CachedFile
-
-log = logging.getLogger("mkdocs.plugins.blog-in")
+log = logging.getLogger("mkdocs.plugins.publisher.common")
 
 
 def run_subprocess(cmd) -> int:
@@ -52,23 +49,3 @@ def list_files(
 
 def get_hashed_file_name(file: Path) -> Path:
     return Path(file.with_name(f"{str(uuid4()).replace('-', '')}{str(file.suffix).lower()}").name)
-
-
-def is_new_smaller(old_file: Path, new_file: Path, blog_config: BlogConfig) -> bool:
-    new_file_size = new_file.stat().st_size
-    old_file_size = old_file.stat().st_size
-    log.info(
-        f"Minified: '{old_file.relative_to(blog_config.site_dir)}' -> "
-        f"{new_file.relative_to(blog_config.plugin_config.minify.cache_dir)} "
-        f"(size: {old_file_size} -> {new_file_size})"
-    )
-    return new_file_size < old_file_size
-
-
-def copy_cached_file(cached_file: CachedFile, blog_config: BlogConfig):
-    original_file = blog_config.site_dir / cached_file.original_file_path
-    cache_file = blog_config.cache_dir / cached_file.cached_file_name
-    try:
-        original_file.write_bytes(cache_file.read_bytes())
-    except FileNotFoundError as e:
-        log.warning(e)

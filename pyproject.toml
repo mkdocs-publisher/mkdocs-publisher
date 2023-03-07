@@ -1,13 +1,15 @@
 [tool.poetry]
-name = "mkdocs-blog-in"
+name = "mkdocs_publishing"
 version = "0.4.0"
-description = "Blogging plugin for MkDocs"
+description = "Publishing plugins for MkDocs"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
 readme = "README.md"
-keywords = ["mkdocs", "mkdocs-plugin", "blog", "blogging"]
+keywords = ["mkdocs", "mkdocs-plugin", "publishing", "blog", "minifier"]
 packages = [
-    {include = "mkdocs_blog_in"},
+    {include = "mkdocs_publishing"},
+    {from = "mkdocs_publishing", include = "blog"},
+    {from = "mkdocs_publishing", include = "minifier"},
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -77,7 +79,8 @@ reportMissingTypeStubs = false
 typeCheckingMode = "basic"
 
 [tool.poetry.plugins."mkdocs.plugins"]
-blog = "mkdocs_blog_in.blog:BlogInPlugin"
+blog = "mkdocs_publishing.blog.plugin:BlogPlugin"
+minifier = "mkdocs_publishing.minifier.plugin:MinifierPlugin"
 
 [tool.poetry.scripts]
 mkdocs-blog-in = "mkdocs_blog_in.cli.command:app"

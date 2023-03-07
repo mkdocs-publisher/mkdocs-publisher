@@ -4,11 +4,10 @@ from dataclasses import fields
 from pathlib import Path
 
 import frontmatter
+from blog.structures import BlogConfig
+from blog.structures import BlogPost
 
-from mkdocs_blog_in.structures import BlogConfig
-from mkdocs_blog_in.structures import BlogPost
-
-log = logging.getLogger("mkdocs.plugins.blog-in")
+log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
 
 def parse_markdown_files(

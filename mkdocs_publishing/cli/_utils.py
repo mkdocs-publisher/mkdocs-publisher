@@ -1,13 +1,12 @@
 from pathlib import Path
 from typing import cast
 
+from blog.config import BlogInPluginConfig
+from blog.plugin import BlogInPlugin
 from mkdocs import config
 from mkdocs import utils
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
-
-from mkdocs_blog_in.blog import BlogInPlugin
-from mkdocs_blog_in.config import BlogInPluginConfig
 
 
 def mkdocs_cfg() -> MkDocsConfig:
