@@ -1,4 +1,4 @@
-# mkdocs_publishing
+# mkdocs-publishing
 
 [![PyPI version](https://badge.fury.io/py/mkdocs-blog-in.svg)](https://badge.fury.io/py/mkdocs-blog-in)
 [![Github All Releases](https://img.shields.io/github/downloads/mkusz/mkdocs-blog-in/total.svg)]()
@@ -67,7 +67,6 @@ This list is unordered so functionalities can be added whenever in upcoming vers
 - [ ] add author/authors per page metadata (with predefined default in mkdocs.yaml)
 - [ ] extend categories functionality like: possibility to add multiple categories (like tags), configurable limit of categories (with checks) and configurable list of categories
 - [ ] add configurable date format
-- [ ] file size optimization with cache
 - [ ] create documentation
 - [ ] documentation: integration with MkDocs RSS plugin
 - [x] image optimization with cache
@@ -143,8 +142,9 @@ poetry add --editable ../mkdocs-blog-in/
 - added: css file minifier (using: postcss with plugins: cssnano, svgo)
 - added: js file minifier (using: uglifyjs)
 - changed: internal file structure refactor with new global plugin config (BlogInConfig class) that will help with further development and small fixes and improvments
-- fix: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
-- change: project rename
+- fixed: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
+- changed: project rename
+- changed: split into 2 internal plugins: blog and minifier
 
 ### 0.3.0 - 2023.02.20
 
