@@ -3,7 +3,7 @@ from typing import Optional
 
 from minifier.base import BaseMinifier
 from minifier.base import CachedFile
-from mkdocs_publishing import utils
+from mkdocs_publisher import utils
 
 log = logging.getLogger("mkdocs.plugins.publisher.minifier")
 

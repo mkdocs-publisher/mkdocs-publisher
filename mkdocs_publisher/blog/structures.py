@@ -8,8 +8,9 @@ from typing import List
 from typing import Optional
 from typing import Union
 
-from blog.config import BlogInPluginConfig
 from mkdocs.config.defaults import MkDocsConfig
+
+from blog.config import BlogPluginConfig
 
 
 @dataclass
@@ -21,7 +22,7 @@ class BlogPost:
     path: Optional[str]
     content: Optional[str]
     tags: Optional[List[str]]
-    category: Optional[str]
+    categories: Optional[str]
     slug: Union[str, None] = None
     teaser: str = ""
     is_teaser: bool = False
@@ -54,7 +55,7 @@ class Translation:
 @dataclass
 class BlogConfig:
     mkdocs_config: MkDocsConfig = field(init=False)
-    plugin_config: BlogInPluginConfig = field(init=False)
+    plugin_config: BlogPluginConfig = field(init=False)
     translation: Translation = field(init=False)
     temp_dir: Path = field(init=False)
     docs_dir: Path = field(init=False)
@@ -63,7 +64,7 @@ class BlogConfig:
     blog_posts: Dict[datetime, BlogPost] = field(init=False, default_factory=lambda: dict())
     temp_files: Dict[str, Path] = field(init=False, default_factory=lambda: dict())
 
-    def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogInPluginConfig):
+    def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogPluginConfig):
         from blog.translate import Translate
 
         self.mkdocs_config = mkdocs_config

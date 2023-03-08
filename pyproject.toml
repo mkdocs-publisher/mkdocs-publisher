@@ -1,15 +1,15 @@
 [tool.poetry]
-name = "mkdocs_publishing"
+name = "mkdocs-publisher"
 version = "0.4.0"
 description = "Publishing plugins for MkDocs"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
 readme = "README.md"
-keywords = ["mkdocs", "mkdocs-plugin", "publishing", "blog", "minifier"]
+keywords = ["mkdocs", "mkdocs-plugin", "publisher", "blog", "minifier"]
 packages = [
-    {include = "mkdocs_publishing"},
-    {from = "mkdocs_publishing", include = "blog"},
-    {from = "mkdocs_publishing", include = "minifier"},
+    {include = "mkdocs_publisher"},
+    {from = "mkdocs_publisher", include = "blog"},
+    {from = "mkdocs_publisher", include = "minifier"},
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -45,6 +45,8 @@ black = "^22.12.0"
 pyright = "^1.1.291"
 flake8 = "^6.0.0"
 mkdocs-material = "^9.0.11"
+pymdown-extensions = "^9.10"
+yamllint = "^1.29.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -60,18 +62,16 @@ line_length = 99
 force_single_line = true
 verbose = true
 src_paths = [
-    "mkdocs_blog_in",
+    "mkdocs_publisher",
     "tests",
 ]
 
 [tool.pyright]
 extraPaths = [
-    "dev",
-    "mkdocs_blog_in",
+    "mkdocs_publisher",
 ]
 include = [
-    "dev",
-    "mkdocs_blog_in",
+    "mkdocs_publisher",
     "tests",
 ]
 reportMissingImports = false
@@ -79,8 +79,8 @@ reportMissingTypeStubs = false
 typeCheckingMode = "basic"
 
 [tool.poetry.plugins."mkdocs.plugins"]
-blog = "mkdocs_publishing.blog.plugin:BlogPlugin"
-minifier = "mkdocs_publishing.minifier.plugin:MinifierPlugin"
+blog = "mkdocs_publisher.blog.plugin:BlogPlugin"
+minifier = "mkdocs_publisher.minifier.plugin:MinifierPlugin"
 
 [tool.poetry.scripts]
-mkdocs-blog-in = "mkdocs_blog_in.cli.command:app"
+publisher = "mkdocs_publisher.cli.publisher:app"

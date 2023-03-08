@@ -1,4 +1,4 @@
-# mkdocs-publishing
+# mkdocs-publisher
 
 [![PyPI version](https://badge.fury.io/py/mkdocs-blog-in.svg)](https://badge.fury.io/py/mkdocs-blog-in)
 [![Github All Releases](https://img.shields.io/github/downloads/mkusz/mkdocs-blog-in/total.svg)]()

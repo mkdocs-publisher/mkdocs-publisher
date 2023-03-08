@@ -4,12 +4,13 @@ from typing import Dict
 from typing import cast
 
 import yaml
-from minifier import minifiers
-from minifier.base import CachedFile
-from minifier.config import MinifierConfig
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
+
+from minifier import minifiers
+from minifier.base import CachedFile
+from minifier.config import MinifierConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.minifier")
 

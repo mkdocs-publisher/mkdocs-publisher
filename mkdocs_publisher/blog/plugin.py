@@ -6,12 +6,6 @@ from typing import Any
 from typing import Dict
 from typing import Optional
 
-import utils
-from blog import creators
-from blog import modifiers
-from blog import parsers
-from blog.config import BlogInPluginConfig
-from blog.structures import BlogConfig
 from mkdocs.config import Config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
@@ -20,10 +14,17 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
+import utils
+from blog import creators
+from blog import modifiers
+from blog import parsers
+from blog.config import BlogPluginConfig
+from blog.structures import BlogConfig
+
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
 
-class BlogPlugin(BasePlugin[BlogInPluginConfig]):
+class BlogPlugin(BasePlugin[BlogPluginConfig]):
     def __init__(self):
         self.blog_config = BlogConfig()  # Empty instance
         self.temp_files: Dict[str, Path] = {}

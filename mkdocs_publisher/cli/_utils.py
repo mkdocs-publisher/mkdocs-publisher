@@ -1,20 +1,21 @@
 from pathlib import Path
 from typing import cast
 
-from blog.config import BlogInPluginConfig
-from blog.plugin import BlogInPlugin
 from mkdocs import config
 from mkdocs import utils
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
+
+from blog.config import BlogPluginConfig
+from blog.plugin import BlogPlugin
 
 
 def mkdocs_cfg() -> MkDocsConfig:
     return config.load_config(config_file=open(Path.cwd() / "mkdocs.yml", "rb"))
 
 
-def blog_in_cfg() -> BlogInPluginConfig:
-    plugin = BlogInPlugin()
+def blog_in_cfg() -> BlogPluginConfig:
+    plugin = BlogPlugin()
 
     options = {}
     yaml_file = cast(dict, utils.yaml_load(open(Path.cwd() / "mkdocs.yml", "rb")))

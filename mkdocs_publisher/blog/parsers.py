@@ -4,10 +4,13 @@ from dataclasses import fields
 from pathlib import Path
 
 import frontmatter
+
 from blog.structures import BlogConfig
 from blog.structures import BlogPost
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
+
+REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description"]
 
 
 def parse_markdown_files(
@@ -24,7 +27,7 @@ def parse_markdown_files(
         if file_path.is_file() and path.suffix == ".md":
             parents = list(path.parents)[:-1]
             with open(file_path) as markdown_file:
-                post = frontmatter.load(markdown_file)
+                post: frontmatter.Post = frontmatter.load(markdown_file)
                 if not parents:
                     for line in post.content.split("\n"):
                         if line.startswith("# "):
@@ -32,11 +35,28 @@ def parse_markdown_files(
                 elif str(parents[0]) == str(blog_config.blog_dir):
                     post_meta = dict(post)
 
+                    if "status" not in post_meta:
+                        log.info(
+                            f"File: {file_path} - missing 1 required positional argument: "
+                            f"'status' (setting to default: draft)"
+                        )
+                        post_meta["status"] = "draft"
+
                     # Convert tags format
-                    if "," in post_meta["tags"]:
-                        post_meta["tags"] = [t.strip() for t in post_meta["tags"].split(",")]
-                    elif isinstance(post_meta["tags"], str):
-                        post_meta["tags"] = [post_meta["tags"]]
+                    if "tags" in post_meta:
+                        if "," in post_meta["tags"]:
+                            post_meta["tags"] = [t.strip() for t in post_meta["tags"].split(",")]
+                        elif isinstance(post_meta["tags"], str):
+                            post_meta["tags"] = [post_meta["tags"]]
+
+                    # Convert categories format
+                    if "categories" in post_meta:
+                        if "," in post_meta["categories"]:
+                            post_meta["categories"] = [
+                                t.strip() for t in post_meta["categories"].split(",")
+                            ]
+                        elif isinstance(post_meta["categories"], str):
+                            post_meta["categories"] = [post_meta["categories"]]
 
                     # Create a new blog post
                     blog_post_keys = [f.name for f in fields(BlogPost)]
@@ -45,11 +65,16 @@ def parse_markdown_files(
                     post_data["path"] = str(path)
                     if "slug" in post_meta and post_meta["slug"].strip() != "":
                         post_data["slug"] = f"{blog_config.blog_dir}/{post_meta['slug']}"
-                    blog_post: BlogPost = BlogPost(**post_data)
 
-                    # Add new post to blog posts collection
-                    blog_config.blog_posts[blog_post.date] = blog_post
-                    log.debug(f"New blog posts: {blog_post.title}")
+                    try:
+                        blog_post: BlogPost = BlogPost(**post_data)
+
+                        # Add new post to blog posts collection
+                        blog_config.blog_posts[blog_post.date] = blog_post
+                        log.debug(f"New blog posts: {blog_post.title}")
+                    except TypeError as e:
+                        msg = str(e).replace("__init__()", f"File: {file_path} -")
+                        log.warning(msg)
 
 
 def create_blog_post_teaser(blog_config: BlogConfig):

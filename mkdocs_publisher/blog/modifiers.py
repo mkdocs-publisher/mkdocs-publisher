@@ -3,11 +3,12 @@ from collections import OrderedDict
 from copy import deepcopy
 from typing import cast
 
-from blog.structures import BlogConfig
 from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
+
+from blog.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 

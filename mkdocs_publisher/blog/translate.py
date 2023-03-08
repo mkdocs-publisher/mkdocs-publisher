@@ -4,16 +4,17 @@ from dataclasses import fields
 from typing import cast
 
 import yaml
+
 from blog import lang as lang_resources
-from blog.config import BlogInPluginConfig
+from blog.config import BlogPluginConfig
 from blog.structures import Translation
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
 
 class Translate:
-    def __init__(self, config: BlogInPluginConfig):
-        self._config: BlogInPluginConfig = config
+    def __init__(self, config: BlogPluginConfig):
+        self._config: BlogPluginConfig = config
         self._lang: str = self._config.lang
         self._translation: Translation = cast(Translation, None)
 

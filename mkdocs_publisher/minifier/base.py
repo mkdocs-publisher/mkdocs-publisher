@@ -9,9 +9,10 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
-from minifier.config import MinifierConfig
 from mkdocs.config.defaults import MkDocsConfig
-from mkdocs_publishing import utils
+
+from minifier.config import MinifierConfig
+from mkdocs_publisher import utils
 
 log = logging.getLogger("mkdocs.plugins.publisher.minifier")
 
@@ -143,6 +144,7 @@ class BaseMinifier:
             cached_file = CachedFile()
             cached_file.based_on(file=file, directory=Path(self._mkdocs_config.site_dir))
             recreate_file = True
+
         if recreate_file:
             log.debug(f"Minifying file: {file} (putting into cache)")
             cached_file = self.minifier(cached_file=cached_file)

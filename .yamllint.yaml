@@ -1,0 +1,10 @@
+extends: default
+
+ignore-from-file: .gitignore
+
+rules:
+  document-start:
+    present: false
+  line-length:
+    max: 99
+    level: warning

@@ -1,5 +1,5 @@
-site_name: MkDocs-blog-in
-site_url: https://mkusz.github.io/mkdocs-blogger
+site_name: MkDocs Publisher
+site_url: https://mkusz.github.io/mkdocs-publisher
 site_author: Maciej 'maQ' Kusz
 site_description: Blogging plugin for MkDocs
 copyright: >
@@ -8,10 +8,13 @@ copyright: >
 repo_url: https://github.com/mkusz/mkdocs-blog-in
 
 use_directory_urls: true
-strict: true
+#strict: true
+
+dev_addr: 127.0.0.1:8666
 
 extra:
   homepage: https://mkusz.github.io/mkdocs-blog-in
+  version: 0.4.0
 
 watch:
   - overrides
@@ -34,8 +37,8 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - pymdownx.emoji:
-      emoji_index: "!!python/name:materialx.emoji.twemoji"
-      emoji_generator: "!!python/name:materialx.emoji.to_svg"
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
 plugins:
   - search

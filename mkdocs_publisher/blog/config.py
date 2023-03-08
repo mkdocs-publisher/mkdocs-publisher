@@ -2,7 +2,7 @@ from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
 
 
-class _BlogInTranslationConfig(Config):
+class _BlogTranslationConfig(Config):
     teaser_link_text = option.Optional(option.Type(str))
     blog_page_title = option.Optional(option.Type(str))
     blog_navigation_name = option.Optional(option.Type(str))
@@ -17,7 +17,7 @@ class _BlogInTranslationConfig(Config):
     older_posts = option.Optional(option.Type(str))
 
 
-class BlogInPluginConfig(Config):
+class BlogPluginConfig(Config):
     # General settings
     lang = option.Choice(["en", "pl"], default="en")  # TODO: auto update based on files
     teaser_marker = option.Type(str, default="<!-- more -->")
@@ -31,6 +31,4 @@ class BlogInPluginConfig(Config):
     tags_subdir = option.Type(str, default="tags")
 
     # Values that are in lang files and can be overriden
-    translation: _BlogInTranslationConfig = option.SubConfig(
-        _BlogInTranslationConfig
-    )  # type: ignore
+    translation: _BlogTranslationConfig = option.SubConfig(_BlogTranslationConfig)  # type: ignore

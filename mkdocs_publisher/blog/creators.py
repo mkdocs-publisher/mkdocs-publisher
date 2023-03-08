@@ -8,10 +8,11 @@ from typing import cast
 
 import frontmatter
 import jinja2
-from blog import templates
-from blog.structures import BlogConfig
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
+
+from blog import templates
+from blog.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
@@ -65,10 +66,11 @@ def create_blog_post_pages(
             archive_chunks[year] = []
         archive_chunks[year].append(blog_config.blog_posts[date].as_dict)
 
-        category = cast(str, blog_config.blog_posts[date].category)
-        if category not in categories_chunks:
-            categories_chunks[category] = []
-        categories_chunks[category].append(blog_config.blog_posts[date].as_dict)
+        categories = cast(str, blog_config.blog_posts[date].categories)
+        for category in categories:
+            if category not in categories_chunks:
+                categories_chunks[category] = []
+            categories_chunks[category].append(blog_config.blog_posts[date].as_dict)
 
         tags = cast(list, blog_config.blog_posts[date].tags)
         for tag in tags:
