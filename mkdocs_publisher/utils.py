@@ -1,6 +1,6 @@
 import logging
 import subprocess
-from hashlib import blake2b
+from hashlib import md5
 from pathlib import Path
 from typing import List
 from typing import Optional
@@ -27,7 +27,7 @@ def remove_dir(directory: Path):
 
 def calculate_file_hash(file: Path, block_size: int = 8192) -> str:
     with open(file, "rb") as binary_file:
-        hash = blake2b()
+        hash = md5()
         while chunk := binary_file.read(block_size):
             hash.update(chunk)
         return hash.hexdigest()

@@ -6,6 +6,7 @@ copyright: >
   &copy; 2023 Maciej 'maQ' Kusz
 
 repo_url: https://github.com/mkusz/mkdocs-blog-in
+edit_uri: edit/main/docs/docs
 
 use_directory_urls: true
 #strict: true
@@ -14,24 +15,49 @@ dev_addr: 127.0.0.1:8666
 
 extra:
   homepage: https://mkusz.github.io/mkdocs-blog-in
-  version: 0.4.0
+
+extra_css:
+  - assets/stylesheets/blog.css
 
 watch:
   - overrides
+  - docs
 
 theme:
   name: material
   language: en
+  font: Lato
   custom_dir: overrides
 
   palette:
-    primary: black
-    accent: red
+
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+      primary: black
+      accent: red
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+      primary: black
+      accent: red
 
   features:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.footer  # Prev/Next page
+    - navigation.tracking  # Anchor tracking
+    - navigation.top  # Back to top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
 
 markdown_extensions:
   - attr_list
@@ -43,4 +69,13 @@ markdown_extensions:
 plugins:
   - search
   - blog
-  - minifier
+  - minifier:
+      threads: 16
+
+nav:
+  - Home: home.md
+  - Getting started:
+      - Installation: start/installation.md
+  - Setup:
+      - Setting up minifier: setup/setting-up-minifier.md
+  - Blog: blog/index.md

@@ -40,11 +40,10 @@ def blog_post_nav_sorter(
     """Reorder blog posts in config navigation section from newest to oldest."""
 
     log.info("Reorder blog posts from newest to oldest")
-    config_nav["_blog_posts_"] = []
-    for date in sorted(blog_config.blog_posts, reverse=True):
-        config_nav["_blog_posts_"].append(
-            {blog_config.blog_posts[date].title: blog_config.blog_posts[date].path}
-        )
+    config_nav["_blog_posts_"] = {
+        blog_config.blog_posts[date].title: blog_config.blog_posts[date].path
+        for date in sorted(blog_config.blog_posts, reverse=True)
+    }
 
 
 def blog_post_nav_remove(
@@ -69,13 +68,21 @@ def blog_post_nav_remove(
                     isinstance(section_item, Page) and str(section_item.title).startswith("index-")
                 ):
                     children.append(section_item)
+                if (
+                    isinstance(section_item, Page)
+                    and not blog_config.plugin_config.start_page
+                    and str(section_item.title).startswith("index-0")
+                ):
+                    children.append(section_item)
             item.children = children
 
 
 def blog_post_nav_next_prev_change(blog_config: BlogConfig, page: Page):
     """Change blog post next/prev navigation"""
 
-    if page.title == "index":
+    if (blog_config.plugin_config.start_page and page.title == "index") or (
+        not blog_config.plugin_config.start_page and page.title == "index-0"
+    ):
         page.title = blog_config.translation.recent_blog_posts_navigation_name
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):
             next_page_copy = cast(Page, deepcopy(page.next_page))

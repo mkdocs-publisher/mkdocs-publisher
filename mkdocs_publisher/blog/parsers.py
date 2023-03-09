@@ -24,7 +24,11 @@ def parse_markdown_files(
     for file_path in blog_config.docs_dir.glob("**/*"):
         file_path = Path(file_path)
         path = Path(file_path).relative_to(blog_config.docs_dir)
-        if file_path.is_file() and path.suffix == ".md":
+        if (
+            file_path.is_file()
+            and path.is_relative_to(blog_config.blog_dir)
+            and path.suffix == ".md"
+        ):
             parents = list(path.parents)[:-1]
             with open(file_path) as markdown_file:
                 post: frontmatter.Post = frontmatter.load(markdown_file)

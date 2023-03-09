@@ -1,1 +1,0 @@
-# MkDocs publisher plugin

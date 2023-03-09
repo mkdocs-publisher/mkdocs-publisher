@@ -22,7 +22,7 @@ class BlogPost:
     path: Optional[str]
     content: Optional[str]
     tags: Optional[List[str]]
-    categories: Optional[str]
+    categories: Optional[List[str]]
     slug: Union[str, None] = None
     teaser: str = ""
     is_teaser: bool = False

@@ -51,7 +51,8 @@ def create_blog_post_pages(
     for index, date in enumerate(sorted(blog_config.blog_posts, reverse=True)):
         index = (
             "index"
-            if index < blog_config.plugin_config.posts_per_page
+            if blog_config.plugin_config.start_page
+            and index < blog_config.plugin_config.posts_per_page
             else f"index-{str(index//blog_config.plugin_config.posts_per_page)}"
         )
         if index not in posts_chunks:

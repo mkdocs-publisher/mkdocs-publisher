@@ -7,7 +7,7 @@
     </div>
     <div class="col">
     {% for tag in post.tags %}
-        <a href="/{{ config.posts_dir }}/{{ config.tags_dir }}/{{ tag }}/">#{{ tag }}</a>
+        <a href="/{{ config.blog_dir }}/{{ config.tags_subdir }}/{{ tag }}/">#{{ tag }}</a>
     {% endfor %}
     </div>
 </div>

@@ -3,7 +3,10 @@
 [![PyPI version](https://badge.fury.io/py/mkdocs-blog-in.svg)](https://badge.fury.io/py/mkdocs-blog-in)
 [![Github All Releases](https://img.shields.io/github/downloads/mkusz/mkdocs-blog-in/total.svg)]()
 
-Blogging platform plugin for [MkDocs](https://www.mkdocs.org/).
+Publishing platform plugins for [MkDocs](https://www.mkdocs.org/) that includes:
+
+- blog - adds blogging capability,
+- minifier - file size optimization
 
 ## Another blogging plugin for MkDocs? But why?
 
@@ -106,24 +109,38 @@ List of included features (more documentation is needed):
 
 This list is unordered so functionalities can be added whenever in upcoming version:
 
-- [ ] add cli tool for creating an empty blog posts and pages
-- [ ] add templates overrides (same mechanism as in mkdocs-material theme) with cli tool to copy a template
-- [ ] add social media preview (image metadata key to match RSS plugin defaults)
-- [ ] add unittests
-- [ ] add reading time
-- [ ] add obsidian templates and preconfig for new vault
-- [ ] add page/post meta to publish state like: draft, published, hidden
-- [ ] add author/authors per page metadata (with predefined default in mkdocs.yaml)
-- [ ] extend categories functionality like: possibility to add multiple categories (like tags), configurable limit of categories (with checks) and configurable list of categories
-- [ ] add configurable date format
-- [ ] create documentation
+- [ ] add: cli tool for creating an empty blog posts and pages
+- [ ] add: templates overrides (same mechanism as in mkdocs-material theme) with cli tool to copy a template
+- [ ] add: social media preview (image metadata key to match RSS plugin defaults)
+- [ ] add: unittests
+- [ ] add: reading time
+- [ ] add: obsidian templates and preconfig for new vault
+- [ ] add: page/post meta to publish state like: draft, published, hidden
+- [ ] add: author/authors per page metadata (with predefined default in mkdocs.yaml)
+- [ ] extend: categories functionality like: possibility to add multiple categories (like tags), configurable limit of categories (with checks) and configurable list of categories
+- [ ] add: configurable date format
+- [ ] add: documentation
 - [ ] documentation: integration with MkDocs RSS plugin
-- [x] image optimization with cache
-- [x] add concurrency in file optimization
+- [ ] fix: navigation with other documents (blog strips them out)
+- [ ] add: docker image
+- [ ] add: sitemap optimization + robots.txt (omit pages with 'draft' status, maybe some add 'preview' status (?), check for limits (50MB, 50k links, ), video sitemap, html sitemap, page priority (lowest 0.0 <> 1.0 highest), update frequency, strip blog dynamic pages like tags/categories/archive/etc., https://seosherpa.com/xml-sitemap/)
+- [ ] add: plugin for navigation solver
 
 ## Version history
 
 ### 0.4.0
+
+General:
+
+- changed: project rename
+
+Blog:
+
+- added: possibility to choose a blog as a starting page with option to define manually blog in nav configuration
+- changed: internal file structure refactor with new global plugin config (BlogConfig class) that will help with further development with small fixes and improvements
+- fixed: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
+
+Minifier (new plugin):
 
 - added: png image minifier (using: pngquant and oxipng)
 - added: jpg image minifier (using: mozjpeg)
@@ -131,10 +148,6 @@ This list is unordered so functionalities can be added whenever in upcoming vers
 - added: html file minifier (using: html-minifier)
 - added: css file minifier (using: postcss with plugins: cssnano, svgo)
 - added: js file minifier (using: uglifyjs)
-- changed: internal file structure refactor with new global plugin config (BlogInConfig class) that will help with further development and small fixes and improvments
-- fixed: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
-- changed: project rename
-- changed: split into 2 internal plugins: blog and minifier
 
 ### 0.3.0 - 2023.02.20
 

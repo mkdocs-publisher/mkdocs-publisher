@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 from typing import Dict
 from typing import Optional
+from typing import cast
 
 from mkdocs.config import Config
 from mkdocs.config.defaults import MkDocsConfig
@@ -34,9 +35,10 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         # Initialization of all the values
         self.blog_config.parse_configs(mkdocs_config=config, plugin_config=self.config)
 
+        # TODO: add blog.css file to config.extra_css
+
         # New config navigation
         config_nav = OrderedDict()
-
         parsers.parse_markdown_files(
             blog_config=self.blog_config,
             config_nav=config_nav,
@@ -56,8 +58,16 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
             config_nav=config_nav,
         )
 
-        # Override nav section
-        config.nav = config_nav
+        # Modify nav section
+        new_nav = []
+        for n in cast(list, config.nav):
+            if self.blog_config.translation.blog_navigation_name in n.keys():
+                for k, v in config_nav.items():
+                    new_nav.append({k: v})
+            else:
+                new_nav.append(n)
+        config.nav = new_nav
+
         return config
 
     def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation:
@@ -74,7 +84,6 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
             blog_config=self.blog_config,
             files=files,
         )
-
         return new_files
 
     @event_priority(-100)  # Run after all other plugins

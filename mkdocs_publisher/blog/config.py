@@ -22,6 +22,7 @@ class BlogPluginConfig(Config):
     lang = option.Choice(["en", "pl"], default="en")  # TODO: auto update based on files
     teaser_marker = option.Type(str, default="<!-- more -->")
     posts_per_page = option.Type(int, default=5)
+    start_page = option.Type(bool, default=False)
 
     # Directories
     temp_dir = option.Type(str, default=".temp")
