@@ -3,7 +3,7 @@ from typing import Optional
 
 from minifier.base import BaseMinifier
 from minifier.base import CachedFile
-from mkdocs_publisher import utils
+from mkdocs_publisher import _utils
 
 log = logging.getLogger("mkdocs.plugins.publisher.minifier")
 
@@ -32,7 +32,7 @@ class PngMinifier(BaseMinifier):
                     str(output_file),
                     str(input_file),
                 ]
-                if utils.run_subprocess(cmd=pngquant_cmd) != 0:
+                if _utils.run_subprocess(cmd=pngquant_cmd) != 0:
                     output_file.unlink(missing_ok=True)
                     return None
 
@@ -48,7 +48,7 @@ class PngMinifier(BaseMinifier):
                     str(output_file) if not minify_options.pngquant_enabled else None,
                     str(input_file) if not minify_options.pngquant_enabled else str(output_file),
                 ]
-                if utils.run_subprocess(cmd=oxipng_cmd) != 0:
+                if _utils.run_subprocess(cmd=oxipng_cmd) != 0:
                     output_file.unlink(missing_ok=True)
                     return None
 
@@ -76,7 +76,7 @@ class JpgMinifier(BaseMinifier):
                 str(output_file.with_suffix(".tga")),
                 str(input_file),
             ]
-            if utils.run_subprocess(cmd=djpg_cmd) != 0:
+            if _utils.run_subprocess(cmd=djpg_cmd) != 0:
                 output_file.with_suffix(".tga").unlink(missing_ok=True)
                 return None
 
@@ -91,7 +91,7 @@ class JpgMinifier(BaseMinifier):
                 str(output_file.with_suffix(".jpg_")),
                 str(output_file.with_suffix(".tga")),
             ]
-            if utils.run_subprocess(cmd=cjpg_cmd) != 0:
+            if _utils.run_subprocess(cmd=cjpg_cmd) != 0:
                 output_file.with_suffix(".jpg_").unlink(missing_ok=True)
                 return None
             output_file.with_suffix(".tga").unlink(missing_ok=True)
@@ -106,7 +106,7 @@ class JpgMinifier(BaseMinifier):
                 str(output_file),
                 str(output_file.with_suffix(".jpg_")),
             ]
-            if utils.run_subprocess(cmd=jpegtran_cmd) != 0:
+            if _utils.run_subprocess(cmd=jpegtran_cmd) != 0:
                 output_file.unlink(missing_ok=True)
                 return None
             output_file.with_suffix(".jpg_").unlink(missing_ok=True)
@@ -137,7 +137,7 @@ class SvgMinifier(BaseMinifier):
                 "--input",
                 str(input_file),
             ]
-            if utils.run_subprocess(cmd=svgo_cmd) != 0:
+            if _utils.run_subprocess(cmd=svgo_cmd) != 0:
                 output_file.unlink(missing_ok=True)
                 return None
 
@@ -174,7 +174,7 @@ class HtmlMinifier(BaseMinifier):
                 str(output_file),
                 str(input_file),
             ]
-            if utils.run_subprocess(cmd=html_minifier_cmd) != 0:
+            if _utils.run_subprocess(cmd=html_minifier_cmd) != 0:
                 output_file.unlink(missing_ok=True)
                 return None
 
@@ -207,7 +207,7 @@ class CssMinifier(BaseMinifier):
                 str(output_file),
                 str(input_file),
             ]
-            if utils.run_subprocess(cmd=css_minifier_cmd) != 0:
+            if _utils.run_subprocess(cmd=css_minifier_cmd) != 0:
                 output_file.unlink(missing_ok=True)
                 return None
 
@@ -238,7 +238,7 @@ class JsMinifier(BaseMinifier):
                 str(output_file),
                 str(input_file),
             ]
-            if utils.run_subprocess(cmd=js_minifier_cmd) != 0:
+            if _utils.run_subprocess(cmd=js_minifier_cmd) != 0:
                 output_file.unlink(missing_ok=True)
                 return None
 

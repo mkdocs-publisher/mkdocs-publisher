@@ -23,6 +23,7 @@ class BlogPluginConfig(Config):
     teaser_marker = option.Type(str, default="<!-- more -->")
     posts_per_page = option.Type(int, default=5)
     start_page = option.Type(bool, default=False)
+    slug = option.Type(str, default="blog")
 
     # Directories
     temp_dir = option.Type(str, default=".temp")

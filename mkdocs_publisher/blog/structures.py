@@ -6,10 +6,13 @@ from pathlib import Path
 from typing import Dict
 from typing import List
 from typing import Optional
-from typing import Union
+from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
+import _utils
+from auto_nav.config import AutoNavPluginConfig
+from auto_nav.plugin import AutoNavPlugin
 from blog.config import BlogPluginConfig
 
 
@@ -23,7 +26,7 @@ class BlogPost:
     content: Optional[str]
     tags: Optional[List[str]]
     categories: Optional[List[str]]
-    slug: Union[str, None] = None
+    slug: Optional[str] = None
     teaser: str = ""
     is_teaser: bool = False
 
@@ -56,6 +59,7 @@ class Translation:
 class BlogConfig:
     mkdocs_config: MkDocsConfig = field(init=False)
     plugin_config: BlogPluginConfig = field(init=False)
+    auto_nav_config: Optional[AutoNavPluginConfig] = field(init=False, default=None)
     translation: Translation = field(init=False)
     temp_dir: Path = field(init=False)
     docs_dir: Path = field(init=False)
@@ -69,6 +73,14 @@ class BlogConfig:
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
+        self.auto_nav_config = cast(
+            AutoNavPluginConfig,
+            _utils.get_plugin_config(
+                plugin=AutoNavPlugin(),
+                config_file_path=cast(str, plugin_config.config_file_path),
+                yaml_config_key="pub-auto-nav",
+            ),
+        )
         self.temp_dir = Path(plugin_config.temp_dir)
         self.docs_dir = Path(mkdocs_config.docs_dir)
         self.blog_dir = Path(plugin_config.blog_dir)

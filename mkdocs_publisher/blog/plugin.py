@@ -1,3 +1,6 @@
+import importlib
+import importlib.resources
+import importlib.util
 import logging
 from collections import OrderedDict
 from datetime import datetime
@@ -11,11 +14,12 @@ from mkdocs.config import Config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
+from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
-import utils
+import _utils
 from blog import creators
 from blog import modifiers
 from blog import parsers
@@ -34,8 +38,6 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
         # Initialization of all the values
         self.blog_config.parse_configs(mkdocs_config=config, plugin_config=self.config)
-
-        # TODO: add blog.css file to config.extra_css
 
         # New config navigation
         config_nav = OrderedDict()
@@ -60,8 +62,10 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
         # Modify nav section
         new_nav = []
+        if config.nav is None:
+            config.nav = []
         for n in cast(list, config.nav):
-            if self.blog_config.translation.blog_navigation_name in n.keys():
+            if str(self.blog_config.blog_dir) in n.values():
                 for k, v in config_nav.items():
                     new_nav.append({k: v})
             else:
@@ -84,6 +88,24 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
             blog_config=self.blog_config,
             files=files,
         )
+
+        # TODO: add as _utils and split into blog specific path
+        config.extra_css.append("assets/stylesheets/blog.min.css")
+
+        with importlib.resources.path(
+            importlib.import_module("_extra"), "__init__.py"
+        ) as extra_path:
+            s = importlib.import_module("_extra.assets.stylesheets")
+            with importlib.resources.path(s, "blog.min.css") as blog_stylesheets:
+                new_files.append(
+                    File(
+                        path=str(blog_stylesheets.relative_to(extra_path.parent)),
+                        src_dir=str(extra_path.parent),
+                        dest_dir=str(self.blog_config.site_dir),
+                        use_directory_urls=self.blog_config.mkdocs_config.use_directory_urls,
+                    )
+                )
+
         return new_files
 
     @event_priority(-100)  # Run after all other plugins
@@ -107,9 +129,9 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:
 
-        utils.remove_dir(directory=self.blog_config.temp_dir)
+        _utils.remove_dir(directory=self.blog_config.temp_dir)
 
     @event_priority(-100)  # Run after all other plugins
     def on_shutdown(self) -> None:
 
-        utils.remove_dir(directory=self.blog_config.temp_dir)
+        _utils.remove_dir(directory=self.blog_config.temp_dir)

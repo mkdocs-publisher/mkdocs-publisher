@@ -1,40 +1,24 @@
-# mkdocs-publisher
+# Publisher plugin for MkDocs
 
 [![PyPI version](https://badge.fury.io/py/mkdocs-blog-in.svg)](https://badge.fury.io/py/mkdocs-blog-in)
 [![Github All Releases](https://img.shields.io/github/downloads/mkusz/mkdocs-blog-in/total.svg)]()
 
 Publishing platform plugins for [MkDocs](https://www.mkdocs.org/) that includes:
 
-- blog - adds blogging capability,
-- minifier - file size optimization
+- pub-auto-nav - building site navigation right from files (no need for manual definition in config)
+- pub-blog - adds blogging capability,
+- pub-minifier - file size optimization (good for SEO and overall page size optimization).
 
-## Another blogging plugin for MkDocs? But why?
+## Installation
 
-The simplest answer is: because I couldn't find one good enough (and free).
+```commandline
+pip install mkdocs-publisher
+```
 
-The flip side of the same coin was that I wanted to migrate my personal blog related to [testing](https://testerembyc.pl) (sorry only in Polish, but you can try to use google translator) from [Nikola](https://getnikola.com/) that works quite well, but sometimes is overlly complicated, has almost none search functionality and markdown files are not the default one (but it's possible to use them). Why markdown format is so important? Becasue I love [Obsidian](https://obsidian.md) as a tool for gathering knowledge and this format is a crucial part of that tool.
-
-At the time when this plugin was created, there was no free and qood alternatives. The only one that could be good enought was hidden behind a paid wall and was a part of a theme [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/blog/). Some of the ideas for this plugin and functionalities came from documentation of the Material for MkDocs theme, Nikola and other plugins.
-
-Existing alternatives (with my comment):
-
-- [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/blog/) - complex solution but paid,
-- [mkdocs-blogging-plugin](https://github.com/liang2kl/mkdocs-blogging-plugin) - works, but very simple solution for very simple blog (limited tags usage, thame files modification neede, limited use of frontmatter, limited number of features),
-- [mkdocs-blog-plugin](https://github.com/fmaida/mkdocs-blog-plugin) - no longer maintained and very simple,
-- [python-mkblog](https://github.com/derJD/python-mkblog) - no longer maintained and very simple,
-- [mkdocs-blog](https://github.com/andyoakley/mkdocs-blog) - no longer maintained and very simple,
-- [material theme modification](https://www.dirigible.io/blogs/2021/11/2/material-blogging-capabilities/) - it's not a plugin, but comples theme modification, it's hard to extend and configure.
-
-As you can see, there are just 2 still maintained plugins for blogging in MkDocs:
-1. Material for MkDocs - complex but paid,
-2. mkdosc-blogging-plugin - much simpler than Material for MkDocs.
-
-At this moment (v0.4.0) of this plugin, it's functionality is somewhere in between those 2 (but closer to more complex solution). Since this is plugin that I will be using for my blog, it will be maintainted at least as long as my blog will be alive. I know that there is still a huge list of improvemnts I want to add (especially a documentation) but it's just a matter of time.
-
-If you have an idea for some new functionality (or found a bug), please report and issue with a proper label.
+## Basic usage
 
 > **Note**
-> As a base for any development, mkdocs-material theme was used.
+> As a base for any development, mkdocs-material theme was used. If you are willing to use any other theme you may (or may not) face some issues. If this will happen, please submit an issue.
 
 > **Warning**
 > Consider this plugin as a beta, so before any use make sure you have a backup of your data.
@@ -109,22 +93,14 @@ List of included features (more documentation is needed):
 
 This list is unordered so functionalities can be added whenever in upcoming version:
 
-- [ ] add: cli tool for creating an empty blog posts and pages
 - [ ] add: templates overrides (same mechanism as in mkdocs-material theme) with cli tool to copy a template
 - [ ] add: social media preview (image metadata key to match RSS plugin defaults)
-- [ ] add: unittests
-- [ ] add: reading time
 - [ ] add: obsidian templates and preconfig for new vault
 - [ ] add: page/post meta to publish state like: draft, published, hidden
 - [ ] add: author/authors per page metadata (with predefined default in mkdocs.yaml)
 - [ ] extend: categories functionality like: possibility to add multiple categories (like tags), configurable limit of categories (with checks) and configurable list of categories
 - [ ] add: configurable date format
-- [ ] add: documentation
-- [ ] documentation: integration with MkDocs RSS plugin
-- [ ] fix: navigation with other documents (blog strips them out)
-- [ ] add: docker image
 - [ ] add: sitemap optimization + robots.txt (omit pages with 'draft' status, maybe some add 'preview' status (?), check for limits (50MB, 50k links, ), video sitemap, html sitemap, page priority (lowest 0.0 <> 1.0 highest), update frequency, strip blog dynamic pages like tags/categories/archive/etc., https://seosherpa.com/xml-sitemap/)
-- [ ] add: plugin for navigation solver
 
 ## Version history
 
@@ -133,12 +109,19 @@ This list is unordered so functionalities can be added whenever in upcoming vers
 General:
 
 - changed: project rename
+- added: cross configuration of blog and auto-nav plugins:
+  - blog do not add auto-nav meta files
+  - auto-nav automatically adds blog dir to skipped directories since it will be build by blog
+  - if one of the plugins is not enabled, other is not using it's values
 
 Blog:
 
 - added: possibility to choose a blog as a starting page with option to define manually blog in nav configuration
+- added: `slug` config option for setting an entire blog main directory url
 - changed: internal file structure refactor with new global plugin config (BlogConfig class) that will help with further development with small fixes and improvements
+- changed: blog subdirectory navigation creation (entry path needs to be equal to ssubdirectory name)
 - fixed: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
+- fixed: navigation is no longer overriden by a blog (if there is no other nav, blog will create on with recent posts as a main page)
 
 Minifier (new plugin):
 
@@ -148,6 +131,13 @@ Minifier (new plugin):
 - added: html file minifier (using: html-minifier)
 - added: css file minifier (using: postcss with plugins: cssnano, svgo)
 - added: js file minifier (using: uglifyjs)
+
+Auto-nav (new plugin):
+
+- added: build navigation based on file names
+- added: directory metadata and additional settings can be set in a frontmatter of `*.md` file (default to `README.md`)
+- added: configuration of sort prefix delimiter
+- added: sort prefix removal in url and site files
 
 ### 0.3.0 - 2023.02.20
 

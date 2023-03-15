@@ -11,7 +11,7 @@ import jinja2
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
-from blog import templates
+from _extra.assets import templates
 from blog.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
@@ -23,8 +23,11 @@ def create_mkdocs_blog_files(
 ):
     for temp_file in blog_config.temp_files.values():
         try:
+            parts = [p for p in Path(temp_file).relative_to(blog_config.temp_dir).parts]
+            if parts[0] == blog_config.plugin_config.blog_dir:
+                parts[0] = blog_config.plugin_config.slug
             file = File(
-                path=str(Path(temp_file).relative_to(blog_config.temp_dir)),
+                path=str(Path(*parts)),
                 src_dir=str(blog_config.temp_dir),
                 dest_dir=str(blog_config.site_dir),
                 use_directory_urls=blog_config.mkdocs_config.use_directory_urls,
@@ -143,7 +146,7 @@ def _create_pages(
 
     # pages_dir = blog_config.docs_dir / blog_config.blog_dir / sub_dir
 
-    blog_temp_dir = blog_config.temp_dir / blog_config.blog_dir
+    blog_temp_dir = blog_config.temp_dir / blog_config.plugin_config.slug
     blog_temp_dir.mkdir(exist_ok=True)
 
     pages_dir = blog_temp_dir / sub_dir
@@ -152,7 +155,6 @@ def _create_pages(
     for key, single_posts_chunk in posts_chunks.items():
         file_name = f"{key}.md"
         file_path = pages_dir / file_name
-
         _render_and_write_page(
             single_posts_chunk=single_posts_chunk,
             file_path=file_path,
@@ -163,7 +165,9 @@ def _create_pages(
         blog_config.temp_files[f"{sub_dir}/{key}"] = file_path
         log.debug(f"Creating blog post chunk file: {file_path}")
 
-        config_nav[navigation_name][key] = f"{blog_config.blog_dir}/{sub_dir}/{file_name}"
+        config_nav[navigation_name][
+            key
+        ] = f"{blog_config.plugin_config.slug}/{sub_dir}/{file_name}"
 
 
 def _render_and_write_page(
@@ -177,9 +181,9 @@ def _render_and_write_page(
     # print(templates.list_templates())
     # template = templates.get_template("index.html")
     index_template = importlib.resources.read_text(templates, "posts-list.html")
-
     context = {
         "posts": single_posts_chunk,
+        "site_url": str(blog_config.mkdocs_config.site_url),
         "config": blog_config.plugin_config,
         "translation": blog_config.translation,
     }

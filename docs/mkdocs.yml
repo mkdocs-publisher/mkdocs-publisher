@@ -9,15 +9,12 @@ repo_url: https://github.com/mkusz/mkdocs-blog-in
 edit_uri: edit/main/docs/docs
 
 use_directory_urls: true
-#strict: true
+strict: true
 
 dev_addr: 127.0.0.1:8666
 
 extra:
   homepage: https://mkusz.github.io/mkdocs-blog-in
-
-extra_css:
-  - assets/stylesheets/blog.css
 
 watch:
   - overrides
@@ -62,20 +59,15 @@ theme:
 markdown_extensions:
   - attr_list
   - md_in_html
+  - pymdownx.tasklist
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
 
 plugins:
   - search
-  - blog
-  - minifier:
+  - pub-auto-nav
+  - pub-blog:
+      blog_dir: 03_blog
+  - pub-minifier:
       threads: 16
-
-nav:
-  - Home: home.md
-  - Getting started:
-      - Installation: start/installation.md
-  - Setup:
-      - Setting up minifier: setup/setting-up-minifier.md
-  - Blog: blog/index.md

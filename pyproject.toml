@@ -5,9 +5,19 @@ description = "Publishing plugins for MkDocs"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
 readme = "README.md"
-keywords = ["mkdocs", "mkdocs-plugin", "publisher", "blog", "minifier"]
+keywords = [
+    "mkdocs",
+    "mkdocs-plugin",
+    "publisher",
+    "blog",
+    "minifier",
+    "frontmatter",
+    "tags",
+    "navigation"
+]
 packages = [
     {include = "mkdocs_publisher"},
+    {from = "mkdocs_publisher", include = "auto_nav"},
     {from = "mkdocs_publisher", include = "blog"},
     {from = "mkdocs_publisher", include = "minifier"},
 ]
@@ -27,12 +37,12 @@ classifiers = [
     "Topic :: Documentation",
     "Topic :: Text Processing",
 ]
-homepage = "https://github.com/mkusz/mkdocs-blog-in"
-repository = "https://github.com/mkusz/mkdocs-blog-in"
-documentation = "https://mkusz.github.io/mkdocs-blog-in"
+homepage = "https://github.com/mkusz/mkdocs-publisher"
+repository = "https://github.com/mkusz/mkdocs-publisher"
+documentation = "https://mkusz.github.io/mkdocs-publisher"
 
 [tool.poetry.urls]
-"Bug Tracker" = "https://github.com/mkusz/mkdocs-blog-in/issues"
+"Bug Tracker" = "https://github.com/mkusz/mkdocs-publisher/issues"
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -79,8 +89,9 @@ reportMissingTypeStubs = false
 typeCheckingMode = "basic"
 
 [tool.poetry.plugins."mkdocs.plugins"]
-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"
-minifier = "mkdocs_publisher.minifier.plugin:MinifierPlugin"
+pub-auto-nav = "mkdocs_publisher.auto_nav.plugin:AutoNavPlugin"
+pub-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"
+pub-minifier = "mkdocs_publisher.minifier.plugin:MinifierPlugin"
 
 [tool.poetry.scripts]
-publisher = "mkdocs_publisher.cli.publisher:app"
+publisher = "mkdocs_publisher._cli.publisher:app"

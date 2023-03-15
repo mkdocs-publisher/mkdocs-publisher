@@ -12,7 +12,7 @@ from typing import Optional
 from mkdocs.config.defaults import MkDocsConfig
 
 from minifier.config import MinifierConfig
-from mkdocs_publisher import utils
+from mkdocs_publisher import _utils
 
 log = logging.getLogger("mkdocs.plugins.publisher.minifier")
 
@@ -35,8 +35,8 @@ class CachedFile:
 
     def based_on(self, file: Path, directory: Path):
         self.original_file_path = file
-        self.original_file_hash = utils.calculate_file_hash(file=directory / file)
-        self.cached_file_name = utils.get_hashed_file_name(file=file)
+        self.original_file_hash = _utils.calculate_file_hash(file=directory / file)
+        self.cached_file_name = _utils.get_hashed_file_name(file=file)
 
     @property
     def as_dict(self) -> dict:
@@ -70,7 +70,7 @@ class BaseMinifier:
         threads = []
 
         # TODO: add possibility to exclude some files
-        for file in utils.list_files(
+        for file in _utils.list_files(
             directory=Path(self._mkdocs_config.site_dir),
             extensions=self.extensions,
             relative_to=Path(self._mkdocs_config.site_dir),
@@ -95,7 +95,7 @@ class BaseMinifier:
         new_file = self._plugin_config.cache_dir / cached_file.cached_file_name
         new_file_size = new_file.stat().st_size
         old_file_size = old_file.stat().st_size
-        log.info(
+        log.debug(
             f"Minified: '{old_file.relative_to(self._mkdocs_config.site_dir)}' "
             f"(size: {old_file_size} -> {new_file_size})"
         )
@@ -125,7 +125,7 @@ class BaseMinifier:
         recreate_file = False
         if str(file) in self._cached_files:
             log.debug(f"{file} is in cache")
-            file_hash = utils.calculate_file_hash(file=(self._mkdocs_config.site_dir / file))
+            file_hash = _utils.calculate_file_hash(file=(self._mkdocs_config.site_dir / file))
             cached_file = self._cached_files[str(file)]
             if cached_file.original_file_hash == file_hash:
                 log.debug(f"{file} hash is equal to one in cache (file: {file_hash})")

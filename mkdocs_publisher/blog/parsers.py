@@ -1,6 +1,7 @@
 import logging
 from collections import OrderedDict
 from dataclasses import fields
+from datetime import datetime
 from pathlib import Path
 
 import frontmatter
@@ -22,6 +23,9 @@ def parse_markdown_files(
     """
     log.info(f"Parsing blog posts from '{blog_config.blog_dir}' directory")
     for file_path in blog_config.docs_dir.glob("**/*"):
+        if blog_config.auto_nav_config is not None:
+            if file_path.parts[-1] == blog_config.auto_nav_config.meta_file_name:
+                continue
         file_path = Path(file_path)
         path = Path(file_path).relative_to(blog_config.docs_dir)
         if (
@@ -47,20 +51,28 @@ def parse_markdown_files(
                         post_meta["status"] = "draft"
 
                     # Convert tags format
-                    if "tags" in post_meta:
+                    if "tags" in post_meta and post_meta["tags"] is not None:
                         if "," in post_meta["tags"]:
                             post_meta["tags"] = [t.strip() for t in post_meta["tags"].split(",")]
                         elif isinstance(post_meta["tags"], str):
                             post_meta["tags"] = [post_meta["tags"]]
+                    else:
+                        post_meta["tags"] = ["undefined"]  # TODO: move this value to config
 
                     # Convert categories format
-                    if "categories" in post_meta:
+                    if "categories" in post_meta and post_meta["categories"] is not None:
                         if "," in post_meta["categories"]:
                             post_meta["categories"] = [
                                 t.strip() for t in post_meta["categories"].split(",")
                             ]
                         elif isinstance(post_meta["categories"], str):
                             post_meta["categories"] = [post_meta["categories"]]
+                    else:
+                        post_meta["categories"] = ["undefined"]  # TODO: move this value to config
+
+                    # Setup date to current one, when missing
+                    if "date" in post_meta and post_meta["date"] is None:
+                        post_meta["date"] = datetime.utcnow()
 
                     # Create a new blog post
                     blog_post_keys = [f.name for f in fields(BlogPost)]
@@ -68,8 +80,7 @@ def parse_markdown_files(
                     post_data["content"] = post.content
                     post_data["path"] = str(path)
                     if "slug" in post_meta and post_meta["slug"].strip() != "":
-                        post_data["slug"] = f"{blog_config.blog_dir}/{post_meta['slug']}"
-
+                        post_data["slug"] = post_meta["slug"]
                     try:
                         blog_post: BlogPost = BlogPost(**post_data)
 

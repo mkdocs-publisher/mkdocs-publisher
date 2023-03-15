@@ -22,10 +22,12 @@ def blog_post_slug_modifier(blog_config: BlogConfig, files: Files) -> Files:
     log.info("Modify blog posts url addresses based on slug")
     for file in files:
         if file.src_uri in blog_posts and blog_posts[file.src_uri].slug is not None:
-            slug = blog_posts[file.src_uri].slug
-            file.name = slug.split("/")[-1]  # type: ignore
-            file.url = f"{slug}/"
-            file.dest_uri = f"{slug}/index.html"
+            url = file.url.split("/")
+            url[-1] = blog_posts[file.src_uri].slug  # type: ignore
+            file.url = f"{'/'.join(url)}/"
+            file.name = str(blog_posts[file.src_uri].slug)
+            url.append(file.dest_uri.split("/")[-1])
+            file.dest_uri = "/".join(url)
             file.abs_dest_path = str(blog_config.site_dir / file.dest_uri)
             log.debug(f"Blog post: {blog_posts[file.src_uri].title} url is: {file.url}")
         new_files.append(file)
