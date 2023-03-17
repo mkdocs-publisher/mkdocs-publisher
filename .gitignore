@@ -1,4 +1,6 @@
 # created by virtualenv automatically
+.DS_Store
+.obsidian
 .cache
 .temp
 .venv

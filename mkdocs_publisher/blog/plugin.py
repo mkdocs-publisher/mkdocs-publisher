@@ -63,7 +63,10 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         # Modify nav section
         new_nav = []
         if config.nav is None:
-            config.nav = []
+            if self.blog_config.plugin_config.start_page:
+                config.nav = [{str(self.blog_config.blog_dir): str(self.blog_config.blog_dir)}]
+            else:
+                config.nav = []
         for n in cast(list, config.nav):
             if str(self.blog_config.blog_dir) in n.values():
                 for k, v in config_nav.items():
@@ -82,7 +85,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
     def on_files(self, files: Files, config: MkDocsConfig) -> Files:
 
-        creators.create_mkdocs_blog_files(blog_config=self.blog_config, files=files)
+        creators.create_blog_files(blog_config=self.blog_config, files=files)
 
         new_files = modifiers.blog_post_slug_modifier(
             blog_config=self.blog_config,

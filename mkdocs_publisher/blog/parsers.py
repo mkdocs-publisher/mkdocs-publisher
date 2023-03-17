@@ -1,4 +1,5 @@
 import logging
+import re
 from collections import OrderedDict
 from dataclasses import fields
 from datetime import datetime
@@ -12,6 +13,29 @@ from blog.structures import BlogPost
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
 REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description"]
+
+
+def count_words(content):
+    """Count words in markdown content.
+
+    This code is based on: https://github.com/gandreadis/markdown-word-count
+    """
+    content = re.sub(r"<!--(.*?)-->", "", content, flags=re.MULTILINE)  # Comments
+    content = content.replace("\t", "    ")  # Tabs to spaces
+    content = re.sub(r"[ ]{2,}", "    ", content)  # More than 1 space to 4 spaces
+    content = re.sub(r"^\[[^]]*\][^(].*", "", content, flags=re.MULTILINE)  # Footnotes
+    content = re.sub(
+        r"^( {4,}[^-*]).*", "", content, flags=re.MULTILINE
+    )  # Indented blocks of code
+    content = re.sub(r"{#.*}", "", content)  # Custom header IDs
+    content = content.replace("\n", " ")  # Replace newlines with spaces for uniform handling
+    content = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", content)  # Remove images
+    content = re.sub(r"</?[^>]*>", "", content)  # Remove HTML tags
+    content = re.sub(r"[#*`~\-–^=<>+|/:]", "", content)  # Remove special characters
+    content = re.sub(r"\[[0-9]*\]", "", content)  # Remove footnote references
+    content = re.sub(r"[0-9#]*\.", "", content)  # Remove enumerations
+
+    return len(content.split())
 
 
 def parse_markdown_files(
@@ -90,6 +114,9 @@ def parse_markdown_files(
                     except TypeError as e:
                         msg = str(e).replace("__init__()", f"File: {file_path} -")
                         log.warning(msg)
+
+                    # TODO: add reading time
+                    # print(f"{file_path} - {count_words(post.content) / 265 * 60}")
 
 
 def create_blog_post_teaser(blog_config: BlogConfig):

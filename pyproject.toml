@@ -48,14 +48,14 @@ documentation = "https://mkusz.github.io/mkdocs-publisher"
 python = "^3.9"
 python-frontmatter = "^1.0.0"
 mkdocs = "^1.4.2"
+mkdocs-material = "^9.1.3"
+pymdown-extensions = "^9.10"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
 black = "^22.12.0"
 pyright = "^1.1.291"
 flake8 = "^6.0.0"
-mkdocs-material = "^9.0.11"
-pymdown-extensions = "^9.10"
 yamllint = "^1.29.0"
 
 [build-system]

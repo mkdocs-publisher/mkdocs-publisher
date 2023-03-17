@@ -40,15 +40,15 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
                     else:
                         post = {"title": file.stem}
                     title = post.get("title")
-                    nav.append(
-                        {
-                            title: self._iterate_dir(
-                                directory=file,
-                                skip_subfiles_of_dir=skip_subfiles_of_dir,
-                                relative_to=relative_to,
-                            )
-                        }
-                    )
+                    subdir_nav = {
+                        title: self._iterate_dir(
+                            directory=file,
+                            skip_subfiles_of_dir=skip_subfiles_of_dir,
+                            relative_to=relative_to,
+                        )
+                    }
+                    if list(subdir_nav.values())[0]:
+                        nav.append(subdir_nav)
                 elif (
                     file.is_file()
                     and len(file.relative_to(directory).parents) == 1
@@ -58,7 +58,15 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
                         nav.append({file.stem: str(file.relative_to(relative_to))})
                 else:
                     log.debug(f"{file} is not .md or dir and will not be added to navigation")
-            elif str(file) in skip_subfiles_of_dir:
+            elif file.suffix == ".md" and not any(
+                [p for p in [str(p) for p in file.parents][0:-1] if p in skip_subfiles_of_dir]
+            ):
+                nav.append({file.stem: str(file.relative_to(relative_to))})
+            elif (
+                file.is_dir()
+                and self.blog_config is not None
+                and str(file).endswith(self.blog_config.blog_dir)
+            ):
                 nav.append({file.stem: str(file.relative_to(relative_to))})
         return nav
 
@@ -75,10 +83,10 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
                 yaml_config_key="pub-blog",
             ),
         )
-
-        blog_dir = str(Path(config.docs_dir) / Path(self.blog_config.blog_dir))
-        if blog_dir not in self.config.skip_dir:
-            self.config.skip_dir.append(blog_dir)
+        if self.blog_config is not None:
+            blog_dir = str(Path(config.docs_dir) / Path(self.blog_config.blog_dir))
+            if blog_dir not in self.config.skip_dir:
+                self.config.skip_dir.append(blog_dir)
 
         skip_subfiles_of_dir = [str(Path(f)) for f in self.config.skip_dir]
         nav = self._iterate_dir(

@@ -3,7 +3,7 @@
 [![PyPI version](https://badge.fury.io/py/mkdocs-blog-in.svg)](https://badge.fury.io/py/mkdocs-blog-in)
 [![Github All Releases](https://img.shields.io/github/downloads/mkusz/mkdocs-blog-in/total.svg)]()
 
-Publishing platform plugins for [MkDocs](https://www.mkdocs.org/) that includes:
+Publishing platform plugins for [MkDocs](https://www.mkdocs.org/) that include:
 
 - pub-auto-nav - building site navigation right from files (no need for manual definition in config)
 - pub-blog - adds blogging capability,
@@ -91,16 +91,7 @@ List of included features (more documentation is needed):
 
 ## Todo's
 
-This list is unordered so functionalities can be added whenever in upcoming version:
-
-- [ ] add: templates overrides (same mechanism as in mkdocs-material theme) with cli tool to copy a template
-- [ ] add: social media preview (image metadata key to match RSS plugin defaults)
-- [ ] add: obsidian templates and preconfig for new vault
-- [ ] add: page/post meta to publish state like: draft, published, hidden
-- [ ] add: author/authors per page metadata (with predefined default in mkdocs.yaml)
-- [ ] extend: categories functionality like: possibility to add multiple categories (like tags), configurable limit of categories (with checks) and configurable list of categories
-- [ ] add: configurable date format
-- [ ] add: sitemap optimization + robots.txt (omit pages with 'draft' status, maybe some add 'preview' status (?), check for limits (50MB, 50k links, ), video sitemap, html sitemap, page priority (lowest 0.0 <> 1.0 highest), update frequency, strip blog dynamic pages like tags/categories/archive/etc., https://seosherpa.com/xml-sitemap/)
+Full list of planned developments can be found on [this documentation page](docs/docs/05_dev/02_todo.md).
 
 ## Version history
 
@@ -143,7 +134,7 @@ Auto-nav (new plugin):
 
 - fixed: for wrong directory structure in site-packages after install
 
-### 0.2.0
+### 0.2.0 - 2023.02.19
 
 - added: sub pages for archive, categories, blog
 - added: configurable blog posts pagination with page navigation

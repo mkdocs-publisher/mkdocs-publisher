@@ -34,7 +34,7 @@ theme:
         icon: material/lightbulb
         name: Switch to dark mode
       primary: black
-      accent: red
+      accent: orange
 
     # Palette toggle for dark mode
     - scheme: slate
@@ -42,7 +42,7 @@ theme:
         icon: material/lightbulb-outline
         name: Switch to light mode
       primary: black
-      accent: red
+      accent: orange
 
   features:
     - navigation.tabs
@@ -55,19 +55,43 @@ theme:
     - search.share
     - content.code.copy
     - content.code.annotate
+    - content.tabs.link
 
 markdown_extensions:
   - attr_list
   - md_in_html
+  - admonition
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.details
   - pymdownx.tasklist
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
 
 plugins:
   - search
   - pub-auto-nav
   - pub-blog:
-      blog_dir: 03_blog
+      blog_dir: 04_blog
+#      start_page: true  # TODO: add detection of this when auto-nav is enabled
   - pub-minifier:
       threads: 16
+
+#nav:
+#  - 04_blog: 04_blog

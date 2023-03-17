@@ -17,7 +17,7 @@ from blog.structures import BlogConfig
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
 
-def create_mkdocs_blog_files(
+def create_blog_files(
     blog_config: BlogConfig,
     files: Files,
 ):
@@ -50,7 +50,7 @@ def create_blog_post_pages(
     categories_chunks: Dict[str, list] = {}
     tags_chunks: Dict[str, list] = {}
 
-    # Build post pages
+    # Build post index pages
     for index, date in enumerate(sorted(blog_config.blog_posts, reverse=True)):
         index = (
             "index"
@@ -58,6 +58,8 @@ def create_blog_post_pages(
             and index < blog_config.plugin_config.posts_per_page
             else f"index-{str(index//blog_config.plugin_config.posts_per_page)}"
         )
+        # if not blog_config.plugin_config.start_page and index == "index-0":
+        #     index = blog_config.plugin_config.slug
         if index not in posts_chunks:
             posts_chunks[index] = []
         posts_chunks[index].append(blog_config.blog_posts[date])
