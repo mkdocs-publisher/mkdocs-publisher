@@ -3,7 +3,7 @@ title: Setting up a blog
 slug: setting-up-a-blog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-03-17 23:09:54
+update: 2023-03-19 01:23:02
 categories: setup plugin blog
 description: Setting up blog plugin
 ---
@@ -247,19 +247,19 @@ If there is no language that suits you best, you can translate part of the inter
 Below, you can find a list of settings keys with English values that allow to translate some parts of the interface:
 
 ```yaml title="mkdocs.yaml"
-    plugins:
-      pub-blog:
-        translation:
-          teaser_link_text: Read more
-          blog_page_title: Blog
-          blog_navigation_name: Blog
-          recent_blog_posts_navigation_name: Recent posts
-          archive_page_title: Archive
-          archive_navigation_name: Archive
-          categories_page_title: Category
-          categories_navigation_name: Categories
-          tags_page_title: Tag
-          tags_navigation_name: Tags
-          newer_posts: Newer posts
-          older_posts: Older posts
+plugins:
+  pub-blog:
+    translation:
+      teaser_link_text: Read more
+      blog_page_title: Blog
+      blog_navigation_name: Blog
+      recent_blog_posts_navigation_name: Recent posts
+      archive_page_title: Archive
+      archive_navigation_name: Archive
+      categories_page_title: Category
+      categories_navigation_name: Categories
+      tags_page_title: Tag
+      tags_navigation_name: Tags
+      newer_posts: Newer posts
+      older_posts: Older posts
 ```

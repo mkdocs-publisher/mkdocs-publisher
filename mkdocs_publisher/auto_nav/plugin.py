@@ -28,6 +28,13 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
 
         self.blog_config: Optional[BlogPluginConfig] = None
 
+    def _read_markdown_title(self, file: Path) -> str:
+        with open(file) as file_meta:
+            post = frontmatter.load(file_meta)
+        if "title" not in post.metadata:
+            log.warning(f"File '{file}' doesn't contain 'title' meta data")
+        return post.get("title", default=file.stem)
+
     def _iterate_dir(self, directory: Path, skip_subfiles_of_dir: List[str], relative_to: Path):
         nav = list()
         for file in sorted([f for f in directory.glob("**/*")]):
@@ -35,8 +42,8 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
                 if file.is_dir():
                     meta_file = file / self.config.meta_file_name
                     if meta_file.exists():
-                        with open(meta_file) as meta:
-                            post = frontmatter.load(meta)
+                        with open(meta_file) as file_meta:
+                            post = frontmatter.load(file_meta)
                     else:
                         post = {"title": file.stem}
                     title = post.get("title")
@@ -55,13 +62,15 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
                     and file.suffix == ".md"
                 ):
                     if Path(file).parts[-1] != self.config.meta_file_name:
-                        nav.append({file.stem: str(file.relative_to(relative_to))})
+                        title = self._read_markdown_title(file=file)
+                        nav.append({title: str(file.relative_to(relative_to))})
                 else:
                     log.debug(f"{file} is not .md or dir and will not be added to navigation")
             elif file.suffix == ".md" and not any(
                 [p for p in [str(p) for p in file.parents][0:-1] if p in skip_subfiles_of_dir]
             ):
-                nav.append({file.stem: str(file.relative_to(relative_to))})
+                title = self._read_markdown_title(file=file)
+                nav.append({title: str(file.relative_to(relative_to))})
             elif (
                 file.is_dir()
                 and self.blog_config is not None

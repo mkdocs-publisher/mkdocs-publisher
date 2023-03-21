@@ -3,12 +3,13 @@ title: v0.1.0 - Initial release
 slug: v010-initial-release
 status: published
 date: 2023-02-02 22:00:00
-tags: v0.1.0
+update: 2023-03-18 22:34:17
 categories: release
+tags: v0.1.0
 description: Initial version of MkDosc Blog-in plugin
 ---
 
-### Another blogging plugin for MkDocs? But why?
+Another blogging plugin for MkDocs? But why?
 
 The simplest answer is: because I couldn't find one good enough (and free).
 
@@ -30,9 +31,9 @@ Existing alternatives (with my comment):
 As you can see, there are just 2 still maintained plugins for blogging in MkDocs:
 
 1. Material for MkDocs - complex but paid,
-2. mkdosc-blogging-plugin - much simpler than Material for MkDocs.
+2. mkdosc-blogging-plugin - much simpler than Material for MkDocs and a bit hacky due to mostly tricks in the template.
 
-### Features implemented
+## Features implemented
 
 This project is now at an early stage of development. Current functionalities are:
 

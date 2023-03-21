@@ -16,10 +16,13 @@
 
 {{ post.is_short }}
 
-{% if post.is_teaser %}
+
 <div class="post-link">
+{% if post.is_teaser %}
     <a href="{{ site_url }}/{{ config.slug }}/{{ post.slug }}/">{{ translation.teaser_link_text }}</a>
-</div>
+{% else %}
+    &nbsp;
 {% endif %}
+</div>
 
 {% endfor %}

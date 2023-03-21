@@ -111,9 +111,9 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
         return new_files
 
-    @event_priority(-100)  # Run after all other plugins
     def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files):
         # Modify page update date
+        # TODO: move to meta-apply plugin
         # TODO: move date format to config
         update_date: datetime = page.meta.get(
             "update", page.meta.get("date", datetime.strptime(page.update_date, "%Y-%m-%d"))
@@ -126,7 +126,6 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     ) -> Optional[Dict[str, Any]]:
 
         modifiers.blog_post_nav_next_prev_change(blog_config=self.blog_config, page=page)
-
         return context
 
     @event_priority(-100)  # Run after all other plugins

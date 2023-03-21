@@ -170,6 +170,13 @@ class HtmlMinifier(BaseMinifier):
                 "--collapse-boolean-attributes"
                 if minify_options.collapse_boolean_attributes
                 else None,
+                "--preserve-line-breaks" if minify_options.preserve_line_breaks else None,
+                "--max-line-length" if int(minify_options.max_line_length) > 0 else None,
+                minify_options.max_line_length
+                if int(minify_options.max_line_length) > 0
+                else None,
+                "--sort-attributes" if minify_options.sort_attributes else None,
+                "--sort-class-name" if minify_options.sort_class_name else None,
                 "--output",
                 str(output_file),
                 str(input_file),

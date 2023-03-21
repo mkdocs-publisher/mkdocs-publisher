@@ -1,4 +1,16 @@
+---
+title: TODO
+slug: todo
+status: published
+date: 2023-02-12 22:00:00
+update: 2023-03-20 18:56:27
+categories: general todo
+description: Plans for future development of Publisher for MkDocs
+---
+
 # Plans for future development
+
+Below TODO lists are overal plan and there is no particular order when they will be implemented.
 
 ## Plugins
 

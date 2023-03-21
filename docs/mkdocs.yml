@@ -1,7 +1,7 @@
 site_name: MkDocs Publisher
 site_url: https://mkusz.github.io/mkdocs-publisher
 site_author: Maciej 'maQ' Kusz
-site_description: Blogging plugin for MkDocs
+site_description: Publishing plugin for MkDocs
 copyright: >
   &copy; 2023 Maciej 'maQ' Kusz
 
@@ -33,7 +33,7 @@ theme:
       toggle:
         icon: material/lightbulb
         name: Switch to dark mode
-      primary: black
+      primary: orange
       accent: orange
 
     # Palette toggle for dark mode
@@ -41,7 +41,7 @@ theme:
       toggle:
         icon: material/lightbulb-outline
         name: Switch to light mode
-      primary: black
+      primary: orange
       accent: orange
 
   features:

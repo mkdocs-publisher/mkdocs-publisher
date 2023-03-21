@@ -25,6 +25,12 @@ class _MinifierHtmlConfig(Config):
     collapse_whitespace = option.Type(bool, default=True)
     conservative_collapse = option.Type(bool, default=True)
     collapse_boolean_attributes = option.Type(bool, default=True)
+    preserve_line_breaks = option.Type(bool, default=False)
+    sort_attributes = option.Type(bool, default=True)
+    sort_class_name = option.Type(bool, default=True)
+    max_line_length = option.Choice(
+        [str(i) for i in range(1, 4096)], default="512"
+    )  # 0 - disabled
 
 
 class _MinifierSvgConfig(Config):
