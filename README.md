@@ -52,7 +52,7 @@ List of included features (more documentation is needed):
 
 ## Todo's
 
-A full list of planned developments can be found on [this documentation page](docs/docs/05_dev/01_todo.md).
+A full list of planned developments can be found on [this documentation page](docs/05_dev/01_todo.md).
 
 ## Version history
 

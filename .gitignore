@@ -1,6 +1,6 @@
 # created by virtualenv automatically
 .DS_Store
-docs/docs/.obsidian
+.obsidian
 .cache
 .temp
 .venv
