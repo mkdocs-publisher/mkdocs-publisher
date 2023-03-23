@@ -1,4 +1,8 @@
 # created by virtualenv automatically
+.DS_Store
+.obsidian
+.cache
+.temp
 .venv
 __pycache__
 .idea

@@ -1,0 +1,111 @@
+site_name: MkDocs Publisher
+site_url: https://mkusz.github.io/mkdocs-publisher
+site_author: Maciej 'maQ' Kusz
+site_description: Publishing plugin for MkDocs
+copyright: >
+  &copy; 2023 Maciej 'maQ' Kusz
+
+repo_url: https://github.com/mkusz/mkdocs-publisher
+edit_uri: edit/main/docs
+
+docs_dir: docs_md
+site_dir: docs
+
+use_directory_urls: true
+strict: true
+
+dev_addr: 127.0.0.1:8666
+
+extra:
+  homepage: https://mkusz.github.io/mkdocs-publisher
+
+extra_css:
+  - assets/stylesheets/publisher.css
+
+watch:
+  - overrides
+  - docs
+
+theme:
+  name: material
+  language: en
+  font: Lato
+  custom_dir: overrides
+
+  palette:
+
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+      primary: orange
+      accent: orange
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+      primary: orange
+      accent: orange
+
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.footer  # Prev/Next page
+    - navigation.tracking  # Anchor tracking
+    - navigation.top  # Back to top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
+
+markdown_extensions:
+  - attr_list
+  - def_list
+  - md_in_html
+  - admonition
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.details
+  - pymdownx.tasklist
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+plugins:
+  - search
+  - pub-auto-nav
+  - pub-blog:
+      blog_dir: 04_blog
+#      start_page: true  # TODO: add detection of this when auto-nav is enabled
+  - pub-minifier:
+      threads: 16
+
+#nav:
+#  - 04_blog: 04_blog

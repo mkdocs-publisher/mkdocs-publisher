@@ -1,13 +1,25 @@
 [tool.poetry]
-name = "mkdocs-blog-in"
-version = "0.3.0"
-description = "Blogging plugin for MkDocs"
+name = "mkdocs-publisher"
+version = "0.4.0"
+description = "Publishing plugins for MkDocs"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
 readme = "README.md"
-keywords = ["mkdocs", "mkdocs-plugin", "blog", "blogging"]
+keywords = [
+    "mkdocs",
+    "mkdocs-plugin",
+    "publisher",
+    "blog",
+    "minifier",
+    "frontmatter",
+    "tags",
+    "navigation"
+]
 packages = [
-    {include = "mkdocs_blog_in"},
+    {include = "mkdocs_publisher"},
+    {from = "mkdocs_publisher", include = "auto_nav"},
+    {from = "mkdocs_publisher", include = "blog"},
+    {from = "mkdocs_publisher", include = "minifier"},
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -25,24 +37,26 @@ classifiers = [
     "Topic :: Documentation",
     "Topic :: Text Processing",
 ]
-homepage = "https://github.com/mkusz/mkdocs-blog-in"
-repository = "https://github.com/mkusz/mkdocs-blog-in"
-documentation = "https://mkusz.github.io/mkdocs-blog-in"
+homepage = "https://github.com/mkusz/mkdocs-publisher"
+repository = "https://github.com/mkusz/mkdocs-publisher"
+documentation = "https://mkusz.github.io/mkdocs-publisher"
 
 [tool.poetry.urls]
-"Bug Tracker" = "https://github.com/mkusz/mkdocs-blog-in/issues"
+"Bug Tracker" = "https://github.com/mkusz/mkdocs-publisher/issues"
 
 [tool.poetry.dependencies]
 python = "^3.9"
 python-frontmatter = "^1.0.0"
 mkdocs = "^1.4.2"
+mkdocs-material = "^9.1.3"
+pymdown-extensions = "^9.10"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
 black = "^22.12.0"
 pyright = "^1.1.291"
 flake8 = "^6.0.0"
-mkdocs-material = "^9.0.11"
+yamllint = "^1.29.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -58,18 +72,16 @@ line_length = 99
 force_single_line = true
 verbose = true
 src_paths = [
-    "mkdocs_blog_in",
+    "mkdocs_publisher",
     "tests",
 ]
 
 [tool.pyright]
 extraPaths = [
-    "dev",
-    "mkdocs_blog_in",
+    "mkdocs_publisher",
 ]
 include = [
-    "dev",
-    "mkdocs_blog_in",
+    "mkdocs_publisher",
     "tests",
 ]
 reportMissingImports = false
@@ -77,7 +89,9 @@ reportMissingTypeStubs = false
 typeCheckingMode = "basic"
 
 [tool.poetry.plugins."mkdocs.plugins"]
-blog = "mkdocs_blog_in.blog:BlogInPlugin"
-#
+pub-auto-nav = "mkdocs_publisher.auto_nav.plugin:AutoNavPlugin"
+pub-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"
+pub-minifier = "mkdocs_publisher.minifier.plugin:MinifierPlugin"
+
 [tool.poetry.scripts]
-mkdocs-blog-in = "mkdocs_blog_in.cli.command:app"
+publisher = "mkdocs_publisher._cli.publisher:app"
