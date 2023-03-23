@@ -25,11 +25,11 @@ class _MinifierHtmlConfig(Config):
     collapse_whitespace = option.Type(bool, default=True)
     conservative_collapse = option.Type(bool, default=True)
     collapse_boolean_attributes = option.Type(bool, default=True)
-    preserve_line_breaks = option.Type(bool, default=False)
+    preserve_line_breaks = option.Type(bool, default=True)
     sort_attributes = option.Type(bool, default=True)
     sort_class_name = option.Type(bool, default=True)
     max_line_length = option.Choice(
-        [str(i) for i in range(1, 4096)], default="512"
+        [str(i) for i in range(1, 4096)], default="1024"
     )  # 0 - disabled
 
 
@@ -66,7 +66,7 @@ class _MinifierPngConfig(Config):
 class MinifierConfig(Config):
     cache_dir = option.Type(str, default=".cache")
     cache_file = option.Type(str, default=".cached_files_list.yml")
-    threads = option.Type(int, default=8)
+    threads = option.Type(int, default=0)  # 0 - default (read from system)
 
     js: _MinifierJsConfig = option.SubConfig(_MinifierJsConfig)  # type: ignore
     css: _MinifierCssConfig = option.SubConfig(_MinifierCssConfig)  # type: ignore

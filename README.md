@@ -35,49 +35,6 @@ Image optimization is needed for optimal web speed loading that is needed for be
 
 Since 2 most used image formats are PNG and JPEG, this plugin offers an image optimization option. Tools used for image optimization were chosen to fulfill both main image optimization purposes: high quality with small file size.
 
-### MacOS installation
-
-- PNG
-
-```commandline
-brew install pngquant oxipng
-```
-
-- JPEG
-
-```commandline
-
-brew install mozjpeq
-
-```
-
-- SVG
-
-```commandline
-
-brew install svgo
-
-```
-
-
-
-## HTML, JS, CSS optimization
-
-```commandline
-
-brew install node
-npm install -g html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
-
-```
-
-## Plugin development
-
-```commandline
-
-poetry add --editable ../mkdocs-publisher/
-
-```
-
 ## Features
 
 List of included features (more documentation is needed):
@@ -95,7 +52,7 @@ List of included features (more documentation is needed):
 
 ## Todo's
 
-A full list of planned developments can be found on [this documentation page](docs/docs/05_dev/02_todo.md).
+A full list of planned developments can be found on [this documentation page](docs/docs/05_dev/01_todo.md).
 
 ## Version history
 

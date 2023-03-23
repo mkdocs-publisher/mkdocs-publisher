@@ -10,7 +10,7 @@ description: Plans for future development of Publisher for MkDocs
 
 # Plans for future development
 
-Below TODO lists are overal plan and there is no particular order when they will be implemented.
+Below TODO lists are an overall plan and there is no particular order when they will be implemented. If you are interested in any of the below points being implemented in a first place or there is something missing here, please report and issue.
 
 ## Plugins
 
@@ -28,8 +28,15 @@ Below TODO lists are overal plan and there is no particular order when they will
 
 ### Minifier
 
-- [ ] Add: ignored files list/pattern
+- [ ] Add: ignored files list/pattern (globally and per file type)
 - [ ] Add: stats for number of minified/taken from cache files
+- [ ] Add: cache disable (globally and per file type)
+- [ ] Add: configurable file extensions per minifier
+
+### Automations (new plugin)
+
+- [ ] Add: automatic addition of `extra_css` and `extra_js` files
+- [ ] Add: automatic addition of `loading` attribute to all images and iframes for [lazy-loading](https://squidfunk.github.io/mkdocs-material/reference/images/#image-lazy-loading)
 
 ### Meta-apply (new plugin)
 
@@ -45,11 +52,12 @@ Below TODO lists are overal plan and there is no particular order when they will
 
 - [ ] Add: callout format support
 - [ ] Add: wiki links format support
+- [ ] Add: links fixer relative to file
 - [ ] Add: charts
-- [ ] Add: mindmaps (???)
+- [ ] Add: mind maps (???)
 - [ ] Add: templates (blog post, page, etc.)
 - [ ] Add: backlinks
-- [ ] Add: graphs (long term goal)
+- [ ] Add: graphs (long-term goal)
 
 ## General
 
@@ -76,6 +84,6 @@ Below TODO lists are overal plan and there is no particular order when they will
 
  - [ ] Create Docker image with everything preinstalled and preconfigured
  - [ ] GitHub repo with preconfigured pages, etc. (can be integrated with Docker Image creation)
- - [ ] Unittests and code coverage with pre-commit
+ - [ ] Unit testss and code coverage with pre-commit
  - [ ] Cleanup list of code TODO's
- - [ ] Drop `python-frontmatter` for MkDocs built-in library for metadata retirval
+ - [ ] Drop `python-frontmatter` for MkDocs built-in library for metadata retrieval

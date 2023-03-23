@@ -5,7 +5,7 @@ site_description: Publishing plugin for MkDocs
 copyright: >
   &copy; 2023 Maciej 'maQ' Kusz
 
-repo_url: https://github.com/mkusz/mkdocs-blog-in
+repo_url: https://github.com/mkusz/mkdocs-publisher
 edit_uri: edit/main/docs/docs
 
 use_directory_urls: true
@@ -14,7 +14,10 @@ strict: true
 dev_addr: 127.0.0.1:8666
 
 extra:
-  homepage: https://mkusz.github.io/mkdocs-blog-in
+  homepage: https://mkusz.github.io/mkdocs-publisher
+
+extra_css:
+  - assets/stylesheets/publisher.css
 
 watch:
   - overrides
@@ -56,9 +59,11 @@ theme:
     - content.code.copy
     - content.code.annotate
     - content.tabs.link
+    - toc.follow
 
 markdown_extensions:
   - attr_list
+  - def_list
   - md_in_html
   - admonition
   - pymdownx.critic
@@ -68,6 +73,7 @@ markdown_extensions:
   - pymdownx.tilde
   - pymdownx.details
   - pymdownx.tasklist
+  - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
@@ -80,6 +86,11 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.tabbed:
       alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - toc:
+      permalink: true
       slugify: !!python/object/apply:pymdownx.slugs.slugify
         kwds:
           case: lower

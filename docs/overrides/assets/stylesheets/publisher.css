@@ -1,0 +1,8 @@
+.tabbed-set {
+    border-bottom: 0.1rem solid var(--md-accent-fg-color);
+}
+
+.tabbed-set .tabbed-set {
+    border-bottom: 0;
+    padding-bottom: 0.5rem;
+}

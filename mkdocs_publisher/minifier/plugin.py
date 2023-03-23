@@ -1,4 +1,5 @@
 import logging
+from multiprocessing import cpu_count
 from pathlib import Path
 from typing import Dict
 from typing import cast
@@ -23,6 +24,10 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
 
         # TODO: Add path to tools checker
         cached_files: Dict[str, CachedFile] = {}
+
+        if self.config.threads == 0:
+            self.config.threads = int(cpu_count())
+        log.info(f"Threads used for minifiers: {self.config.threads}")
 
         cached_files_list: Path = Path(self.config.cache_dir) / self.config.cache_file
         if cached_files_list.exists():

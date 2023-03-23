@@ -11,17 +11,17 @@ description: Installation
 
 All plugins are part of this package and cannot be installed separately, but not all of them have to be enabled (more about this you can find in the [Setup section](01_installation.md)).
 
-Publisher for MkDocs is a Python package that can be installed using `pip` (ideally inside a virtual environment) or any other package manager like `poetry` that handles virtual management out off the box.
+Publisher for MkDocs is a Python package that can be installed using `pip` (ideally inside a virtual environment) or any other package manager like `poetry` that handles virtual management out of the box.
 
 ===+ "pip"
 
-    ```
+    ```bash
     pip install mkdocs-publisher
     ```
 
 === "poetry"
 
-    ```
+    ```bash
     poetry add mkdocs-publisher
     ```
 

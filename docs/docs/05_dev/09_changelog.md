@@ -3,6 +3,7 @@ title: Changelog
 slug: changelog
 status: published
 date: 2023-02-12 22:00:00
+update: 2023-03-22 15:46:24
 categories: general changelog
 description: Publisher for MkDocs version history
 ---
@@ -36,6 +37,7 @@ Minifier (new plugin):
 - added: HTML file minifier (using: html-minifier)
 - added: CSS file minifier (using: postcss with plugins: cssnano, svgo)
 - added: JS file minifier (using: uglifyjs)
+- added: read number of threads from system
 
 Auto-nav (new plugin):
 

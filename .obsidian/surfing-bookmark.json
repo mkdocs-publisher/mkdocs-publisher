@@ -1,0 +1,36 @@
+{
+  "bookmarks": [
+    {
+      "id": "1191494667",
+      "name": "Home - MkDocs Publisher",
+      "url": "http://127.0.0.1:8666/mkdocs-publisher/home/",
+      "description": "",
+      "category": [
+        "ROOT"
+      ],
+      "tags": "",
+      "created": 1679513248750,
+      "modified": 1679513248750
+    },
+    {
+      "id": "2014068036",
+      "name": "Obsidian",
+      "url": "https://obsidian.md/",
+      "description": "A awesome note-taking tool",
+      "category": [
+        "ROOT"
+      ],
+      "tags": "",
+      "created": 1672840861051,
+      "modified": 1672840861052
+    }
+  ],
+  "categories": [
+    {
+      "value": "ROOT",
+      "text": "ROOT",
+      "label": "ROOT",
+      "children": []
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "newFileLocation": "current",
+  "newFileFolderPath": "docs/docs",
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": true,
+  "showUnsupportedFiles": false,
+  "alwaysUpdateLinks": true,
+  "useTab": false,
+  "showFrontmatter": true,
+  "showLineNumber": true,
+  "spellcheck": true,
+  "spellcheckDictionary": [
+    "Parall",
+    "MozJPEG",
+    "MozJPEG",
+    "utilize"
+  ]
+}
