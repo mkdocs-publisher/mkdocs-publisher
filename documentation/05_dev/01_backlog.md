@@ -1,18 +1,22 @@
 ---
-title: TODO
-slug: todo
+title: Backlog
+slug: backlog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-03-20 18:56:27
-categories: general todo
+update: 2023-03-23 23:02:36
+categories: general backlog
 description: Plans for future development of Publisher for MkDocs
 ---
 
 # Plans for future development
 
-Below TODO lists are an overall plan and there is no particular order when they will be implemented. If you are interested in any of the below points being implemented in a first place or there is something missing here, please report and issue.
+Below lists is a list of tasks that are planned to be done (a backlog) and there is no particular order when they will be implemented. If you are interested in any of the below points being implemented in a first place or there is something missing here, please report and issue.
 
 ## Plugins
+
+### Auto-nav
+
+There are no backlog tasks for this plugin at this time.
 
 ### Blog
 
@@ -38,7 +42,7 @@ Below TODO lists are an overall plan and there is no particular order when they 
 - [ ] Add: automatic addition of `extra_css` and `extra_js` files
 - [ ] Add: automatic addition of `loading` attribute to all images and iframes for [lazy-loading](https://squidfunk.github.io/mkdocs-material/reference/images/#image-lazy-loading)
 
-### Meta-apply (new plugin)
+### Status (new plugin)
 
 - [ ] Add: usage of page frontmatter
 - [ ] Add: document publication state: draft, published, hidden
@@ -84,6 +88,6 @@ Below TODO lists are an overall plan and there is no particular order when they 
 
  - [ ] Create Docker image with everything preinstalled and preconfigured
  - [ ] GitHub repo with preconfigured pages, etc. (can be integrated with Docker Image creation)
- - [ ] Unit testss and code coverage with pre-commit
+ - [ ] Unit tests and code coverage with pre-commit
  - [ ] Cleanup list of code TODO's
  - [ ] Drop `python-frontmatter` for MkDocs built-in library for metadata retrieval
