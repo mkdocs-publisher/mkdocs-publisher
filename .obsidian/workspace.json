@@ -10,13 +10,30 @@
           {
             "id": "4f70dd908f5b605d",
             "type": "tabs",
+            "dimension": 51.38173302107728,
             "children": [
               {
                 "id": "e14784d175c8f2c7",
                 "type": "leaf",
                 "state": {
-                  "type": "empty",
-                  "state": {}
+                  "type": "markdown",
+                  "state": {
+                    "file": "README.md",
+                    "mode": "source",
+                    "source": false
+                  }
+                }
+              },
+              {
+                "id": "bc49d97e17ee6945",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "documentation/04_blog/v040.md",
+                    "mode": "source",
+                    "source": false
+                  }
                 }
               }
             ]
@@ -24,6 +41,7 @@
           {
             "id": "45b003188e11ca0c",
             "type": "tabs",
+            "dimension": 48.61826697892271,
             "children": [
               {
                 "id": "3b1a537b17d0ae3d",
@@ -32,7 +50,7 @@
                 "state": {
                   "type": "surfing-view",
                   "state": {
-                    "url": "http://127.0.0.1:8666/mkdocs-publisher/setup/setting-up-auto-nav/"
+                    "url": "http://127.0.0.1:8666/mkdocs-publisher/"
                   },
                   "pinned": true
                 }
@@ -98,7 +116,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "a0737368d39f299e",
@@ -114,6 +132,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,6 +149,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -151,7 +171,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "README.md"
+              }
             }
           }
         ]
@@ -174,15 +196,42 @@
   },
   "active": "e14784d175c8f2c7",
   "lastOpenFiles": [
+    "documentation/04_blog/v040.md",
+    "README.md",
+    "documentation/02_setup/03_setting-up-a-blog.md",
+    "documentation/05_dev/01_backlog.md",
+    "documentation/02_setup/02_setting-up-auto-nav.md",
+    "documentation/04_blog/v030.md",
+    "documentation/04_blog/v020.md",
+    "documentation/02_setup/01_installation.md",
+    "documentation/02_setup/04_setting-up-a-minifier.md",
+    "docs/search/search_index.json",
+    "docs/search",
+    "docs/blog/tags/v0.3.0/index.html",
+    "docs/blog/tags/v0.2.0/index.html",
+    "docs/blog/tags/v0.1.0/index.html",
+    "docs/blog/tags/v0.3.0",
+    "docs/blog/tags/v0.2.0",
+    "docs/blog/tags/v0.1.0",
+    "docs/blog/tags",
+    "docs/index-0/index.html",
+    "documentation/index.md",
+    "docs/assets/images/favicon.png",
+    "docs_md/05_dev/01_todo.md",
+    "documentation/05_dev/README.md",
+    "documentation/05_dev/09_changelog.md",
+    "documentation/05_dev/08_development.md",
+    "documentation/04_blog/v010-initial-release.md",
+    "documentation/04_blog/README.md",
+    "documentation/03_how-to-publish/README.md",
+    "documentation/03_how-to-publish/01_first_steps.md",
+    "documentation/02_setup/README.md",
     "docs/docs/05_dev/09_changelog.md",
     "docs/docs/02_setup/02_setting-up-auto-nav.md",
     "docs/docs/02_setup/04_setting-up-a-minifier.md",
     "docs/docs/02_setup/03_setting-up-a-blog.md",
     "docs/docs/01_home.md",
     "docs/docs/05_dev/01_todo.md",
-    "docs/docs/03_how-to-publish/01_first_steps.md",
-    "README.md",
-    "docs/docs/02_setup/README.md",
-    "docs/docs/05_dev/08_development.md"
+    "docs/docs/03_how-to-publish/01_first_steps.md"
   ]
 }
