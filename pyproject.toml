@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-publisher"
-version = "0.4.0"
+version = "0.4.1"
 description = "Publishing plugins for MkDocs"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
@@ -17,9 +17,6 @@ keywords = [
 ]
 packages = [
     {include = "mkdocs_publisher"},
-    {from = "mkdocs_publisher", include = "auto_nav"},
-    {from = "mkdocs_publisher", include = "blog"},
-    {from = "mkdocs_publisher", include = "minifier"},
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

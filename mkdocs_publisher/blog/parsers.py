@@ -7,8 +7,8 @@ from pathlib import Path
 
 import frontmatter
 
-from blog.structures import BlogConfig
-from blog.structures import BlogPost
+from mkdocs_publisher.blog.structures import BlogConfig
+from mkdocs_publisher.blog.structures import BlogPost
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 

@@ -11,8 +11,8 @@ import jinja2
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
-from _extra.assets import templates
-from blog.structures import BlogConfig
+from mkdocs_publisher._extra.assets import templates
+from mkdocs_publisher.blog.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 

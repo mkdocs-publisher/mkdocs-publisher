@@ -394,9 +394,18 @@ Included features
 </div>
 <div class="md-content"data-md-component="content">
 <article class="md-typeset md-content__inner">
+<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/documentation/index.md"class="md-icon md-content__button"title="Edit this page">
+<svg viewBox="0 0 24 24"xmlns="http://www.w3.org/2000/svg"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+</a>
+<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/documentation/index.md"class="md-icon md-content__button"title="View source of this page">
+<svg viewBox="0 0 24 24"xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+</a>
 <h1 id="publisher-plugin-for-mkdocs">Publisher plugin for MkDocs<a href="#publisher-plugin-for-mkdocs"class="headerlink"title="Permanent link">&para;</a></h1>
-<p><a href="https://badge.fury.io/py/mkdocs-blog-in"><img alt="PyPI version"src="https://badge.fury.io/py/mkdocs-blog-in.svg"></a>
-<a href=""><img alt="Github All Releases"src="https://img.shields.io/github/downloads/mkusz/mkdocs-blog-in/total.svg"></a></p>
+<p><a href="https://pypi.org/project/mkdocs-publisher/"><img alt="PyPI version"src="https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&amp;style=plastic"></a>
+<a href="https://opensource.org/license/bsd-3-clause/"><img alt="License type"src="https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&amp;style=plastic"></a>
+<a href="https://pypistats.org/search/mkdocs-publisher"><img alt="PyPI Downloads last month"src="https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&amp;style=plastic"></a>
+<a href="https://www.python.org"><img alt="Python versions"src="https://img.shields.io/pypi/pyversions/mkdocs-publisher?logo=python&amp;style=plastic"></a>
+<a href="https://github.com/mkusz/mkdocs-publisher/commits/main"><img alt="GitHub last commit"src="https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&amp;style=plastic"></a></p>
 <p>Publisher for MkDocs is a set of plugins for <a href="https://www.mkdocs.org">MkDocs</a> that was created originally as “yet another blogging plugin for MkDocs” (you can read more about this in <a href="blog/v010-initial-release/">this blog post</a>). During a process of development, I realized that it can become something more that will help not only me with blog creation, but also as a part of a wider publishing tool. Documents creation can be used with cooperation with an <a href="https://obsidian.md/">Obsidian.md</a> that is a tool for creating a second brain and also an excellent Markdown files editor.</p>
 <p>Currently, this plugin is also written with strict cooperation with <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> theme. It was not tested on any, and probably some functionalities may not work as intended (for example, formatting of blog posts). However, all the plugins that are included in this package should work separately and not all of them have to be enabled (for example, <em>pub-minifier</em> will work with any other set of plugins).</p>
 <h2 id="included-features">Included features<a href="#included-features"class="headerlink"title="Permanent link">&para;</a></h2>
@@ -449,7 +458,7 @@ Material for MkDocs
 <div class="md-dialog"data-md-component="dialog">
 <div class="md-typeset md-dialog__inner"></div>
 </div>
-<script id="__config"type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.footer", "navigation.tracking", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script id="__config"type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.footer", "navigation.tracking", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
 <script src="assets/javascripts/bundle.efa0ade1.min.js"></script>
 </body>
 </html>

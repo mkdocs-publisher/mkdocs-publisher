@@ -19,12 +19,12 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
-import _utils
-from blog import creators
-from blog import modifiers
-from blog import parsers
-from blog.config import BlogPluginConfig
-from blog.structures import BlogConfig
+from mkdocs_publisher import _utils
+from mkdocs_publisher.blog import creators
+from mkdocs_publisher.blog import modifiers
+from mkdocs_publisher.blog import parsers
+from mkdocs_publisher.blog.config import BlogPluginConfig
+from mkdocs_publisher.blog.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 

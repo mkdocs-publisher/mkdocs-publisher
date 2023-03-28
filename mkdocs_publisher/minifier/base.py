@@ -11,8 +11,8 @@ from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 
-from minifier.config import MinifierConfig
 from mkdocs_publisher import _utils
+from mkdocs_publisher.minifier.config import MinifierConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.minifier")
 
