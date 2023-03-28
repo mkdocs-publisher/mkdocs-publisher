@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/home</loc>
+         <loc>https://mkusz.github.io/mkdocs-publisher/</loc>
          <lastmod>2023-03-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -17,7 +17,7 @@
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/setup/setting-up-a-blog</loc>
-         <lastmod>2023-03-22</lastmod>
+         <lastmod>2023-03-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
@@ -46,8 +46,8 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/dev/todo</loc>
-         <lastmod>2023-03-20</lastmod>
+         <loc>https://mkusz.github.io/mkdocs-publisher/dev/backlog</loc>
+         <lastmod>2023-03-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
@@ -62,32 +62,32 @@
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/index-0/</loc>
-         <lastmod>2023-03-23</lastmod>
+         <lastmod>2023-03-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/archive/2023/</loc>
-         <lastmod>2023-03-23</lastmod>
+         <lastmod>2023-03-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/categories/release/</loc>
-         <lastmod>2023-03-23</lastmod>
+         <lastmod>2023-03-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.1.0/</loc>
-         <lastmod>2023-03-23</lastmod>
+         <lastmod>2023-03-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.2.0/</loc>
-         <lastmod>2023-03-23</lastmod>
+         <lastmod>2023-03-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.3.0/</loc>
-         <lastmod>2023-03-23</lastmod>
+         <lastmod>2023-03-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

@@ -48,7 +48,7 @@ To simplify the entire process, below is presented a single way of installation 
     npm install --no-fund -f svgo html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
     ```
 
-### Basic configuration
+### Configuration
 
 To enable the built-in optimization plugin, the following lines have to be added to `mkdocs.yml` file:
 
