@@ -88,8 +88,8 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
 
     @event_priority(100)  # Run before any other plugins
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
-        from blog.config import BlogPluginConfig
-        from blog.plugin import BlogPlugin
+        from mkdocs_publisher.blog.config import BlogPluginConfig
+        from mkdocs_publisher.blog.plugin import BlogPlugin
 
         self.blog_config = cast(
             BlogPluginConfig,

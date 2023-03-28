@@ -69,7 +69,7 @@ class BlogConfig:
     temp_files: Dict[str, Path] = field(init=False, default_factory=lambda: dict())
 
     def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogPluginConfig):
-        from blog.translate import Translate
+        from mkdocs_publisher.blog.translate import Translate
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config

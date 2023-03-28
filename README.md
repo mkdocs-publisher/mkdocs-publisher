@@ -5,7 +5,7 @@ update: 2023-03-28 12:15:52
 # Publisher plugin for MkDocs
 
 [![![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&style=plastic)](https://pypi.org/project/mkdocs-publisher/)
-[![License type](https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&style=plastic)](https://opensource.org/license/bsd-3-clause/)
+[![License type](https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&style=plastic)](https://opensource.org/license/bsd-2-clause/)
 [![PyPI Downloads last month](https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&style=plastic)](https://pypistats.org/search/mkdocs-publisher)
 [![Python versions](https://img.shields.io/pypi/pyversions/mkdocs-publisher?logo=python&style=plastic)](https://www.python.org)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&style=plastic)](https://github.com/mkusz/mkdocs-publisher/commits/main)
@@ -53,6 +53,14 @@ More detailed information on how to setup, configure and write a blog posts and/
 A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/dev/backlog/).
 
 ## Version history
+
+### 0.4.1 - 2023-03-28
+
+General:
+
+- fix: links in documentation
+- fix: imports of libraries
+- fix: badges links + new added
 
 ### 0.4.0 - 2023-03-28
 

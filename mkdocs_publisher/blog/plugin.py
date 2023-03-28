@@ -96,9 +96,9 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         config.extra_css.append("assets/stylesheets/blog.min.css")
 
         with importlib.resources.path(
-            importlib.import_module("_extra"), "__init__.py"
+            importlib.import_module("mkdocs_publisher._extra"), "__init__.py"
         ) as extra_path:
-            s = importlib.import_module("_extra.assets.stylesheets")
+            s = importlib.import_module("mkdocs_publisher._extra.assets.stylesheets")
             with importlib.resources.path(s, "blog.min.css") as blog_stylesheets:
                 new_files.append(
                     File(

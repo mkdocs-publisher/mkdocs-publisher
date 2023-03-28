@@ -315,6 +315,11 @@ v0.3.0
 v0.4.0
 </a>
 </li>
+<li class="md-nav__item">
+<a href="../../blog/tags/v0.4.1/"class="md-nav__link">
+v0.4.1
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -358,6 +363,16 @@ Table of contents
 Install as editable library
 </a>
 </li>
+<li class="md-nav__item">
+<a href="#install-from-build-package"class="md-nav__link">
+Install from build package
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#remove-from-dependencies"class="md-nav__link">
+Remove from dependencies
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -388,6 +403,16 @@ Table of contents
 Install as editable library
 </a>
 </li>
+<li class="md-nav__item">
+<a href="#install-from-build-package"class="md-nav__link">
+Install from build package
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#remove-from-dependencies"class="md-nav__link">
+Remove from dependencies
+</a>
+</li>
 </ul>
 </nav>
 </div>
@@ -411,6 +436,32 @@ Install as editable library
 </div>
 <div class="tabbed-block">
 <div class="highlight language-bash"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1"id="__codelineno-1-1"name="__codelineno-1-1"></a>poetry<span class="w"> </span>add<span class="w"> </span>--editable<span class="w"> </span>../mkdocs-publisher/
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="install-from-build-package">Install from build package<a href="#install-from-build-package"class="headerlink"title="Permanent link">&para;</a></h2>
+<div class="tabbed-alternate tabbed-set"data-tabs="2:2"><input type="radio"id="pip_1"name="__tabbed_2"checked><input type="radio"id="poetry_1"name="__tabbed_2"><div class="tabbed-labels"><label for="pip_1">pip</label><label for="poetry_1">poetry</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight language-bash"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1"id="__codelineno-2-1"name="__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>../mkdocs-publisher/dist/mkdocs-publisher-0.4.1.tar.gz
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight language-bash"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1"id="__codelineno-3-1"name="__codelineno-3-1"></a>poetry<span class="w"> </span>add<span class="w"> </span>../mkdocs-publisher/dist/mkdocs-publisher-0.4.1.tar.gz
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="remove-from-dependencies">Remove from dependencies<a href="#remove-from-dependencies"class="headerlink"title="Permanent link">&para;</a></h2>
+<div class="tabbed-alternate tabbed-set"data-tabs="3:2"><input type="radio"id="pip_2"name="__tabbed_3"checked><input type="radio"id="poetry_2"name="__tabbed_3"><div class="tabbed-labels"><label for="pip_2">pip</label><label for="poetry_2">poetry</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight language-bash"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1"id="__codelineno-4-1"name="__codelineno-4-1"></a>pip<span class="w"> </span>uninstall<span class="w"> </span>mkdocs-publisher
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight language-bash"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1"id="__codelineno-5-1"name="__codelineno-5-1"></a>poetry<span class="w"> </span>remove<span class="w"> </span>mkdocs-publisher
 </span></code></pre></div>
 </div>
 </div>
