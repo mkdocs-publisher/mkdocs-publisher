@@ -1,9 +1,9 @@
 import logging
 from typing import Optional
 
-from minifier.base import BaseMinifier
-from minifier.base import CachedFile
 from mkdocs_publisher import _utils
+from mkdocs_publisher.minifier.base import BaseMinifier
+from mkdocs_publisher.minifier.base import CachedFile
 
 log = logging.getLogger("mkdocs.plugins.publisher.minifier")
 

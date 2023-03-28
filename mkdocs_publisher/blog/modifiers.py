@@ -8,7 +8,7 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 
-from blog.structures import BlogConfig
+from mkdocs_publisher.blog.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 

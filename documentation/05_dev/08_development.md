@@ -23,3 +23,31 @@ description: Development of this plugin how to
     ```bash
     poetry add --editable ../mkdocs-publisher/
     ```
+
+## Install from build package
+
+===+ "pip"
+
+    ```bash
+    pip install ../mkdocs-publisher/dist/mkdocs-publisher-0.4.1.tar.gz
+    ```
+
+=== "poetry"
+
+    ```bash
+    poetry add ../mkdocs-publisher/dist/mkdocs-publisher-0.4.1.tar.gz
+    ```
+
+## Remove from dependencies
+
+===+ "pip"
+
+    ```bash
+    pip uninstall mkdocs-publisher
+    ```
+
+=== "poetry"
+
+    ```bash
+    poetry remove mkdocs-publisher
+    ```

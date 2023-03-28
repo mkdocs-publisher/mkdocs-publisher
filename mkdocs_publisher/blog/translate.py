@@ -5,9 +5,9 @@ from typing import cast
 
 import yaml
 
-from blog import lang as lang_resources
-from blog.config import BlogPluginConfig
-from blog.structures import Translation
+from mkdocs_publisher.blog import lang as lang_resources
+from mkdocs_publisher.blog.config import BlogPluginConfig
+from mkdocs_publisher.blog.structures import Translation
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 

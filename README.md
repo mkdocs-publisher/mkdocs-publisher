@@ -4,14 +4,17 @@ update: 2023-03-28 12:15:52
 ---
 # Publisher plugin for MkDocs
 
-[![PyPI version](https://badge.fury.io/py/mkdocs-blog-in.svg)](https://badge.fury.io/py/mkdocs-blog-in)
-[![Github All Releases](https://img.shields.io/github/downloads/mkusz/mkdocs-blog-in/total.svg)]()
+[![![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&style=plastic)](https://pypi.org/project/mkdocs-publisher/)
+[![License type](https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&style=plastic)](https://opensource.org/license/bsd-2-clause/)
+[![PyPI Downloads last month](https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&style=plastic)](https://pypistats.org/search/mkdocs-publisher)
+[![Python versions](https://img.shields.io/pypi/pyversions/mkdocs-publisher?logo=python&style=plastic)](https://www.python.org)
+[![GitHub last commit](https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&style=plastic)](https://github.com/mkusz/mkdocs-publisher/commits/main)
 
 Publishing platform plugins for [MkDocs](https://www.mkdocs.org/) that include:
 
-- `pub-auto-nav` - building site navigation right from files (no need for manual definition in config)
-- `pub-blog` - adds blogging capability,
-- `pub-minifier` - file size optimization (good for SEO and overall page size optimization).
+- `pub-auto-nav`– building site navigation right from files (no need for manual definition in config),
+- `pub-blog` – adds blogging capability,
+- `pub-minifier` – file size optimization (good for SEO and overall page size optimization).
 
 ## Installation
 
@@ -51,6 +54,14 @@ A full list of planned developments can be found on [this documentation page](ht
 
 ## Version history
 
+### 0.4.1 - 2023-03-28
+
+General:
+
+- fix: links in documentation
+- fix: imports of libraries
+- fix: badges links + new added
+
 ### 0.4.0 - 2023-03-28
 
 General:
@@ -66,7 +77,7 @@ Blog:
 
 - added: possibility to choose a blog as a starting page with option to define manually blog in nav configuration
 - added: `slug` config option for setting an entire blog's main directory URL
-- changed: internal file structure refactor with new global plugin config (BlogConfig class) that will help with further development with small fixes and improvements
+- changed: internal file structure refactor with new global plugin config (`BlogConfig` class) that will help with further development with small fixes and improvements
 - changed: blog subdirectory navigation creation (entry path needs to be equal to subdirectory name)
 - fixed: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
 - fixed: navigation is no longer overridden by a blog (if there is no other nav, blog will create on with recent posts as a main page)

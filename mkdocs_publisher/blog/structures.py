@@ -10,10 +10,10 @@ from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
-import _utils
-from auto_nav.config import AutoNavPluginConfig
-from auto_nav.plugin import AutoNavPlugin
-from blog.config import BlogPluginConfig
+from mkdocs_publisher import _utils
+from mkdocs_publisher.auto_nav.config import AutoNavPluginConfig
+from mkdocs_publisher.auto_nav.plugin import AutoNavPlugin
+from mkdocs_publisher.blog.config import BlogPluginConfig
 
 
 @dataclass
@@ -69,7 +69,7 @@ class BlogConfig:
     temp_files: Dict[str, Path] = field(init=False, default_factory=lambda: dict())
 
     def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogPluginConfig):
-        from blog.translate import Translate
+        from mkdocs_publisher.blog.translate import Translate
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config

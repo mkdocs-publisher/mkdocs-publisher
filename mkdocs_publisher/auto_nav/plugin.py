@@ -16,15 +16,15 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 
-import _utils
-from auto_nav.config import AutoNavPluginConfig
+from mkdocs_publisher import _utils
+from mkdocs_publisher.auto_nav.config import AutoNavPluginConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.auto-nav")
 
 
 class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
     def __init__(self):
-        from blog.config import BlogPluginConfig
+        from mkdocs_publisher.blog.config import BlogPluginConfig
 
         self.blog_config: Optional[BlogPluginConfig] = None
 
@@ -88,8 +88,8 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
 
     @event_priority(100)  # Run before any other plugins
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
-        from blog.config import BlogPluginConfig
-        from blog.plugin import BlogPlugin
+        from mkdocs_publisher.blog.config import BlogPluginConfig
+        from mkdocs_publisher.blog.plugin import BlogPlugin
 
         self.blog_config = cast(
             BlogPluginConfig,

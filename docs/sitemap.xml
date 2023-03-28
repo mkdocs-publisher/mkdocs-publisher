@@ -51,6 +51,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://mkusz.github.io/mkdocs-publisher/blog/v041/</loc>
+         <lastmod>2023-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/dev/backlog</loc>
          <lastmod>2023-03-23</lastmod>
          <changefreq>daily</changefreq>
@@ -97,6 +102,11 @@
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.4.0/</loc>
+         <lastmod>2023-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.4.1/</loc>
          <lastmod>2023-03-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
