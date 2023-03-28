@@ -1,6 +1,6 @@
 ---
 date: 2023-02-28 12:30:18
-update: 2023-03-20 13:03:13
+update: 2023-03-28 12:15:52
 ---
 # Publisher plugin for MkDocs
 
@@ -43,11 +43,11 @@ List of included features (more documentation is needed):
 
 ## How To
 
-More detailed information on how to setup, configure and write a blog posts and/or documentation can be found in [documentation](/mkdocs-publisher)
+More detailed information on how to setup, configure and write a blog posts and/or documentation can be found in [documentation](https://mkusz.github.io/mkdocs-publisher/)
 
 ## Todo's
 
-A full list of planned developments can be found on [this documentation page](/mkdocs-publisher/dev/backlog).
+A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/dev/backlog/).
 
 ## Version history
 

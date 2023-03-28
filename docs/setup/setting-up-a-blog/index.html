@@ -172,7 +172,7 @@ Home
 </a>
 </li>
 <li class="md-nav__item md-nav__item--nested md-nav__item--active">
-<input type="checkbox"id="__nav_2"class="md-toggle md-nav__toggle"checked>
+<input type="checkbox"id="__nav_2"checked class="md-toggle md-nav__toggle">
 <label for="__nav_2"class="md-nav__link"id="__nav_2_label"tabindex="0">
 Setup
 <span class="md-icon md-nav__icon"></span>
@@ -209,24 +209,19 @@ Table of contents
 </label>
 <ul class="md-nav__list"data-md-scrollfix data-md-component="toc">
 <li class="md-nav__item">
-<a href="#basic-configuration"class="md-nav__link">
-Basic configuration
+<a href="#configuration"class="md-nav__link">
+Configuration
 </a>
-</li>
-<li class="md-nav__item">
-<a href="#advanced-settings"class="md-nav__link">
-Advanced settings
-</a>
-<nav class="md-nav"aria-label="Advanced settings">
+<nav class="md-nav"aria-label="Configuration">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a href="#teaser-marker"class="md-nav__link">
-Teaser marker
+<a href="#enable-blog"class="md-nav__link">
+Enable blog
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#pagination"class="md-nav__link">
-Pagination
+<a href="#settings"class="md-nav__link">
+Settings
 </a>
 </li>
 <li class="md-nav__item">
@@ -250,6 +245,16 @@ Translation
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a href="#usage"class="md-nav__link">
+Usage
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#customization"class="md-nav__link">
+Customization
+</a>
 </li>
 </ul>
 </nav>
@@ -366,6 +371,11 @@ v0.2.0
 v0.3.0
 </a>
 </li>
+<li class="md-nav__item">
+<a href="../../blog/tags/v0.4.0/"class="md-nav__link">
+v0.4.0
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -417,24 +427,19 @@ Table of contents
 </label>
 <ul class="md-nav__list"data-md-scrollfix data-md-component="toc">
 <li class="md-nav__item">
-<a href="#basic-configuration"class="md-nav__link">
-Basic configuration
+<a href="#configuration"class="md-nav__link">
+Configuration
 </a>
-</li>
-<li class="md-nav__item">
-<a href="#advanced-settings"class="md-nav__link">
-Advanced settings
-</a>
-<nav class="md-nav"aria-label="Advanced settings">
+<nav class="md-nav"aria-label="Configuration">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a href="#teaser-marker"class="md-nav__link">
-Teaser marker
+<a href="#enable-blog"class="md-nav__link">
+Enable blog
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#pagination"class="md-nav__link">
-Pagination
+<a href="#settings"class="md-nav__link">
+Settings
 </a>
 </li>
 <li class="md-nav__item">
@@ -459,6 +464,16 @@ Translation
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a href="#usage"class="md-nav__link">
+Usage
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#customization"class="md-nav__link">
+Customization
+</a>
+</li>
 </ul>
 </nav>
 </div>
@@ -477,7 +492,8 @@ Translation
 </ul>
 <p>All the above documents are created outside <code>docs</code> directory, so they are not visible and do not interfere with your content.</p>
 <p>This documentation contains a <a href="../../blog/">blog</a> that is created using this plugin, so you can take a look at a living example.</p>
-<h2 id="basic-configuration">Basic configuration<a href="#basic-configuration"class="headerlink"title="Permanent link">&para;</a></h2>
+<h2 id="configuration">Configuration<a href="#configuration"class="headerlink"title="Permanent link">&para;</a></h2>
+<h3 id="enable-blog">Enable blog<a href="#enable-blog"class="headerlink"title="Permanent link">&para;</a></h3>
 <p>To enable the built-in blog plugin, the following lines have to be added to <code>mkdocs.yml</code> file:</p>
 <div class="tabbed-alternate tabbed-set"data-tabs="1:2"><input type="radio"id="mkdocsyml"name="__tabbed_1"checked><input type="radio"id="_1"name="__tabbed_1"><div class="tabbed-labels"><label for="mkdocsyml"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label><label for="_1"><span class="twemoji"><svg
 viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z"/></svg></span></label></div>
@@ -533,11 +549,11 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </div>
 </div>
 </div>
-<h2 id="advanced-settings">Advanced settings<a href="#advanced-settings"class="headerlink"title="Permanent link">&para;</a></h2>
+<h3 id="settings">Settings<a href="#settings"class="headerlink"title="Permanent link">&para;</a></h3>
 <dl>
 <dt><a href="#+blog.slug"id="+blog.slug">slug</a></dt>
 <dd>
-<p><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"/></svg></span> Default: <code>blog</code> - this option gives you an ability to to go to specify your blog direct URL, like <code>https://yourblog.com/blog/</code>. The <code>blog</code> part of the URL can be configured to a non-standard value:</p>
+<p><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"/></svg></span> Default: <code>blog</code> - this option gives you an ability to go to specify your blog direct URL, like <code>https://yourblog.com/blog/</code>. The <code>blog</code> part of the URL can be configured to a non-standard value:</p>
 <div class="tabbed-alternate tabbed-set"data-tabs="5:1"><input type="radio"id="mkdocsyml_3"name="__tabbed_5"checked><div class="tabbed-labels"><label for="mkdocsyml_3"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -549,29 +565,49 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </div>
 </div>
 </dd>
-</dl>
-<h3 id="teaser-marker">Teaser marker<a href="#teaser-marker"class="headerlink"title="Permanent link">&para;</a></h3>
-<p>Usually, blog posts are a huge chunk of text. Putting a longer text on an index page, can be not convenient for your blog audience. To split a longer blog post into a teaser part and a full article, you have to put a <code>&lt;!-- more --&gt;</code> in some line inside a content of your blog post. This value is a valid HTML comment, so it will not be rendered. If, for any reason, you need to change it, you can do it by adding the following configuration key:</p>
-<div class="highlight language-yaml"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1"id="__codelineno-5-1"name="__codelineno-5-1"></a><span class="nt">plugins</span><span class="p">:</span>
+<dt><a href="#+blog.teaser_marker"id="+blog.teaser_marker">teaser_marker</a></dt>
+<dd>
+<p><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"/></svg></span> Default: <code>&lt;!-- more --&gt;</code> - this option gives you an ability to split a blog posts that are a massive chunk of text into two parts: blog post teaser visible on blog posts index page and the full article. To split the blog post, you have to put a <code>&lt;!-- more --&gt;</code> in some line inside a content of your blog post. This value is a valid HTML comment, so it will not be rendered. If, for any reason, you need to change it, you can do it by adding the following configuration key:</p>
+<div class="tabbed-alternate tabbed-set"data-tabs="6:1"><input type="radio"id="mkdocsyml_4"name="__tabbed_6"checked><div class="tabbed-labels"><label for="mkdocsyml_4"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="highlight language-yaml"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1"id="__codelineno-5-1"name="__codelineno-5-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-5-2"><a href="#__codelineno-5-2"id="__codelineno-5-2"name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
 </span><span id="__span-5-3"><a href="#__codelineno-5-3"id="__codelineno-5-3"name="__codelineno-5-3"></a><span class="hll"><span class="w">      </span><span class="nt">teaser_marker</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">&lt;!-- more --&gt;`</span>
 </span></span></code></pre></div>
-<h3 id="pagination">Pagination<a href="#pagination"class="headerlink"title="Permanent link">&para;</a></h3>
-<p>When you gather over time some amount of blog posts, their index even with short teasers, they can take quite much space over a single page and scrolling down is not a convenient solution. To avoid this, blogging engine allows splitting index pages when they contain a certain amount of blog posts. By default, it's set to 5, but you can change it by adding a following configuration key:</p>
-<div class="highlight language-yaml"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1"id="__codelineno-6-1"name="__codelineno-6-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</dd>
+<dt><a href="#+blog.pagination"id="+blog.pagination">pagination</a></dt>
+<dd>
+<p><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"/></svg></span> Default: <code>5</code> - this option setup number of When you gather over time some amount of blog posts, their index even with short teasers, they can take quite much space over a single page and scrolling down is not a convenient solution. To avoid this, blogging engine allows splitting index pages when they contain a certain amount of blog posts. By default, it's set to 5, but you can change it by adding a following configuration key:</p>
+<div class="tabbed-alternate tabbed-set"data-tabs="7:1"><input type="radio"id="mkdocsyml_5"name="__tabbed_7"checked><div class="tabbed-labels"><label for="mkdocsyml_5"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="highlight language-yaml"><pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1"id="__codelineno-6-1"name="__codelineno-6-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-6-2"><a href="#__codelineno-6-2"id="__codelineno-6-2"name="__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
 </span><span id="__span-6-3"><a href="#__codelineno-6-3"id="__codelineno-6-3"name="__codelineno-6-3"></a><span class="hll"><span class="w">      </span><span class="nt">posts_per_page</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 </span></span></code></pre></div>
+</dd>
+</dl>
 <h3 id="directories">Directories<a href="#directories"class="headerlink"title="Permanent link">&para;</a></h3>
 <p>This plugin to work correctly, needs to create and/or use some directories. Those settings should be considered as advanced and for day to day use, you should not change them.</p>
-<div class="tabbed-alternate tabbed-set"data-tabs="6:4"><input type="radio"id="temp_dir"name="__tabbed_6"checked><input type="radio"id="archive_subdir"name="__tabbed_6"><input type="radio"id="categories_subdir"name="__tabbed_6"><input type="radio"id="tags_subdir"name="__tabbed_6"><div class="tabbed-labels"><label for="temp_dir"><code>temp_dir</code></label><label for="archive_subdir"><code>archive_subdir</code></label><label for="categories_subdir"><code>categories_subdir</code></label><label for="tags_subdir"><code>tags_subdir</code></label></div>
+<dl>
+<dt><a href="#+blog.temp_dir"id="+blog.temp_dir">temp_dir</a></dt>
+<dd>
+<p><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"/></svg></span> Default: <code>.temp</code> - temporary directory is used by a blog engine to create an index files with a blog post teasers and other files like a list of archive, categories, and tags pages.</p>
+<div class="tabbed-alternate tabbed-set"data-tabs="8:2"><input type="radio"id="mkdocsyml_6"name="__tabbed_8"checked><input type="radio"id="_2"name="__tabbed_8"><div class="tabbed-labels"><label for="mkdocsyml_6"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label><label for="_2"><span class="twemoji">
+<svg viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z"/></svg></span></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>Temporary directory is used by a blog engine to create an index files with a blog post teasers and other files like a list of archive, categories and tags pages.</p>
-<div class="highlight language-yaml"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1"id="__codelineno-7-1"name="__codelineno-7-1"></a><span class="nt">plugins</span><span class="p">:</span>
+<div class="highlight language-yaml"><pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1"id="__codelineno-7-1"name="__codelineno-7-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-7-2"><a href="#__codelineno-7-2"id="__codelineno-7-2"name="__codelineno-7-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
 </span><span id="__span-7-3"><a href="#__codelineno-7-3"id="__codelineno-7-3"name="__codelineno-7-3"></a><span class="hll"><span class="w">      </span><span class="nt">temp_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.temp</span>
 </span></span></code></pre></div>
+</div>
+<div class="tabbed-block">
 <p>Temporary directory is created at the same level as main <code>docs</code> directory and <code>mkdocs.yml</code> configuration file.</p>
 <div class="highlight language-text"><pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1"id="__codelineno-8-1"name="__codelineno-8-1"></a>.
 </span><span id="__span-8-2"><a href="#__codelineno-8-2"id="__codelineno-8-2"name="__codelineno-8-2"></a><span class="hll">├─ .temp/
@@ -580,13 +616,22 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </span><span id="__span-8-5"><a href="#__codelineno-8-5"id="__codelineno-8-5"name="__codelineno-8-5"></a>└─ mkdocs.yml
 </span></code></pre></div>
 </div>
+</div>
+</div>
+</dd>
+<dt><a href="#+blog.archive_subdir"id="+blog.archive_subdir">archive_subdir</a></dt>
+<dd>
+<p><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"/></svg></span> Default: <code>archive</code> - archive subdirectory is used to store dynamically generated documents that contain archive indexes.</p>
+<div class="tabbed-alternate tabbed-set"data-tabs="9:2"><input type="radio"id="mkdocsyml_7"name="__tabbed_9"checked><input type="radio"id="_3"name="__tabbed_9"><div class="tabbed-labels"><label for="mkdocsyml_7"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label><label for="_3"><span class="twemoji">
+<svg viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z"/></svg></span></label></div>
+<div class="tabbed-content">
 <div class="tabbed-block">
-<p>Archive subdirectory is used to store dynamically generated documents that contains archive indexes.</p>
-<p>Some description</p>
-<div class="highlight language-yaml"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-9-1"><a href="#__codelineno-9-1"id="__codelineno-9-1"name="__codelineno-9-1"></a><span class="nt">plugins</span><span class="p">:</span>
+<div class="highlight language-yaml"><pre><span></span><code><span id="__span-9-1"><a href="#__codelineno-9-1"id="__codelineno-9-1"name="__codelineno-9-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-9-2"><a href="#__codelineno-9-2"id="__codelineno-9-2"name="__codelineno-9-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
 </span><span id="__span-9-3"><a href="#__codelineno-9-3"id="__codelineno-9-3"name="__codelineno-9-3"></a><span class="hll"><span class="w">      </span><span class="nt">archive_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">archive</span>
 </span></span></code></pre></div>
+</div>
+<div class="tabbed-block">
 <p>Archive directory is a subdirectory to a temporary directory.</p>
 <div class="highlight language-text"><pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1"id="__codelineno-10-1"name="__codelineno-10-1"></a>.
 </span><span id="__span-10-2"><a href="#__codelineno-10-2"id="__codelineno-10-2"name="__codelineno-10-2"></a><span class="hll">├─ .temp/
@@ -596,15 +641,22 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </span><span id="__span-10-6"><a href="#__codelineno-10-6"id="__codelineno-10-6"name="__codelineno-10-6"></a>└─ mkdocs.yml
 </span></code></pre></div>
 </div>
+</div>
+</div>
+</dd>
+<dt><a href="#+blog.categories_subdir"id="+blog.categories_subdir">categories_subdir</a></dt>
+<dd>
+<p><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"/></svg></span> Default: <code>categories</code> - categories subdirectory is used to store dynamically generated documents that contain categories indexes.</p>
+<div class="tabbed-alternate tabbed-set"data-tabs="10:2"><input type="radio"id="mkdocsyml_8"name="__tabbed_10"checked><input type="radio"id="_4"name="__tabbed_10"><div class="tabbed-labels"><label for="mkdocsyml_8"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label><label for="_4"><span
+class="twemoji"><svg viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z"/></svg></span></label></div>
+<div class="tabbed-content">
 <div class="tabbed-block">
-<p>Categories subdirectory is used to store dynamically generated documents that contains categories indexes.</p>
-<div class="highlight language-yaml"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1"id="__codelineno-11-1"name="__codelineno-11-1"></a><span class="nt">plugins</span><span class="p">:</span>
+<div class="highlight language-yaml"><pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1"id="__codelineno-11-1"name="__codelineno-11-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-11-2"><a href="#__codelineno-11-2"id="__codelineno-11-2"name="__codelineno-11-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-11-3"><a href="#__codelineno-11-3"id="__codelineno-11-3"name="__codelineno-11-3"></a><span class="hll"><span class="w">      </span><span class="nt">categories_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">categories</span><span class="w"> </span><span class="c1"># (1)!</span>
+</span><span id="__span-11-3"><a href="#__codelineno-11-3"id="__codelineno-11-3"name="__codelineno-11-3"></a><span class="hll"><span class="w">      </span><span class="nt">categories_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">categories</span>
 </span></span></code></pre></div>
-<ol>
-<li>The default value.</li>
-</ol>
+</div>
+<div class="tabbed-block">
 <p>Categories subdirectory is a subdirectory to a temporary directory.</p>
 <div class="highlight language-text"><pre><span></span><code><span id="__span-12-1"><a href="#__codelineno-12-1"id="__codelineno-12-1"name="__codelineno-12-1"></a>.
 </span><span id="__span-12-2"><a href="#__codelineno-12-2"id="__codelineno-12-2"name="__codelineno-12-2"></a><span class="hll">├─ .temp/
@@ -614,23 +666,36 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </span><span id="__span-12-6"><a href="#__codelineno-12-6"id="__codelineno-12-6"name="__codelineno-12-6"></a>└─ mkdocs.yml
 </span></code></pre></div>
 </div>
+</div>
+</div>
+</dd>
+<dt><a href="#+blog.tags"id="+blog.tags">tags</a></dt>
+<dd>
+<p><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"/></svg></span> Default: <code>tags</code> - tags subdirectory is used to store dynamically generated documents that contain tags indexes.</p>
+<div class="tabbed-alternate tabbed-set"data-tabs="11:2"><input type="radio"id="mkdocsyml_9"name="__tabbed_11"checked><input type="radio"id="_5"name="__tabbed_11"><div class="tabbed-labels"><label for="mkdocsyml_9"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label><label for="_5"><span
+class="twemoji"><svg viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z"/></svg></span></label></div>
+<div class="tabbed-content">
 <div class="tabbed-block">
-<p>Tags subdirectory is used to store dynamically generated documents that contains tags indexes.</p>
-<div class="highlight language-yaml"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-13-1"><a href="#__codelineno-13-1"id="__codelineno-13-1"name="__codelineno-13-1"></a><span class="nt">plugins</span><span class="p">:</span>
+<div class="highlight language-yaml"><pre><span></span><code><span id="__span-13-1"><a href="#__codelineno-13-1"id="__codelineno-13-1"name="__codelineno-13-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-13-2"><a href="#__codelineno-13-2"id="__codelineno-13-2"name="__codelineno-13-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
 </span><span id="__span-13-3"><a href="#__codelineno-13-3"id="__codelineno-13-3"name="__codelineno-13-3"></a><span class="hll"><span class="w">      </span><span class="nt">tags_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tags</span>
 </span></span></code></pre></div>
+</div>
+<div class="tabbed-block"></div>
+</div>
+</div>
 <p>Tags directory is a subdirectory to a temporary directory.</p>
-<div class="highlight language-text"><pre><span></span><code><span id="__span-14-1"><a href="#__codelineno-14-1"id="__codelineno-14-1"name="__codelineno-14-1"></a>.
-</span><span id="__span-14-2"><a href="#__codelineno-14-2"id="__codelineno-14-2"name="__codelineno-14-2"></a><span class="hll">├─ .temp/
-</span></span><span id="__span-14-3"><a href="#__codelineno-14-3"id="__codelineno-14-3"name="__codelineno-14-3"></a><span class="hll">│  └─ tags/
-</span></span><span id="__span-14-4"><a href="#__codelineno-14-4"id="__codelineno-14-4"name="__codelineno-14-4"></a>├─ docs/
-</span><span id="__span-14-5"><a href="#__codelineno-14-5"id="__codelineno-14-5"name="__codelineno-14-5"></a>│  └─ blog/
-</span><span id="__span-14-6"><a href="#__codelineno-14-6"id="__codelineno-14-6"name="__codelineno-14-6"></a>└─ mkdocs.yml
-</span></code></pre></div>
-</div>
-</div>
-</div>
+<div class="highlight language-text"><pre><span></span><code>```commandline hl_lines=&quot;2 3&quot;
+.
+├─ .temp/
+│  └─ tags/
+├─ docs/
+│  └─ blog/
+└─ mkdocs.yml
+```
+</code></pre></div>
+</dd>
+</dl>
 <h3 id="language">Language<a href="#language"class="headerlink"title="Permanent link">&para;</a></h3>
 <p>By default, the blogging plugin is set to use <em>English</em> (<code>en</code>) translation. Currently, available languages:</p>
 <ul>
@@ -638,17 +703,24 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 <li><code>pl</code> - Polish.</li>
 </ul>
 <p>To set up one of the above languages, the following line has to be added to the <code>mkdocs.yml</code> file:</p>
-<div class="highlight language-yaml"><span class="filename">mkdosc.yml</span><pre><span></span><code><span id="__span-15-1"><a href="#__codelineno-15-1"id="__codelineno-15-1"name="__codelineno-15-1"></a><span class="nt">plugin</span><span class="p">:</span>
+<div class="tabbed-alternate tabbed-set"data-tabs="12:1"><input type="radio"id="mkdocsyml_10"name="__tabbed_12"checked><div class="tabbed-labels"><label for="mkdocsyml_10"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="highlight language-yaml"><pre><span></span><code><span id="__span-15-1"><a href="#__codelineno-15-1"id="__codelineno-15-1"name="__codelineno-15-1"></a><span class="nt">plugin</span><span class="p">:</span>
 </span><span id="__span-15-2"><a href="#__codelineno-15-2"id="__codelineno-15-2"name="__codelineno-15-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-15-3"><a href="#__codelineno-15-3"id="__codelineno-15-3"name="__codelineno-15-3"></a><span class="hll"><span class="w">      </span><span class="nt">lang</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;pl&#39;</span><span class="w"> </span><span class="c1"># (1)!</span>
+</span><span id="__span-15-3"><a href="#__codelineno-15-3"id="__codelineno-15-3"name="__codelineno-15-3"></a><span class="hll"><span class="w">      </span><span class="nt">lang</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;pl&#39;</span>
 </span></span></code></pre></div>
-<ol>
-<li>Set language to Polish</li>
-</ol>
 <h4 id="translation">Translation<a href="#translation"class="headerlink"title="Permanent link">&para;</a></h4>
 <p>If there is no language that suits you best, you can translate part of the interface by providing values for the below keys inside the configuration <code>mkdocs.yml</code> files. Providing those values overrides values for setup of a given language, and this way it's possible to change only some of them.</p>
 <p>Below, you can find a list of settings keys with English values that allow to translate some parts of the interface:</p>
-<div class="highlight language-yaml"><span class="filename">mkdocs.yaml</span><pre><span></span><code><span id="__span-16-1"><a href="#__codelineno-16-1"id="__codelineno-16-1"name="__codelineno-16-1"></a><span class="nt">plugins</span><span class="p">:</span>
+<div class="tabbed-alternate tabbed-set"data-tabs="13:1"><input type="radio"id="mkdocsyml_11"name="__tabbed_13"checked><div class="tabbed-labels"><label for="mkdocsyml_11"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="highlight language-yaml"><pre><span></span><code><span id="__span-16-1"><a href="#__codelineno-16-1"id="__codelineno-16-1"name="__codelineno-16-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-16-2"><a href="#__codelineno-16-2"id="__codelineno-16-2"name="__codelineno-16-2"></a><span class="w">  </span><span class="nt">pub-blog</span><span class="p">:</span>
 </span><span id="__span-16-3"><a href="#__codelineno-16-3"id="__codelineno-16-3"name="__codelineno-16-3"></a><span class="hll"><span class="w">    </span><span class="nt">translation</span><span class="p">:</span>
 </span></span><span id="__span-16-4"><a href="#__codelineno-16-4"id="__codelineno-16-4"name="__codelineno-16-4"></a><span class="hll"><span class="w">      </span><span class="nt">teaser_link_text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read more</span>
@@ -664,6 +736,10 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </span></span><span id="__span-16-14"><a href="#__codelineno-16-14"id="__codelineno-16-14"name="__codelineno-16-14"></a><span class="hll"><span class="w">      </span><span class="nt">newer_posts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Newer posts</span>
 </span></span><span id="__span-16-15"><a href="#__codelineno-16-15"id="__codelineno-16-15"name="__codelineno-16-15"></a><span class="hll"><span class="w">      </span><span class="nt">older_posts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Older posts</span>
 </span></span></code></pre></div>
+<h2 id="usage">Usage<a href="#usage"class="headerlink"title="Permanent link">&para;</a></h2>
+<p>More detailed usage is described in <a href="./how-to-publish/first_steps">how to publish</a>.</p>
+<h2 id="customization">Customization<a href="#customization"class="headerlink"title="Permanent link">&para;</a></h2>
+<p>It's not yet implemented.</p>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
