@@ -37,14 +37,7 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
 
     def _iterate_dir(self, directory: Path, skip_subfiles_of_dir: List[str], relative_to: Path):
         nav = list()
-        sorted_files = sorted([f for f in directory.glob("**/*")])
-
-        # Make index.md a first file in give directory
-        no_index_files = [f for f in sorted_files if f.name != "index.md"]
-        sorted_files = [f for f in sorted_files if f.name == "index.md"]
-        sorted_files.extend(no_index_files)
-
-        for file in sorted_files:
+        for file in sorted([f for f in directory.glob("**/*")]):
             if not any([s for s in skip_subfiles_of_dir if str(file).startswith(s)]):
                 if file.is_dir():
                     meta_file = file / self.config.meta_file_name

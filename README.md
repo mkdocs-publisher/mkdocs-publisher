@@ -9,9 +9,9 @@ update: 2023-03-20 13:03:13
 
 Publishing platform plugins for [MkDocs](https://www.mkdocs.org/) that include:
 
-- `pub-auto-nav` - building site navigation right from files (no need for manual definition in config)
-- `pub-blog` - adds blogging capability,
-- `pub-minifier` - file size optimization (good for SEO and overall page size optimization).
+- pub-auto-nav - building site navigation right from files (no need for manual definition in config)
+- pub-blog - adds blogging capability,
+- pub-minifier - file size optimization (good for SEO and overall page size optimization).
 
 ## Installation
 
@@ -22,36 +22,41 @@ pip install mkdocs-publisher
 ## Basic usage
 
 > **Note**
-> As a base for any development, [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) theme was used. If you are willing to use any other theme, you may (or may not) face some issues. If this happens, please submit an issue.
+> As a base for any development, mkdocs-material theme was used. If you are willing to use any other theme, you may (or may not) face some issues. If this happens, please submit an issue.
 
 > **Warning**
 > Consider this plugin as a beta, so before any use make sure you have a backup of your data.
 
 If you have found any issue, have an idea for a feature, please submit an issue.
 
+## Image optimization
+
+Image optimization is needed for optimal web speed loading that is needed for better scoring on search engines (part of proper SEO). The best image optimization that reduce image file size but not image quality.
+
+Since 2 most used image formats are PNG and JPEG, this plugin offers an image optimization option. Tools used for image optimization were chosen to fulfill both main image optimization purposes: high quality with small file size.
+
 ## Features
 
 List of included features (more documentation is needed):
 
-- automatic blog post index page generation with blog post teasers based on delimiter inside a blog post and own template (delimiter can be changed in plugin config in `mkdocs.yaml`),
+- automatic blog post index page generation with blog post teasers based on delimiter inside a blog post and own template (delimiter can be changed in plugin config in mkdocs.yaml),
 - blog post/page update date based on blog post metadata,
-- separate directory for blog post documents with auto-generated separate navigation (blog posts are sorted from newest to oldest),
+- separate directory for blog post documents with auto-generated separate navigation (blog posts are sorted from newest to oldest)
 - home page set to blog post index with possibility to rename,
-- auto-adding link to full blog post from blog post index file (under each post that has teaser delimiter, if delimiter is not present, then full post is inside post index file, but is preserved in blog post navigation and site map),
-- added sub-pages for blog posts: archive, categories, tags,
-- minification plugin for graphics and documentation files.
+- auto-adding link to full blog post from blog post index file (under each post that has teaser delimiter, if delimiter is not present, then full post is inside post index file, but is preserved in blog post navigation and site map).
+- added sub-pages for blog posts: archive, categories, tags
 
 ## How To
 
-More detailed information on how to setup, configure and write a blog posts and/or documentation can be found in [documentation](/mkdocs-publisher)
+[TODO]
 
 ## Todo's
 
-A full list of planned developments can be found on [this documentation page](/mkdocs-publisher/dev/backlog).
+A full list of planned developments can be found on [this documentation page](docs/05_dev/01_todo.md).
 
 ## Version history
 
-### 0.4.0 - 2023-03-28
+### 0.4.0
 
 General:
 

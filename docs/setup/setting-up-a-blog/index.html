@@ -114,7 +114,7 @@ GitHub
 <div class="md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a href="../.."class="md-tabs__link">
+<a href="../../home"class="md-tabs__link">
 Home
 </a>
 </li>
@@ -134,7 +134,7 @@ Blog
 </a>
 </li>
 <li class="md-tabs__item">
-<a href="../../dev/backlog"class="md-tabs__link">
+<a href="../../dev/todo"class="md-tabs__link">
 Development
 </a>
 </li>
@@ -167,7 +167,7 @@ GitHub
 </div>
 <ul class="md-nav__list"data-md-scrollfix>
 <li class="md-nav__item">
-<a href="../.."class="md-nav__link">
+<a href="../../home"class="md-nav__link">
 Home
 </a>
 </li>
@@ -219,6 +219,11 @@ Advanced settings
 </a>
 <nav class="md-nav"aria-label="Advanced settings">
 <ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#slug"class="md-nav__link">
+Slug
+</a>
+</li>
 <li class="md-nav__item">
 <a href="#teaser-marker"class="md-nav__link">
 Teaser marker
@@ -385,8 +390,8 @@ Development
 </label>
 <ul class="md-nav__list"data-md-scrollfix>
 <li class="md-nav__item">
-<a href="../../dev/backlog"class="md-nav__link">
-Backlog
+<a href="../../dev/todo"class="md-nav__link">
+TODO
 </a>
 </li>
 <li class="md-nav__item">
@@ -427,6 +432,11 @@ Advanced settings
 </a>
 <nav class="md-nav"aria-label="Advanced settings">
 <ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#slug"class="md-nav__link">
+Slug
+</a>
+</li>
 <li class="md-nav__item">
 <a href="#teaser-marker"class="md-nav__link">
 Teaser marker
@@ -498,11 +508,8 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </div>
 </div>
 <p>The last thing is to add a blog to a site navigation. There are 3 ways to do it:</p>
-<div class="tabbed-alternate tabbed-set"data-tabs="2:3"><input type="radio"id="using-pub-auto-nav-plugin"name="__tabbed_2"checked><input type="radio"id="add-to-existing-site-layout"name="__tabbed_2"><input type="radio"id="standalone-mode"name="__tabbed_2"><div class="tabbed-labels"><label for="using-pub-auto-nav-plugin">Using <em>pub-auto-nav</em> plugin</label><label for="add-to-existing-site-layout">Add to existing site layout</label><label for="standalone-mode">Standalone mode</label></div>
+<div class="tabbed-alternate tabbed-set"data-tabs="2:3"><input type="radio"id="add-to-existing-site-layout"name="__tabbed_2"checked><input type="radio"id="using-pub-auto-nav-plugin"name="__tabbed_2"><input type="radio"id="standalone-mode"name="__tabbed_2"><div class="tabbed-labels"><label for="add-to-existing-site-layout">Add to existing site layout</label><label for="using-pub-auto-nav-plugin">Using <em>pub-auto-nav</em> plugin</label><label for="standalone-mode">Standalone mode</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block">
-<p>When <a href="../setting-up-auto-nav">pub-auto-nav</a> plugin is configured and directory for blog posts is set up, there is nothing more left to be configured. All the things related to creating navigation section will be handled automatically by the <em>pub-auto-nav</em> plugin.</p>
-</div>
 <div class="tabbed-block">
 <p>If an existing pages are created in MkDocs, it's simple to just add a blog functionality. To achieve it, <em>Any name</em> with path to a blog subdirectory name (by default it's a <code>blog</code>) has to be added to the <code>mkdocs.yml</code> file and blogging engine will handle everything else.</p>
 <div class="tabbed-alternate tabbed-set"data-tabs="3:1"><input type="radio"id="mkdocsyml_1"name="__tabbed_3"checked><div class="tabbed-labels"><label for="mkdocsyml_1"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label></div>
@@ -516,6 +523,9 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </div>
 </div>
 </div>
+</div>
+<div class="tabbed-block">
+<p>When <a href="../setting-up-auto-nav">pub-auto-nav</a> plugin is configured and directory for blog posts is set up, there is nothing more left to be configured. All the things related to creating navigation section will be handled automatically by the <em>pub-auto-nav</em> plugin.</p>
 </div>
 <div class="tabbed-block">
 <p>A standalone mode gives a posibility to setup a MkDocs for just a pure blogging experience. Blog will become a main page. To make it happen, the following lines have to be added to <code>mkdocs.yml</code> file:</p>
@@ -534,22 +544,12 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </div>
 </div>
 <h2 id="advanced-settings">Advanced settings<a href="#advanced-settings"class="headerlink"title="Permanent link">&para;</a></h2>
-<dl>
-<dt><a href="#+blog.slug"id="+blog.slug">slug</a></dt>
-<dd>
-<p><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"/></svg></span> Default: <code>blog</code> - this option gives you an ability to to go to specify your blog direct URL, like <code>https://yourblog.com/blog/</code>. The <code>blog</code> part of the URL can be configured to a non-standard value:</p>
-<div class="tabbed-alternate tabbed-set"data-tabs="5:1"><input type="radio"id="mkdocsyml_3"name="__tabbed_5"checked><div class="tabbed-labels"><label for="mkdocsyml_3"><span class="twemoji"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> mkdocs.yml</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight language-yaml"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1"id="__codelineno-4-1"name="__codelineno-4-1"></a><span class="nt">plugins</span><span class="p">:</span>
+<h3 id="slug">Slug<a href="#slug"class="headerlink"title="Permanent link">&para;</a></h3>
+<p>When using non-standalone blog mode, it's good to have an ability to go to your blog by a direct URL, like <code>https://yourblog.com/blog/</code>. The <code>blog</code> part of the URL can be configured to a non-standard value:</p>
+<div class="highlight language-yaml"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1"id="__codelineno-4-1"name="__codelineno-4-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-4-2"><a href="#__codelineno-4-2"id="__codelineno-4-2"name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
 </span><span id="__span-4-3"><a href="#__codelineno-4-3"id="__codelineno-4-3"name="__codelineno-4-3"></a><span class="hll"><span class="w">      </span><span class="nt">slug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blog</span>
 </span></span></code></pre></div>
-</div>
-</div>
-</div>
-</dd>
-</dl>
 <h3 id="teaser-marker">Teaser marker<a href="#teaser-marker"class="headerlink"title="Permanent link">&para;</a></h3>
 <p>Usually, blog posts are a huge chunk of text. Putting a longer text on an index page, can be not convenient for your blog audience. To split a longer blog post into a teaser part and a full article, you have to put a <code>&lt;!-- more --&gt;</code> in some line inside a content of your blog post. This value is a valid HTML comment, so it will not be rendered. If, for any reason, you need to change it, you can do it by adding the following configuration key:</p>
 <div class="highlight language-yaml"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1"id="__codelineno-5-1"name="__codelineno-5-1"></a><span class="nt">plugins</span><span class="p">:</span>
@@ -564,7 +564,7 @@ viewBox="0 0 576 512"xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 
 </span></span></code></pre></div>
 <h3 id="directories">Directories<a href="#directories"class="headerlink"title="Permanent link">&para;</a></h3>
 <p>This plugin to work correctly, needs to create and/or use some directories. Those settings should be considered as advanced and for day to day use, you should not change them.</p>
-<div class="tabbed-alternate tabbed-set"data-tabs="6:4"><input type="radio"id="temp_dir"name="__tabbed_6"checked><input type="radio"id="archive_subdir"name="__tabbed_6"><input type="radio"id="categories_subdir"name="__tabbed_6"><input type="radio"id="tags_subdir"name="__tabbed_6"><div class="tabbed-labels"><label for="temp_dir"><code>temp_dir</code></label><label for="archive_subdir"><code>archive_subdir</code></label><label for="categories_subdir"><code>categories_subdir</code></label><label for="tags_subdir"><code>tags_subdir</code></label></div>
+<div class="tabbed-alternate tabbed-set"data-tabs="5:4"><input type="radio"id="temp_dir"name="__tabbed_5"checked><input type="radio"id="archive_subdir"name="__tabbed_5"><input type="radio"id="categories_subdir"name="__tabbed_5"><input type="radio"id="tags_subdir"name="__tabbed_5"><div class="tabbed-labels"><label for="temp_dir"><code>temp_dir</code></label><label for="archive_subdir"><code>archive_subdir</code></label><label for="categories_subdir"><code>categories_subdir</code></label><label for="tags_subdir"><code>tags_subdir</code></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Temporary directory is used by a blog engine to create an index files with a blog post teasers and other files like a list of archive, categories and tags pages.</p>

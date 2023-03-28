@@ -6,9 +6,9 @@ copyright: >
   &copy; 2023 Maciej 'maQ' Kusz
 
 repo_url: https://github.com/mkusz/mkdocs-publisher
-edit_uri: edit/main/docsumentation
+edit_uri: edit/main/docs
 
-docs_dir: documentation
+docs_dir: docs_md
 site_dir: docs
 
 use_directory_urls: true
