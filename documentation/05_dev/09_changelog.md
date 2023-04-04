@@ -10,7 +10,15 @@ description: Publisher for MkDocs version history
 
 # Version history
 
-### 0.4.0
+### 0.4.1 - 2023-03-28
+
+General:
+
+- fix: links in documentation
+- fix: imports of libraries
+- fix: badges links + new added
+
+### 0.4.0 - 2023-03-28
 
 General:
 

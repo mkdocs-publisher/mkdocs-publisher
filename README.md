@@ -1,10 +1,10 @@
 ---
 date: 2023-02-28 12:30:18
-update: 2023-03-28 12:15:52
+update: 2023-03-29 21:53:17
 ---
 # Publisher plugin for MkDocs
 
-[![![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&style=plastic)](https://pypi.org/project/mkdocs-publisher/)
+[![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&style=plastic)](https://pypi.org/project/mkdocs-publisher/)
 [![License type](https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&style=plastic)](https://opensource.org/license/bsd-2-clause/)
 [![PyPI Downloads last month](https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&style=plastic)](https://pypistats.org/search/mkdocs-publisher)
 [![Python versions](https://img.shields.io/pypi/pyversions/mkdocs-publisher?logo=python&style=plastic)](https://www.python.org)
@@ -25,7 +25,7 @@ pip install mkdocs-publisher
 ## Basic usage
 
 > **Note**
-> As a base for any development, [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) theme was used. If you are willing to use any other theme, you may (or may not) face some issues. If this happens, please submit an issue.
+> As a base for any development, [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) theme was used. If you are willing to use any other theme, you may (or may not) face some issues. If this happens, please submit an [issue](https://github.com/mkusz/mkdocs-publisher/issues).
 
 > **Warning**
 > Consider this plugin as a beta, so before any use make sure you have a backup of your data.
@@ -38,11 +38,12 @@ List of included features (more documentation is needed):
 
 - automatic blog post index page generation with blog post teasers based on delimiter inside a blog post and own template (delimiter can be changed in plugin config in `mkdocs.yaml`),
 - blog post/page update date based on blog post metadata,
-- separate directory for blog post documents with auto-generated separate navigation (blog posts are sorted from newest to oldest),
+- separate directory for blog post documents with auto-generated separate navigation (blog posts are sorted from newest to oldest based on blog post metadata),
 - home page set to blog post index with possibility to rename,
 - auto-adding link to full blog post from blog post index file (under each post that has teaser delimiter, if delimiter is not present, then full post is inside post index file, but is preserved in blog post navigation and site map),
 - added sub-pages for blog posts: archive, categories, tags,
-- minification plugin for graphics and documentation files.
+- minification plugin for graphics and documentation files,
+- social cards metadata injection based on document metadata (no need to edit any template).
 
 ## How To
 
@@ -53,6 +54,17 @@ More detailed information on how to setup, configure and write a blog posts and/
 A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/dev/backlog/).
 
 ## Version history
+
+### 0.5.0 - 2023.04.04
+
+Blog:
+
+- add: index blog post title is now a link to a post
+
+Social (new plugin):
+
+- add: automatic addition of open graph tags directly into HTML code (no template modification is needed) based on document meta
+- add: automatic addition of twitter tags directly into HTML code (no template modification is needed) based on document meta
 
 ### 0.4.1 - 2023-03-28
 

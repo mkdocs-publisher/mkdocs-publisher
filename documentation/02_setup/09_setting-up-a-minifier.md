@@ -5,7 +5,7 @@ status: published
 date: 2023-02-02 22:00:00
 update: 2023-03-22 22:57:34
 categories: setup plugin minifier
-description: Setting up minifier plugin
+description: Setting up a minifier plugin
 ---
 
 # Setting up a minifier plugin
@@ -318,7 +318,7 @@ CSS file size optimizations are done using [PostCSS](https://postcss.org) tool a
 
 - [PostCSS CLI](https://github.com/postcss/postcss-cli) - this is a Command Line Interface for this tool,
 - [cssnano](https://github.com/cssnano/cssnano) - compression tool plugin,
-- postcss-svgo - inline SVG files optimization plugin using an [SVGO](https://github.com/svg/svgo) tool (the same we are using for an [SVG file optimization](04_setting-up-a-minifier.md#svg-optimization)).
+- postcss-svgo - inline SVG files optimization plugin using an [SVGO](https://github.com/svg/svgo) tool (the same we are using for an [SVG file optimization](09_setting-up-a-minifier.md#svg-optimization)).
 
 This is a [Node.js](https://nodejs.org/) based tool. As we can read on the project website:
 

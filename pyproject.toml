@@ -47,6 +47,7 @@ python-frontmatter = "^1.0.0"
 mkdocs = "^1.4.2"
 mkdocs-material = "^9.1.3"
 pymdown-extensions = "^9.10"
+beautifulsoup4 = "^4.12.0"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
@@ -89,6 +90,7 @@ typeCheckingMode = "basic"
 pub-auto-nav = "mkdocs_publisher.auto_nav.plugin:AutoNavPlugin"
 pub-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"
 pub-minifier = "mkdocs_publisher.minifier.plugin:MinifierPlugin"
+pub-social = "mkdocs_publisher.social.plugin:SocialPlugin"
 
 [tool.poetry.scripts]
 publisher = "mkdocs_publisher._cli.publisher:app"
