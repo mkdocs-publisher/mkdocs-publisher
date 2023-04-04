@@ -10,6 +10,17 @@ description: Publisher for MkDocs version history
 
 # Version history
 
+### 0.5.0 – 2023.04.04
+
+Blog:
+
+- add: index blog post title is now a link to a post
+
+Social (new plugin):
+
+- add: automatic addition of open graph tags directly into HTML code (no template modification is needed) based on document meta
+- add: automatic addition of twitter tags directly into HTML code (no template modification is needed) based on document meta
+
 ### 0.4.1 - 2023-03-28
 
 General:

@@ -1,6 +1,6 @@
 ---
 date: 2023-02-28 12:30:18
-update: 2023-03-29 21:53:17
+update: 2023-04-04 23:52:23
 ---
 # Publisher plugin for MkDocs
 
@@ -12,8 +12,9 @@ update: 2023-03-29 21:53:17
 
 Publishing platform plugins for [MkDocs](https://www.mkdocs.org/) that include:
 
-- `pub-auto-nav`– building site navigation right from files (no need for manual definition in config),
+- `pub-auto-nav` – building site navigation right from files (no need for manual definition in config),
 - `pub-blog` – adds blogging capability,
+- `pub-social` – creates social cards for social media sharing using document metadata,
 - `pub-minifier` – file size optimization (good for SEO and overall page size optimization).
 
 ## Installation
@@ -47,15 +48,15 @@ List of included features (more documentation is needed):
 
 ## How To
 
-More detailed information on how to setup, configure and write a blog posts and/or documentation can be found in [documentation](https://mkusz.github.io/mkdocs-publisher/)
+More detailed information on how to set up, configure and write a blog posts and/or documentation can be found in [documentation](https://mkusz.github.io/mkdocs-publisher/)
 
-## Todo's
+## Todo
 
 A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/dev/backlog/).
 
 ## Version history
 
-### 0.5.0 - 2023.04.04
+### 0.5.0 – 2023.04.04
 
 Blog:
 
@@ -66,7 +67,7 @@ Social (new plugin):
 - add: automatic addition of open graph tags directly into HTML code (no template modification is needed) based on document meta
 - add: automatic addition of twitter tags directly into HTML code (no template modification is needed) based on document meta
 
-### 0.4.1 - 2023-03-28
+### 0.4.1 – 2023-03-28
 
 General:
 
@@ -74,7 +75,7 @@ General:
 - fix: imports of libraries
 - fix: badges links + new added
 
-### 0.4.0 - 2023-03-28
+### 0.4.0 – 2023-03-28
 
 General:
 
@@ -109,20 +110,20 @@ Auto-nav (new plugin):
 - added: directory metadata and additional settings can be set in a frontmatter of `*.md` file (default to `README.md`)
 - added: configuration of sort prefix delimiter
 - added: sort prefix removal in URL and site files
-- added: read file title from `title` meta data key
+- added: read file title from `title` metadata key
 
-### 0.3.0 - 2023.02.20
+### 0.3.0 – 2023.02.20
 
 - fixed: for wrong directory structure in site-packages after install
 
-### 0.2.0 - 2023.02.19
+### 0.2.0 – 2023.02.19
 
 - added: sub-pages for archive, categories, blog
 - added: configurable blog posts pagination with page navigation
 - added: interface language change: EN and PL (help wanted with more languages)
 - added: possibility to override for all interface text elements
 
-### 0.1.0 - initial release
+### 0.1.0 – initial release
 
 - added: blog post update date based on metadata
 - added: blog post URL link based on metadata
