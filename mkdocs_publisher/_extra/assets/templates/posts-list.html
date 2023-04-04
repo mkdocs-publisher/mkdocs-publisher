@@ -1,5 +1,5 @@
 {% for post in posts %}
-## {{ post.title }}
+## [{{ post.title }}]({{ site_url }}/{{ config.slug }}/{{ post.slug }}/)
 
 <div class="post-extra">
     <div class="col">
@@ -19,7 +19,9 @@
 
 <div class="post-link">
 {% if post.is_teaser %}
-    <a href="{{ site_url }}/{{ config.slug }}/{{ post.slug }}/">{{ translation.teaser_link_text }}</a>
+    <a href="{{ site_url }}/{{ config.slug }}/{{ post.slug }}/" title="{ post.title }">
+        {{ translation.teaser_link_text }}
+    </a>
 {% else %}
     &nbsp;
 {% endif %}

@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width,initial-scale=1"name="viewport">
-<meta content="Setting up a blog plugin"name="description">
+<meta content="Setting up social cards plugin"name="description">
 <meta content="Maciej 'maQ' Kusz"name="author">
-<link href="https://mkusz.github.io/mkdocs-publisher/setup/setting-up-a-blog"rel="canonical">
-<link href="../setting-up-auto-nav"rel="prev">
-<link href="../setting-up-a-social-cards"rel="next">
+<link href="https://mkusz.github.io/mkdocs-publisher/setup/setting-up-a-social-cards"rel="canonical">
+<link href="../setting-up-a-blog"rel="prev">
+<link href="../setting-up-a-minifier"rel="next">
 <link href="../../assets/images/favicon.png"rel="icon">
 <meta content="mkdocs-1.4.2, mkdocs-material-9.1.3"name="generator">
 <title>
-Setting up a blog - MkDocs Publisher
+Setting up social cards - MkDocs Publisher
 </title>
 <link href="../../assets/stylesheets/main.c4a75a56.min.css"rel="stylesheet">
 <link href="../../assets/stylesheets/palette.a0c5b2b5.min.css"rel="stylesheet">
@@ -22,14 +22,14 @@ Setting up a blog - MkDocs Publisher
 <link href="../../assets/stylesheets/blog.min.css"rel="stylesheet">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta content="article"property="og:type">
-<meta content="Setting up a blog"property="og:title">
-<meta content="Setting up a blog plugin"property="og:description">
+<meta content="Setting up social cards"property="og:title">
+<meta content="Setting up social cards plugin"property="og:description">
 <meta content="MkDocs Publisher"property="og:site_name">
 <meta content="en_us"property="og:locale">
-<meta content="https://mkusz.github.io/mkdocs-publisher/setup/setting-up-a-blog"property="og:url">
+<meta content="https://mkusz.github.io/mkdocs-publisher/setup/setting-up-a-social-cards"property="og:url">
 <meta content="summary"property="twitter:card">
-<meta content="Setting up a blog"property="twitter:title">
-<meta content="Setting up a blog plugin"property="twitter:description">
+<meta content="Setting up social cards"property="twitter:title">
+<meta content="Setting up social cards plugin"property="twitter:description">
 </head>
 <body data-md-color-accent="orange"data-md-color-primary="orange"data-md-color-scheme="default"dir="ltr">
 <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
@@ -38,7 +38,7 @@ Setting up a blog - MkDocs Publisher
 <label for="__drawer"class="md-overlay">
 </label>
 <div data-md-component="skip">
-<a href="#setting-up-a-blog-plugin"class="md-skip">
+<a href="#setting-up-social-cards-plugin"class="md-skip">
 Skip to content
 </a>
 </div>
@@ -67,7 +67,7 @@ MkDocs Publisher
 </div>
 <div class="md-header__topic"data-md-component="header-topic">
 <span class="md-ellipsis">
-Setting up a blog
+Setting up social cards
 </span>
 </div>
 </div>
@@ -224,7 +224,7 @@ Home
 </a>
 </li>
 <li class="md-nav__item md-nav__item--nested md-nav__item--active">
-<input type="checkbox"id="__nav_2"checked class="md-toggle md-nav__toggle">
+<input type="checkbox"id="__nav_2"class="md-toggle md-nav__toggle"checked>
 <label for="__nav_2"class="md-nav__link"id="__nav_2_label"tabindex="0">
 Setup
 <span class="md-icon md-nav__icon">
@@ -247,15 +247,20 @@ Installation
 Setting up an auto-nav
 </a>
 </li>
+<li class="md-nav__item">
+<a href="../setting-up-a-blog"class="md-nav__link">
+Setting up a blog
+</a>
+</li>
 <li class="md-nav__item md-nav__item--active">
 <input type="checkbox"id="__toc"class="md-toggle md-nav__toggle">
 <label for="__toc"class="md-nav__link md-nav__link--active">
-Setting up a blog
+Setting up social cards
 <span class="md-icon md-nav__icon">
 </span>
 </label>
 <a href="."class="md-nav__link md-nav__link--active">
-Setting up a blog
+Setting up social cards
 </a>
 <nav class="md-nav md-nav--secondary"aria-label="Table of contents">
 <label for="__toc"class="md-nav__title">
@@ -265,35 +270,40 @@ Table of contents
 </label>
 <ul class="md-nav__list"data-md-scrollfix=""data-md-component="toc">
 <li class="md-nav__item">
+<a href="#document-metadata"class="md-nav__link">
+Document metadata
+</a>
+</li>
+<li class="md-nav__item">
 <a href="#configuration"class="md-nav__link">
 Configuration
 </a>
 <nav class="md-nav"aria-label="Configuration">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a href="#enable-blog"class="md-nav__link">
-Enable blog
+<a href="#enable-social-cards"class="md-nav__link">
+Enable social cards
 </a>
 </li>
 <li class="md-nav__item">
 <a href="#settings"class="md-nav__link">
 Settings
 </a>
-</li>
-<li class="md-nav__item">
-<a href="#directories"class="md-nav__link">
-Directories
-</a>
-</li>
-<li class="md-nav__item">
-<a href="#language"class="md-nav__link">
-Language
-</a>
-<nav class="md-nav"aria-label="Language">
+<nav class="md-nav"aria-label="Settings">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a href="#translation"class="md-nav__link">
-Translation
+<a href="#open-graph-cards"class="md-nav__link">
+Open Graph cards
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#twitter-cards"class="md-nav__link">
+Twitter cards
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#metadata-keys-names"class="md-nav__link">
+Metadata keys names
 </a>
 </li>
 </ul>
@@ -302,23 +312,8 @@ Translation
 </ul>
 </nav>
 </li>
-<li class="md-nav__item">
-<a href="#usage"class="md-nav__link">
-Usage
-</a>
-</li>
-<li class="md-nav__item">
-<a href="#customization"class="md-nav__link">
-Customization
-</a>
-</li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a href="../setting-up-a-social-cards"class="md-nav__link">
-Setting up social cards
-</a>
 </li>
 <li class="md-nav__item">
 <a href="../setting-up-a-minifier"class="md-nav__link">
@@ -516,35 +511,40 @@ Table of contents
 </label>
 <ul class="md-nav__list"data-md-scrollfix=""data-md-component="toc">
 <li class="md-nav__item">
+<a href="#document-metadata"class="md-nav__link">
+Document metadata
+</a>
+</li>
+<li class="md-nav__item">
 <a href="#configuration"class="md-nav__link">
 Configuration
 </a>
 <nav class="md-nav"aria-label="Configuration">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a href="#enable-blog"class="md-nav__link">
-Enable blog
+<a href="#enable-social-cards"class="md-nav__link">
+Enable social cards
 </a>
 </li>
 <li class="md-nav__item">
 <a href="#settings"class="md-nav__link">
 Settings
 </a>
-</li>
-<li class="md-nav__item">
-<a href="#directories"class="md-nav__link">
-Directories
-</a>
-</li>
-<li class="md-nav__item">
-<a href="#language"class="md-nav__link">
-Language
-</a>
-<nav class="md-nav"aria-label="Language">
+<nav class="md-nav"aria-label="Settings">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a href="#translation"class="md-nav__link">
-Translation
+<a href="#open-graph-cards"class="md-nav__link">
+Open Graph cards
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#twitter-cards"class="md-nav__link">
+Twitter cards
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#metadata-keys-names"class="md-nav__link">
+Metadata keys names
 </a>
 </li>
 </ul>
@@ -552,16 +552,6 @@ Translation
 </li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a href="#usage"class="md-nav__link">
-Usage
-</a>
-</li>
-<li class="md-nav__item">
-<a href="#customization"class="md-nav__link">
-Customization
-</a>
 </li>
 </ul>
 </nav>
@@ -570,80 +560,163 @@ Customization
 </div>
 <div class="md-content"data-md-component="content">
 <article class="md-typeset md-content__inner">
-<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/documentation/02_setup/03_setting-up-a-blog.md"class="md-icon md-content__button"title="Edit this page">
+<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/documentation/02_setup/04_setting-up-a-social-cards.md"class="md-icon md-content__button"title="Edit this page">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z">
 </path>
 </svg>
 </a>
-<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/documentation/02_setup/03_setting-up-a-blog.md"class="md-icon md-content__button"title="View source of this page">
+<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/documentation/02_setup/04_setting-up-a-social-cards.md"class="md-icon md-content__button"title="View source of this page">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z">
 </path>
 </svg>
 </a>
-<h1 id="setting-up-a-blog-plugin">
-Setting up a blog plugin
-<a href="#setting-up-a-blog-plugin"class="headerlink"title="Permanent link">
+<h1 id="setting-up-social-cards-plugin">
+Setting up social cards plugin
+<a href="#setting-up-social-cards-plugin"class="headerlink"title="Permanent link">
 ¶
 </a>
 </h1>
 <p>
-Publisher for MkDocs allows you to create a blog. A blog can be a sidecar for your current documentation, or it can be configured as a standalone. The entire blogging engine is created and preconfigured, so you can focus on content creation. It will handle creation of:
+When you are a blogger or a person who wants to publish some documentation, book or any other piece of written text, you probably also want to share it over social media. Most platforms (like Facebook, LinkedIn, etc.) uses some web page metadata called
+<a href="https://ogp.me">
+Open Graph
+</a>
+. Twitter is using part of this data and some additional metadata called
+<a href="https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards">
+Twitter Cards
+</a>
+. No matter if you want to share your text with Facebook or Twitter, MkDocs Publisher is here to help you with this task and is doing it (almost) fully automatically. You don't have to edit any template like it's needed when you would like to use similar functionality from
+<a href="https://squidfunk.github.io/mkdocs-material/setup/setting-up-social-cards/?h=social">
+Material for MkDosc
+</a>
+theme (at least it's true for
+<code>
+v9.1.5
+</code>
+). At this time (MkDocs Publisher
+<code>
+v0.5.0
+</code>
+) it's not possible to auto-generate a whole social card (this task is added to the
+<a href="../../dev/backlog">
+backlog
+</a>
+). However, it's possible to add your image as a preview with additional description, etc.
+</p>
+<h2 id="document-metadata">
+Document metadata
+<a href="#document-metadata"class="headerlink"title="Permanent link">
+¶
+</a>
+</h2>
+<p>
+Markdown documents can contain additional metadata that is not rendered by MkDocs. This metadata is located at the beginning of the file (more information about this you can found in MkDocs documentation in
+<a href="https://www.mkdocs.org/user-guide/writing-your-docs/#meta-data">
+Meta-Data section
+</a>
+).
+</p>
+<p>
+Some data used by social cards is global (like site name) but some are unique per document. Data needed and optional that is needed by social card is:
 </p>
 <ul>
 <li>
-indexes,
+(required)
+<code>
+title
+</code>
+- document title (30–65 characters),
 </li>
 <li>
-archive,
+(required)
+<code>
+description
+</code>
+- short document description (120–350 characters),
 </li>
 <li>
-categories,
-</li>
-<li>
-tags,
-</li>
-<li>
-pagination.
+(optional)
+<code>
+image
+</code>
+- link to an image (1200×630 pixels).
 </li>
 </ul>
+<div class="tabbed-alternate tabbed-set"data-tabs="1:2">
+<input type="radio"id="yaml-style-meta-data"name="__tabbed_1"checked>
+<input type="radio"id="multimarkdown-style-meta-data"name="__tabbed_1">
+<div class="tabbed-labels">
+<label for="yaml-style-meta-data">
+YAML Style Meta-Data
+</label>
+<label for="multimarkdown-style-meta-data">
+MultiMarkdown Style Meta-Data
+</label>
+</div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>
-All the above documents are created outside
-<code>
-docs
-</code>
-directory, so they are not visible and do not interfere with your content.
+It's prefered style since more plugins supports it.
+</p>
+<div class="highlight language-markdown">
+<pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1"id="__codelineno-0-1"name="__codelineno-0-1"></a>---
+</span><span id="__span-0-2"><a href="#__codelineno-0-2"id="__codelineno-0-2"name="__codelineno-0-2"></a>title: Your document title
+</span><span id="__span-0-3"><a href="#__codelineno-0-3"id="__codelineno-0-3"name="__codelineno-0-3"></a>description: A short description of document content that encourage to read it
+</span><span id="__span-0-4"><a href="#__codelineno-0-4"id="__codelineno-0-4"name="__codelineno-0-4"></a><span class="gu">image: /some/url/to/an/image.jpg</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5"id="__codelineno-0-5"name="__codelineno-0-5"></a><span class="gu">---</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6"id="__codelineno-0-6"name="__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a href="#__codelineno-0-7"id="__codelineno-0-7"name="__codelineno-0-7"></a>This is the first paragraph of the document.
+</span></code></pre>
+</div>
+</div>
+<div class="tabbed-block">
+<p>
+This style is NOT prefered since not all plugins supports it.
+</p>
+<div class="highlight language-markdown">
+<pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1"id="__codelineno-1-1"name="__codelineno-1-1"></a>Title: Your document title
+</span><span id="__span-1-2"><a href="#__codelineno-1-2"id="__codelineno-1-2"name="__codelineno-1-2"></a>Description: A short description of document content that encourage to read it
+</span><span id="__span-1-3"><a href="#__codelineno-1-3"id="__codelineno-1-3"name="__codelineno-1-3"></a>Image: /some/url/to/an/image.jpg
+</span><span id="__span-1-4"><a href="#__codelineno-1-4"id="__codelineno-1-4"name="__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a href="#__codelineno-1-5"id="__codelineno-1-5"name="__codelineno-1-5"></a>This is the first paragraph of the document.
+</span></code></pre>
+</div>
+</div>
+</div>
+
+
+</div>
+<div class="admonition warning">
+<p class="admonition-title">
+Warning
 </p>
 <p>
-This documentation contains a
-<a href="../../blog/">
-blog
-</a>
-that is created using this plugin, so you can take a look at a living example.
+If any of the required key is missing, social card will not be included in a web page.
 </p>
+</div>
 <h2 id="configuration">
 Configuration
 <a href="#configuration"class="headerlink"title="Permanent link">
 ¶
 </a>
 </h2>
-<h3 id="enable-blog">
-Enable blog
-<a href="#enable-blog"class="headerlink"title="Permanent link">
+<h3 id="enable-social-cards">
+Enable social cards
+<a href="#enable-social-cards"class="headerlink"title="Permanent link">
 ¶
 </a>
 </h3>
 <p>
-To enable the built-in blog plugin, the following lines have to be added to
+To enable the built-in social cards plugin, the following lines have to be added to
 <code>
 mkdocs.yml
 </code>
 file:
 </p>
-<div class="tabbed-alternate tabbed-set"data-tabs="1:2">
-<input type="radio"id="mkdocsyml"name="__tabbed_1"checked>
-<input type="radio"id="_1"name="__tabbed_1">
+<div class="tabbed-alternate tabbed-set"data-tabs="2:1">
+<input type="radio"id="mkdocsyml"name="__tabbed_2"checked>
 <div class="tabbed-labels">
 <label for="mkdocsyml">
 <span class="twemoji">
@@ -654,95 +727,49 @@ file:
 </span>
 mkdocs.yml
 </label>
-<label for="_1">
-<span class="twemoji">
-<svg viewbox="0 0 576 512"xmlns="http://www.w3.org/2000/svg">
-<!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.-->
-<path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z">
-</path>
-</svg>
-</span>
-</label>
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1"id="__codelineno-0-1"name="__codelineno-0-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2"id="__codelineno-0-2"name="__codelineno-0-2"></a><span class="hll"><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pub-blog</span>
+<pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1"id="__codelineno-2-1"name="__codelineno-2-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2"id="__codelineno-2-2"name="__codelineno-2-2"></a><span class="hll"><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pub-social</span>
 </span></span></code></pre>
 </div>
 </div>
-<div class="tabbed-block">
-<p>
-By default, the blogging plugin assumes that blog posts are located inside
-<code>
-blog
-</code>
-subdirectory. You have to create this directory manually, so the directory structure will look like this:
-</p>
-<div class="highlight language-text">
-<pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1"id="__codelineno-1-1"name="__codelineno-1-1"></a>.
-</span><span id="__span-1-2"><a href="#__codelineno-1-2"id="__codelineno-1-2"name="__codelineno-1-2"></a>├─ docs/
-</span><span id="__span-1-3"><a href="#__codelineno-1-3"id="__codelineno-1-3"name="__codelineno-1-3"></a><span class="hll">│  └─ blog/
-</span></span><span id="__span-1-4"><a href="#__codelineno-1-4"id="__codelineno-1-4"name="__codelineno-1-4"></a>└─ mkdocs.yml
-</span></code></pre>
-</div>
-</div>
 </div>
 
-
 </div>
-<p>
-The last thing is to add a blog to a site navigation. There are 3 ways to do it:
-</p>
-<div class="tabbed-alternate tabbed-set"data-tabs="2:3">
-<input type="radio"id="using-pub-auto-nav-plugin"name="__tabbed_2"checked>
-<input type="radio"id="add-to-existing-site-layout"name="__tabbed_2">
-<input type="radio"id="standalone-mode"name="__tabbed_2">
-<div class="tabbed-labels">
-<label for="using-pub-auto-nav-plugin">
-Using
-<em>
-pub-auto-nav
-</em>
-plugin
-</label>
-<label for="add-to-existing-site-layout">
-Add to existing site layout
-</label>
-<label for="standalone-mode">
-Standalone mode
-</label>
-</div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>
-When
-<a href="../setting-up-auto-nav">
-pub-auto-nav
+<h3 id="settings">
+Settings
+<a href="#settings"class="headerlink"title="Permanent link">
+¶
 </a>
-plugin is configured and directory for blog posts is set up, there is nothing more left to be configured. All the things related to creating navigation section will be handled automatically by the
-<em>
-pub-auto-nav
-</em>
-plugin.
-</p>
-</div>
-<div class="tabbed-block">
+</h3>
+<h4 id="open-graph-cards">
+Open Graph cards
+<a href="#open-graph-cards"class="headerlink"title="Permanent link">
+¶
+</a>
+</h4>
+<dl>
+<dt>
+<a href="#+social.og.enable"id="+social.og.enable">
+enabled
+</a>
+</dt>
+<dd>
 <p>
-If an existing pages are created in MkDocs, it's simple to just add a blog functionality. To achieve it,
-<em>
-Any name
-</em>
-with path to a blog subdirectory name (by default it's a
+<span class="twemoji">
+<svg viewbox="0 0 16 16"xmlns="http://www.w3.org/2000/svg">
+<path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z">
+</path>
+</svg>
+</span>
+Default:
 <code>
-blog
+true
 </code>
-) has to be added to the
-<code>
-mkdocs.yml
-</code>
-file and blogging engine will handle everything else.
+- this option gives you an ability to enable or disable an Open Graph cards:
 </p>
 <div class="tabbed-alternate tabbed-set"data-tabs="3:1">
 <input type="radio"id="mkdocsyml_1"name="__tabbed_3"checked>
@@ -760,24 +787,35 @@ mkdocs.yml
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1"id="__codelineno-2-1"name="__codelineno-2-1"></a><span class="nt">nav</span><span class="p">:</span>
-</span><span id="__span-2-2"><a href="#__codelineno-2-2"id="__codelineno-2-2"name="__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"> </span><span class="c1"># Previous navigation elements</span>
-</span><span id="__span-2-3"><a href="#__codelineno-2-3"id="__codelineno-2-3"name="__codelineno-2-3"></a><span class="hll"><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Any name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blog</span>
-</span></span><span id="__span-2-4"><a href="#__codelineno-2-4"id="__codelineno-2-4"name="__codelineno-2-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"> </span><span class="c1"># Next navigation elements</span>
-</span></code></pre>
+<pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1"id="__codelineno-3-1"name="__codelineno-3-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-3-2"><a href="#__codelineno-3-2"id="__codelineno-3-2"name="__codelineno-3-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-social</span><span class="p">:</span>
+</span><span id="__span-3-3"><a href="#__codelineno-3-3"id="__codelineno-3-3"name="__codelineno-3-3"></a><span class="hll"><span class="w">      </span><span class="nt">og</span><span class="p">:</span>
+</span></span><span id="__span-3-4"><a href="#__codelineno-3-4"id="__codelineno-3-4"name="__codelineno-3-4"></a><span class="hll"><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></span></code></pre>
 </div>
 </div>
 </div>
 
 </div>
-</div>
-<div class="tabbed-block">
+</dd>
+<dt>
+<a href="#+social.og.locale"id="+social.og.locale">
+locale
+</a>
+</dt>
+<dd>
 <p>
-A standalone mode gives a posibility to setup a MkDocs for just a pure blogging experience. Blog will become a main page. To make it happen, the following lines have to be added to
+<span class="twemoji">
+<svg viewbox="0 0 16 16"xmlns="http://www.w3.org/2000/svg">
+<path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z">
+</path>
+</svg>
+</span>
+Default:
 <code>
-mkdocs.yml
+en_US
 </code>
-file:
+- this option gives you an ability to set a locale of an Open Graph cards:
 </p>
 <div class="tabbed-alternate tabbed-set"data-tabs="4:1">
 <input type="radio"id="mkdocsyml_2"name="__tabbed_4"checked>
@@ -795,9 +833,10 @@ mkdocs.yml
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1"id="__codelineno-3-1"name="__codelineno-3-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-3-2"><a href="#__codelineno-3-2"id="__codelineno-3-2"name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-3-3"><a href="#__codelineno-3-3"id="__codelineno-3-3"name="__codelineno-3-3"></a><span class="hll"><span class="w">    </span><span class="nt">start_page</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1"id="__codelineno-4-1"name="__codelineno-4-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-4-2"><a href="#__codelineno-4-2"id="__codelineno-4-2"name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-social</span><span class="p">:</span>
+</span><span id="__span-4-3"><a href="#__codelineno-4-3"id="__codelineno-4-3"name="__codelineno-4-3"></a><span class="hll"><span class="w">      </span><span class="nt">og</span><span class="p">:</span>
+</span></span><span id="__span-4-4"><a href="#__codelineno-4-4"id="__codelineno-4-4"name="__codelineno-4-4"></a><span class="hll"><span class="w">        </span><span class="nt">locale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">en_us</span>
 </span></span></code></pre>
 </div>
 </div>
@@ -805,24 +844,24 @@ mkdocs.yml
 
 </div>
 <p>
-Documents created outisde directory where blog posts are stored, will be considered as out of navigation configuration but still rendred. To use them, you have to put links to them inside blog posts or by editing thame template files.
+There is a limited set of
+<a href="https://developer.yoast.com/features/opengraph/api/changing-og-locale-output/">
+possible values
+</a>
+.
 </p>
-</div>
-</div>
-
-
-
-</div>
-<h3 id="settings">
-Settings
-<a href="#settings"class="headerlink"title="Permanent link">
+</dd>
+</dl>
+<h4 id="twitter-cards">
+Twitter cards
+<a href="#twitter-cards"class="headerlink"title="Permanent link">
 ¶
 </a>
-</h3>
+</h4>
 <dl>
 <dt>
-<a href="#+blog.slug"id="+blog.slug">
-slug
+<a href="#+social.twitter.enable"id="+social.twitter.enable">
+enabled
 </a>
 </dt>
 <dd>
@@ -835,17 +874,9 @@ slug
 </span>
 Default:
 <code>
-blog
+true
 </code>
-- this option gives you an ability to go to specify your blog direct URL, like
-<code>
-https://yourblog.com/blog/
-</code>
-. The
-<code>
-blog
-</code>
-part of the URL can be configured to a non-standard value:
+- this option gives you an ability to enable or disable a Twitter Cards:
 </p>
 <div class="tabbed-alternate tabbed-set"data-tabs="5:1">
 <input type="radio"id="mkdocsyml_3"name="__tabbed_5"checked>
@@ -863,9 +894,10 @@ mkdocs.yml
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1"id="__codelineno-4-1"name="__codelineno-4-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-4-2"><a href="#__codelineno-4-2"id="__codelineno-4-2"name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-4-3"><a href="#__codelineno-4-3"id="__codelineno-4-3"name="__codelineno-4-3"></a><span class="hll"><span class="w">      </span><span class="nt">slug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blog</span>
+<pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1"id="__codelineno-5-1"name="__codelineno-5-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-5-2"><a href="#__codelineno-5-2"id="__codelineno-5-2"name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-social</span><span class="p">:</span>
+</span><span id="__span-5-3"><a href="#__codelineno-5-3"id="__codelineno-5-3"name="__codelineno-5-3"></a><span class="hll"><span class="w">      </span><span class="nt">twitter</span><span class="p">:</span>
+</span></span><span id="__span-5-4"><a href="#__codelineno-5-4"id="__codelineno-5-4"name="__codelineno-5-4"></a><span class="hll"><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></span></code></pre>
 </div>
 </div>
@@ -874,8 +906,8 @@ mkdocs.yml
 </div>
 </dd>
 <dt>
-<a href="#+blog.teaser_marker"id="+blog.teaser_marker">
-teaser_marker
+<a href="#+social.twitter.website"id="+social.twitter.website">
+website
 </a>
 </dt>
 <dd>
@@ -888,13 +920,13 @@ teaser_marker
 </span>
 Default:
 <code>
-&lt;!-- more --&gt;
+''
 </code>
-- this option gives you an ability to split a blog posts that are a massive chunk of text into two parts: blog post teaser visible on blog posts index page and the full article. To split the blog post, you have to put a
-<code>
-&lt;!-- more --&gt;
-</code>
-in some line inside a content of your blog post. This value is a valid HTML comment, so it will not be rendered. If, for any reason, you need to change it, you can do it by adding the following configuration key:
+- this option gives you an ability to add a Twitter
+<a href="https://business.twitter.com/en/basics/create-a-twitter-business-profile.html">
+website account
+</a>
+name:
 </p>
 <div class="tabbed-alternate tabbed-set"data-tabs="6:1">
 <input type="radio"id="mkdocsyml_4"name="__tabbed_6"checked>
@@ -911,20 +943,21 @@ mkdocs.yml
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
+<div class="highlight language-yaml">
+<pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1"id="__codelineno-6-1"name="__codelineno-6-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-6-2"><a href="#__codelineno-6-2"id="__codelineno-6-2"name="__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-social</span><span class="p">:</span>
+</span><span id="__span-6-3"><a href="#__codelineno-6-3"id="__codelineno-6-3"name="__codelineno-6-3"></a><span class="hll"><span class="w">      </span><span class="nt">twitter</span><span class="p">:</span>
+</span></span><span id="__span-6-4"><a href="#__codelineno-6-4"id="__codelineno-6-4"name="__codelineno-6-4"></a><span class="hll"><span class="w">        </span><span class="nt">website</span><span class="p">:</span><span class="w"> </span><span class="err">@</span><span class="l l-Scalar l-Scalar-Plain">website</span>
+</span></span></code></pre>
+</div>
 </div>
 </div>
 
 </div>
-<div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1"id="__codelineno-5-1"name="__codelineno-5-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-5-2"><a href="#__codelineno-5-2"id="__codelineno-5-2"name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-5-3"><a href="#__codelineno-5-3"id="__codelineno-5-3"name="__codelineno-5-3"></a><span class="hll"><span class="w">      </span><span class="nt">teaser_marker</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">&lt;!-- more --&gt;`</span>
-</span></span></code></pre>
-</div>
 </dd>
 <dt>
-<a href="#+blog.pagination"id="+blog.pagination">
-pagination
+<a href="#+social.twitter.author"id="+social.twitter.author">
+author
 </a>
 </dt>
 <dd>
@@ -937,9 +970,13 @@ pagination
 </span>
 Default:
 <code>
-5
+''
 </code>
-- this option setup number of When you gather over time some amount of blog posts, their index even with short teasers, they can take quite much space over a single page and scrolling down is not a convenient solution. To avoid this, blogging engine allows splitting index pages when they contain a certain amount of blog posts. By default, it's set to 5, but you can change it by adding a following configuration key:
+- this option gives you an ability to add a Twitter
+<a href="https://help.twitter.com/en/using-twitter/create-twitter-account">
+author account
+</a>
+name:
 </p>
 <div class="tabbed-alternate tabbed-set"data-tabs="7:1">
 <input type="radio"id="mkdocsyml_5"name="__tabbed_7"checked>
@@ -956,31 +993,32 @@ mkdocs.yml
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
+<div class="highlight language-yaml">
+<pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1"id="__codelineno-7-1"name="__codelineno-7-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-7-2"><a href="#__codelineno-7-2"id="__codelineno-7-2"name="__codelineno-7-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-social</span><span class="p">:</span>
+</span><span id="__span-7-3"><a href="#__codelineno-7-3"id="__codelineno-7-3"name="__codelineno-7-3"></a><span class="hll"><span class="w">      </span><span class="nt">twitter</span><span class="p">:</span>
+</span></span><span id="__span-7-4"><a href="#__codelineno-7-4"id="__codelineno-7-4"name="__codelineno-7-4"></a><span class="hll"><span class="w">        </span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="err">@</span><span class="l l-Scalar l-Scalar-Plain">author</span>
+</span></span></code></pre>
+</div>
 </div>
 </div>
 
 </div>
-<div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1"id="__codelineno-6-1"name="__codelineno-6-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-6-2"><a href="#__codelineno-6-2"id="__codelineno-6-2"name="__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-6-3"><a href="#__codelineno-6-3"id="__codelineno-6-3"name="__codelineno-6-3"></a><span class="hll"><span class="w">      </span><span class="nt">posts_per_page</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
-</span></span></code></pre>
-</div>
 </dd>
 </dl>
-<h3 id="directories">
-Directories
-<a href="#directories"class="headerlink"title="Permanent link">
+<h4 id="metadata-keys-names">
+Metadata keys names
+<a href="#metadata-keys-names"class="headerlink"title="Permanent link">
 ¶
 </a>
-</h3>
+</h4>
 <p>
-This plugin to work correctly, needs to create and/or use some directories. Those settings should be considered as advanced and for day to day use, you should not change them.
+You can change a name of the keys used to store metadata used to create social cards.
 </p>
 <dl>
 <dt>
-<a href="#+blog.temp_dir"id="+blog.temp_dir">
-temp_dir
+<a href="#+social.meta_keys.title_key"id="+social.meta_keys.title_key">
+title_key
 </a>
 </dt>
 <dd>
@@ -993,13 +1031,12 @@ temp_dir
 </span>
 Default:
 <code>
-.temp
+title
 </code>
-- temporary directory is used by a blog engine to create an index files with a blog post teasers and other files like a list of archive, categories, and tags pages.
+- this option gives you an ability to change a metadata title key used to create a social card:
 </p>
-<div class="tabbed-alternate tabbed-set"data-tabs="8:2">
+<div class="tabbed-alternate tabbed-set"data-tabs="8:1">
 <input type="radio"id="mkdocsyml_6"name="__tabbed_8"checked>
-<input type="radio"id="_2"name="__tabbed_8">
 <div class="tabbed-labels">
 <label for="mkdocsyml_6">
 <span class="twemoji">
@@ -1010,54 +1047,24 @@ Default:
 </span>
 mkdocs.yml
 </label>
-<label for="_2">
-<span class="twemoji">
-<svg viewbox="0 0 576 512"xmlns="http://www.w3.org/2000/svg">
-<!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.-->
-<path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z">
-</path>
-</svg>
-</span>
-</label>
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1"id="__codelineno-7-1"name="__codelineno-7-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-7-2"><a href="#__codelineno-7-2"id="__codelineno-7-2"name="__codelineno-7-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-7-3"><a href="#__codelineno-7-3"id="__codelineno-7-3"name="__codelineno-7-3"></a><span class="hll"><span class="w">      </span><span class="nt">temp_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.temp</span>
+<pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1"id="__codelineno-8-1"name="__codelineno-8-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-8-2"><a href="#__codelineno-8-2"id="__codelineno-8-2"name="__codelineno-8-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-social</span><span class="p">:</span>
+</span><span id="__span-8-3"><a href="#__codelineno-8-3"id="__codelineno-8-3"name="__codelineno-8-3"></a><span class="hll"><span class="w">      </span><span class="nt">meta_keys</span><span class="p">:</span>
+</span></span><span id="__span-8-4"><a href="#__codelineno-8-4"id="__codelineno-8-4"name="__codelineno-8-4"></a><span class="hll"><span class="w">         </span><span class="nt">title_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">title</span>
 </span></span></code></pre>
 </div>
 </div>
-<div class="tabbed-block">
-<p>
-Temporary directory is created at the same level as main
-<code>
-docs
-</code>
-directory and
-<code>
-mkdocs.yml
-</code>
-configuration file.
-</p>
-<div class="highlight language-text">
-<pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1"id="__codelineno-8-1"name="__codelineno-8-1"></a>.
-</span><span id="__span-8-2"><a href="#__codelineno-8-2"id="__codelineno-8-2"name="__codelineno-8-2"></a><span class="hll">├─ .temp/
-</span></span><span id="__span-8-3"><a href="#__codelineno-8-3"id="__codelineno-8-3"name="__codelineno-8-3"></a>├─ docs/
-</span><span id="__span-8-4"><a href="#__codelineno-8-4"id="__codelineno-8-4"name="__codelineno-8-4"></a>│  └─ blog/
-</span><span id="__span-8-5"><a href="#__codelineno-8-5"id="__codelineno-8-5"name="__codelineno-8-5"></a>└─ mkdocs.yml
-</span></code></pre>
 </div>
-</div>
-</div>
-
 
 </div>
 </dd>
 <dt>
-<a href="#+blog.archive_subdir"id="+blog.archive_subdir">
-archive_subdir
+<a href="#+social.meta_keys.description_key"id="+social.meta_keys.description_key">
+description_key
 </a>
 </dt>
 <dd>
@@ -1070,13 +1077,12 @@ archive_subdir
 </span>
 Default:
 <code>
-archive
+description
 </code>
-- archive subdirectory is used to store dynamically generated documents that contain archive indexes.
+- this option gives you an ability to change a metadata description key used to create a social card:
 </p>
-<div class="tabbed-alternate tabbed-set"data-tabs="9:2">
+<div class="tabbed-alternate tabbed-set"data-tabs="9:1">
 <input type="radio"id="mkdocsyml_7"name="__tabbed_9"checked>
-<input type="radio"id="_3"name="__tabbed_9">
 <div class="tabbed-labels">
 <label for="mkdocsyml_7">
 <span class="twemoji">
@@ -1087,37 +1093,15 @@ archive
 </span>
 mkdocs.yml
 </label>
-<label for="_3">
-<span class="twemoji">
-<svg viewbox="0 0 576 512"xmlns="http://www.w3.org/2000/svg">
-<!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.-->
-<path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z">
-</path>
-</svg>
-</span>
-</label>
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight language-yaml">
 <pre><span></span><code><span id="__span-9-1"><a href="#__codelineno-9-1"id="__codelineno-9-1"name="__codelineno-9-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-9-2"><a href="#__codelineno-9-2"id="__codelineno-9-2"name="__codelineno-9-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-9-3"><a href="#__codelineno-9-3"id="__codelineno-9-3"name="__codelineno-9-3"></a><span class="hll"><span class="w">      </span><span class="nt">archive_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">archive</span>
+</span><span id="__span-9-2"><a href="#__codelineno-9-2"id="__codelineno-9-2"name="__codelineno-9-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-social</span><span class="p">:</span>
+</span><span id="__span-9-3"><a href="#__codelineno-9-3"id="__codelineno-9-3"name="__codelineno-9-3"></a><span class="hll"><span class="w">      </span><span class="nt">meta_keys</span><span class="p">:</span>
+</span></span><span id="__span-9-4"><a href="#__codelineno-9-4"id="__codelineno-9-4"name="__codelineno-9-4"></a><span class="hll"><span class="w">         </span><span class="nt">description_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">description</span>
 </span></span></code></pre>
-</div>
-</div>
-<div class="tabbed-block">
-<p>
-Archive directory is a subdirectory to a temporary directory.
-</p>
-<div class="highlight language-text">
-<pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1"id="__codelineno-10-1"name="__codelineno-10-1"></a>.
-</span><span id="__span-10-2"><a href="#__codelineno-10-2"id="__codelineno-10-2"name="__codelineno-10-2"></a><span class="hll">├─ .temp/
-</span></span><span id="__span-10-3"><a href="#__codelineno-10-3"id="__codelineno-10-3"name="__codelineno-10-3"></a><span class="hll">│  └─ archive/
-</span></span><span id="__span-10-4"><a href="#__codelineno-10-4"id="__codelineno-10-4"name="__codelineno-10-4"></a>├─ docs/
-</span><span id="__span-10-5"><a href="#__codelineno-10-5"id="__codelineno-10-5"name="__codelineno-10-5"></a>│  └─ blog/
-</span><span id="__span-10-6"><a href="#__codelineno-10-6"id="__codelineno-10-6"name="__codelineno-10-6"></a>└─ mkdocs.yml
-</span></code></pre>
 </div>
 </div>
 </div>
@@ -1125,8 +1109,8 @@ Archive directory is a subdirectory to a temporary directory.
 </div>
 </dd>
 <dt>
-<a href="#+blog.categories_subdir"id="+blog.categories_subdir">
-categories_subdir
+<a href="#+social.meta_keys.image_key"id="+social.meta_keys.image_key">
+image_key
 </a>
 </dt>
 <dd>
@@ -1139,13 +1123,12 @@ categories_subdir
 </span>
 Default:
 <code>
-categories
+title
 </code>
-- categories subdirectory is used to store dynamically generated documents that contain categories indexes.
+- this option gives you an ability to change a metadata image key used to create a social card:
 </p>
-<div class="tabbed-alternate tabbed-set"data-tabs="10:2">
+<div class="tabbed-alternate tabbed-set"data-tabs="10:1">
 <input type="radio"id="mkdocsyml_8"name="__tabbed_10"checked>
-<input type="radio"id="_4"name="__tabbed_10">
 <div class="tabbed-labels">
 <label for="mkdocsyml_8">
 <span class="twemoji">
@@ -1156,249 +1139,22 @@ categories
 </span>
 mkdocs.yml
 </label>
-<label for="_4">
-<span class="twemoji">
-<svg viewbox="0 0 576 512"xmlns="http://www.w3.org/2000/svg">
-<!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.-->
-<path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z">
-</path>
-</svg>
-</span>
-</label>
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1"id="__codelineno-11-1"name="__codelineno-11-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-11-2"><a href="#__codelineno-11-2"id="__codelineno-11-2"name="__codelineno-11-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-11-3"><a href="#__codelineno-11-3"id="__codelineno-11-3"name="__codelineno-11-3"></a><span class="hll"><span class="w">      </span><span class="nt">categories_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">categories</span>
+<pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1"id="__codelineno-10-1"name="__codelineno-10-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-10-2"><a href="#__codelineno-10-2"id="__codelineno-10-2"name="__codelineno-10-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-social</span><span class="p">:</span>
+</span><span id="__span-10-3"><a href="#__codelineno-10-3"id="__codelineno-10-3"name="__codelineno-10-3"></a><span class="hll"><span class="w">      </span><span class="nt">meta_keys</span><span class="p">:</span>
+</span></span><span id="__span-10-4"><a href="#__codelineno-10-4"id="__codelineno-10-4"name="__codelineno-10-4"></a><span class="hll"><span class="w">         </span><span class="nt">image_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image</span>
 </span></span></code></pre>
 </div>
 </div>
-<div class="tabbed-block">
-<p>
-Categories subdirectory is a subdirectory to a temporary directory.
-</p>
-<div class="highlight language-text">
-<pre><span></span><code><span id="__span-12-1"><a href="#__codelineno-12-1"id="__codelineno-12-1"name="__codelineno-12-1"></a>.
-</span><span id="__span-12-2"><a href="#__codelineno-12-2"id="__codelineno-12-2"name="__codelineno-12-2"></a><span class="hll">├─ .temp/
-</span></span><span id="__span-12-3"><a href="#__codelineno-12-3"id="__codelineno-12-3"name="__codelineno-12-3"></a><span class="hll">│  └─ categories/
-</span></span><span id="__span-12-4"><a href="#__codelineno-12-4"id="__codelineno-12-4"name="__codelineno-12-4"></a>├─ docs/
-</span><span id="__span-12-5"><a href="#__codelineno-12-5"id="__codelineno-12-5"name="__codelineno-12-5"></a>│  └─ blog/
-</span><span id="__span-12-6"><a href="#__codelineno-12-6"id="__codelineno-12-6"name="__codelineno-12-6"></a>└─ mkdocs.yml
-</span></code></pre>
 </div>
-</div>
-</div>
-</div>
-</dd>
-<dt>
-<a href="#+blog.tags"id="+blog.tags">
-tags
-</a>
-</dt>
-<dd>
-<p>
-<span class="twemoji">
-<svg viewbox="0 0 16 16"xmlns="http://www.w3.org/2000/svg">
-<path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z">
-</path>
-</svg>
-</span>
-Default:
-<code>
-tags
-</code>
-- tags subdirectory is used to store dynamically generated documents that contain tags indexes.
-</p>
-<div class="tabbed-alternate tabbed-set"data-tabs="11:2">
-<input type="radio"id="mkdocsyml_9"name="__tabbed_11"checked>
-<input type="radio"id="_5"name="__tabbed_11">
-<div class="tabbed-labels">
-<label for="mkdocsyml_9">
-<span class="twemoji">
-<svg viewbox="0 0 16 16"xmlns="http://www.w3.org/2000/svg">
-<path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
-</path>
-</svg>
-</span>
-mkdocs.yml
-</label>
-<label for="_5">
-<span class="twemoji">
-<svg viewbox="0 0 576 512"xmlns="http://www.w3.org/2000/svg">
-<!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.-->
-<path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z">
-</path>
-</svg>
-</span>
-</label>
-</div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-13-1"><a href="#__codelineno-13-1"id="__codelineno-13-1"name="__codelineno-13-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-13-2"><a href="#__codelineno-13-2"id="__codelineno-13-2"name="__codelineno-13-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-13-3"><a href="#__codelineno-13-3"id="__codelineno-13-3"name="__codelineno-13-3"></a><span class="hll"><span class="w">      </span><span class="nt">tags_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tags</span>
-</span></span></code></pre>
-</div>
-</div>
-<div class="tabbed-block">
-</div>
-</div>
-</div>
-<p>
-Tags directory is a subdirectory to a temporary directory.
-</p>
-<div class="highlight language-text">
-<pre><span></span><code>```commandline hl_lines="2 3"
-.
-├─ .temp/
-│  └─ tags/
-├─ docs/
-│  └─ blog/
-└─ mkdocs.yml
-```
-</code></pre>
+
 </div>
 </dd>
 </dl>
-<h3 id="language">
-Language
-<a href="#language"class="headerlink"title="Permanent link">
-¶
-</a>
-</h3>
-<p>
-By default, the blogging plugin is set to use
-<em>
-English
-</em>
-(
-<code>
-en
-</code>
-) translation. Currently, available languages:
-</p>
-<ul>
-<li>
-<code>
-en
-</code>
-- English,
-</li>
-<li>
-<code>
-pl
-</code>
-- Polish.
-</li>
-</ul>
-<p>
-To set up one of the above languages, the following line has to be added to the
-<code>
-mkdocs.yml
-</code>
-file:
-</p>
-<div class="tabbed-alternate tabbed-set"data-tabs="12:1">
-<input type="radio"id="mkdocsyml_10"name="__tabbed_12"checked>
-<div class="tabbed-labels">
-<label for="mkdocsyml_10">
-<span class="twemoji">
-<svg viewbox="0 0 16 16"xmlns="http://www.w3.org/2000/svg">
-<path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
-</path>
-</svg>
-</span>
-mkdocs.yml
-</label>
-</div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-</div>
-</div>
-</div>
-<div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-15-1"><a href="#__codelineno-15-1"id="__codelineno-15-1"name="__codelineno-15-1"></a><span class="nt">plugin</span><span class="p">:</span>
-</span><span id="__span-15-2"><a href="#__codelineno-15-2"id="__codelineno-15-2"name="__codelineno-15-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-15-3"><a href="#__codelineno-15-3"id="__codelineno-15-3"name="__codelineno-15-3"></a><span class="hll"><span class="w">      </span><span class="nt">lang</span><span class="p">:</span><span class="w"> </span><span class="s">'pl'</span>
-</span></span></code></pre>
-</div>
-<h4 id="translation">
-Translation
-<a href="#translation"class="headerlink"title="Permanent link">
-¶
-</a>
-</h4>
-<p>
-If there is no language that suits you best, you can translate part of the interface by providing values for the below keys inside the configuration
-<code>
-mkdocs.yml
-</code>
-files. Providing those values overrides values for setup of a given language, and this way it's possible to change only some of them.
-</p>
-<p>
-Below, you can find a list of settings keys with English values that allow to translate some parts of the interface:
-</p>
-<div class="tabbed-alternate tabbed-set"data-tabs="13:1">
-<input type="radio"id="mkdocsyml_11"name="__tabbed_13"checked>
-<div class="tabbed-labels">
-<label for="mkdocsyml_11">
-<span class="twemoji">
-<svg viewbox="0 0 16 16"xmlns="http://www.w3.org/2000/svg">
-<path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
-</path>
-</svg>
-</span>
-mkdocs.yml
-</label>
-</div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-</div>
-</div>
-</div>
-<div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-16-1"><a href="#__codelineno-16-1"id="__codelineno-16-1"name="__codelineno-16-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-16-2"><a href="#__codelineno-16-2"id="__codelineno-16-2"name="__codelineno-16-2"></a><span class="w">  </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-16-3"><a href="#__codelineno-16-3"id="__codelineno-16-3"name="__codelineno-16-3"></a><span class="hll"><span class="w">    </span><span class="nt">translation</span><span class="p">:</span>
-</span></span><span id="__span-16-4"><a href="#__codelineno-16-4"id="__codelineno-16-4"name="__codelineno-16-4"></a><span class="hll"><span class="w">      </span><span class="nt">teaser_link_text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read more</span>
-</span></span><span id="__span-16-5"><a href="#__codelineno-16-5"id="__codelineno-16-5"name="__codelineno-16-5"></a><span class="hll"><span class="w">      </span><span class="nt">blog_page_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Blog</span>
-</span></span><span id="__span-16-6"><a href="#__codelineno-16-6"id="__codelineno-16-6"name="__codelineno-16-6"></a><span class="hll"><span class="w">      </span><span class="nt">blog_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Blog</span>
-</span></span><span id="__span-16-7"><a href="#__codelineno-16-7"id="__codelineno-16-7"name="__codelineno-16-7"></a><span class="hll"><span class="w">      </span><span class="nt">recent_blog_posts_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Recent posts</span>
-</span></span><span id="__span-16-8"><a href="#__codelineno-16-8"id="__codelineno-16-8"name="__codelineno-16-8"></a><span class="hll"><span class="w">      </span><span class="nt">archive_page_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Archive</span>
-</span></span><span id="__span-16-9"><a href="#__codelineno-16-9"id="__codelineno-16-9"name="__codelineno-16-9"></a><span class="hll"><span class="w">      </span><span class="nt">archive_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Archive</span>
-</span></span><span id="__span-16-10"><a href="#__codelineno-16-10"id="__codelineno-16-10"name="__codelineno-16-10"></a><span class="hll"><span class="w">      </span><span class="nt">categories_page_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Category</span>
-</span></span><span id="__span-16-11"><a href="#__codelineno-16-11"id="__codelineno-16-11"name="__codelineno-16-11"></a><span class="hll"><span class="w">      </span><span class="nt">categories_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Categories</span>
-</span></span><span id="__span-16-12"><a href="#__codelineno-16-12"id="__codelineno-16-12"name="__codelineno-16-12"></a><span class="hll"><span class="w">      </span><span class="nt">tags_page_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tag</span>
-</span></span><span id="__span-16-13"><a href="#__codelineno-16-13"id="__codelineno-16-13"name="__codelineno-16-13"></a><span class="hll"><span class="w">      </span><span class="nt">tags_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tags</span>
-</span></span><span id="__span-16-14"><a href="#__codelineno-16-14"id="__codelineno-16-14"name="__codelineno-16-14"></a><span class="hll"><span class="w">      </span><span class="nt">newer_posts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Newer posts</span>
-</span></span><span id="__span-16-15"><a href="#__codelineno-16-15"id="__codelineno-16-15"name="__codelineno-16-15"></a><span class="hll"><span class="w">      </span><span class="nt">older_posts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Older posts</span>
-</span></span></code></pre>
-</div>
-<h2 id="usage">
-Usage
-<a href="#usage"class="headerlink"title="Permanent link">
-¶
-</a>
-</h2>
-<p>
-More detailed usage is described in
-<a href="../../how-to-publish/first_steps">
-how to publish
-</a>
-.
-</p>
-<h2 id="customization">
-Customization
-<a href="#customization"class="headerlink"title="Permanent link">
-¶
-</a>
-</h2>
-<p>
-It's not yet implemented.
-</p>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
@@ -1413,7 +1169,7 @@ Back to top
 </main>
 <footer class="md-footer">
 <nav class="md-grid md-footer__inner"aria-label="Footer">
-<a href="../setting-up-auto-nav"class="md-footer__link md-footer__link--prev"aria-label="Previous: Setting up an auto-nav"rel="prev">
+<a href="../setting-up-a-blog"class="md-footer__link md-footer__link--prev"aria-label="Previous: Setting up a blog"rel="prev">
 <div class="md-icon md-footer__button">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z">
@@ -1425,17 +1181,17 @@ Back to top
 <span class="md-footer__direction">
 Previous
 </span>
-Setting up an auto-nav
+Setting up a blog
 </div>
 </div>
 </a>
-<a href="../setting-up-a-social-cards"class="md-footer__link md-footer__link--next"aria-label="Next: Setting up social cards"rel="next">
+<a href="../setting-up-a-minifier"class="md-footer__link md-footer__link--next"aria-label="Next: Setting up a minifier"rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
 Next
 </span>
-Setting up social cards
+Setting up a minifier
 </div>
 </div>
 <div class="md-icon md-footer__button">

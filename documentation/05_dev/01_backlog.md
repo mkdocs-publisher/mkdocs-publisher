@@ -3,7 +3,7 @@ title: Backlog
 slug: backlog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-03-23 23:02:36
+update: 2023-04-04 13:38:46
 categories: general backlog
 description: Plans for future development of Publisher for MkDocs
 ---
@@ -16,7 +16,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Auto-nav
 
-There are no backlog tasks for this plugin at this time.
+- [ ] Add: ignore file/directory from config and/or README.md file
 
 ### Blog
 
@@ -28,7 +28,9 @@ There are no backlog tasks for this plugin at this time.
 - [ ] Add: language override in YAML file
 - [ ] Add: configurable date format
 - [ ] Add: blog post publication state: draft, published, hidden
+- [ ] Fix: remove edit_url from dynamic pages (like archive/categories/tags and indexes)
 - [ ] Fix: `blog` slug do not open first page when not in standalone mode
+- [ ] Fix: remove slug and make it automatically the same as `blog_dir`
 
 ### Minifier
 
@@ -51,6 +53,20 @@ There are no backlog tasks for this plugin at this time.
 ### Social (new plugin)
 
 - [ ] Add: inject social media preview into document based on frontmatter
+- [ ] Add: image generator if one is not provided
+- [ ] Add: ignored file list/pattern
+- [ ] Add: warning on missing meta key
+- [ ] Add: ignore single file based on frontmatter
+- [ ] Add: check for description and title length (SEO)
+- [ ] Add: setup a default image used for a social card
+
+### SEO (new plugin)
+
+- [ ] Add: multiple html `<meta name="author">` based on frontmatter authors
+- [ ] Add: multiple html `<meta name="keywords">` based on frontmatter categories and tags
+- [ ] Add: publisher html value`<link href="{site_url}" rel="publisher" />` that points to the main page URL
+- [ ] Add: robots html settings `<meta name="robots" content="noindex, nofollow" />`
+- [ ] Add: check for description and title length (SEO)
 
 ### Obsidian (new plugin)
 
@@ -71,6 +87,7 @@ There are no backlog tasks for this plugin at this time.
 - [ ] Add: create a new blog post
 - [ ] Add: document/blog post slug update
 - [ ] Add: check for minifier tools
+- [ ] Add: clean minifier cache
 - [ ] Add: minify single file using minifier
 - [ ] Add: document/blog post publication state change
 

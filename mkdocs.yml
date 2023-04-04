@@ -106,8 +106,8 @@ plugins:
   - pub-blog:
       blog_dir: 04_blog
 #      start_page: true  # TODO: add detection of this when auto-nav is enabled
-  - pub-minifier:
-      threads: 16
+  - pub-social
+  - pub-minifier
 
 #nav:
 #  - 04_blog: 04_blog

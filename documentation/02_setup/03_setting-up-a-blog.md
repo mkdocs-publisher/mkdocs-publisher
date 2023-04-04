@@ -3,9 +3,9 @@ title: Setting up a blog
 slug: setting-up-a-blog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-03-27 15:44:24
+update: 2023-04-04 21:35:51
 categories: setup plugin blog
-description: Setting up blog plugin
+description: Setting up a blog plugin
 ---
 
 # Setting up a blog plugin
@@ -264,7 +264,7 @@ plugins:
 
 ## Usage
 
-More detailed usage is described in [how to publish](./how-to-publish/first_steps).
+More detailed usage is described in [how to publish](../03_how-to-publish/01_first_steps.md).
 
 ## Customization
 
