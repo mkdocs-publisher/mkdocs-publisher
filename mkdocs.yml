@@ -107,6 +107,7 @@ plugins:
       blog_dir: 04_blog
 #      start_page: true  # TODO: add detection of this when auto-nav is enabled
   - pub-social
+  - pub-obsidian
   - pub-minifier
 
 #nav:

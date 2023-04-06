@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-publisher"
-version = "0.5.0"
+version = "0.6.0"
 description = "Publishing plugins for MkDocs"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
@@ -90,6 +90,7 @@ typeCheckingMode = "basic"
 pub-auto-nav = "mkdocs_publisher.auto_nav.plugin:AutoNavPlugin"
 pub-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"
 pub-minifier = "mkdocs_publisher.minifier.plugin:MinifierPlugin"
+pub-obsidian = "mkdocs_publisher.obsidian.plugin:ObsidianPlugin"
 pub-social = "mkdocs_publisher.social.plugin:SocialPlugin"
 
 [tool.poetry.scripts]
