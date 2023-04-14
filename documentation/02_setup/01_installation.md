@@ -29,6 +29,6 @@ This package depends on some other Python packages and MkDocs plugins, so during
 
 - [MkDocs](https://www.mkdocs.org),
 - [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) - probably the best theme for MkDocs,
-- [PyMdown Extensions](pymdown-extensions) - extensions for Markdown language.
+- [PyMdown Extensions](https://python-markdown.github.io/extensions/) - extensions for Markdown language.
 
 There are also some external tools used, mostly by `pub-minifier` plugin. Since this plugin is part of this package, but it's optional to use (not enabled by default), the process of installation of those tools is described in this plugin installation.

@@ -20,7 +20,11 @@ Backlog - MkDocs Publisher
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
 <link href="../../assets/stylesheets/publisher.css"rel="stylesheet">
 <link href="../../assets/stylesheets/blog.min.css"rel="stylesheet">
+<link href="../../assets/stylesheets/obsidian.css"rel="stylesheet">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.2"></script>
 <meta content="article"property="og:type">
 <meta content="Backlog"property="og:title">
 <meta content="Plans for future development of Publisher for MkDocs"property="og:description">
@@ -181,11 +185,6 @@ Blog
 <li class="md-tabs__item">
 <a href="."class="md-tabs__link md-tabs__link--active">
 Development
-</a>
-</li>
-<li class="md-tabs__item">
-<a href="../../test"class="md-tabs__link">
-test
 </a>
 </li>
 </ul>
@@ -468,8 +467,8 @@ Status (new plugin)
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#social-new-plugin"class="md-nav__link">
-Social (new plugin)
+<a href="#social"class="md-nav__link">
+Social
 </a>
 </li>
 <li class="md-nav__item">
@@ -530,11 +529,6 @@ Changelog
 </ul>
 </nav>
 </li>
-<li class="md-nav__item">
-<a href="../../test"class="md-nav__link">
-test
-</a>
-</li>
 </ul>
 </nav>
 </div>
@@ -582,8 +576,8 @@ Status (new plugin)
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#social-new-plugin"class="md-nav__link">
-Social (new plugin)
+<a href="#social"class="md-nav__link">
+Social
 </a>
 </li>
 <li class="md-nav__item">
@@ -667,7 +661,6 @@ Auto-nav
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Add: ignore file/directory from config and/or README.md file
-
 </li>
 </ul>
 <h3 id="blog">
@@ -680,12 +673,10 @@ Blog
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Add: blog post reading time + watch time (defined in post meta)
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Add: possibility to disable categories and/or tags pages
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
@@ -694,37 +685,30 @@ Add: automatic add
 search exclude
 </a>
 to draft and hidden pages when using material for MkDocs theme with search plugin enabled
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Add: authors and update date in the template
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Add: blog posts index template override
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Add: language override in YAML file
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Add: configurable date format
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Add: blog post publication state: draft, published, hidden
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Fix: remove edit_url from dynamic pages (like archive/categories/tags and indexes)
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
@@ -733,7 +717,6 @@ Fix:
 blog
 </code>
 slug do not open first page when not in standalone mode
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
@@ -741,7 +724,6 @@ Fix: remove slug and make it automatically the same as
 <code>
 blog_dir
 </code>
-
 </li>
 </ul>
 <h3 id="minifier">
@@ -754,7 +736,6 @@ Minifier
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Add: ignored files list/pattern (globally and per file type)
-
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
@@ -824,9 +805,9 @@ robots.txt
 file based on document status
 </li>
 </ul>
-<h3 id="social-new-plugin">
-Social (new plugin)
-<a href="#social-new-plugin"class="headerlink"title="Permanent link">
+<h3 id="social">
+Social
+<a href="#social"class="headerlink"title="Permanent link">
 ¶
 </a>
 </h3>
@@ -911,16 +892,16 @@ Obsidian (new plugin)
 </h3>
 <ul class="task-list">
 <li class="task-list-item">
-<input type="checkbox"disabled>
+<input type="checkbox"disabled checked>
 Add: callout format support
 </li>
 <li class="task-list-item">
-<input type="checkbox"disabled>
+<input type="checkbox"disabled checked>
 Add: wiki links format support
 </li>
 <li class="task-list-item">
-<input type="checkbox"disabled>
-Add: links fixer relative to file
+<input type="checkbox"disabled checked>
+Add: links fixer relative to file (obsidian vault have to be inside docs_dir)
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
@@ -940,7 +921,7 @@ Add: backlinks
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>
-Add: graphs (long-term goal)
+Add: graph view (long-term goal)
 </li>
 </ul>
 <h2 id="general">
@@ -1034,6 +1015,10 @@ Other
 <li class="task-list-item">
 <input type="checkbox"disabled>
 Create Docker image with everything preinstalled and preconfigured
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add to docker image online vega charts editor
 </li>
 <li class="task-list-item">
 <input type="checkbox"disabled>

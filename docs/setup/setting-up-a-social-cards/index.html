@@ -20,7 +20,11 @@ Setting up social cards - MkDocs Publisher
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
 <link href="../../assets/stylesheets/publisher.css"rel="stylesheet">
 <link href="../../assets/stylesheets/blog.min.css"rel="stylesheet">
+<link href="../../assets/stylesheets/obsidian.css"rel="stylesheet">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.2"></script>
 <meta content="article"property="og:type">
 <meta content="Setting up social cards"property="og:title">
 <meta content="Setting up social cards plugin"property="og:description">
@@ -181,11 +185,6 @@ Blog
 <li class="md-tabs__item">
 <a href="../../dev/backlog"class="md-tabs__link">
 Development
-</a>
-</li>
-<li class="md-tabs__item">
-<a href="../../test"class="md-tabs__link">
-test
 </a>
 </li>
 </ul>
@@ -500,11 +499,6 @@ Changelog
 </ul>
 </nav>
 </li>
-<li class="md-nav__item">
-<a href="../../test"class="md-nav__link">
-test
-</a>
-</li>
 </ul>
 </nav>
 </div>
@@ -695,8 +689,6 @@ This style is NOT prefered since not all plugins supports it.
 </div>
 </div>
 </div>
-
-
 </div>
 <div class="admonition warning">
 <p class="admonition-title">
@@ -747,7 +739,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 <h3 id="settings">
 Settings
@@ -805,7 +796,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 </dd>
 <dt>
@@ -851,7 +841,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 <p>
 There is a limited set of
@@ -912,7 +901,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 </dd>
 <dt>
@@ -962,7 +950,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 </dd>
 <dt>
@@ -1012,7 +999,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 </dd>
 </dl>
@@ -1069,7 +1055,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 </dd>
 <dt>
@@ -1115,7 +1100,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 </dd>
 <dt>
@@ -1161,7 +1145,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 </dd>
 </dl>

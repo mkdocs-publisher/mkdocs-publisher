@@ -20,7 +20,11 @@ Setting up a minifier - MkDocs Publisher
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
 <link href="../../assets/stylesheets/publisher.css"rel="stylesheet">
 <link href="../../assets/stylesheets/blog.min.css"rel="stylesheet">
+<link href="../../assets/stylesheets/obsidian.css"rel="stylesheet">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.2"></script>
 <meta content="article"property="og:type">
 <meta content="Setting up a minifier"property="og:title">
 <meta content="Setting up a minifier plugin"property="og:description">
@@ -181,11 +185,6 @@ Blog
 <li class="md-tabs__item">
 <a href="../../dev/backlog"class="md-tabs__link">
 Development
-</a>
-</li>
-<li class="md-tabs__item">
-<a href="../../test"class="md-tabs__link">
-test
 </a>
 </li>
 </ul>
@@ -609,11 +608,6 @@ Changelog
 </ul>
 </nav>
 </li>
-<li class="md-nav__item">
-<a href="../../test"class="md-nav__link">
-test
-</a>
-</li>
 </ul>
 </nav>
 </div>
@@ -908,9 +902,6 @@ apt
 </div>
 </div>
 </div>
-
-
-
 </div>
 <h3 id="configuration">
 Configuration
@@ -947,7 +938,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 <p>
 Just like that, all optimization tools are enabled with optimal settings (according to my small experiments).
@@ -1017,7 +1007,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
 </div>
 </dd>
 </dl>
@@ -1113,8 +1102,6 @@ directory and the directory structure looks like this:
 </div>
 </div>
 </div>
-
-
 </div>
 </dd>
 <dt>
@@ -1179,8 +1166,6 @@ mkdocs.yml
 </div>
 </div>
 </div>
-
-
 </div>
 </dd>
 </dl>
@@ -1294,9 +1279,6 @@ apt
 </div>
 </div>
 </div>
-
-
-
 </div>
 <h4 id="jpeg-optimization-settings">
 Settings

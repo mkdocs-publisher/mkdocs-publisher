@@ -3,9 +3,9 @@ title: Backlog
 slug: backlog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-04-04 13:38:46
-categories: general backlog
+update: 2023-04-07 00:04:22
 description: Plans for future development of Publisher for MkDocs
+categories: general backlog
 ---
 
 # Plans for future development
@@ -50,7 +50,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: document publication state: draft, published, hidden
 - [ ] Add: sitemap optimizations and creation of `robots.txt` file based on document status
 
-### Social (new plugin)
+### Social
 
 - [ ] Add: inject social media preview into document based on frontmatter
 - [ ] Add: image generator if one is not provided
@@ -70,14 +70,14 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Obsidian (new plugin)
 
-- [ ] Add: callout format support
-- [ ] Add: wiki links format support
-- [ ] Add: links fixer relative to file
+- [x] Add: callout format support
+- [x] Add: wiki links format support
+- [x] Add: links fixer relative to file (obsidian vault have to be inside docs_dir)
 - [ ] Add: charts
 - [ ] Add: mind maps (???)
 - [ ] Add: templates (blog post, page, etc.)
 - [ ] Add: backlinks
-- [ ] Add: graphs (long-term goal)
+- [ ] Add: graph view (long-term goal)
 
 ## General
 
@@ -104,6 +104,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 ### Other
 
  - [ ] Create Docker image with everything preinstalled and preconfigured
+ - [ ] Add to docker image online vega charts editor
  - [ ] GitHub repo with preconfigured pages, etc. (can be integrated with Docker Image creation)
  - [ ] Unit tests and code coverage with pre-commit
  - [ ] Cleanup list of code TODO's
