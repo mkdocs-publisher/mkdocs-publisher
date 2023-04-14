@@ -56,13 +56,13 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:
         if self.config.vega.enabled:
-            config.extra_css.append("assets/stylesheets/obsidian.css")
+            config.extra_css.append("assets/stylesheets/obsidian.min.css")
 
             with importlib.resources.path(
                 importlib.import_module("mkdocs_publisher._extra"), "__init__.py"
             ) as extra_path:
                 s = importlib.import_module("mkdocs_publisher._extra.assets.stylesheets")
-                with importlib.resources.path(s, "obsidian.css") as blog_stylesheets:
+                with importlib.resources.path(s, "obsidian.min.css") as blog_stylesheets:
                     files.append(
                         File(
                             path=str(blog_stylesheets.relative_to(extra_path.parent)),

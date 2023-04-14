@@ -20,7 +20,7 @@ extra:
   homepage: https://mkusz.github.io/mkdocs-publisher
 
 extra_css:
-  - assets/stylesheets/publisher.css
+  - assets/stylesheets/publisher.min.css
 
 watch:
   - overrides

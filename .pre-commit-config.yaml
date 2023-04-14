@@ -1,4 +1,14 @@
 repos:
+#  - repo: local
+#    hooks:
+#      - id: process-css
+#        name: .min.css and .min.css.map files generation
+#        description: Generate CSS min and map files.
+#        entry: postcss
+#        args: ['--verbose', '-m', '-u', 'cssnano', 'postcss-svgo', '--ext', '.min.css', '--dir', '.', '--base', '.']
+#        language: system
+#        files: (?<!\.min)\.css$
+#        verbose: true
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0
@@ -17,9 +27,9 @@ repos:
       - id: lint-yaml
         name: lint YAML files
         description: Format and check YAML files.
-        entry: poetry run yamllint .
+        entry: poetry run yamllint
         language: system
-        files: .yml|.yaml$
+        files: \.(yml|yaml)$
 
       - id: format
         name: format Python code
