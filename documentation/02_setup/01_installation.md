@@ -3,13 +3,14 @@ title: Installation
 slug: installation
 status: published
 date: 2023-03-16 18:27:00
-categories: start
+update: 2023-04-17 12:17:19
 description: Installation
+categories: start
 ---
 
 # Installation
 
-All plugins are part of this package and cannot be installed separately, but not all of them have to be enabled (more about this you can find in the [Setup section](01_installation.md)).
+All plugins are part of this package and cannot be installed separately, but not all of them have to be enabled.
 
 Publisher for MkDocs is a Python package that can be installed using `pip` (ideally inside a virtual environment) or any other package manager like `poetry` that handles virtual management out of the box.
 

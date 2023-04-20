@@ -1,9 +1,9 @@
 # created by virtualenv automatically
 .DS_Store
-.obsidian
 .cache
 .temp
 .venv
 __pycache__
 .idea
 dist
+*/.obsidian/plugins/obsidian-languagetool-plugin

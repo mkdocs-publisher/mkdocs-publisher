@@ -3,7 +3,7 @@ title: Backlog
 slug: backlog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-04-07 00:04:22
+update: 2023-04-19 17:59:01
 description: Plans for future development of Publisher for MkDocs
 categories: general backlog
 ---
@@ -28,9 +28,11 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: language override in YAML file
 - [ ] Add: configurable date format
 - [ ] Add: blog post publication state: draft, published, hidden
+- [ ] Add: auto slug based on slugify
 - [ ] Fix: remove edit_url from dynamic pages (like archive/categories/tags and indexes)
 - [ ] Fix: `blog` slug do not open first page when not in standalone mode
 - [ ] Fix: remove slug and make it automatically the same as `blog_dir`
+- [ ] Fix: if there is a page in `nav` that is right before blog, next page is called `index-0` instead of blog
 
 ### Minifier
 
@@ -73,10 +75,10 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [x] Add: callout format support
 - [x] Add: wiki links format support
 - [x] Add: links fixer relative to file (obsidian vault have to be inside docs_dir)
-- [ ] Add: charts
-- [ ] Add: mind maps (???)
+- [x] Add: charts
+- [ ] Add: mind maps (using [markmap](https://markmap.js.org/docs/markmap))
 - [ ] Add: templates (blog post, page, etc.)
-- [ ] Add: backlinks
+- [x] Add: backlinks
 - [ ] Add: graph view (long-term goal)
 
 ## General

@@ -1,11 +1,11 @@
 ---
-title: Backlog
-slug: backlog
+title: Versioning
+slug: versioning
 status: published
 date: 2023-03-30 13:12:26
-update: 2023-03-30 13:39:39
-categories: general versioning
+update: 2023-04-19 13:51:10
 description: Approach to versioning
+categories: general versioning
 ---
 
 # Approach to versioning

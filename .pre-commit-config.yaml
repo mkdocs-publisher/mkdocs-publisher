@@ -5,10 +5,10 @@ repos:
 #        name: .min.css and .min.css.map files generation
 #        description: Generate CSS min and map files.
 #        entry: postcss
-#        args: ['--verbose', '-m', '-u', 'cssnano', 'postcss-svgo', '--ext', '.min.css', '--dir', '.', '--base', '.']
+#        args: ['-m', '-u', 'cssnano', 'postcss-svgo',
+#               '--ext', '.min.css', '--dir', '.', '--base', '.']
 #        language: system
 #        files: (?<!\.min)\.css$
-#        verbose: true
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0

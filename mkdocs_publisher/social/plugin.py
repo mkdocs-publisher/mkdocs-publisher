@@ -1,14 +1,13 @@
 import logging
 from pathlib import Path
-from typing import List
 from typing import Optional
 
-from bs4 import BeautifulSoup
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
 from mkdocs.structure.pages import Page
 
+from mkdocs_publisher._common.html_modifier import HTMLModifier
 from mkdocs_publisher.social.config import SocialConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.social")
@@ -32,26 +31,14 @@ OPEN_GRAPH_PROPERTIES = [
 ]
 
 
-def _remove_properties_from_head(soup: BeautifulSoup, properties: List[str]):
-    """Remove meta tags with given properties from HTML head section"""
-    for prop in properties:
-        head_property = soup.head.find(name="meta", attr={"property": prop})  # type: ignore
-        if head_property is not None:
-            head_property.extract()
-
-
-def _add_meta_property(soup: BeautifulSoup, name: str, value: str):
-    soup.head.append(soup.new_tag(name="meta", attrs={"property": name, "content": value}))  # type: ignore
-
-
 class SocialPlugin(BasePlugin[SocialConfig]):
     @event_priority(-99)
     def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
-        soup: BeautifulSoup = BeautifulSoup(markup=output, features="html.parser")
+        html_modifier = HTMLModifier(markup=output)
 
-        # Remove old values
-        _remove_properties_from_head(soup=soup, properties=OPEN_GRAPH_PROPERTIES)
-        _remove_properties_from_head(soup=soup, properties=TWITTER_PROPERTIES)
+        log.debug("Removing old properties")
+        html_modifier.remove_meta_properties(properties=OPEN_GRAPH_PROPERTIES)
+        html_modifier.remove_meta_properties(properties=TWITTER_PROPERTIES)
 
         # Get all needed meta values
         title = page.meta.get(self.config.meta_keys.title_key, None)
@@ -70,36 +57,37 @@ class SocialPlugin(BasePlugin[SocialConfig]):
             image = f"{config.site_url}{image}".replace("//", "/")
         url = f"{config.site_url}{page.url}"
         site_name = config.site_name
-        # Add all open graph values
+
         if self.config.og.enabled and title and description:
-            _add_meta_property(soup=soup, name="og:type", value="article")
-            _add_meta_property(soup=soup, name="og:title", value=title)
-            _add_meta_property(soup=soup, name="og:description", value=description)
-            _add_meta_property(soup=soup, name="og:site_name", value=site_name)
-            _add_meta_property(soup=soup, name="og:locale", value=self.config.og.locale)
-            _add_meta_property(soup=soup, name="og:url", value=url)
+            log.debug("Adding open graph properties")
+            html_modifier.add_meta_property(name="og:type", value="article")
+            html_modifier.add_meta_property(name="og:title", value=title)
+            html_modifier.add_meta_property(name="og:description", value=description)
+            html_modifier.add_meta_property(name="og:site_name", value=site_name)
+            html_modifier.add_meta_property(name="og:locale", value=self.config.og.locale)
+            html_modifier.add_meta_property(name="og:url", value=url)
 
             if image is not None:
-                _add_meta_property(soup=soup, name="og:image", value=image)
+                html_modifier.add_meta_property(name="og:image", value=image)
 
-        # Add all twitter values
         if self.config.twitter.enabled and title and description:
+            log.debug("Adding Twitter cards values")
             card_type = "summary_large_image" if image else "summary"
-            _add_meta_property(soup=soup, name="twitter:card", value=card_type)
-            _add_meta_property(soup=soup, name="twitter:title", value=title)
-            _add_meta_property(soup=soup, name="twitter:description", value=description)
+            html_modifier.add_meta_property(name="twitter:card", value=card_type)
+            html_modifier.add_meta_property(name="twitter:title", value=title)
+            html_modifier.add_meta_property(name="twitter:description", value=description)
 
             if image is not None:
-                _add_meta_property(soup=soup, name="twitter:image", value=image)
+                html_modifier.add_meta_property(name="twitter:image", value=image)
 
             if self.config.twitter.website:
-                _add_meta_property(
-                    soup=soup, name="twitter:site", value=self.config.twitter.website
+                html_modifier.add_meta_property(
+                    name="twitter:site", value=self.config.twitter.website
                 )
 
             if self.config.twitter.author:
-                _add_meta_property(
-                    soup=soup, name="twitter:creator", value=self.config.twitter.author
+                html_modifier.add_meta_property(
+                    name="twitter:creator", value=self.config.twitter.author
                 )
 
-        return soup.prettify()
+        return str(html_modifier)

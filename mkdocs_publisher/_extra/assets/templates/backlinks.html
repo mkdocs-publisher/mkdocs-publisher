@@ -1,0 +1,12 @@
+
+---
+
+<p class="obsidian_backlink_title">{{ title }}:</p>
+<div class="obsidian_backlink" markdown=1>
+{% for link in links %}
+??? backlink "{{ link.title }}"
+
+    {{ link.text }}
+
+{% endfor %}
+</div>
