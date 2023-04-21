@@ -24,22 +24,19 @@ log = logging.getLogger("mkdocs.plugins.publisher.auto-nav")
 
 class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
     def __init__(self):
-        from mkdocs_publisher.blog.config import BlogPluginConfig
-
-        self.blog_config: Optional[BlogPluginConfig] = None
-        self.skip_subfiles_of_dir: List[str] = []
+        self._skip_subfiles_of_dirs: List[str] = []
 
     @staticmethod
     def _read_markdown_title(file: Path) -> str:
         with open(file) as file_meta:
             post = frontmatter.load(file_meta)
         if "title" not in post.metadata:
-            log.warning(f"File '{file}' doesn't contain 'title' meta data")
+            log.warning(f'File "{file}" doesn\'t contain "title" meta data')
         return post.get("title", default=file.stem)
 
     def _iterate_dir(self, directory: Path, skip_subfiles_of_dir: List[str], relative_to: Path):
         nav = list()
-        sorted_files = sorted([f for f in directory.glob("**/*")])
+        sorted_files = sorted([f for f in directory.glob("*")])
 
         # Make index.md a first file in give directory
         no_index_files = [f for f in sorted_files if f.name != "index.md"]
@@ -49,23 +46,41 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
         for file in sorted_files:
             if not any([s for s in skip_subfiles_of_dir if str(file).startswith(s)]):
                 if file.is_dir():
+
+                    # Read meta data from directory file (default: README.md)
                     meta_file = file / self.config.meta_file_name
                     title = None
+                    skip = False
                     if meta_file.exists():
                         with open(meta_file) as file_meta:
                             post = frontmatter.load(file_meta)
-                            title = post.get("title")
-                    if title is None:
-                        title = file.stem
-                    subdir_nav = {
-                        title: self._iterate_dir(
-                            directory=file,
-                            skip_subfiles_of_dir=skip_subfiles_of_dir,
-                            relative_to=relative_to,
+                            title = post.get("title", default=None)
+                            skip = post.get(self.config.meta_file_skip_dir_key_name, default=False)
+
+                    # Skip directories that are
+                    if str(file.parts[-1]).startswith("_"):
+                        skip = True
+
+                    # Check if directory should be skipped or added to nav
+                    if isinstance(skip, bool) and not skip:
+                        if title is None:
+                            title = file.stem
+                        subdir_nav = {
+                            title: self._iterate_dir(
+                                directory=file,
+                                skip_subfiles_of_dir=skip_subfiles_of_dir,
+                                relative_to=relative_to,
+                            )
+                        }
+                        if list(subdir_nav.values())[0]:
+                            nav.append(subdir_nav)
+                    elif not isinstance(skip, bool):
+                        log.warning(
+                            f'{meta_file} file "{self.config.meta_file_skip_dir_key_name}" '
+                            f'value is in wrong format (only "true" and "false" are allowed).'
                         )
-                    }
-                    if list(subdir_nav.values())[0]:
-                        nav.append(subdir_nav)
+                    else:
+                        log.debug(f'Skipping directory: "{file}"')
                 elif (
                     file.is_file()
                     and len(file.relative_to(directory).parents) == 1
@@ -86,8 +101,8 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
                 nav.append({title: str(file.relative_to(relative_to))})
             elif (
                 file.is_dir()
-                and self.blog_config is not None
-                and str(file).endswith(self.blog_config.blog_dir)
+                and self._blog_config is not None
+                and str(file).endswith(self._blog_config.blog_dir)
             ):
                 nav.append({file.stem: str(file.relative_to(relative_to))})
         return nav
@@ -97,7 +112,7 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
         from mkdocs_publisher.blog.config import BlogPluginConfig
         from mkdocs_publisher.blog.plugin import BlogPlugin
 
-        self.blog_config = cast(
+        self._blog_config = cast(
             BlogPluginConfig,
             _utils.get_plugin_config(
                 plugin=BlogPlugin(),
@@ -106,8 +121,8 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
             ),
         )
 
-        self.skip_subfiles_of_dir = [
-            str(Path(config.docs_dir) / Path(f)) for f in self.config.skip_dir
+        self._skip_subfiles_of_dirs = [
+            str(Path(config.docs_dir) / Path(f)) for f in self.config.skip_dirs
         ]
 
         # Found skipped directories based on meta data related to each directory
@@ -119,15 +134,15 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
                     directory_to_skip = str(meta_file.parent)
                     if (
                         post.get(self.config.meta_file_skip_dir_key_name)
-                        and directory_to_skip not in self.skip_subfiles_of_dir
+                        and directory_to_skip not in self._skip_subfiles_of_dirs
                     ):
-                        self.skip_subfiles_of_dir.append(directory_to_skip)
+                        self._skip_subfiles_of_dirs.append(directory_to_skip)
 
-        skip_in_nav_dirs = [d for d in self.skip_subfiles_of_dir]
+        skip_in_nav_dirs = [d for d in self._skip_subfiles_of_dirs]
 
-        if self.blog_config is not None:
-            blog_dir = self.blog_config.blog_dir
-            if blog_dir not in self.config.skip_dir:
+        if self._blog_config is not None:
+            blog_dir = self._blog_config.blog_dir
+            if blog_dir not in self.config.skip_dirs:
                 skip_in_nav_dirs.append(str(Path(config.docs_dir) / blog_dir))
 
         # Check if path exists
@@ -136,7 +151,7 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
                 log.warning(
                     f"Directory '{Path(directory).relative_to(config.docs_dir)}' "
                     f"that should be skipped, doesn't exists in "
-                    f"'{Path(config.docs_dir).relative_to(Path().cwd())}' directory"
+                    f'"{Path(config.docs_dir).relative_to(Path().cwd())}" directory'
                 )
 
         nav = self._iterate_dir(
@@ -173,8 +188,9 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
 
     @event_priority(100)  # Run before any other plugins
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:
+
         if self.config.remove_sort_prefix_from_slug:
-            prefix = rf"^[0-9]+{self.config.sort_prefix_delimiter}"
+            prefix = re.compile(rf"^[0-9]+{self.config.sort_prefix_delimiter}")
             new_files = Files(files=[])
             for file in files:
                 file.dest_path = str(
@@ -198,7 +214,7 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
             if not any(
                 [
                     s
-                    for s in self.skip_subfiles_of_dir
+                    for s in self._skip_subfiles_of_dirs
                     if str(Path(config.docs_dir) / file.src_uri).startswith(s)
                 ]
             ):

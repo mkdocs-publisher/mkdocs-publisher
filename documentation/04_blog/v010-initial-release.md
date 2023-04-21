@@ -33,7 +33,7 @@ As you can see, there are just 2 still maintained plugins for blogging in MkDocs
 1. Material for MkDocs - complex but paid,
 2. mkdosc-blogging-plugin - much simpler than Material for MkDocs and a bit hacky due to mostly tricks in the template.
 
-## Features implemented
+## Changelog
 
 This project is now at an early stage of development. Current functionalities are:
 

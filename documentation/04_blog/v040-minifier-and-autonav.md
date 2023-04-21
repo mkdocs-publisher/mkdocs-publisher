@@ -15,7 +15,7 @@ During a development, many ideas about further development came to my mind. I ha
 
 <!-- more -->
 
-## Features implemented
+## Changelog
 
 ### General
 

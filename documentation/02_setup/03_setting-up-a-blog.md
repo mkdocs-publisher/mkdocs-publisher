@@ -3,14 +3,14 @@ title: Setting up a blog
 slug: setting-up-a-blog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-04-17 12:00:24
+update: 2023-04-21 21:53:54
 description: Setting up a blog plugin
 categories: setup plugin blog
 ---
 
 # Setting up a blog plugin
 
-Publisher for MkDocs allows you to create a blog. A blog can be a sidecar for your current documentation, or it can be configured as a standalone. The entire blogging engine is created and preconfigured, so you can focus on content creation. It will handle creation of:
+**Publisher for MkDocs** allows you to create a blog. A blog can be a sidecar for your current documentation, or it can be configured as a standalone. The entire blogging engine is created and preconfigured, so you can focus on content creation. It will handle creation of:
 
 - indexes,
 - archive,

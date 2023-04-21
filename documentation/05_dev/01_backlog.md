@@ -16,7 +16,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Auto-nav
 
-- [ ] Add: ignore file/directory from config and/or README.md file
+There is no development plans at this moment.
 
 ### Blog
 
@@ -29,7 +29,6 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: configurable date format
 - [ ] Add: blog post publication state: draft, published, hidden
 - [ ] Add: auto-generate slug based on slugify (+ inject into document metadata)
-- [x] Fix: remove edit_url from dynamic pages (like archive/categories/tags and indexes)
 - [ ] Fix: `blog` slug do not open first page when not in standalone mode
 - [ ] Fix: remove slug and make it automatically the same as `blog_dir`
 - [ ] Fix: if there is a page in `nav` that is right before blog, next page is called `index-0` instead of `blog`
@@ -54,13 +53,12 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Social
 
-- [x] Add: inject social media preview into document based on frontmatter
 - [ ] Add: image generator if one is not provided
 - [ ] Add: ignored file list/pattern
 - [ ] Add: warning on missing meta key
 - [ ] Add: ignore single file based on frontmatter
 - [ ] Add: check for description and title length (SEO)
-- [ ] Add: setup a default image used for a social card
+- [ ] Add: set up a default image used for a social card
 
 ### SEO (new plugin)
 
@@ -72,13 +70,8 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Obsidian (new plugin)
 
-- [x] Add: callout format support
-- [x] Add: wiki links format support
-- [x] Add: links fixer relative to file (obsidian vault have to be inside docs_dir)
-- [x] Add: charts
 - [ ] Add: mind maps (using [markmap](https://markmap.js.org/docs/markmap))
 - [ ] Add: templates (blog post, page, etc.)
-- [x] Add: backlinks
 - [ ] Add: graph view (long-term goal)
 
 ## General
@@ -112,3 +105,4 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
  - [ ] Unit tests and code coverage with pre-commit
  - [ ] Cleanup list of code TODO's
  - [ ] Drop `python-frontmatter` for MkDocs built-in library for metadata retrieval
+ - [ ] Move translations to jinja templates like Material for MkDocs is doing it

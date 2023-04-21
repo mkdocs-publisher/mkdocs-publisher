@@ -3,7 +3,7 @@ title: v0.6.0 - 2023-04-20
 slug: v060
 status: published
 date: 2023-04-20 21:26:12
-update: 2023-04-20 12:09:00
+update: 2023-04-21 21:59:10
 tags: [v0.6.0]
 description: MkDosc Publisher plugin v0.6.0
 categories: release
@@ -21,21 +21,27 @@ For more details about this release, read more below or jump directly to [pub-ob
 
 <!-- more -->
 
-## Features implemented
+## Changelog
 
 ### General
 
-- added: internal class for HTML modifications
-- changed: project license to MIT
+- :material-plus-circle: internal class for HTML modifications
+- :material-sync-circle: project license to MIT
+
+### Auto-nav
+
+- :material-plus-circle: possibility to define `skip_dir` value in `README.md` (this affects only the directory and all subdirectories where the file is located)
+- :material-plus-circle: skip directories that name start with `_` (can be configured and disbled)
+- :material-check-circle: second level directories were producing double menu entries
 
 ### Blog
 
-- fixed: internal links for blog teaser/index, category, tag or archive pages
-- fixed: remove `edit_url` for blog teaser/index, category, tag or archive pages
+- :material-check-circle: internal links for blog teaser/index, category, tag or archive pages
+- :material-check-circle: remove `edit_url` for blog teaser/index, category, tag or archive pages
 
 ### Social
 
-- changed: code refactor of HTML modification elements and logging added
+- :material-sync-circle: code refactor of HTML modification elements and logging added
 
 ### Obsidian (new plugin):
 
@@ -43,7 +49,7 @@ This plugin is a set of functionalities and should be split into various smaller
 
 #### General
 
-- added: server watch can omit `.obsidian` directory that needs to be a part of the documentation directory that is automatically added into watch and causes server reload on (almost) any interaction with obsidian (changing settings etc.)
+- :material-plus-circle: server watch can omit `.obsidian` directory that needs to be a part of the documentation directory that is automatically added into watch and causes server reload on (almost) any interaction with obsidian (changing settings etc.)
 
 #### WikiLinks
 
@@ -51,18 +57,18 @@ This plugin is a set of functionalities and should be split into various smaller
 
 #### Callouts
 
-- added: mapping of all Obsidian callouts into Material admonitions
+- :material-plus-circle: mapping of all Obsidian callouts into Markdown admonitions
 
 #### Backlinks
 
-- added: auto-generation of backlinks for all internal documents (visible as an custom admonition at the bottom of the page)
-- added: backlinks are not generated for blog temporary files like post indexes, archive, tags and categories
-- added: backlinks are grouped per page like in Obsidian (if more than one link is pointing from one page to another, all context links will be visible)
+- :material-plus-circle: auto-generation of backlinks for all internal documents (visible as an custom admonition at the bottom of the page)
+- :material-plus-circle: backlinks are not generated for blog temporary files like post indexes, archive, tags and categories
+- :material-plus-circle: backlinks are grouped per page like in Obsidian (if more than one link is pointing from one page to another, all context links will be visible)
 
 #### Charts
 
-- added: support for *vega* and *vega-lite* charts when added by [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)
--
+- :material-plus-circle: support for *vega* and *vega-lite* charts when added by [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)
+
 ---
 
 > [!info] Legend

@@ -22,7 +22,7 @@ For more details about this release, read more below or jump directly to [pub-so
 
 <!-- more -->
 
-## Features implemented
+## Changelog
 
 ### Blog
 

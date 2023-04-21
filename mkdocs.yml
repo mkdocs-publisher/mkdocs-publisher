@@ -55,6 +55,7 @@ theme:
     - navigation.footer  # Prev/Next page
     - navigation.tracking  # Anchor tracking
     - navigation.top  # Back to top
+    - navigation.sections
     - search.suggest
     - search.highlight
     - search.share

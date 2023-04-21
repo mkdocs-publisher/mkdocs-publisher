@@ -39,7 +39,7 @@ v0.6.0 - 2023-04-20 - MkDocs Publisher
 <label class="md-overlay"for="__drawer">
 </label>
 <div data-md-component="skip">
-<a href="#features-implemented"class="md-skip">
+<a href="#changelog"class="md-skip">
 Skip to content
 </a>
 </div>
@@ -312,7 +312,7 @@ Blog
 index-0
 </a>
 </li>
-<li class="md-nav__item md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
 <input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_4_2">
 <label class="md-nav__link"for="__nav_4_2"id="__nav_4_2_label"tabindex="0">
 Archive
@@ -334,7 +334,7 @@ Archive
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
 <input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_4_3">
 <label class="md-nav__link"for="__nav_4_3"id="__nav_4_3_label"tabindex="0">
 Categories
@@ -356,7 +356,7 @@ release
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
 <input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_4_4">
 <label class="md-nav__link"for="__nav_4_4"id="__nav_4_4_label"tabindex="0">
 Tags
@@ -464,14 +464,19 @@ Table of contents
 </label>
 <ul class="md-nav__list"data-md-scrollfix=""data-md-component="toc">
 <li class="md-nav__item">
-<a href="#features-implemented"class="md-nav__link">
-Features implemented
+<a href="#changelog"class="md-nav__link">
+Changelog
 </a>
-<nav class="md-nav"aria-label="Features implemented">
+<nav class="md-nav"aria-label="Changelog">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a href="#general"class="md-nav__link">
 General
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#auto-nav"class="md-nav__link">
+Auto-nav
 </a>
 </li>
 <li class="md-nav__item">
@@ -520,11 +525,6 @@ Charts
 </li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a href="#--added-support-for-vega-and-vega-lite-charts-when-added-by-vega-visualization-plugin-for-obsidian"class="md-nav__link">
-- added: support for vega and vega-lite charts when added by Vega Visualization Plugin for Obsidian
-</a>
 </li>
 </ul>
 </nav>
@@ -619,9 +619,9 @@ pub-obsidian
 </a>
 plugin documentation.
 </p>
-<h2 id="features-implemented">
-Features implemented
-<a href="#features-implemented"class="headerlink"title="Permanent link">
+<h2 id="changelog">
+Changelog
+<a href="#changelog"class="headerlink"title="Permanent link">
 ¶
 </a>
 </h2>
@@ -633,10 +633,69 @@ General
 </h3>
 <ul>
 <li>
-added: internal class for HTML modifications
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+internal class for HTML modifications
 </li>
 <li>
-changed: project license to MIT
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+project license to MIT
+</li>
+</ul>
+<h3 id="auto-nav">
+Auto-nav
+<a href="#auto-nav"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+possibility to define
+<code>
+skip_dir
+</code>
+value in
+<code>
+README.md
+</code>
+(this affects only the directory and all subdirectories where the file is located)
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+skip directories that name start with
+<code>
+_
+</code>
+(can be configured and disbled)
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
+</path>
+</svg>
+</span>
+second level directories were producing double menu entries
 </li>
 </ul>
 <h3 id="blog">
@@ -647,10 +706,22 @@ Blog
 </h3>
 <ul>
 <li>
-fixed: internal links for blog teaser/index, category, tag or archive pages
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
+</path>
+</svg>
+</span>
+internal links for blog teaser/index, category, tag or archive pages
 </li>
 <li>
-fixed: remove
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
+</path>
+</svg>
+</span>
+remove
 <code>
 edit_url
 </code>
@@ -665,7 +736,13 @@ Social
 </h3>
 <ul>
 <li>
-changed: code refactor of HTML modification elements and logging added
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+code refactor of HTML modification elements and logging added
 </li>
 </ul>
 <h3 id="obsidian-new-plugin">
@@ -685,7 +762,13 @@ General
 </h4>
 <ul>
 <li>
-added: server watch can omit
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+server watch can omit
 <code>
 .obsidian
 </code>
@@ -706,7 +789,13 @@ Callouts
 </h4>
 <ul>
 <li>
-added: mapping of all Obsidian callouts into Material admonitions
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+mapping of all Obsidian callouts into Markdown admonitions
 </li>
 </ul>
 <h4 id="backlinks">
@@ -717,13 +806,31 @@ Backlinks
 </h4>
 <ul>
 <li>
-added: auto-generation of backlinks for all internal documents (visible as an custom admonition at the bottom of the page)
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+auto-generation of backlinks for all internal documents (visible as an custom admonition at the bottom of the page)
 </li>
 <li>
-added: backlinks are not generated for blog temporary files like post indexes, archive, tags and categories
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+backlinks are not generated for blog temporary files like post indexes, archive, tags and categories
 </li>
 <li>
-added: backlinks are grouped per page like in Obsidian (if more than one link is pointing from one page to another, all context links will be visible)
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+backlinks are grouped per page like in Obsidian (if more than one link is pointing from one page to another, all context links will be visible)
 </li>
 </ul>
 <h4 id="charts">
@@ -732,8 +839,15 @@ Charts
 ¶
 </a>
 </h4>
-<h2 id="--added-support-for-vega-and-vega-lite-charts-when-added-by-vega-visualization-plugin-for-obsidian">
-- added: support for
+<ul>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+support for
 <em>
 vega
 </em>
@@ -745,10 +859,8 @@ charts when added by
 <a href="https://github.com/Some-Regular-Person/obsidian-vega">
 Vega Visualization Plugin for Obsidian
 </a>
-<a href="#--added-support-for-vega-and-vega-lite-charts-when-added-by-vega-visualization-plugin-for-obsidian"class="headerlink"title="Permanent link">
-¶
-</a>
-</h2>
+</li>
+</ul>
 <hr>
 <div class="admonition info">
 <p class="admonition-title">
@@ -875,7 +987,7 @@ Material for MkDocs
 </div>
 </div>
 <script id="__config"type="application/json">
-{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.footer", "navigation.tracking", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}
+{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.footer", "navigation.tracking", "navigation.top", "navigation.sections", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}
 </script>
 <script src="../../assets/javascripts/bundle.efa0ade1.min.js"></script>
 </body>
