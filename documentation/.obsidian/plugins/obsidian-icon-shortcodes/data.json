@@ -5,7 +5,7 @@
     "obs",
     "luc"
   ],
-  "triggerWithTrailingSpace": false,
+  "triggerWithTrailingSpace": true,
   "spaceAfterSC": true,
   "isMigrated": false
 }

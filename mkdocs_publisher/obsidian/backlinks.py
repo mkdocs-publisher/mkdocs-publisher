@@ -4,10 +4,13 @@ from dataclasses import dataclass
 from typing import Dict
 from typing import List
 from typing import Optional
+from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.pages import Page
 from pymdownx.slugs import slugify
+
+from mkdocs_publisher.blog.plugin import BlogPlugin
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.backlinks")
 
@@ -89,8 +92,17 @@ class Backlink:
             title=str(page.title),
         )
 
+        # Get blog temporary files
+        temp_blog_files = []
+        if "pub-blog" in self._mkdocs_config.plugins:
+            blog_plugin: BlogPlugin = cast(BlogPlugin, self._mkdocs_config.plugins["pub-blog"])
+            temp_blog_files = blog_plugin.blog_config.temp_files_list
+
         # Do not add backlink if links points to the same document
-        if original_link_source != original_link_destination:
+        if (
+            original_link_source != original_link_destination
+            and original_link_source not in temp_blog_files
+        ):
             if original_link_destination not in self._links:
                 self._links[original_link_destination] = [link]
             else:

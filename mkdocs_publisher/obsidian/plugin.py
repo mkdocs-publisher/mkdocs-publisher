@@ -16,12 +16,13 @@ from mkdocs.config import Config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.livereload import LiveReloadServer
 from mkdocs.plugins import BasePlugin
-from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
+from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
+from mkdocs.utils import meta as meta_parser
 
+from mkdocs_publisher._common import resources
 from mkdocs_publisher._common.html_modifier import HTMLModifier
-from mkdocs_publisher._extra.assets import stylesheets
 from mkdocs_publisher._extra.assets import templates
 from mkdocs_publisher.obsidian.backlinks import Backlink
 from mkdocs_publisher.obsidian.backlinks import Link
@@ -56,18 +57,20 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         self._backlink = Backlink(mkdocs_config=config, links=self._links)
         return config
 
-    def on_page_read_source(self, *, page: Page, config: MkDocsConfig) -> Optional[str]:
-        # TODO: Move reader and parser to common utils
-        from mkdocs.utils import meta as meta_parser
+    def on_nav(
+        self, nav: Navigation, *, config: MkDocsConfig, files: Files
+    ) -> Optional[Navigation]:
 
-        with open(page.file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
-            markdown, meta = meta_parser.get_data(md_file.read())
+        for file in files:
+            if file.page is not None and self.config.backlinks.enabled:
+                with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
+                    markdown, meta = meta_parser.get_data(md_file.read())
 
-            if self.config.backlinks.enabled:
-                if self.config.wikilinks.enabled:
-                    markdown = re.sub(WIKI_LINKS, _wiki_link_normalization_callback, markdown)
+                    if self.config.wikilinks.enabled:
+                        markdown = re.sub(WIKI_LINKS, _wiki_link_normalization_callback, markdown)
 
-                self._backlink.find_markdown_links(markdown=markdown, page=page)
+                    self._backlink.find_markdown_links(markdown=markdown, page=file.page)
+        return nav
 
     def on_page_markdown(
         self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
@@ -88,7 +91,6 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         if self.config.backlinks.enabled:
             markdown = self._backlink.convert_to_anchor_link(markdown=markdown)
-
             links = self._links.get(page.file.src_uri, None)
             if links is not None:
                 backlink_template = importlib.resources.read_text(templates, "backlinks.html")
@@ -105,22 +107,11 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:
         if self.config.vega.enabled:
-            with importlib.resources.path(
-                importlib.import_module("mkdocs_publisher._extra"), "__init__.py"
-            ) as extra_path:
-                with importlib.resources.path(
-                    importlib.import_module(stylesheets.__name__), "obsidian.min.css"
-                ) as blog_stylesheets:
-                    css_file_path = str(blog_stylesheets.relative_to(extra_path.parent))
-                    files.append(
-                        File(
-                            path=css_file_path,
-                            src_dir=str(extra_path.parent),
-                            dest_dir=config.site_dir,
-                            use_directory_urls=config.use_directory_urls,
-                        )
-                    )
-                    config.extra_css.append(css_file_path)
+            resources.add_extra_css(
+                stylesheet_file_name="obsidian.min.css",
+                config=config,
+                files=files,
+            )
         return files
 
     def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:

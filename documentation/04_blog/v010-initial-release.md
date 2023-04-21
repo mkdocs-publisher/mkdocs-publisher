@@ -37,8 +37,17 @@ As you can see, there are just 2 still maintained plugins for blogging in MkDocs
 
 This project is now at an early stage of development. Current functionalities are:
 
-- blog post update date based on metadata (post YAML frontmatter)
-- blog post URL link based on metadata (post YAML frontmatter)
-- blog post tags and categories based on metadata (post YAML frontmatter)
-- support for blog post teaser
-- auto generation of blog posts navigation
+- :material-plus-circle: blog post update date based on metadata (post YAML frontmatter)
+- :material-plus-circle: blog post URL link based on metadata (post YAML frontmatter)
+- :material-plus-circle: blog post tags and categories based on metadata (post YAML frontmatter)
+- :material-plus-circle: support for blog post teaser
+- :material-plus-circle: auto generation of blog posts navigation
+
+---
+
+> [!info] Legend
+> :material-plus-circle: - added
+>
+> :material-check-circle: - fixed
+>
+> :material-sync-circle: - changed

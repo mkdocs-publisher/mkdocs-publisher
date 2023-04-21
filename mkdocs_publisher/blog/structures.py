@@ -68,6 +68,13 @@ class BlogConfig:
     blog_posts: Dict[datetime, BlogPost] = field(init=False, default_factory=lambda: dict())
     temp_files: Dict[str, Path] = field(init=False, default_factory=lambda: dict())
 
+    @property
+    def temp_files_list(self) -> List[str]:
+        temp_files = []
+        for path in self.temp_files.values():
+            temp_files.append(str(path.relative_to(self.temp_dir)))
+        return temp_files
+
     def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogPluginConfig):
         from mkdocs_publisher.blog.translate import Translate
 

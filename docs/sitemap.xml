@@ -26,6 +26,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://mkusz.github.io/mkdocs-publisher/setup/05-setting-up-obsidian</loc>
+         <lastmod>2023-04-20</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/setup/setting-up-a-minifier</loc>
          <lastmod>2023-03-22</lastmod>
          <changefreq>daily</changefreq>
@@ -42,27 +47,32 @@
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/v020/</loc>
-         <lastmod>2023-03-18</lastmod>
+         <lastmod>2023-04-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/v030/</loc>
-         <lastmod>2023-03-18</lastmod>
+         <lastmod>2023-04-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/v040/</loc>
-         <lastmod>2023-03-28</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/v041/</loc>
-         <lastmod>2023-03-28</lastmod>
+         <lastmod>2023-04-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/v050/</loc>
-         <lastmod>2023-03-28</lastmod>
+         <lastmod>2023-04-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkusz.github.io/mkdocs-publisher/blog/v060/</loc>
+         <lastmod>2023-04-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
@@ -87,52 +97,57 @@
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/index-0/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/index-1/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/archive/2023/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/categories/release/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.1.0/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.2.0/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.3.0/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.4.0/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.4.1/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.5.0/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <lastmod>2023-04-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v0.6.0/</loc>
+         <lastmod>2023-04-21</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

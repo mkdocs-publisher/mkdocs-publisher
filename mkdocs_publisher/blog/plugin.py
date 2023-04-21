@@ -1,10 +1,6 @@
-import importlib
-import importlib.resources
-import importlib.util
 import logging
 from collections import OrderedDict
 from datetime import datetime
-from pathlib import Path
 from typing import Any
 from typing import Dict
 from typing import Optional
@@ -14,12 +10,12 @@ from mkdocs.config import Config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
-from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
 from mkdocs_publisher import _utils
+from mkdocs_publisher._common import resources
 from mkdocs_publisher.blog import creators
 from mkdocs_publisher.blog import modifiers
 from mkdocs_publisher.blog import parsers
@@ -32,7 +28,6 @@ log = logging.getLogger("mkdocs.plugins.publisher.blog")
 class BlogPlugin(BasePlugin[BlogPluginConfig]):
     def __init__(self):
         self.blog_config = BlogConfig()  # Empty instance
-        self.temp_files: Dict[str, Path] = {}
 
     def on_config(self, config: MkDocsConfig) -> Config:
 
@@ -92,22 +87,9 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
             files=files,
         )
 
-        # TODO: add as _utils and split into blog specific path
-        config.extra_css.append("assets/stylesheets/blog.min.css")
-
-        with importlib.resources.path(
-            importlib.import_module("mkdocs_publisher._extra"), "__init__.py"
-        ) as extra_path:
-            s = importlib.import_module("mkdocs_publisher._extra.assets.stylesheets")
-            with importlib.resources.path(s, "blog.min.css") as blog_stylesheets:
-                new_files.append(
-                    File(
-                        path=str(blog_stylesheets.relative_to(extra_path.parent)),
-                        src_dir=str(extra_path.parent),
-                        dest_dir=str(self.blog_config.site_dir),
-                        use_directory_urls=self.blog_config.mkdocs_config.use_directory_urls,
-                    )
-                )
+        resources.add_extra_css(
+            stylesheet_file_name="blog.min.css", config=config, files=new_files
+        )
 
         return new_files
 
@@ -124,6 +106,10 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     def on_page_context(
         self, context: Dict[str, Any], *, page: Page, config: MkDocsConfig, nav: Navigation
     ) -> Optional[Dict[str, Any]]:
+
+        # Temporary created files cannot be edited
+        if page.file.src_uri in self.blog_config.temp_files_list:
+            page.edit_url = None
 
         modifiers.blog_post_nav_next_prev_change(blog_config=self.blog_config, page=page)
         return context

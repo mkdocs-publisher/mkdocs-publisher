@@ -28,11 +28,11 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: language override in YAML file
 - [ ] Add: configurable date format
 - [ ] Add: blog post publication state: draft, published, hidden
-- [ ] Add: auto slug based on slugify
-- [ ] Fix: remove edit_url from dynamic pages (like archive/categories/tags and indexes)
+- [ ] Add: auto-generate slug based on slugify (+ inject into document metadata)
+- [x] Fix: remove edit_url from dynamic pages (like archive/categories/tags and indexes)
 - [ ] Fix: `blog` slug do not open first page when not in standalone mode
 - [ ] Fix: remove slug and make it automatically the same as `blog_dir`
-- [ ] Fix: if there is a page in `nav` that is right before blog, next page is called `index-0` instead of blog
+- [ ] Fix: if there is a page in `nav` that is right before blog, next page is called `index-0` instead of `blog`
 
 ### Minifier
 
@@ -54,7 +54,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Social
 
-- [ ] Add: inject social media preview into document based on frontmatter
+- [x] Add: inject social media preview into document based on frontmatter
 - [ ] Add: image generator if one is not provided
 - [ ] Add: ignored file list/pattern
 - [ ] Add: warning on missing meta key
@@ -102,6 +102,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] How to set up and use docker image
 - [ ] Setting up CI/CD in GitHub Actions
 - [ ] This plugin development how to
+- [ ] Credits for used libraries with description (like in [MkDocs Coverage Plugin](https://pawamoy.github.io/mkdocs-coverage/credits/))
 
 ### Other
 

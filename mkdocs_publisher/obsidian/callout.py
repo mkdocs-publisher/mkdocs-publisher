@@ -55,7 +55,7 @@ def _callout_block(match: re.Match, text_indentation: str = "spaces") -> str:
         match=match, match_group=1, text_indentation=text_indentation
     )
 
-    callout_type = match.group(3)
+    callout_type = match.group(3).lower()
     if "|" in callout_type:
         callout_type, align = callout_type.split("|")
         align = ALIGN_MAPPING.get(align)

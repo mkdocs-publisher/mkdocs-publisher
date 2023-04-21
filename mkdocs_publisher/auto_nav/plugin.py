@@ -29,7 +29,8 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
         self.blog_config: Optional[BlogPluginConfig] = None
         self.skip_subfiles_of_dir: List[str] = []
 
-    def _read_markdown_title(self, file: Path) -> str:
+    @staticmethod
+    def _read_markdown_title(file: Path) -> str:
         with open(file) as file_meta:
             post = frontmatter.load(file_meta)
         if "title" not in post.metadata:

@@ -23,7 +23,7 @@ classifiers = [
     "Environment :: Console",
     "Environment :: Web Environment",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -94,4 +94,4 @@ pub-obsidian = "mkdocs_publisher.obsidian.plugin:ObsidianPlugin"
 pub-social = "mkdocs_publisher.social.plugin:SocialPlugin"
 
 [tool.poetry.scripts]
-publisher = "mkdocs_publisher._cli.publisher:app"
+mkdocs-pub = "mkdocs_publisher._cli.publisher:app"

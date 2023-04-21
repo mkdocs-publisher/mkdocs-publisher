@@ -23,7 +23,7 @@ Currently, this plugin is also written with strict cooperation with [Material fo
 
 The list of most important features built into MkDocs Publisher:
 
-- automatic navigation builds ([pub-auto-nav](02_setup/02_setting-up-auto-nav.md) plugin - :material-new-box: in [v0.4.0](04_blog/v040.md)),
+- automatic navigation builds ([pub-auto-nav](02_setup/02_setting-up-auto-nav.md) plugin - :material-plus-circle: [v0.4.0](04_blog/v040-minifier-and-autonav.md)),
 - creating a blog posts with automatic build of archive, categories, tags, and index pages ([pub-blog](02_setup/03_setting-up-a-blog.md) plugin),
-- automatic social cards metadata creation based on document metadata ([pub-social](02_setup/04_setting-up-a-social-cards.md) plugin - :material-new-box: in [v0.5.0](04_blog/v050.md)),
-- file size optimizations, that is beneficial for site download speed and SEO ([pub-minifier](02_setup/09_setting-up-a-minifier.md) plugin - :material-new-box: in [v0.4.0](04_blog/v040.md)).
+- social cards metadata creation based on document metadata ([pub-social](02_setup/04_setting-up-a-social-cards.md) plugin - :material-plus-circle: [v0.5.0](04_blog/v050-social.md)),
+- file size optimizations, that is beneficial for site download speed and SEO ([pub-minifier](02_setup/09_setting-up-a-minifier.md) plugin - :material-plus-circle: [v0.4.0](04_blog/v040-minifier-and-autonav.md)).
