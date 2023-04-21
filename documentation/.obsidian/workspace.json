@@ -4,23 +4,49 @@
     "type": "split",
     "children": [
       {
-        "id": "bfd567ebb562715c",
-        "type": "tabs",
+        "id": "2d28466c1e497f99",
+        "type": "split",
         "children": [
           {
-            "id": "a1c1bca238e90ff4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "04_blog/v060-obsidian.md",
-                "mode": "source",
-                "backlinks": true,
-                "source": false
+            "id": "bfd567ebb562715c",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a1c1bca238e90ff4",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "index.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": false
+                  }
+                }
               }
-            }
+            ]
+          },
+          {
+            "id": "1f85bf5aa924e78b",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "9808771a97944704",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "04_blog/v060-obsidian.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": false
+                  }
+                }
+              }
+            ]
           }
-        ]
+        ],
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -94,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "04_blog/v060-obsidian.md",
+                "file": "index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "04_blog/v060-obsidian.md",
+                "file": "index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "04_blog/v060-obsidian.md"
+                "file": "index.md"
               }
             }
           }
@@ -157,8 +183,9 @@
   },
   "active": "a1c1bca238e90ff4",
   "lastOpenFiles": [
-    "05_dev/01_backlog.md",
     "04_blog/v060-obsidian.md",
+    "index.md",
+    "05_dev/01_backlog.md",
     "02_setup/05-setting-up-obsidian.md",
     "02_setup/04_setting-up-a-social-cards.md",
     "04_blog/v050-social.md",
@@ -169,7 +196,6 @@
     "04_blog/v040-minifier-and-autonav.md",
     "04_blog/v020.md",
     "04_blog/v010-initial-release.md",
-    "index.md",
     "05_dev/README.md",
     "_templates",
     "02_setup/01_installation.md",

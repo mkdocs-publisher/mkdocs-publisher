@@ -22,9 +22,6 @@ Category - release - MkDocs Publisher
 <link href="../../../assets/stylesheets/blog.min.css"rel="stylesheet">
 <link href="../../../assets/stylesheets/obsidian.min.css"rel="stylesheet">
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-<script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.1"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.2"></script>
 </head>
 <body data-md-color-accent="orange"data-md-color-primary="orange"data-md-color-scheme="default"dir="ltr">
 <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
@@ -591,7 +588,19 @@ but since all the files are just a flat text file written using
 <a href="https://www.markdownguide.org">
 Markdown syntax
 </a>
-, you were unable to see it. The reason for that was simple: integration with Obsidian was not "mature" enough to be presented. You can ask: "Why? Obsidian just uses the same Markdown syntax as MkDocs uses.". The answer to that is not so obvious. The simple answer is just "yes", but the real answer is "not always". Obsidian introduces some additional syntax options like
+, you were unable to see it. The reason for that was simple: integration with Obsidian was not "mature" enough to be presented. You can ask:
+<em>
+"Why? Obsidian just uses the same Markdown syntax as MkDocs uses"
+</em>
+. The answer to that is not so obvious. The simple answer is just
+<em>
+"yes"
+</em>
+, but the real answer is
+<em>
+"not always"
+</em>
+. Obsidian introduces some additional syntax options like
 <a href="https://help.obsidian.md/Editing+and+formatting/Callouts">
 callouts
 </a>
@@ -615,7 +624,7 @@ backlinks
 <li>
 charts (using
 <a href="https://github.com/Some-Regular-Person/obsidian-vega">
-Vega visualization plugin for Obsidian
+Vega Visualization Plugin for Obsidian
 </a>
 ),
 </li>

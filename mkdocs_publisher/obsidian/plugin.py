@@ -52,6 +52,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def __init__(self):
         self._links: Dict[str, List[Link]] = {}
         self._backlink: Backlink = cast(Backlink, None)
+        self._vega_pages: List[Page] = list()
 
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
         self._backlink = Backlink(mkdocs_config=config, links=self._links)
@@ -63,6 +64,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         for file in files:
             if file.page is not None and self.config.backlinks.enabled:
+                log.debug(f"Parse links for backlinks in '{file.src_path}'")
                 with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
                     markdown, meta = meta_parser.get_data(md_file.read())
 
@@ -88,11 +90,14 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             # TODO: add verification if all things are enabled in .obsidian config
             vega_charts = VegaCharts(vega_config=self.config.vega)
             markdown = vega_charts.generate_charts(markdown=markdown)
+            if vega_charts.is_vega:
+                self._vega_pages.append(page)
 
         if self.config.backlinks.enabled:
             markdown = self._backlink.convert_to_anchor_link(markdown=markdown)
             links = self._links.get(page.file.src_uri, None)
             if links is not None:
+                log.debug(f"Add backlinks to '{page.file.src_uri}'")
                 backlink_template = importlib.resources.read_text(templates, "backlinks.html")
                 context = {
                     "links": links,
@@ -116,8 +121,8 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
     def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
 
-        # TODO: add only if given page has a vega chart
-        if self.config.vega.enabled:
+        if self.config.vega.enabled and page in self._vega_pages:
+            # TODO: embed scripts to assets and give possibility to serve from site_dir
             html_modifier = HTMLModifier(markup=output)
             html_modifier.add_head_script(src="https://cdn.jsdelivr.net/npm/vega@5.22.1")
             html_modifier.add_head_script(src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.1")

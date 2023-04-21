@@ -22,9 +22,6 @@ v0.6.0 - 2023-04-20 - MkDocs Publisher
 <link href="../../assets/stylesheets/blog.min.css"rel="stylesheet">
 <link href="../../assets/stylesheets/obsidian.min.css"rel="stylesheet">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-<script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.1"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.2"></script>
 <meta content="article"property="og:type">
 <meta content="v0.6.0 - 2023-04-20"property="og:title">
 <meta content="MkDosc Publisher plugin v0.6.0"property="og:description">
@@ -524,6 +521,11 @@ Charts
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a href="#--added-support-for-vega-and-vega-lite-charts-when-added-by-vega-visualization-plugin-for-obsidian"class="md-nav__link">
+- added: support for vega and vega-lite charts when added by Vega Visualization Plugin for Obsidian
+</a>
+</li>
 </ul>
 </nav>
 </div>
@@ -555,7 +557,19 @@ but since all the files are just a flat text file written using
 <a href="https://www.markdownguide.org">
 Markdown syntax
 </a>
-, you were unable to see it. The reason for that was simple: integration with Obsidian was not "mature" enough to be presented. You can ask: "Why? Obsidian just uses the same Markdown syntax as MkDocs uses.". The answer to that is not so obvious. The simple answer is just "yes", but the real answer is "not always". Obsidian introduces some additional syntax options like
+, you were unable to see it. The reason for that was simple: integration with Obsidian was not "mature" enough to be presented. You can ask:
+<em>
+"Why? Obsidian just uses the same Markdown syntax as MkDocs uses"
+</em>
+. The answer to that is not so obvious. The simple answer is just
+<em>
+"yes"
+</em>
+, but the real answer is
+<em>
+"not always"
+</em>
+. Obsidian introduces some additional syntax options like
 <a href="https://help.obsidian.md/Editing+and+formatting/Callouts">
 callouts
 </a>
@@ -579,7 +593,7 @@ backlinks
 <li>
 charts (using
 <a href="https://github.com/Some-Regular-Person/obsidian-vega">
-Vega visualization plugin for Obsidian
+Vega Visualization Plugin for Obsidian
 </a>
 ),
 </li>
@@ -690,6 +704,11 @@ Callouts
 ¶
 </a>
 </h4>
+<ul>
+<li>
+added: mapping of all Obsidian callouts into Material admonitions
+</li>
+</ul>
 <h4 id="backlinks">
 Backlinks
 <a href="#backlinks"class="headerlink"title="Permanent link">
@@ -698,10 +717,13 @@ Backlinks
 </h4>
 <ul>
 <li>
-added:
+added: auto-generation of backlinks for all internal documents (visible as an custom admonition at the bottom of the page)
 </li>
 <li>
 added: backlinks are not generated for blog temporary files like post indexes, archive, tags and categories
+</li>
+<li>
+added: backlinks are grouped per page like in Obsidian (if more than one link is pointing from one page to another, all context links will be visible)
 </li>
 </ul>
 <h4 id="charts">
@@ -710,6 +732,23 @@ Charts
 ¶
 </a>
 </h4>
+<h2 id="--added-support-for-vega-and-vega-lite-charts-when-added-by-vega-visualization-plugin-for-obsidian">
+- added: support for
+<em>
+vega
+</em>
+and
+<em>
+vega-lite
+</em>
+charts when added by
+<a href="https://github.com/Some-Regular-Person/obsidian-vega">
+Vega Visualization Plugin for Obsidian
+</a>
+<a href="#--added-support-for-vega-and-vega-lite-charts-when-added-by-vega-visualization-plugin-for-obsidian"class="headerlink"title="Permanent link">
+¶
+</a>
+</h2>
 <hr>
 <div class="admonition info">
 <p class="admonition-title">
@@ -742,6 +781,32 @@ Legend
 </span>
 - changed
 </p>
+</div>
+<hr>
+<p class="obsidian_backlink_title">
+Backlinks:
+</p>
+<div class="obsidian_backlink">
+<details class="backlink">
+<summary>
+Home
+</summary>
+<p>
+</p><p class="obsidian_backlink">
+- integration with Obsidian.md as documentation editor with support for some Markdown syntax specific to it and some plugins (pub-obsidian plugin
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+<a href="https://mkusz.github.io/mkdocs-publisher/#04-blog-v060-obsidian">
+v0.6.0
+</a>
+):
+</p>
+<p></p>
+</details>
 </div>
 </article>
 </div>

@@ -31,6 +31,11 @@ class VegaCharts:
             "vega-lite": self._vega_config.vega_lite_schema,
         }
         self._vega_chart_id: int = 0
+        self._vega_found: bool = False
+
+    @property
+    def is_vega(self) -> bool:
+        return self._vega_found
 
     def generate_charts(self, markdown: str) -> str:
         in_vega_block: bool = False
@@ -66,6 +71,9 @@ class VegaCharts:
 
                     for vega_chart_line in vega_chart.split("\n"):
                         markdown_lines.append(vega_chart_line)
+
+                    # Mark that vega is in that page
+                    self._vega_found = True
 
                     # Restore default values
                     in_vega_block = False
