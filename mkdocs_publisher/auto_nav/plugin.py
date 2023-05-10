@@ -3,7 +3,6 @@ import re
 from pathlib import Path
 from typing import List
 from typing import Optional
-from typing import cast
 
 import frontmatter
 from mkdocs.config import Config
@@ -16,8 +15,8 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 
-from mkdocs_publisher import _utils
 from mkdocs_publisher.auto_nav.config import AutoNavPluginConfig
+from mkdocs_publisher.blog.config import BlogPluginConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.auto-nav")
 
@@ -109,18 +108,7 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
 
     @event_priority(100)  # Run before any other plugins
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
-        from mkdocs_publisher.blog.config import BlogPluginConfig
-        from mkdocs_publisher.blog.plugin import BlogPlugin
-
-        self._blog_config = cast(
-            BlogPluginConfig,
-            _utils.get_plugin_config(
-                plugin=BlogPlugin(),
-                config_file_path=str(self.config.config_file_path),
-                yaml_config_key="pub-blog",
-            ),
-        )
-
+        self._blog_config: BlogPluginConfig = config.plugins["pub-blog"].config
         self._skip_subfiles_of_dirs = [
             str(Path(config.docs_dir) / Path(f)) for f in self.config.skip_dirs
         ]
@@ -149,7 +137,7 @@ class AutoNavPlugin(BasePlugin[AutoNavPluginConfig]):
         for directory in skip_in_nav_dirs:
             if not Path(directory).exists():
                 log.warning(
-                    f"Directory '{Path(directory).relative_to(config.docs_dir)}' "
+                    f'Directory "{Path(directory).relative_to(config.docs_dir)}" '
                     f"that should be skipped, doesn't exists in "
                     f'"{Path(config.docs_dir).relative_to(Path().cwd())}" directory'
                 )

@@ -3,10 +3,10 @@
 
 <p class="obsidian_backlink_title">{{ title }}:</p>
 <div class="obsidian_backlink" markdown=1>
-{% for link in links %}
-??? backlink "{{ link.title }}"
+{% for backlink in backlinks %}
+??? backlink "{{ backlink.title }}"
 
-    {{ link.text }}
+    {{ backlink.text }}
 
 {% endfor %}
 </div>

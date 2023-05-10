@@ -3,5 +3,6 @@
   "useMarkdownLinks": true,
   "newLinkFormat": "relative",
   "showUnsupportedFiles": true,
-  "showFrontmatter": true
+  "showFrontmatter": true,
+  "livePreview": false
 }

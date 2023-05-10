@@ -17,8 +17,9 @@ class _ObsidianVegaConfig(Config):
     vega_lite_schema = option.Type(str, default="https://vega.github.io/schema/vega-lite/v5.json")
 
 
-class _ObsidianWikiLinksConfig(Config):
-    enabled = option.Type(bool, default=True)
+class _ObsidianLinksConfig(Config):
+    wikilinks_enabled = option.Type(bool, default=True)
+    img_lazy_loading = option.Type(bool, default=True)
 
 
 class ObsidianPluginConfig(Config):
@@ -27,4 +28,4 @@ class ObsidianPluginConfig(Config):
     backlinks: _ObsidianBacklinksConfig = option.SubConfig(_ObsidianBacklinksConfig)  # type: ignore
     callouts: _ObsidianCalloutsConfig = option.SubConfig(_ObsidianCalloutsConfig)  # type: ignore
     vega: _ObsidianVegaConfig = option.SubConfig(_ObsidianVegaConfig)  # type: ignore
-    wikilinks: _ObsidianWikiLinksConfig = option.SubConfig(_ObsidianWikiLinksConfig)  # type: ignore
+    links: _ObsidianLinksConfig = option.SubConfig(_ObsidianLinksConfig)  # type: ignore

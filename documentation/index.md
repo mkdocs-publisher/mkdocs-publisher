@@ -30,5 +30,6 @@ The list of most important features built into MkDocs Publisher:
 - integration with [Obsidian.md](https://obsidian.md/) as documentation editor with support for some Markdown syntax specific to it and some plugins ([pub-obsidian](02_setup/05-setting-up-obsidian.md) plugin :material-plus-circle: [v0.6.0](04_blog/v060-obsidian.md)):
 	- [backlinks](https://help.obsidian.md/Plugins/Backlinks),
 	- [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) ,
-	- charts (using [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)),
+	- [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links)
+	- [vega charts](https://vega.github.io/vega/) (using [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)) - advanced solution for creating charts,
 	- mind maps (using [Mindmap NextGen plugin for Obsidian](https://github.com/verocloud/obsidian-mindmap-nextgen)).

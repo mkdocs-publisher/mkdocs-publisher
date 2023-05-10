@@ -501,8 +501,8 @@ General
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#wikilinks"class="md-nav__link">
-WikiLinks
+<a href="#links"class="md-nav__link">
+Links
 </a>
 </li>
 <li class="md-nav__item">
@@ -591,11 +591,25 @@ backlinks
 ,
 </li>
 <li>
-charts (using
+<a href="https://help.obsidian.md/Editing+and+formatting/Callouts">
+callouts
+</a>
+,
+</li>
+<li>
+<a href="https://help.obsidian.md/Linking+notes+and+files/Internal+links">
+wikilinks
+</a>
+</li>
+<li>
+<a href="https://vega.github.io/vega/">
+vega charts
+</a>
+(using
 <a href="https://github.com/Some-Regular-Person/obsidian-vega">
 Vega Visualization Plugin for Obsidian
 </a>
-),
+) - advanced solution for creating charts,
 </li>
 <li>
 mind maps (using
@@ -650,6 +664,28 @@ internal class for HTML modifications
 </span>
 project license to MIT
 </li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+project
+<code>
+README.md
+</code>
+cleanup
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+internal method for importing other plugin config (neede for cross functionalities)
+</li>
 </ul>
 <h3 id="auto-nav">
 Auto-nav
@@ -686,7 +722,7 @@ skip directories that name start with
 <code>
 _
 </code>
-(can be configured and disbled)
+(can be configured and disabled)
 </li>
 <li>
 <span class="twemoji">
@@ -717,11 +753,11 @@ internal links for blog teaser/index, category, tag or archive pages
 <li>
 <span class="twemoji">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
-<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
+<path d="M17 13H7v-2h10m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
 </path>
 </svg>
 </span>
-remove
+removed
 <code>
 edit_url
 </code>
@@ -775,12 +811,41 @@ server watch can omit
 directory that needs to be a part of the documentation directory that is automatically added into watch and causes server reload on (almost) any interaction with obsidian (changing settings etc.)
 </li>
 </ul>
-<h4 id="wikilinks">
-WikiLinks
-<a href="#wikilinks"class="headerlink"title="Permanent link">
+<h4 id="links">
+Links
+<a href="#links"class="headerlink"title="Permanent link">
 ¶
 </a>
 </h4>
+<ul>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+support for wiki links format for images and internal links
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+configurable image lazy loading option (SEO optimization)
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+documents and images file path solver (it doesn't affect documentation but it's required by MkDocs for proper links generation)
+</li>
+</ul>
 <h4 id="callouts">
 Callouts
 <a href="#callouts"class="headerlink"title="Permanent link">
@@ -874,8 +939,13 @@ Legend
 </svg>
 </span>
 - added
-</p>
-<p>
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13H7v-2h10m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+- removed
 <span class="twemoji">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
@@ -883,8 +953,6 @@ Legend
 </svg>
 </span>
 - fixed
-</p>
-<p>
 <span class="twemoji">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">

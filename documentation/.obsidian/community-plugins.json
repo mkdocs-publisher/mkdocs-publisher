@@ -4,5 +4,7 @@
   "obsidian-linter",
   "obsidian-languagetool-plugin",
   "obsidian-mindmap-nextgen",
-  "obsidian-icon-shortcodes"
+  "obsidian-icon-shortcodes",
+  "obsidian-vega",
+  "obsidian-charts"
 ]

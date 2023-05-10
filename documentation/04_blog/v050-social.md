@@ -37,7 +37,6 @@ For more details about this release, read more below or jump directly to [pub-so
 
 > [!info] Legend
 > :material-plus-circle: - added
->
+> :material-minus-circle: - removed
 > :material-check-circle: - fixed
->
 > :material-sync-circle: - changed

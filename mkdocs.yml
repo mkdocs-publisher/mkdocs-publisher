@@ -102,7 +102,9 @@ markdown_extensions:
 
 plugins:
   - search
-  - pub-auto-nav
+  - pub-auto-nav:
+      skip_dirs:
+        - _templates
   - pub-blog:
       blog_dir: 04_blog
 #      start_page: true  # TODO: add detection of this when auto-nav is enabled

@@ -2,7 +2,6 @@ import importlib
 import importlib.resources
 import importlib.util
 import logging
-import re
 from pathlib import Path
 from typing import Callable
 from typing import Dict
@@ -22,40 +21,28 @@ from mkdocs.structure.pages import Page
 from mkdocs.utils import meta as meta_parser
 
 from mkdocs_publisher._common import resources
-from mkdocs_publisher._common.html_modifier import HTMLModifier
+from mkdocs_publisher._common.html_modifiers import HTMLModifier
 from mkdocs_publisher._extra.assets import templates
 from mkdocs_publisher.obsidian.backlinks import Backlink
 from mkdocs_publisher.obsidian.backlinks import Link
 from mkdocs_publisher.obsidian.callout import CalloutToAdmonition
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
+from mkdocs_publisher.obsidian.markdown_links import MarkdownLinks
 from mkdocs_publisher.obsidian.vega import VegaCharts
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian")
 
-WIKI_LINKS = r"(\[\[\S+\]\])"
-
-
-def _wiki_link_normalization_callback(match: re.Match):
-    wiki_link = match.group(0)[2:-2]
-    # TODO: not only .md files can be inside wiki linki (also images). Fix extensions
-    # TODO: move to separate file
-    if "|" in wiki_link:
-        file, name = wiki_link.split("|")
-        wiki_link = f"[{name}]({file}.md)"
-    else:
-        name = wiki_link.split("/")[-1]
-        wiki_link = f"[{name}]({wiki_link}.md)"
-    return wiki_link
-
 
 class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def __init__(self):
-        self._links: Dict[str, List[Link]] = {}
         self._backlink: Backlink = cast(Backlink, None)
+        self._backlink_links: Dict[str, List[Link]] = {}
+        self._md_links: MarkdownLinks = cast(MarkdownLinks, None)
         self._vega_pages: List[Page] = list()
 
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
-        self._backlink = Backlink(mkdocs_config=config, links=self._links)
+        self._backlink = Backlink(mkdocs_config=config, backlinks=self._backlink_links)
+        self._md_links = MarkdownLinks(mkdocs_config=config)
         return config
 
     def on_nav(
@@ -64,12 +51,13 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         for file in files:
             if file.page is not None and self.config.backlinks.enabled:
-                log.debug(f"Parse links for backlinks in '{file.src_path}'")
+                log.debug(f"Parse backlinks for backlinks in '{file.src_path}'")
                 with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
                     markdown, meta = meta_parser.get_data(md_file.read())
 
-                    if self.config.wikilinks.enabled:
-                        markdown = re.sub(WIKI_LINKS, _wiki_link_normalization_callback, markdown)
+                    markdown = self._md_links.normalize(
+                        markdown=markdown, file_path=str(file.src_uri)
+                    )
 
                     self._backlink.find_markdown_links(markdown=markdown, page=file.page)
         return nav
@@ -77,14 +65,15 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def on_page_markdown(
         self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
     ) -> Optional[str]:
-        # TODO: add verification if relative links are enabled in .obsidian config
-        if self.config.wikilinks.enabled:
-            markdown = re.sub(WIKI_LINKS, _wiki_link_normalization_callback, markdown)
+        # TODO: add verification if relative backlinks are enabled in .obsidian config
+        markdown = self._md_links.normalize(markdown=markdown, file_path=str(page.file.src_uri))
 
         if self.config.callouts.enabled:
             # TODO: add verification if all things are enabled in mkdocs.yaml config file
             callout_to_admonition = CalloutToAdmonition(callouts_config=self.config.callouts)
-            markdown = callout_to_admonition.convert_callouts(markdown=markdown)
+            markdown = callout_to_admonition.convert_callouts(
+                markdown=markdown, file_path=str(page.file.src_uri)
+            )
 
         if self.config.vega.enabled:
             # TODO: add verification if all things are enabled in .obsidian config
@@ -95,12 +84,12 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         if self.config.backlinks.enabled:
             markdown = self._backlink.convert_to_anchor_link(markdown=markdown)
-            links = self._links.get(page.file.src_uri, None)
-            if links is not None:
+            page_backlinks = self._backlink_links.get(page.file.src_uri, None)
+            if page_backlinks is not None:
                 log.debug(f"Add backlinks to '{page.file.src_uri}'")
                 backlink_template = importlib.resources.read_text(templates, "backlinks.html")
                 context = {
-                    "links": links,
+                    "backlinks": page_backlinks,
                     "title": "Backlinks",  # TODO: move to translations
                 }
                 template = jinja2.Environment(loader=jinja2.BaseLoader()).from_string(
@@ -134,10 +123,10 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def on_serve(
         self, server: LiveReloadServer, *, config: MkDocsConfig, builder: Callable
     ) -> Optional[LiveReloadServer]:
-
         server.unwatch(config.docs_dir)
 
         def no_obsidian_callback(event):
+            """Watcheer implementation that skips .obsidian directory"""
             if isinstance(event, watchdog.events.FileModifiedEvent) and str(
                 event.src_path
             ).startswith(str(Path(config.docs_dir) / self.config.obsidian_directory)):

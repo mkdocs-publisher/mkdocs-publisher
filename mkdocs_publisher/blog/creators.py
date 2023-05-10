@@ -1,6 +1,5 @@
 import importlib.resources
 import logging
-import re
 from collections import OrderedDict
 from datetime import datetime
 from pathlib import Path
@@ -14,10 +13,9 @@ from mkdocs.structure.files import Files
 
 from mkdocs_publisher._extra.assets import templates
 from mkdocs_publisher.blog.structures import BlogConfig
+from mkdocs_publisher.obsidian.markdown_links import MarkdownLinks
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
-
-MARKDOWN_LINK = re.compile(r"\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]+.md)(#[\w\-.]+)?\)")
 
 
 def create_blog_files(
@@ -194,21 +192,12 @@ def _render_and_write_page(
     }
     template = jinja2.Environment(loader=jinja2.BaseLoader()).from_string(index_template)
     markdown = template.render(context)
-    file_relative_depth = len(Path(file_path).parts) - 2  # Value omits .temp dir and file name
 
-    def fix_relative_links(match: re.Match):
-        """Fix relative links in dynamically created documents
-        like categories, tags and post previews"""
-        anchor_link = match.group(3) if match.group(3) is not None else ""
-        link = match.group(2).replace("../", "")
-        if len(Path(link).parts) == 1:  # This is a link to other blog post
-            link = str(blog_config.blog_dir / link)
-        relative_depth = ["../" for _ in range(file_relative_depth)]
-        relative_depth.append(link)
-        link = "".join(relative_depth)
-        return f"[{match.group(1)}]({link}{anchor_link})"
-
-    markdown = re.sub(MARKDOWN_LINK, fix_relative_links, markdown)
+    md_links = MarkdownLinks(
+        mkdocs_config=blog_config.mkdocs_config, disable_lazy_loading_override=True
+    )
+    markdown = md_links.normalize(markdown=markdown, file_path=str(file_path))
+    markdown = md_links.fix_relative_paths(markdown=markdown)
 
     page = frontmatter.Post(content=markdown)
     page["title"] = page_title

@@ -56,7 +56,6 @@ During a development, many ideas about further development came to my mind. I ha
 
 > [!info] Legend
 > :material-plus-circle: - added
->
+> :material-minus-circle: - removed
 > :material-check-circle: - fixed
->
 > :material-sync-circle: - changed

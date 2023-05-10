@@ -16,7 +16,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Auto-nav
 
-There is no development plans at this moment.
+There are no development plans at this moment.
 
 ### Blog
 
@@ -62,10 +62,10 @@ There is no development plans at this moment.
 
 ### SEO (new plugin)
 
-- [ ] Add: multiple html `<meta name="author">` based on frontmatter authors
-- [ ] Add: multiple html `<meta name="keywords">` based on frontmatter categories and tags
-- [ ] Add: publisher html value`<link href="{site_url}" rel="publisher" />` that points to the main page URL
-- [ ] Add: robots html settings `<meta name="robots" content="noindex, nofollow" />`
+- [ ] Add: multiple HTML `<meta name="author">` based on frontmatter authors
+- [ ] Add: multiple HTML `<meta name="keywords">` based on frontmatter categories and tags
+- [ ] Add: publisher HTML value`<link href="{site_url}" rel="publisher" />` that points to the main page URL
+- [ ] Add: robots HTML settings `<meta name="robots" content="noindex, nofollow" />`
 - [ ] Add: check for description and title length (SEO)
 
 ### Obsidian (new plugin)
@@ -73,6 +73,8 @@ There is no development plans at this moment.
 - [ ] Add: mind maps (using [markmap](https://markmap.js.org/docs/markmap))
 - [ ] Add: templates (blog post, page, etc.)
 - [ ] Add: graph view (long-term goal)
+- [ ] Add: backlinks with unlinked mentions based on page title and aliases (maybe some headings titles?)
+- [ ] Add: detection of an `_templates` directory and add it to the auto-nav `skip_dirs`
 
 ## General
 
@@ -85,6 +87,8 @@ There is no development plans at this moment.
 - [ ] Add: clean minifier cache
 - [ ] Add: minify single file using minifier
 - [ ] Add: document/blog post publication state change
+- [ ] Add: CONTRIBUTING.md file to the repo
+- [ ] Add: issues templates in the project repository issues
 
 ### Documentation
 
@@ -100,7 +104,7 @@ There is no development plans at this moment.
 ### Other
 
  - [ ] Create Docker image with everything preinstalled and preconfigured
- - [ ] Add to docker image online vega charts editor
+ - [ ] Add to docker image online Vega charts editor
  - [ ] GitHub repo with preconfigured pages, etc. (can be integrated with Docker Image creation)
  - [ ] Unit tests and code coverage with pre-commit
  - [ ] Cleanup list of code TODO's

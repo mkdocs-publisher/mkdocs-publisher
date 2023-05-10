@@ -7,7 +7,7 @@ from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
 from mkdocs.structure.pages import Page
 
-from mkdocs_publisher._common.html_modifier import HTMLModifier
+from mkdocs_publisher._common.html_modifiers import HTMLModifier
 from mkdocs_publisher.social.config import SocialConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.social")
@@ -45,9 +45,13 @@ class SocialPlugin(BasePlugin[SocialConfig]):
         description = page.meta.get(self.config.meta_keys.description_key, None)
         image = page.meta.get(self.config.meta_keys.image_key, None)
         if image is not None:
-            image_path = Path(config.docs_dir) / Path(
-                image[1:] if str(image).startswith("/") else image
-            )
+            image = str(image)
+            # TODO: use obsidian path link solver when it will be developed
+            if image.startswith("../"):
+                image = f"/{image.replace('../', '')}"
+            if image.startswith("/"):
+                image = image[1:]
+            image_path = Path(config.docs_dir) / Path(image)
             if not image_path.exists():
                 log.warning(
                     f"File: '{str(image)}' doesn't exists!\n"

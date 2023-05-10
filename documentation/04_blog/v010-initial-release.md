@@ -47,7 +47,6 @@ This project is now at an early stage of development. Current functionalities ar
 
 > [!info] Legend
 > :material-plus-circle: - added
->
+> :material-minus-circle: - removed
 > :material-check-circle: - fixed
->
 > :material-sync-circle: - changed

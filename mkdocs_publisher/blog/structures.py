@@ -10,9 +10,8 @@ from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
-from mkdocs_publisher import _utils
+from mkdocs_publisher._common import mkdocs_utils
 from mkdocs_publisher.auto_nav.config import AutoNavPluginConfig
-from mkdocs_publisher.auto_nav.plugin import AutoNavPlugin
 from mkdocs_publisher.blog.config import BlogPluginConfig
 
 
@@ -80,12 +79,10 @@ class BlogConfig:
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
-        self.auto_nav_config = cast(
+        self.auto_nav_config: Optional[AutoNavPluginConfig] = cast(
             AutoNavPluginConfig,
-            _utils.get_plugin_config(
-                plugin=AutoNavPlugin(),
-                config_file_path=cast(str, plugin_config.config_file_path),
-                yaml_config_key="pub-auto-nav",
+            mkdocs_utils.get_plugin_config(
+                mkdocs_config=mkdocs_config, plugin_name="pub-auto-nav"
             ),
         )
         self.temp_dir = Path(plugin_config.temp_dir)
