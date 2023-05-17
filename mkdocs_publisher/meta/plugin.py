@@ -37,7 +37,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         nav = list()
         sorted_files = sorted([f for f in directory.glob("*")])
 
-        # Make index.md a first file in give directory
+        # Make index.md a first file in given directory
         other_files = [f for f in sorted_files if f.name not in self._not_other_files]
         sorted_files = [f for f in sorted_files if f.name == "index.md"]
         sorted_files.extend(other_files)

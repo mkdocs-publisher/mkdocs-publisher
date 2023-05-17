@@ -26,7 +26,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02_setup/test/01_installation1.md",
+                "file": "04_blog/v060-obsidian.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
@@ -116,7 +116,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "02_setup/test/01_installation1.md",
+                "file": "04_blog/v060-obsidian.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +133,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "02_setup/test/01_installation1.md",
+                "file": "04_blog/v060-obsidian.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -156,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "02_setup/test/01_installation1.md"
+                "file": "04_blog/v060-obsidian.md"
               }
             }
           }
@@ -179,27 +179,27 @@
   },
   "active": "fefd4e5cf8c8c534",
   "lastOpenFiles": [
-    "03_how-to-publish/01_first_steps.md",
-    "04_blog/v060-obsidian.md",
+    "04_blog/v050-social.md",
+    "04_blog/v041.md",
+    "04_blog/v040-minifier-and-autonav.md",
     "04_blog/v030.md",
     "04_blog/v020.md",
     "04_blog/v010-initial-release.md",
+    "04_blog/README.md",
+    "02_setup/test/01_installation1.md",
+    "03_how-to-publish/01_first_steps.md",
+    "04_blog/v060-obsidian.md",
     "02_setup/02_setting-up-auto-nav.md",
     "05_dev/09_changelog.md",
     "index.md",
     "02_setup/README.md",
     "02_setup/09_setting-up-a-minifier.md",
-    "04_blog/README.md",
-    "02_setup/test/01_installation1.md",
     "02_setup/01_installation.md",
     "02_setup/test",
-    "04_blog/v040-minifier-and-autonav.md",
     "05_dev/README.md",
     "_templates/_option.md",
     "03_how-to-publish/README.md",
     "05_dev/01_backlog.md",
-    "04_blog/v050-social.md",
-    "04_blog/v041.md",
     "02_setup/06_setting-up-a-meta.md",
     "02_setup/05_setting-up-an-obsidian.md",
     "02_setup/03_setting-up-a-blog.md",

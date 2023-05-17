@@ -55,12 +55,10 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         )
 
         # Modify nav section
-        new_nav = []
         if config.nav is None:
-            if self.blog_config.plugin_config.start_page:
-                config.nav = [{str(self.blog_config.blog_dir): str(self.blog_config.blog_dir)}]
-            else:
-                config.nav = []
+            config.nav = [{str(self.blog_config.blog_dir): str(self.blog_config.blog_dir)}]
+
+        new_nav = []
         for n in cast(list, config.nav):
             if str(self.blog_config.blog_dir) in n.values():
                 for k, v in config_nav.items():
