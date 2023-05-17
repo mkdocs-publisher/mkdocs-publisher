@@ -1,11 +1,11 @@
 ---
 title: Setting up social cards
-slug: setting-up-social-cards
+slug: pub-social
 status: published
 date: 2023-04-04 21:14:00
-update: 2023-04-04 23:03:49
-categories: setup plugin social cards
+update: 2023-05-15 16:15:56
 description: Setting up social cards plugin
+categories: setup plugin social cards
 ---
 
 # Setting up social cards plugin

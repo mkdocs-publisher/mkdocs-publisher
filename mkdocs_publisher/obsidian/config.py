@@ -23,7 +23,8 @@ class _ObsidianLinksConfig(Config):
 
 
 class ObsidianPluginConfig(Config):
-    obsidian_directory = option.Type(str, default=".obsidian")
+    obsidian_dir = option.Type(str, default=".obsidian")
+    templates_dir = option.Type(str, default="_templates")
 
     backlinks: _ObsidianBacklinksConfig = option.SubConfig(_ObsidianBacklinksConfig)  # type: ignore
     callouts: _ObsidianCalloutsConfig = option.SubConfig(_ObsidianCalloutsConfig)  # type: ignore

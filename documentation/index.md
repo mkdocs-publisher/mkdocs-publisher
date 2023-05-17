@@ -1,9 +1,9 @@
 ---
-title: Home
+title: <i class='fa-solid fa-house'></i>
 slug: home
 status: published
 date: 2023-03-12 12:27:00
-update: 2023-04-21 14:53:51
+update: 2023-05-16 11:39:37
 description: Installation
 categories: start
 ---
@@ -27,7 +27,7 @@ The list of most important features built into MkDocs Publisher:
 - creating a blog posts with automatic build of archive, categories, tags, and index pages ([pub-blog](02_setup/03_setting-up-a-blog.md) plugin),
 - social cards metadata creation based on document metadata ([pub-social](02_setup/04_setting-up-a-social-cards.md) plugin - :material-plus-circle: [v0.5.0](04_blog/v050-social.md)),
 - file size optimizations, that is beneficial for site download speed and SEO ([pub-minifier](02_setup/09_setting-up-a-minifier.md) plugin - :material-plus-circle: [v0.4.0](04_blog/v040-minifier-and-autonav.md)),
-- integration with [Obsidian.md](https://obsidian.md/) as documentation editor with support for some Markdown syntax specific to it and some plugins ([pub-obsidian](02_setup/05-setting-up-obsidian.md) plugin :material-plus-circle: [v0.6.0](04_blog/v060-obsidian.md)):
+- integration with [Obsidian.md](https://obsidian.md/) as documentation editor with support for some Markdown syntax specific to it and some plugins ([pub-obsidian](02_setup/05_setting-up-an-obsidian.md) plugin :material-plus-circle: [v0.6.0](04_blog/v060-obsidian.md)):
 	- [backlinks](https://help.obsidian.md/Plugins/Backlinks),
 	- [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) ,
 	- [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links)

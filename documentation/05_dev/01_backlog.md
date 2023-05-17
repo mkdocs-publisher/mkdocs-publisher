@@ -32,6 +32,7 @@ There are no development plans at this moment.
 - [ ] Fix: `blog` slug do not open first page when not in standalone mode
 - [ ] Fix: remove slug and make it automatically the same as `blog_dir`
 - [ ] Fix: if there is a page in `nav` that is right before blog, next page is called `index-0` instead of `blog`
+- [ ] Fix: no auto-nav navigation creation
 
 ### Minifier
 
@@ -45,7 +46,7 @@ There are no development plans at this moment.
 - [ ] Add: automatic addition of `extra_css` and `extra_js` files
 - [ ] Add: automatic addition of `loading` attribute to all images and iframes for [lazy-loading](https://squidfunk.github.io/mkdocs-material/reference/images/#image-lazy-loading)
 
-### Status (new plugin)
+### Meta (new plugin)
 
 - [ ] Add: usage of page frontmatter
 - [ ] Add: document publication state: draft, published, hidden
@@ -92,8 +93,6 @@ There are no development plans at this moment.
 
 ### Documentation
 
-- [ ] Blog plugin
-- [ ] Minifier plugin
 - [ ] Auto-nav plugin
 - [ ] Integration with RSS plugin
 - [ ] How to set up and use docker image

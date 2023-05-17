@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html class="no-js"lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1"name="viewport">
+<meta content="Plans for future development of Publisher for MkDocs"name="description">
+<meta content="Maciej 'maQ' Kusz"name="author">
+<link href="https://mkusz.github.io/mkdocs-publisher/development/backlog/"rel="canonical">
+<link href="../../blog/v010/"rel="prev">
+<link href="../versioning/"rel="next">
+<link href="../../assets/images/favicon.png"rel="icon">
+<meta content="mkdocs-1.4.2, mkdocs-material-9.1.3"name="generator">
+<title>
+Backlog - MkDocs Publisher
+</title>
+<link href="../../assets/stylesheets/main.c4a75a56.min.css"rel="stylesheet">
+<link href="../../assets/stylesheets/palette.a0c5b2b5.min.css"rel="stylesheet">
+<link href="https://fonts.gstatic.com"rel="preconnect"crossorigin="">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback"rel="stylesheet">
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/publisher.min.css"rel="stylesheet">
+<link href="../../assets/stylesheets/blog.min.css"rel="stylesheet">
+<link href="../../assets/stylesheets/obsidian.min.css"rel="stylesheet">
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<meta content="article"property="og:type">
+<meta content="Backlog"property="og:title">
+<meta content="Plans for future development of Publisher for MkDocs"property="og:description">
+<meta content="MkDocs Publisher"property="og:site_name">
+<meta content="en_us"property="og:locale">
+<meta content="https://mkusz.github.io/mkdocs-publisher/development/backlog/"property="og:url">
+<meta content="summary"property="twitter:card">
+<meta content="Backlog"property="twitter:title">
+<meta content="Plans for future development of Publisher for MkDocs"property="twitter:description">
+</head>
+<body data-md-color-accent="orange"data-md-color-primary="orange"data-md-color-scheme="default"dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input type="checkbox"class="md-toggle"id="__drawer"autocomplete="off"data-md-toggle="drawer">
+<input type="checkbox"class="md-toggle"id="__search"autocomplete="off"data-md-toggle="search">
+<label class="md-overlay"for="__drawer">
+</label>
+<div data-md-component="skip">
+<a href="#plans-for-future-development"class="md-skip">
+Skip to content
+</a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--lifted md-header--shadow"data-md-component="header">
+<nav class="md-grid md-header__inner"aria-label="Header">
+<a href="https://mkusz.github.io/mkdocs-publisher"class="md-header__button md-logo"title="MkDocs Publisher"data-md-component="logo"aria-label="MkDocs Publisher">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z">
+</path>
+</svg>
+</a>
+<label class="md-icon md-header__button"for="__drawer">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z">
+</path>
+</svg>
+</label>
+<div class="md-header__title"data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+MkDocs Publisher
+</span>
+</div>
+<div class="md-header__topic"data-md-component="header-topic">
+<span class="md-ellipsis">
+Backlog
+</span>
+</div>
+</div>
+</div>
+<form class="md-header__option"data-md-component="palette">
+<input type="radio"class="md-option"id="__palette_1"aria-label="Switch to dark mode"data-md-color-accent="orange"data-md-color-media=""data-md-color-primary="orange"data-md-color-scheme="default"name="__palette">
+<label class="md-icon md-header__button"for="__palette_2"hidden title="Switch to dark mode">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z">
+</path>
+</svg>
+</label>
+<input type="radio"class="md-option"id="__palette_2"aria-label="Switch to light mode"data-md-color-accent="orange"data-md-color-media=""data-md-color-primary="orange"data-md-color-scheme="slate"name="__palette">
+<label class="md-icon md-header__button"for="__palette_1"hidden title="Switch to light mode">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z">
+</path>
+</svg>
+</label>
+</form>
+<label class="md-icon md-header__button"for="__search">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z">
+</path>
+</svg>
+</label>
+<div class="md-search"data-md-component="search"role="dialog">
+<label class="md-search__overlay"for="__search">
+</label>
+<div class="md-search__inner"role="search">
+<form class="md-search__form"name="search">
+<input type="text"class="md-search__input"aria-label="Search"name="query"autocapitalize="off"autocomplete="off"autocorrect="off"data-md-component="search-query"placeholder="Search"required spellcheck="false">
+<label class="md-icon md-search__icon"for="__search">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z">
+</path>
+</svg>
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z">
+</path>
+</svg>
+</label>
+<nav class="md-search__options"aria-label="Search">
+<a href="javascript:void(0)"class="md-icon md-search__icon"title="Share"data-md-component="search-share"aria-label="Share"data-clipboard=""data-clipboard-text=""tabindex="-1">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z">
+</path>
+</svg>
+</a>
+<button class="md-icon md-search__icon"type="reset"aria-label="Clear"tabindex="-1"title="Clear">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z">
+</path>
+</svg>
+</button>
+</nav>
+<div class="md-search__suggest"data-md-component="search-suggest">
+</div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap"data-md-scrollfix="">
+<div class="md-search-result"data-md-component="search-result">
+<div class="md-search-result__meta">
+Initializing search
+</div>
+<ol class="md-search-result__list"role="presentation">
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a href="https://github.com/mkusz/mkdocs-publisher"class="md-source"title="Go to repository"data-md-component="source">
+<div class="md-icon md-source__icon">
+<svg viewbox="0 0 448 512"xmlns="http://www.w3.org/2000/svg">
+<!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.-->
+<path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z">
+</path>
+</svg>
+</div>
+<div class="md-source__repository">
+GitHub
+</div>
+</a>
+</div>
+</nav>
+<nav class="md-tabs"aria-label="Tabs"data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a href="../../home/"class="md-tabs__link">
+<i class="fa-house fa-solid">
+</i>
+</a>
+</li>
+<li class="md-tabs__item">
+<a href="../../setup/installation/"class="md-tabs__link">
+Setup
+</a>
+</li>
+<li class="md-tabs__item">
+<a href="../../how-to-publish/first-steps/"class="md-tabs__link">
+How to publish
+</a>
+</li>
+<li class="md-tabs__item">
+<a href="../../blog/"class="md-tabs__link">
+Blog
+</a>
+</li>
+<li class="md-tabs__item">
+<a href="./"class="md-tabs__link md-tabs__link--active">
+Development
+</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container"data-md-component="container">
+<main class="md-main"data-md-component="main">
+<div class="md-grid md-main__inner">
+<div class="md-sidebar md-sidebar--primary"data-md-component="sidebar"data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--lifted md-nav--primary"aria-label="Navigation"data-md-level="0">
+<label class="md-nav__title"for="__drawer">
+<a href="https://mkusz.github.io/mkdocs-publisher"class="md-logo md-nav__button"title="MkDocs Publisher"data-md-component="logo"aria-label="MkDocs Publisher">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z">
+</path>
+</svg>
+</a>
+MkDocs Publisher
+</label>
+<div class="md-nav__source">
+<a href="https://github.com/mkusz/mkdocs-publisher"class="md-source"title="Go to repository"data-md-component="source">
+<div class="md-icon md-source__icon">
+<svg viewbox="0 0 448 512"xmlns="http://www.w3.org/2000/svg">
+<!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.-->
+<path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z">
+</path>
+</svg>
+</div>
+<div class="md-source__repository">
+GitHub
+</div>
+</a>
+</div>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../home/"class="md-nav__link">
+<i class="fa-house fa-solid">
+</i>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input type="checkbox"class="md-toggle md-nav__toggle"id="__nav_2">
+<label class="md-nav__link"for="__nav_2"id="__nav_2_label"tabindex="0">
+Setup
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="1"aria-expanded="false"aria-labelledby="__nav_2_label">
+<label class="md-nav__title"for="__nav_2">
+<span class="md-icon md-nav__icon">
+</span>
+Setup
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../setup/installation/"class="md-nav__link">
+Installation
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../setup/pub-auto-nav/"class="md-nav__link">
+Setting up an auto-nav
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../setup/pub-blog/"class="md-nav__link">
+Setting up a blog
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../setup/pub-social/"class="md-nav__link">
+Setting up social cards
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../setup/pub-obsidian/"class="md-nav__link">
+Setting up obsidian
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../setup/pub-meta/"class="md-nav__link">
+Setting up meta
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../setup/pub-minifier/"class="md-nav__link">
+Setting up minifier
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input type="checkbox"class="md-toggle md-nav__toggle"id="__nav_2_8">
+<label class="md-nav__link"for="__nav_2_8"id="__nav_2_8_label"tabindex="0">
+test
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_2_8_label">
+<label class="md-nav__title"for="__nav_2_8">
+<span class="md-icon md-nav__icon">
+</span>
+test
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../setup/test/installation/"class="md-nav__link">
+Installation
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input type="checkbox"class="md-toggle md-nav__toggle"id="__nav_3">
+<label class="md-nav__link"for="__nav_3"id="__nav_3_label"tabindex="0">
+How to publish
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="1"aria-expanded="false"aria-labelledby="__nav_3_label">
+<label class="md-nav__title"for="__nav_3">
+<span class="md-icon md-nav__icon">
+</span>
+How to publish
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../how-to-publish/first-steps/"class="md-nav__link">
+First steps
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input type="checkbox"class="md-toggle md-nav__toggle"id="__nav_4">
+<label class="md-nav__link"for="__nav_4"id="__nav_4_label"tabindex="0">
+Blog
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="1"aria-expanded="false"aria-labelledby="__nav_4_label">
+<label class="md-nav__title"for="__nav_4">
+<span class="md-icon md-nav__icon">
+</span>
+Blog
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../blog/"class="md-nav__link">
+index-0
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input type="checkbox"class="md-toggle md-nav__toggle"id="__nav_4_2">
+<label class="md-nav__link"for="__nav_4_2"id="__nav_4_2_label"tabindex="0">
+Archive
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_4_2_label">
+<label class="md-nav__title"for="__nav_4_2">
+<span class="md-icon md-nav__icon">
+</span>
+Archive
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../blog/archive/2023/"class="md-nav__link">
+2023
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input type="checkbox"class="md-toggle md-nav__toggle"id="__nav_4_3">
+<label class="md-nav__link"for="__nav_4_3"id="__nav_4_3_label"tabindex="0">
+Categories
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_4_3_label">
+<label class="md-nav__title"for="__nav_4_3">
+<span class="md-icon md-nav__icon">
+</span>
+Categories
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../blog/categories/release/"class="md-nav__link">
+release
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input type="checkbox"class="md-toggle md-nav__toggle"id="__nav_4_4">
+<label class="md-nav__link"for="__nav_4_4"id="__nav_4_4_label"tabindex="0">
+Tags
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_4_4_label">
+<label class="md-nav__title"for="__nav_4_4">
+<span class="md-icon md-nav__icon">
+</span>
+Tags
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../blog/tags/v010/"class="md-nav__link">
+v0.1.0
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../blog/tags/v020/"class="md-nav__link">
+v0.2.0
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../blog/tags/v030/"class="md-nav__link">
+v0.3.0
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../blog/tags/v040/"class="md-nav__link">
+v0.4.0
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../blog/tags/v041/"class="md-nav__link">
+v0.4.1
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../blog/tags/v050/"class="md-nav__link">
+v0.5.0
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../blog/tags/v060/"class="md-nav__link">
+v0.6.0
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--active">
+<input type="checkbox"class="md-toggle md-nav__toggle"id="__nav_5"checked>
+<label class="md-nav__link"for="__nav_5"id="__nav_5_label"tabindex="0">
+Development
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="1"aria-expanded="true"aria-labelledby="__nav_5_label">
+<label class="md-nav__title"for="__nav_5">
+<span class="md-icon md-nav__icon">
+</span>
+Development
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input type="checkbox"class="md-toggle md-nav__toggle"id="__toc">
+<label class="md-nav__link md-nav__link--active"for="__toc">
+Backlog
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<a href="./"class="md-nav__link md-nav__link--active">
+Backlog
+</a>
+<nav class="md-nav md-nav--secondary"aria-label="Table of contents">
+<label class="md-nav__title"for="__toc">
+<span class="md-icon md-nav__icon">
+</span>
+Table of contents
+</label>
+<ul class="md-nav__list"data-md-scrollfix=""data-md-component="toc">
+<li class="md-nav__item">
+<a href="#plugins"class="md-nav__link">
+Plugins
+</a>
+<nav class="md-nav"aria-label="Plugins">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#auto-nav"class="md-nav__link">
+Auto-nav
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#blog"class="md-nav__link">
+Blog
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#minifier"class="md-nav__link">
+Minifier
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#automations-new-plugin"class="md-nav__link">
+Automations (new plugin)
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#meta-new-plugin"class="md-nav__link">
+Meta (new plugin)
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#social"class="md-nav__link">
+Social
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#seo-new-plugin"class="md-nav__link">
+SEO (new plugin)
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#obsidian-new-plugin"class="md-nav__link">
+Obsidian (new plugin)
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#general"class="md-nav__link">
+General
+</a>
+<nav class="md-nav"aria-label="General">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#cli-tool"class="md-nav__link">
+CLI tool
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#documentation"class="md-nav__link">
+Documentation
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#other"class="md-nav__link">
+Other
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="../versioning/"class="md-nav__link">
+Versioning
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../development/"class="md-nav__link">
+Development
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../changelog/"class="md-nav__link">
+Changelog
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary"data-md-component="sidebar"data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--secondary"aria-label="Table of contents">
+<label class="md-nav__title"for="__toc">
+<span class="md-icon md-nav__icon">
+</span>
+Table of contents
+</label>
+<ul class="md-nav__list"data-md-scrollfix=""data-md-component="toc">
+<li class="md-nav__item">
+<a href="#plugins"class="md-nav__link">
+Plugins
+</a>
+<nav class="md-nav"aria-label="Plugins">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#auto-nav"class="md-nav__link">
+Auto-nav
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#blog"class="md-nav__link">
+Blog
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#minifier"class="md-nav__link">
+Minifier
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#automations-new-plugin"class="md-nav__link">
+Automations (new plugin)
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#meta-new-plugin"class="md-nav__link">
+Meta (new plugin)
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#social"class="md-nav__link">
+Social
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#seo-new-plugin"class="md-nav__link">
+SEO (new plugin)
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#obsidian-new-plugin"class="md-nav__link">
+Obsidian (new plugin)
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#general"class="md-nav__link">
+General
+</a>
+<nav class="md-nav"aria-label="General">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#cli-tool"class="md-nav__link">
+CLI tool
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#documentation"class="md-nav__link">
+Documentation
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#other"class="md-nav__link">
+Other
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content"data-md-component="content">
+<article class="md-typeset md-content__inner">
+<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/documentation/05_dev/01_backlog.md"class="md-icon md-content__button"title="Edit this page">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z">
+</path>
+</svg>
+</a>
+<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/documentation/05_dev/01_backlog.md"class="md-icon md-content__button"title="View source of this page">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z">
+</path>
+</svg>
+</a>
+<h1 id="plans-for-future-development">
+Plans for future development
+<a href="#plans-for-future-development"class="headerlink"title="Permanent link">
+¶
+</a>
+</h1>
+<p>
+Below lists is a list of tasks that are planned to be done (a backlog) and there is no particular order when they will be implemented. If you are interested in any of the below points being implemented in a first place or there is something missing here, please report and issue.
+</p>
+<h2 id="plugins">
+Plugins
+<a href="#plugins"class="headerlink"title="Permanent link">
+¶
+</a>
+</h2>
+<h3 id="auto-nav">
+Auto-nav
+<a href="#auto-nav"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<p>
+There are no development plans at this moment.
+</p>
+<h3 id="blog">
+Blog
+<a href="#blog"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: blog post reading time + watch time (defined in post meta)
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: possibility to disable categories and/or tags pages
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: automatic add
+<a href="https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/#search-exclusion">
+search exclude
+</a>
+to draft and hidden pages when using material for MkDocs theme with search plugin enabled
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: authors and update date in the template
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: blog posts index template override
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: language override in YAML file
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: configurable date format
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: blog post publication state: draft, published, hidden
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: auto-generate slug based on slugify (+ inject into document metadata)
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Fix:
+<code>
+blog
+</code>
+slug do not open first page when not in standalone mode
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Fix: remove slug and make it automatically the same as
+<code>
+blog_dir
+</code>
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Fix: if there is a page in
+<code>
+nav
+</code>
+that is right before blog, next page is called
+<code>
+index-0
+</code>
+instead of
+<code>
+blog
+</code>
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Fix: no auto-nav navigation creation
+
+</li>
+</ul>
+<h3 id="minifier">
+Minifier
+<a href="#minifier"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: ignored files list/pattern (globally and per file type)
+
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: stats for number of minified/taken from cache files
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: cache disable (globally and per file type)
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: configurable file extensions per minifier
+</li>
+</ul>
+<h3 id="automations-new-plugin">
+Automations (new plugin)
+<a href="#automations-new-plugin"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: automatic addition of
+<code>
+extra_css
+</code>
+and
+<code>
+extra_js
+</code>
+files
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: automatic addition of
+<code>
+loading
+</code>
+attribute to all images and iframes for
+<a href="https://squidfunk.github.io/mkdocs-material/reference/images/#image-lazy-loading">
+lazy-loading
+</a>
+</li>
+</ul>
+<h3 id="meta-new-plugin">
+Meta (new plugin)
+<a href="#meta-new-plugin"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: usage of page frontmatter
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: document publication state: draft, published, hidden
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: sitemap optimizations and creation of
+<code>
+robots.txt
+</code>
+file based on document status
+</li>
+</ul>
+<h3 id="social">
+Social
+<a href="#social"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: image generator if one is not provided
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: ignored file list/pattern
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: warning on missing meta key
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: ignore single file based on frontmatter
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: check for description and title length (SEO)
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: set up a default image used for a social card
+</li>
+</ul>
+<h3 id="seo-new-plugin">
+SEO (new plugin)
+<a href="#seo-new-plugin"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: multiple HTML
+<code>
+&lt;meta name="author"&gt;
+</code>
+based on frontmatter authors
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: multiple HTML
+<code>
+&lt;meta name="keywords"&gt;
+</code>
+based on frontmatter categories and tags
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: publisher HTML value
+<code>
+&lt;link href="{site_url}" rel="publisher" /&gt;
+</code>
+that points to the main page URL
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: robots HTML settings
+<code>
+&lt;meta name="robots" content="noindex, nofollow" /&gt;
+</code>
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: check for description and title length (SEO)
+</li>
+</ul>
+<h3 id="obsidian-new-plugin">
+Obsidian (new plugin)
+<a href="#obsidian-new-plugin"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: mind maps (using
+<a href="https://markmap.js.org/docs/markmap">
+markmap
+</a>
+)
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: templates (blog post, page, etc.)
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: graph view (long-term goal)
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: backlinks with unlinked mentions based on page title and aliases (maybe some headings titles?)
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: detection of an
+<code>
+_templates
+</code>
+directory and add it to the auto-nav
+<code>
+skip_dirs
+</code>
+</li>
+</ul>
+<h2 id="general">
+General
+<a href="#general"class="headerlink"title="Permanent link">
+¶
+</a>
+</h2>
+<h3 id="cli-tool">
+CLI tool
+<a href="#cli-tool"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: project initialization that preconfigure
+<code>
+mkdocs.yml
+</code>
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: create a new blog post
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: document/blog post slug update
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: check for minifier tools
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: clean minifier cache
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: minify single file using minifier
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: document/blog post publication state change
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: CONTRIBUTING.md file to the repo
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add: issues templates in the project repository issues
+</li>
+</ul>
+<h3 id="documentation">
+Documentation
+<a href="#documentation"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Auto-nav plugin
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Integration with RSS plugin
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+How to set up and use docker image
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Setting up CI/CD in GitHub Actions
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+This plugin development how to
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Credits for used libraries with description (like in
+<a href="https://pawamoy.github.io/mkdocs-coverage/credits/">
+MkDocs Coverage Plugin
+</a>
+)
+</li>
+</ul>
+<h3 id="other">
+Other
+<a href="#other"class="headerlink"title="Permanent link">
+¶
+</a>
+</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Create Docker image with everything preinstalled and preconfigured
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Add to docker image online Vega charts editor
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+GitHub repo with preconfigured pages, etc. (can be integrated with Docker Image creation)
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Unit tests and code coverage with pre-commit
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Cleanup list of code TODO's
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Drop
+<code>
+python-frontmatter
+</code>
+for MkDocs built-in library for metadata retrieval
+</li>
+<li class="task-list-item">
+<input type="checkbox"disabled>
+Move translations to jinja templates like Material for MkDocs is doing it
+</li>
+</ul>
+<hr>
+<p class="obsidian_backlink_title">
+Backlinks:
+</p>
+<div class="obsidian_backlink">
+<details class="backlink">
+<summary>
+Setting up social cards
+</summary>
+<p>
+</p><p class="obsidian_backlink">
+When you are a blogger or a person who wants to publish some documentation, book or any other piece of written text, you probably also want to share it over social media. Most platforms (like Facebook, LinkedIn, etc.) uses some web page metadata called Open Graph. Twitter is using part of this data and some additional metadata called Twitter Cards. No matter if you want to share your text with Facebook or Twitter, MkDocs Publisher is here to help you with this task and is doing it (almost) fully automatically. You don't have to edit any template like it's needed when you would like to use similar functionality from Material for MkDosc theme (at least it's true for
+<code>
+v9.1.5
+</code>
+). At this time (MkDocs Publisher
+<code>
+v0.5.0
+</code>
+) it's not possible to auto-generate a whole social card (this task is added to the
+<a href="https://mkusz.github.io/mkdocs-publisher/02_setup/04_setting-up-a-social-cards/#05-dev-01-backlog">
+backlog
+</a>
+). However, it's possible to add your image as a preview with additional description, etc.
+</p>
+<p></p>
+</details>
+</div>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+</div>
+<button class="md-icon md-top"type="button"data-md-component="top"hidden>
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z">
+</path>
+</svg>
+Back to top
+</button>
+</main>
+<footer class="md-footer">
+<nav class="md-grid md-footer__inner"aria-label="Footer">
+<a href="../../blog/v010/"class="md-footer__link md-footer__link--prev"aria-label="Previous: v0.1.0 - Initial release"rel="prev">
+<div class="md-icon md-footer__button">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z">
+</path>
+</svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+Previous
+</span>
+v0.1.0 - Initial release
+</div>
+</div>
+</a>
+<a href="../versioning/"class="md-footer__link md-footer__link--next"aria-label="Next: Versioning"rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+Next
+</span>
+Versioning
+</div>
+</div>
+<div class="md-icon md-footer__button">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z">
+</path>
+</svg>
+</div>
+</a>
+</nav>
+<div class="md-typeset md-footer-meta">
+<div class="md-grid md-footer-meta__inner">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+© 2023 Maciej 'maQ' Kusz
+</div>
+Made with
+<a href="https://squidfunk.github.io/mkdocs-material/"rel="noopener"target="_blank">
+Material for MkDocs
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog"data-md-component="dialog">
+<div class="md-typeset md-dialog__inner">
+</div>
+</div>
+<script id="__config"type="application/json">
+{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.footer", "navigation.tracking", "navigation.top", "navigation.sections", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}
+</script>
+<script src="../../assets/javascripts/bundle.efa0ade1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>

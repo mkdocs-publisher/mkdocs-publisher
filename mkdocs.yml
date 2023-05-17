@@ -22,6 +22,9 @@ extra:
 extra_css:
   - assets/stylesheets/publisher.min.css
 
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js
+
 watch:
   - overrides
 
@@ -102,15 +105,9 @@ markdown_extensions:
 
 plugins:
   - search
-  - pub-auto-nav:
-      skip_dirs:
-        - _templates
   - pub-blog:
       blog_dir: 04_blog
-#      start_page: true  # TODO: add detection of this when auto-nav is enabled
   - pub-social
   - pub-obsidian
   - pub-minifier
-
-#nav:
-#  - 04_blog: 04_blog
+  - pub-meta

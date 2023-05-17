@@ -13,14 +13,28 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "04_blog/v060-obsidian.md",
+                "file": "02_setup/01_installation.md",
+                "mode": "source",
+                "backlinks": true,
+                "source": true
+              }
+            }
+          },
+          {
+            "id": "fefd4e5cf8c8c534",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "02_setup/test/01_installation1.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -102,7 +116,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "04_blog/v060-obsidian.md",
+                "file": "02_setup/test/01_installation1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,7 +133,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "04_blog/v060-obsidian.md",
+                "file": "02_setup/test/01_installation1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "04_blog/v060-obsidian.md"
+                "file": "02_setup/test/01_installation1.md"
               }
             }
           }
@@ -163,35 +177,36 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ee16ab17b3284a0d",
+  "active": "fefd4e5cf8c8c534",
   "lastOpenFiles": [
-    "04_blog/v010-initial-release.md",
-    "04_blog/v020.md",
-    "04_blog/v030.md",
-    "04_blog/v040-minifier-and-autonav.md",
-    "04_blog/v041.md",
-    "04_blog/v050-social.md",
-    "04_blog/v060-obsidian.md",
-    "05_dev/01_backlog.md",
-    "index.md",
-    "05_dev/README.md",
-    "04_blog/README.md",
-    "02_setup/01_installation.md",
-    "02_setup/03_setting-up-a-blog.md",
-    "02_setup/02_setting-up-auto-nav.md",
-    "02_setup/05-setting-up-obsidian.md",
     "03_how-to-publish/01_first_steps.md",
-    "_templates/_option.md",
-    "02_setup/04_setting-up-a-social-cards.md",
-    "_templates/_temp.md",
-    "03_how-to-publish/README.md",
+    "04_blog/v060-obsidian.md",
+    "04_blog/v030.md",
+    "04_blog/v020.md",
+    "04_blog/v010-initial-release.md",
+    "02_setup/02_setting-up-auto-nav.md",
+    "05_dev/09_changelog.md",
+    "index.md",
     "02_setup/README.md",
     "02_setup/09_setting-up-a-minifier.md",
-    "02_setup/07_obsidian/README.md",
-    "02_setup/07_obsidian/01_installation.md",
-    "05_dev/09_changelog.md",
+    "04_blog/README.md",
+    "02_setup/test/01_installation1.md",
+    "02_setup/01_installation.md",
+    "02_setup/test",
+    "04_blog/v040-minifier-and-autonav.md",
+    "05_dev/README.md",
+    "_templates/_option.md",
+    "03_how-to-publish/README.md",
+    "05_dev/01_backlog.md",
+    "04_blog/v050-social.md",
+    "04_blog/v041.md",
+    "02_setup/06_setting-up-a-meta.md",
+    "02_setup/05_setting-up-an-obsidian.md",
+    "02_setup/03_setting-up-a-blog.md",
+    "02_setup/04_setting-up-a-social-cards.md",
+    "05_dev/02_versioning.md",
+    "05_dev/08_development.md",
     "02_setup/07_obsidian",
-    "().md",
     "_templates",
     "mkdocs_publisher/blog/structures.py.isorted",
     "docs/search/search_index.json",
@@ -200,7 +215,6 @@
     "docs/blog/tags/v0.4.1/index.html",
     "docs/blog/tags/v0.4.0/index.html",
     "docs/blog/tags/v0.3.0/index.html",
-    "docs/blog/tags/v0.2.0/index.html",
     "docs/assets/images/favicon.png"
   ]
 }

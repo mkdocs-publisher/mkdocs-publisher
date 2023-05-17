@@ -1,9 +1,9 @@
 ---
-title: v0.6.0 - 2023-04-20
+title: v0.6.0 - 2023-05-10
 slug: v060
 status: published
-date: 2023-04-20 21:26:12
-update: 2023-05-10 14:23:03
+date: 2023-05-10 21:40:36
+update: 2023-05-15 16:19:17
 tags: [v0.6.0]
 description: MkDosc Publisher plugin v0.6.0
 categories: release
@@ -19,7 +19,15 @@ This was quite a journey to make this release. So far, this whole documentation 
 
 If you need support for additional plugins, please make an [issue](https://github.com/mkusz/mkdocs-publisher/issues) with a future description.
 
-For more details about this release, read more below or jump directly to [pub-obsidian](../02_setup/05-setting-up-obsidian.md) plugin documentation.
+For more details about this release, read more below or jump directly to [pub-obsidian](../02_setup/05_setting-up-an-obsidian.md) plugin documentation.
+
+
+> [!bug] Navigation issue
+> There are some problems with the manually created `nav` section. Please use `pub-auto-nav` plugin if you want to use `pub-blog` plugin.
+
+The above bug will be fixed in the next release.
+
+PS. I need to start to implement unit tests because this project becomes too big to test it manually and deliver production grade quality.
 
 <!-- more -->
 
@@ -30,7 +38,7 @@ For more details about this release, read more below or jump directly to [pub-ob
 - :material-plus-circle: internal class for HTML modifications
 - :material-sync-circle: project license to MIT
 - :material-sync-circle: project `README.md` cleanup
-- :material-sync-circle: internal method for importing other plugin config (neede for cross functionalities)
+- :material-sync-circle: internal method for importing other plugin config (needed for cross functionalities)
 
 ### Auto-nav
 
@@ -75,10 +83,19 @@ This plugin is a set of functionalities and should be split into various smaller
 
 - :material-plus-circle: support for *vega* and *vega-lite* charts when added by [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)
 
+### Meta (new plugin):
+
+This plugin is the one that gets some of the functionalities previously implemented in other plugins (like blog) and extends it for more broad usage for rest of the documents. This plugin allows you to set, a various metadata to the generated file like: update date, file and path URL and others. Some of the settings are common for more plugins. Please take a look at the below list and [pub-meta plugin documentation](../02_setup/06_setting-up-a-meta.md).
+
+
+
 ---
 
 > [!info] Legend
 > :material-plus-circle: - added
+>
 > :material-minus-circle: - removed
+>
 > :material-check-circle: - fixed
+>
 > :material-sync-circle: - changed

@@ -1,9 +1,9 @@
 ---
 title: Setting up a blog
-slug: setting-up-a-blog
+slug: pub-blog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-04-21 21:53:54
+update: 2023-05-15 16:16:00
 description: Setting up a blog plugin
 categories: setup plugin blog
 ---

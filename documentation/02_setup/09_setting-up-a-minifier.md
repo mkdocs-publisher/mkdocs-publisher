@@ -1,11 +1,11 @@
 ---
-title: Setting up a minifier
-slug: setting-up-a-minifier
+title: Setting up minifier
+slug: pub-minifier
 status: published
 date: 2023-02-02 22:00:00
-update: 2023-03-22 22:57:34
+update: 2023-05-16 10:18:25
+description: Setting up minifier plugin
 categories: setup plugin minifier
-description: Setting up a minifier plugin
 ---
 
 # Setting up a minifier plugin

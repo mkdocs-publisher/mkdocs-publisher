@@ -33,6 +33,10 @@
     color: var(--md-default-fg-color--light)
 }
 
+.obsidian_backlink svg {
+    height: 0.825rem;
+}
+
 /* Backlink admonition style */
 
 :root {

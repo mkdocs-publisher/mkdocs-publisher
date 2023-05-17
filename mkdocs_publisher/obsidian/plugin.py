@@ -129,7 +129,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             """Watcheer implementation that skips .obsidian directory"""
             if isinstance(event, watchdog.events.FileModifiedEvent) and str(
                 event.src_path
-            ).startswith(str(Path(config.docs_dir) / self.config.obsidian_directory)):
+            ).startswith(str(Path(config.docs_dir) / self.config.obsidian_dir)):
                 return
 
             if event.is_directory:

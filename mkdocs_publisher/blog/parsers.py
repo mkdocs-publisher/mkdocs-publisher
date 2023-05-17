@@ -23,16 +23,16 @@ def count_words(content):
     content = re.sub(r"<!--(.*?)-->", "", content, flags=re.MULTILINE)  # Comments
     content = content.replace("\t", "    ")  # Tabs to spaces
     content = re.sub(r"[ ]{2,}", "    ", content)  # More than 1 space to 4 spaces
-    content = re.sub(r"^\[[^]]*\][^(].*", "", content, flags=re.MULTILINE)  # Footnotes
+    content = re.sub(r"^\[[^]]*][^(].*", "", content, flags=re.MULTILINE)  # Footnotes
     content = re.sub(
         r"^( {4,}[^-*]).*", "", content, flags=re.MULTILINE
     )  # Indented blocks of code
     content = re.sub(r"{#.*}", "", content)  # Custom header IDs
     content = content.replace("\n", " ")  # Replace newlines with spaces for uniform handling
-    content = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", content)  # Remove images
+    content = re.sub(r"!\[[^]]*]\([^)]*\)", "", content)  # Remove images
     content = re.sub(r"</?[^>]*>", "", content)  # Remove HTML tags
     content = re.sub(r"[#*`~\-–^=<>+|/:]", "", content)  # Remove special characters
-    content = re.sub(r"\[[0-9]*\]", "", content)  # Remove footnote references
+    content = re.sub(r"\[[0-9]*]", "", content)  # Remove footnote references
     content = re.sub(r"[0-9#]*\.", "", content)  # Remove enumerations
 
     return len(content.split())
@@ -46,17 +46,13 @@ def parse_markdown_files(
     BlogPost object is created and filled with content and metadata of the post.
     """
     log.info(f"Parsing blog posts from '{blog_config.blog_dir}' directory")
-    for file_path in blog_config.docs_dir.glob("**/*"):
-        if blog_config.auto_nav_config is not None:
-            if file_path.parts[-1] == blog_config.auto_nav_config.meta_file_name:
+    for file_path in blog_config.docs_dir.glob("**/*.md"):
+        if blog_config.meta_config is not None:
+            if file_path.parts[-1] == blog_config.meta_config.meta_file_name:
                 continue
         file_path = Path(file_path)
         path = Path(file_path).relative_to(blog_config.docs_dir)
-        if (
-            file_path.is_file()
-            and path.is_relative_to(blog_config.blog_dir)
-            and path.suffix == ".md"
-        ):
+        if path.is_relative_to(blog_config.blog_dir):
             parents = list(path.parents)[:-1]
             with open(file_path) as markdown_file:
                 post: frontmatter.Post = frontmatter.load(markdown_file)

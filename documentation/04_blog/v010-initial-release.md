@@ -1,12 +1,12 @@
 ---
 title: v0.1.0 - Initial release
-slug: v010-initial-release
+slug: v010
 status: published
 date: 2023-02-02 22:00:00
-update: 2023-03-18 22:34:17
-categories: release
-tags: v0.1.0
+update: 2023-05-15 16:19:05
+tags: [v0.1.0]
 description: Initial version of MkDosc Blog-in plugin
+categories: release
 ---
 
 Another blogging plugin for MkDocs? But why?
@@ -15,7 +15,7 @@ The simplest answer is: because I couldn't find one good enough (and free).
 
 The flip side of the same coin was that I wanted to migrate my personal blog related to [testing](https://testerembyc.pl) (sorry only in Polish, but you can try to use Google translator) from [Nikola](https://getnikola.com/) that works quite well, but sometimes is overly complicated, has almost none search functionality and markdown files are not the default one (but it's possible to use them). Why does the Markdown format is so important? Because I love [Obsidian](https://obsidian.md) as a tool for gathering knowledge, and this format is a crucial part of that tool.
 
-At the time when this plugin was created, there were no free and good alternatives. The only one that could be good enough was hidden behind a paid wall and was a part of a theme [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/blog/). Some of the ideas for this plugin and functionalities came from documentation of the Material for MkDocs theme, Nikola and other plugins.
+At the time when this plugin was created, there was no free and good alternatives. The only one that could be good enough was hidden behind a paid wall and was a part of a theme [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/blog/). Some of the ideas for this plugin and functionalities came from documentation of the Material for MkDocs theme, Nikola and other plugins.
 
 <!-- more -->
 
@@ -47,6 +47,9 @@ This project is now at an early stage of development. Current functionalities ar
 
 > [!info] Legend
 > :material-plus-circle: - added
+>
 > :material-minus-circle: - removed
+>
 > :material-check-circle: - fixed
+>
 > :material-sync-circle: - changed

@@ -11,8 +11,8 @@ from typing import cast
 from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher._common import mkdocs_utils
-from mkdocs_publisher.auto_nav.config import AutoNavPluginConfig
 from mkdocs_publisher.blog.config import BlogPluginConfig
+from mkdocs_publisher.meta.config import MetaPluginConfig
 
 
 @dataclass
@@ -58,7 +58,7 @@ class Translation:
 class BlogConfig:
     mkdocs_config: MkDocsConfig = field(init=False)
     plugin_config: BlogPluginConfig = field(init=False)
-    auto_nav_config: Optional[AutoNavPluginConfig] = field(init=False, default=None)
+    meta_config: Optional[MetaPluginConfig] = field(init=False, default=None)
     translation: Translation = field(init=False)
     temp_dir: Path = field(init=False)
     docs_dir: Path = field(init=False)
@@ -79,11 +79,9 @@ class BlogConfig:
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
-        self.auto_nav_config: Optional[AutoNavPluginConfig] = cast(
-            AutoNavPluginConfig,
-            mkdocs_utils.get_plugin_config(
-                mkdocs_config=mkdocs_config, plugin_name="pub-auto-nav"
-            ),
+        self.meta_config: Optional[MetaPluginConfig] = cast(
+            MetaPluginConfig,
+            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta"),
         )
         self.temp_dir = Path(plugin_config.temp_dir)
         self.docs_dir = Path(mkdocs_config.docs_dir)

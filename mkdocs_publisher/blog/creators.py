@@ -10,6 +10,7 @@ import frontmatter
 import jinja2
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
+from pymdownx.slugs import slugify
 
 from mkdocs_publisher._extra.assets import templates
 from mkdocs_publisher.blog.structures import BlogConfig
@@ -199,8 +200,12 @@ def _render_and_write_page(
     markdown = md_links.normalize(markdown=markdown, file_path=str(file_path))
     markdown = md_links.fix_relative_paths(markdown=markdown)
 
+    # TODO: when using pub-meta key name should be taken from plugin config
     page = frontmatter.Post(content=markdown)
     page["title"] = page_title
+    # TODO: consider moving slugify configuration to mkdocs.yaml
+    page["slug"] = slugify(case="lower")(text=page_title.split("-")[-1].strip(), sep="-")
+    page["status"] = "published"
 
     with open(file_path, mode="wb") as teasers_index:
         frontmatter.dump(page, teasers_index)

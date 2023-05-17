@@ -13,7 +13,9 @@ keywords = [
     "minifier",
     "frontmatter",
     "tags",
-    "navigation"
+    "navigation",
+    "documentation",
+    "obsidian"
 ]
 packages = [
     {include = "mkdocs_publisher"},
@@ -87,8 +89,8 @@ reportMissingTypeStubs = false
 typeCheckingMode = "basic"
 
 [tool.poetry.plugins."mkdocs.plugins"]
-pub-auto-nav = "mkdocs_publisher.auto_nav.plugin:AutoNavPlugin"
 pub-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"
+pub-meta = "mkdocs_publisher.meta.plugin:MetaPlugin"
 pub-minifier = "mkdocs_publisher.minifier.plugin:MinifierPlugin"
 pub-obsidian = "mkdocs_publisher.obsidian.plugin:ObsidianPlugin"
 pub-social = "mkdocs_publisher.social.plugin:SocialPlugin"

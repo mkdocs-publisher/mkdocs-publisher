@@ -3,7 +3,7 @@ title: v0.5.0 - 2023-04-04
 slug: v050
 status: published
 date: 2023-04-04 21:26:12
-update: 2023-04-21 12:06:07
+update: 2023-05-15 16:19:16
 tags: [v0.5.0]
 description: MkDosc Publisher plugin v0.5.0
 categories: release
@@ -37,6 +37,9 @@ For more details about this release, read more below or jump directly to [pub-so
 
 > [!info] Legend
 > :material-plus-circle: - added
+>
 > :material-minus-circle: - removed
+>
 > :material-check-circle: - fixed
+>
 > :material-sync-circle: - changed
