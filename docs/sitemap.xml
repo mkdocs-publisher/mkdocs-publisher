@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/home/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <loc>https://mkusz.github.io/mkdocs-publisher/</loc>
+         <lastmod>2023-05-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
@@ -11,37 +11,27 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/setup/pub-auto-nav/</loc>
-         <lastmod>2023-05-15</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/setup/pub-blog/</loc>
-         <lastmod>2023-05-15</lastmod>
+         <loc>https://mkusz.github.io/mkdocs-publisher/setup/pub-meta/</loc>
+         <lastmod>2023-05-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/setup/pub-social/</loc>
-         <lastmod>2023-05-15</lastmod>
+         <lastmod>2023-05-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkusz.github.io/mkdocs-publisher/setup/pub-blog/</loc>
+         <lastmod>2023-05-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/setup/pub-obsidian/</loc>
-         <lastmod>2023-05-15</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/setup/pub-meta/</loc>
-         <lastmod>2023-05-15</lastmod>
+         <lastmod>2023-05-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/setup/pub-minifier/</loc>
-         <lastmod>2023-05-16</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/setup/test/installation/</loc>
          <lastmod>2023-05-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -82,17 +72,12 @@
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/v060/</loc>
-         <lastmod>2023-05-15</lastmod>
+         <lastmod>2023-05-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/development/backlog/</loc>
-         <lastmod>2023-04-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/development/versioning/</loc>
-         <lastmod>2023-04-19</lastmod>
+         <loc>https://mkusz.github.io/mkdocs-publisher/development/changelog/</loc>
+         <lastmod>2023-05-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
@@ -101,63 +86,73 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://mkusz.github.io/mkdocs-publisher/development/changelog/</loc>
-         <lastmod>2023-03-22</lastmod>
+         <loc>https://mkusz.github.io/mkdocs-publisher/development/versioning/</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkusz.github.io/mkdocs-publisher/development/other/credits/</loc>
+         <lastmod>2023-05-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkusz.github.io/mkdocs-publisher/development/other/backlog/</loc>
+         <lastmod>2023-04-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/1/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/archive/2023/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/categories/release/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v010/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v020/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v030/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v040/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v041/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v050/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/blog/tags/v060/</loc>
-         <lastmod>2023-05-17</lastmod>
+         <lastmod>2023-05-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

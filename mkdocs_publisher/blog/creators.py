@@ -10,11 +10,11 @@ import frontmatter
 import jinja2
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
-from pymdownx.slugs import slugify
 
+from mkdocs_publisher._common.url import slugify
 from mkdocs_publisher._extra.assets import templates
 from mkdocs_publisher.blog.structures import BlogConfig
-from mkdocs_publisher.obsidian.markdown_links import MarkdownLinks
+from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
@@ -40,6 +40,7 @@ def create_blog_files(
 
 
 def create_blog_post_pages(
+    start_page: bool,
     blog_config: BlogConfig,
     config_nav: OrderedDict,
 ) -> None:
@@ -53,7 +54,11 @@ def create_blog_post_pages(
 
     # Build post index pages
     for index, date in enumerate(sorted(blog_config.blog_posts, reverse=True)):
-        index = f"index-{str(index//blog_config.plugin_config.posts_per_page)}"
+        index = (
+            "index"
+            if start_page and index < blog_config.plugin_config.posts_per_page
+            else f"index-{str(index//blog_config.plugin_config.posts_per_page)}"
+        )
         if index not in posts_chunks:
             posts_chunks[index] = []
         posts_chunks[index].append(blog_config.blog_posts[date])
@@ -135,13 +140,6 @@ def create_blog_post_pages(
         }
     )
 
-    # for file in blog_config.temp_dir.glob("**/*"):
-    #     print(file)
-    #     if file.name.startswith("index"):
-    #         with file.open("r") as md_file:
-    #             print(md_file.read())
-    #             print("-------------------------------------------------------------------------")
-
 
 def _create_pages(
     blog_config: BlogConfig,
@@ -211,10 +209,12 @@ def _render_and_write_page(
     elif file_path.name.startswith("index"):
         slug = f"{blog_config.plugin_config.slug}/{file_path.stem.split('-')[-1]}"
     else:
-        slug = slugify(case="lower")(text=page_title.split("-")[-1].strip(), sep="-")
+        slug = slugify(text=page_title.split("-")[-1].strip())
     page["slug"] = slug
 
     page["status"] = "published"
+    if not blog_config.plugin_config.searchable_non_posts:
+        page["search"] = {"exclude": True}
 
     with open(file_path, mode="wb") as teasers_index:
         frontmatter.dump(page, teasers_index)

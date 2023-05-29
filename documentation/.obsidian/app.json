@@ -4,5 +4,13 @@
   "newLinkFormat": "relative",
   "showUnsupportedFiles": true,
   "showFrontmatter": true,
-  "livePreview": false
+  "livePreview": false,
+  "spellcheckDictionary": [
+    "minifier"
+  ],
+  "userIgnoreFilters": [
+    "_templates/"
+  ],
+  "foldIndent": false,
+  "foldHeading": false
 }

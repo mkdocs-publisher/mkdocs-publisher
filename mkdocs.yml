@@ -12,7 +12,7 @@ docs_dir: documentation
 site_dir: docs
 
 use_directory_urls: true
-strict: true
+strict:
 
 dev_addr: 127.0.0.1:8666
 
@@ -85,6 +85,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
@@ -97,17 +99,12 @@ markdown_extensions:
       slugify: !!python/object/apply:pymdownx.slugs.slugify
         kwds:
           case: lower
-  - toc:
-      permalink: true
-      slugify: !!python/object/apply:pymdownx.slugs.slugify
-        kwds:
-          case: lower
 
 plugins:
   - search
   - pub-blog:
       blog_dir: 04_blog
   - pub-social
+  - pub-meta
   - pub-obsidian
   - pub-minifier
-  - pub-meta

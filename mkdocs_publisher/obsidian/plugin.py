@@ -15,6 +15,7 @@ from mkdocs.config import Config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.livereload import LiveReloadServer
 from mkdocs.plugins import BasePlugin
+from mkdocs.plugins import event_priority
 from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
@@ -27,7 +28,7 @@ from mkdocs_publisher.obsidian.backlinks import Backlink
 from mkdocs_publisher.obsidian.backlinks import Link
 from mkdocs_publisher.obsidian.callout import CalloutToAdmonition
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
-from mkdocs_publisher.obsidian.markdown_links import MarkdownLinks
+from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 from mkdocs_publisher.obsidian.vega import VegaCharts
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian")
@@ -62,6 +63,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                     self._backlink.find_markdown_links(markdown=markdown, page=file.page)
         return nav
 
+    @event_priority(100)  # Run before all other plugins
     def on_page_markdown(
         self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
     ) -> Optional[str]:
@@ -84,7 +86,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         if self.config.backlinks.enabled:
             markdown = self._backlink.convert_to_anchor_link(markdown=markdown)
-            page_backlinks = self._backlink_links.get(page.file.src_uri, None)
+            page_backlinks = self._backlink_links.get(f"{page.file.src_uri}", None)
             if page_backlinks is not None:
                 log.debug(f"Add backlinks to '{page.file.src_uri}'")
                 backlink_template = importlib.resources.read_text(templates, "backlinks.html")
@@ -96,7 +98,6 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                     backlink_template
                 )
                 markdown = f"{markdown}{template.render(context)}"
-
         return markdown
 
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:

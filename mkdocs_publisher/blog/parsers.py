@@ -38,9 +38,15 @@ def count_words(content):
     return len(content.split())
 
 
+# from mkdocs.utils import meta as meta_parser
+# with file.open(encoding="utf-8-sig", errors="strict") as md_file:
+#     markdown, meta = meta_parser.get_data(md_file.read())
+
+
 def parse_markdown_files(
     blog_config: BlogConfig,
     config_nav: OrderedDict,
+    on_serve: bool = False,
 ):
     """Parse all markdown files and extract blog posts from `blog_dir` (default: 'posts').
     BlogPost object is created and filled with content and metadata of the post.
@@ -69,6 +75,11 @@ def parse_markdown_files(
                             f"'status' (setting to default: draft)"
                         )
                         post_meta["status"] = "draft"
+
+                    # Skip non published
+                    if not on_serve and post_meta["status"] != "published":
+                        # TODO: make it configurable
+                        continue
 
                     # Convert tags format
                     if "tags" in post_meta and post_meta["tags"] is not None:

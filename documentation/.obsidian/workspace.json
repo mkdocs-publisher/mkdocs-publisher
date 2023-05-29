@@ -4,37 +4,51 @@
     "type": "split",
     "children": [
       {
-        "id": "bfd567ebb562715c",
-        "type": "tabs",
+        "id": "485649d8fb8f412e",
+        "type": "split",
         "children": [
           {
-            "id": "ee16ab17b3284a0d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "02_setup/01_installation.md",
-                "mode": "source",
-                "backlinks": true,
-                "source": true
+            "id": "bd59e2d44c204190",
+            "type": "tabs",
+            "dimension": 52.365339578454325,
+            "children": [
+              {
+                "id": "086ce72ca8763d71",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "04_blog/v060-obsidian.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": true
+                  }
+                }
               }
-            }
+            ]
           },
           {
-            "id": "fefd4e5cf8c8c534",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "04_blog/v060-obsidian.md",
-                "mode": "source",
-                "backlinks": true,
-                "source": true
+            "id": "412f1cee2456d476",
+            "type": "tabs",
+            "dimension": 47.63466042154567,
+            "children": [
+              {
+                "id": "dc264e50e031b4e3",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "02_setup/03_setting-up-social-cards.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": true
+                  }
+                }
               }
-            }
+            ]
           }
         ],
-        "currentTab": 1
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -46,6 +60,7 @@
       {
         "id": "32cffcd359b8a04e",
         "type": "tabs",
+        "dimension": 52.08430913348946,
         "children": [
           {
             "id": "c6174c4fcf2d07d9",
@@ -63,7 +78,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#css-optimization-installationse",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -97,18 +112,39 @@
             }
           }
         ]
-      }
-    ],
-    "direction": "horizontal",
-    "width": 305.5
-  },
-  "right": {
-    "id": "a0737368d39f299e",
-    "type": "split",
-    "children": [
+      },
       {
-        "id": "5983f6a1a93e086d",
+        "id": "cc181f4efd5ee66f",
         "type": "tabs",
+        "dimension": 26.13583138173302,
+        "children": [
+          {
+            "id": "f4b44a034821742f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "04_blog/v060-obsidian.md"
+              }
+            }
+          },
+          {
+            "id": "75c9ab9eebd23df8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "1ed2fcf609d1f380",
+        "type": "tabs",
+        "dimension": 21.779859484777518,
         "children": [
           {
             "id": "ddecd4e18ec16ae1",
@@ -117,7 +153,7 @@
               "type": "backlink",
               "state": {
                 "file": "04_blog/v060-obsidian.md",
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
@@ -138,33 +174,20 @@
                 "unlinkedCollapsed": true
               }
             }
-          },
-          {
-            "id": "75c9ab9eebd23df8",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true
-              }
-            }
-          },
-          {
-            "id": "f4b44a034821742f",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "04_blog/v060-obsidian.md"
-              }
-            }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 305.5
+  },
+  "right": {
+    "id": "a0737368d39f299e",
+    "type": "split",
+    "children": [],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -177,35 +200,36 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "fefd4e5cf8c8c534",
+  "active": "086ce72ca8763d71",
   "lastOpenFiles": [
-    "04_blog/v050-social.md",
-    "04_blog/v041.md",
-    "04_blog/v040-minifier-and-autonav.md",
-    "04_blog/v030.md",
-    "04_blog/v020.md",
+    "01_home.md",
+    "05_dev/other/02_backlog.md",
+    "02_setup/04_setting-up-blog.md",
+    "02_setup/03_setting-up-social-cards.md",
+    "02_setup/02_setting-up-meta.md",
+    "02_setup/05_setting-up-obsidian.md",
+    "03_how-to-publish/README.md",
     "04_blog/v010-initial-release.md",
+    "05_dev/other/01_credits.md",
+    "_templates/_setting.md",
+    "02_setup/06_setting-up-minifier.md",
+    "02_setup/01_installation.md",
+    "04_blog/v060-obsidian.md",
+    "04_blog/v020.md",
+    "05_dev/01_changelog.md",
+    "05_dev/README.md",
+    "04_blog/v040-minifier-and-autonav.md",
+    "04_blog/v041.md",
+    "04_blog/v050-social.md",
     "04_blog/README.md",
     "02_setup/test/01_installation1.md",
+    "05_dev/other/README.md",
+    "05_dev/other",
+    "05_dev/02_development.md",
+    "05_dev/03_versioning.md",
+    "04_blog/v030.md",
     "03_how-to-publish/01_first_steps.md",
-    "04_blog/v060-obsidian.md",
-    "02_setup/02_setting-up-auto-nav.md",
-    "05_dev/09_changelog.md",
-    "index.md",
-    "02_setup/README.md",
-    "02_setup/09_setting-up-a-minifier.md",
-    "02_setup/01_installation.md",
     "02_setup/test",
-    "05_dev/README.md",
-    "_templates/_option.md",
-    "03_how-to-publish/README.md",
-    "05_dev/01_backlog.md",
-    "02_setup/06_setting-up-a-meta.md",
-    "02_setup/05_setting-up-an-obsidian.md",
-    "02_setup/03_setting-up-a-blog.md",
-    "02_setup/04_setting-up-a-social-cards.md",
-    "05_dev/02_versioning.md",
-    "05_dev/08_development.md",
     "02_setup/07_obsidian",
     "_templates",
     "mkdocs_publisher/blog/structures.py.isorted",
@@ -214,7 +238,6 @@
     "docs/blog/tags/v0.5.0/index.html",
     "docs/blog/tags/v0.4.1/index.html",
     "docs/blog/tags/v0.4.0/index.html",
-    "docs/blog/tags/v0.3.0/index.html",
     "docs/assets/images/favicon.png"
   ]
 }

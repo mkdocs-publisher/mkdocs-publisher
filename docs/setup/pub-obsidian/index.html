@@ -6,12 +6,12 @@
 <meta content="Setting up obsidian plugin"name="description">
 <meta content="Maciej 'maQ' Kusz"name="author">
 <link href="https://mkusz.github.io/mkdocs-publisher/setup/pub-obsidian/"rel="canonical">
-<link href="../pub-social/"rel="prev">
-<link href="../pub-meta/"rel="next">
+<link href="../pub-blog/"rel="prev">
+<link href="../pub-minifier/"rel="next">
 <link href="../../assets/images/favicon.png"rel="icon">
-<meta content="mkdocs-1.4.3, mkdocs-material-9.1.13"name="generator">
+<meta content="mkdocs-1.4.3, mkdocs-material-9.1.14"name="generator">
 <title>
-Setting up obsidian - MkDocs Publisher
+Setting up Obsidian - MkDocs Publisher
 </title>
 <link href="../../assets/stylesheets/main.85bb2934.min.css"rel="stylesheet">
 <link href="../../assets/stylesheets/palette.a6bdf11c.min.css"rel="stylesheet">
@@ -23,13 +23,13 @@ Setting up obsidian - MkDocs Publisher
 <link href="../../assets/stylesheets/obsidian.min.css"rel="stylesheet">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta content="article"property="og:type">
-<meta content="Setting up obsidian"property="og:title">
+<meta content="Setting up Obsidian"property="og:title">
 <meta content="Setting up obsidian plugin"property="og:description">
 <meta content="MkDocs Publisher"property="og:site_name">
 <meta content="en_us"property="og:locale">
 <meta content="https://mkusz.github.io/mkdocs-publisher/setup/pub-obsidian/"property="og:url">
 <meta content="summary"property="twitter:card">
-<meta content="Setting up obsidian"property="twitter:title">
+<meta content="Setting up Obsidian"property="twitter:title">
 <meta content="Setting up obsidian plugin"property="twitter:description">
 </head>
 <body data-md-color-accent="orange"data-md-color-primary="orange"data-md-color-scheme="default"dir="ltr">
@@ -39,6 +39,9 @@ Setting up obsidian - MkDocs Publisher
 <label class="md-overlay"for="__drawer">
 </label>
 <div data-md-component="skip">
+<a href="#setting-up-obsidian"class="md-skip">
+Skip to content
+</a>
 </div>
 <div data-md-component="announce">
 </div>
@@ -65,7 +68,7 @@ MkDocs Publisher
 </div>
 <div class="md-header__topic"data-md-component="header-topic">
 <span class="md-ellipsis">
-Setting up obsidian
+Setting up Obsidian
 </span>
 </div>
 </div>
@@ -157,7 +160,7 @@ GitHub
 <div class="md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a href="../../home/"class="md-tabs__link">
+<a href="../.."class="md-tabs__link">
 <i class="fa-house fa-solid">
 </i>
 </a>
@@ -178,7 +181,7 @@ Blog
 </a>
 </li>
 <li class="md-tabs__item">
-<a href="../../development/backlog/"class="md-tabs__link">
+<a href="../../development/changelog/"class="md-tabs__link">
 Development
 </a>
 </li>
@@ -218,7 +221,7 @@ GitHub
 </div>
 <ul class="md-nav__list"data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../home/"class="md-nav__link">
+<a href="../.."class="md-nav__link">
 <i class="fa-house fa-solid">
 </i>
 </a>
@@ -243,13 +246,8 @@ Installation
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../pub-auto-nav/"class="md-nav__link">
-Setting up an auto-nav
-</a>
-</li>
-<li class="md-nav__item">
-<a href="../pub-blog/"class="md-nav__link">
-Setting up a blog
+<a href="../pub-meta/"class="md-nav__link">
+Setting up meta
 </a>
 </li>
 <li class="md-nav__item">
@@ -257,43 +255,21 @@ Setting up a blog
 Setting up social cards
 </a>
 </li>
+<li class="md-nav__item">
+<a href="../pub-blog/"class="md-nav__link">
+Setting up a blog
+</a>
+</li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-toggle md-nav__toggle"type="checkbox"id="__toc">
 <a href="./"class="md-nav__link md-nav__link--active">
-Setting up obsidian
-</a>
-</li>
-<li class="md-nav__item">
-<a href="../pub-meta/"class="md-nav__link">
-Setting up meta
+Setting up Obsidian
 </a>
 </li>
 <li class="md-nav__item">
 <a href="../pub-minifier/"class="md-nav__link">
 Setting up minifier
 </a>
-</li>
-<li class="md-nav__item md-nav__item--nested md-nav__item--section">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_2_8">
-<label class="md-nav__link"for="__nav_2_8"id="__nav_2_8_label"tabindex="0">
-test
-<span class="md-icon md-nav__icon">
-</span>
-</label>
-<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_2_8_label">
-<label class="md-nav__title"for="__nav_2_8">
-<span class="md-icon md-nav__icon">
-</span>
-test
-</label>
-<ul class="md-nav__list"data-md-scrollfix="">
-<li class="md-nav__item">
-<a href="../test/installation/"class="md-nav__link">
-Installation
-</a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -453,13 +429,8 @@ Development
 </label>
 <ul class="md-nav__list"data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../development/backlog/"class="md-nav__link">
-Backlog
-</a>
-</li>
-<li class="md-nav__item">
-<a href="../../development/versioning/"class="md-nav__link">
-Versioning
+<a href="../../development/changelog/"class="md-nav__link">
+Changelog
 </a>
 </li>
 <li class="md-nav__item">
@@ -468,9 +439,36 @@ Development
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../../development/changelog/"class="md-nav__link">
-Changelog
+<a href="../../development/versioning/"class="md-nav__link">
+Versioning
 </a>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_5_4">
+<label class="md-nav__link"for="__nav_5_4"id="__nav_5_4_label"tabindex="0">
+Other
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_5_4_label">
+<label class="md-nav__title"for="__nav_5_4">
+<span class="md-icon md-nav__icon">
+</span>
+Other
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../development/other/credits/"class="md-nav__link">
+Credits
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../development/other/backlog/"class="md-nav__link">
+Backlog
+</a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -490,20 +488,20 @@ Changelog
 </div>
 <div class="md-content"data-md-component="content">
 <article class="md-typeset md-content__inner">
-<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/documentation/02_setup/05_setting-up-an-obsidian.md"class="md-icon md-content__button"title="Edit this page">
+<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/documentation/02_setup/05_setting-up-obsidian.md"class="md-icon md-content__button"title="Edit this page">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z">
 </path>
 </svg>
 </a>
-<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/documentation/02_setup/05_setting-up-an-obsidian.md"class="md-icon md-content__button"title="View source of this page">
+<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/documentation/02_setup/05_setting-up-obsidian.md"class="md-icon md-content__button"title="View source of this page">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z">
 </path>
 </svg>
 </a>
-<h1>
-Setting up obsidian
+<h1 id="setting-up-obsidian">
+Setting up Obsidian
 </h1>
 <hr>
 <p class="obsidian_backlink_title">
@@ -518,7 +516,7 @@ Backlinks:
 <p>
 </p><p class="obsidian_backlink">
 - integration with Obsidian.md as documentation editor with support for some Markdown syntax specific to it and some plugins (
-<a href="https://mkusz.github.io/mkdocs-publisher/#02-setup-05-setting-up-an-obsidian">
+<a href="https://mkusz.github.io/mkdocs-publisher/#02-setup05-setting-up-obsidian">
 pub-obsidian
 </a>
 plugin
@@ -534,12 +532,12 @@ v0.6.0):
 </details>
 <details class="backlink">
 <summary>
-v0.6.0 - 2023-05-10
+v0.6.0 - 2023-05-19
 </summary>
 <p>
 </p><p class="obsidian_backlink">
 For more details about this release, read more below or jump directly to
-<a href="https://mkusz.github.io/mkdocs-publisher/04_blog/v060-obsidian/#02-setup-05-setting-up-an-obsidian">
+<a href="https://mkusz.github.io/mkdocs-publisher/blog/v060/#02-setup05-setting-up-obsidian">
 pub-obsidian
 </a>
 plugin documentation.
@@ -561,7 +559,7 @@ Back to top
 </main>
 <footer class="md-footer">
 <nav class="md-grid md-footer__inner"aria-label="Footer">
-<a href="../pub-social/"class="md-footer__link md-footer__link--prev"aria-label="Previous: Setting up social cards"rel="prev">
+<a href="../pub-blog/"class="md-footer__link md-footer__link--prev"aria-label="Previous: Setting up a blog"rel="prev">
 <div class="md-icon md-footer__button">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z">
@@ -573,17 +571,17 @@ Back to top
 Previous
 </span>
 <div class="md-ellipsis">
-Setting up social cards
+Setting up a blog
 </div>
 </div>
 </a>
-<a href="../pub-meta/"class="md-footer__link md-footer__link--next"aria-label="Next: Setting up meta"rel="next">
+<a href="../pub-minifier/"class="md-footer__link md-footer__link--next"aria-label="Next: Setting up minifier"rel="next">
 <div class="md-footer__title">
 <span class="md-footer__direction">
 Next
 </span>
 <div class="md-ellipsis">
-Setting up meta
+Setting up minifier
 </div>
 </div>
 <div class="md-icon md-footer__button">

@@ -23,6 +23,7 @@ CALLOUT_MAPPING = {
     "todo": ["todo"],
     "success": ["check", "done", "success"],
     "warning": ["attention", "caution", "warning"],
+    "settings": ["settings"],
 }
 ADMONITION_MAPPING = {
     callout: admonition for admonition, callouts in CALLOUT_MAPPING.items() for callout in callouts

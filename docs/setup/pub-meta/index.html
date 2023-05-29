@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width,initial-scale=1"name="viewport">
-<meta content="Setting up meta plugin"name="description">
+<meta content="Setting up the meta plugin for metadata retrival and automatic navigation building"name="description">
 <meta content="Maciej 'maQ' Kusz"name="author">
 <link href="https://mkusz.github.io/mkdocs-publisher/setup/pub-meta/"rel="canonical">
-<link href="../pub-obsidian/"rel="prev">
-<link href="../pub-minifier/"rel="next">
+<link href="../installation/"rel="prev">
+<link href="../pub-social/"rel="next">
 <link href="../../assets/images/favicon.png"rel="icon">
-<meta content="mkdocs-1.4.3, mkdocs-material-9.1.13"name="generator">
+<meta content="mkdocs-1.4.3, mkdocs-material-9.1.14"name="generator">
 <title>
 Setting up meta - MkDocs Publisher
 </title>
@@ -24,21 +24,24 @@ Setting up meta - MkDocs Publisher
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta content="article"property="og:type">
 <meta content="Setting up meta"property="og:title">
-<meta content="Setting up meta plugin"property="og:description">
+<meta content="Setting up the meta plugin for metadata retrival and automatic navigation building"property="og:description">
 <meta content="MkDocs Publisher"property="og:site_name">
 <meta content="en_us"property="og:locale">
 <meta content="https://mkusz.github.io/mkdocs-publisher/setup/pub-meta/"property="og:url">
 <meta content="summary"property="twitter:card">
 <meta content="Setting up meta"property="twitter:title">
-<meta content="Setting up meta plugin"property="twitter:description">
+<meta content="Setting up the meta plugin for metadata retrival and automatic navigation building"property="twitter:description">
 </head>
 <body data-md-color-accent="orange"data-md-color-primary="orange"data-md-color-scheme="default"dir="ltr">
 <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
-<input class="md-toggle"type="checkbox"id="__drawer"autocomplete="off"data-md-toggle="drawer">
-<input class="md-toggle"type="checkbox"id="__search"autocomplete="off"data-md-toggle="search">
-<label class="md-overlay"for="__drawer">
+<input type="checkbox"id="__drawer"class="md-toggle"autocomplete="off"data-md-toggle="drawer">
+<input type="checkbox"id="__search"class="md-toggle"autocomplete="off"data-md-toggle="search">
+<label for="__drawer"class="md-overlay">
 </label>
 <div data-md-component="skip">
+<a href="#setting-up-the-meta-plugin"class="md-skip">
+Skip to content
+</a>
 </div>
 <div data-md-component="announce">
 </div>
@@ -50,7 +53,7 @@ Setting up meta - MkDocs Publisher
 </path>
 </svg>
 </a>
-<label class="md-icon md-header__button"for="__drawer">
+<label for="__drawer"class="md-icon md-header__button">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z">
 </path>
@@ -71,34 +74,34 @@ Setting up meta
 </div>
 </div>
 <form class="md-header__option"data-md-component="palette">
-<input class="md-option"type="radio"id="__palette_1"aria-label="Switch to dark mode"data-md-color-accent="orange"data-md-color-media=""data-md-color-primary="orange"data-md-color-scheme="default"name="__palette">
-<label class="md-icon md-header__button"for="__palette_2"hidden title="Switch to dark mode">
+<input type="radio"id="__palette_1"class="md-option"aria-label="Switch to dark mode"data-md-color-accent="orange"data-md-color-media=""data-md-color-primary="orange"data-md-color-scheme="default"name="__palette">
+<label for="__palette_2"class="md-icon md-header__button"hidden title="Switch to dark mode">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z">
 </path>
 </svg>
 </label>
-<input class="md-option"type="radio"id="__palette_2"aria-label="Switch to light mode"data-md-color-accent="orange"data-md-color-media=""data-md-color-primary="orange"data-md-color-scheme="slate"name="__palette">
-<label class="md-icon md-header__button"for="__palette_1"hidden title="Switch to light mode">
+<input type="radio"id="__palette_2"class="md-option"aria-label="Switch to light mode"data-md-color-accent="orange"data-md-color-media=""data-md-color-primary="orange"data-md-color-scheme="slate"name="__palette">
+<label for="__palette_1"class="md-icon md-header__button"hidden title="Switch to light mode">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z">
 </path>
 </svg>
 </label>
 </form>
-<label class="md-icon md-header__button"for="__search">
+<label for="__search"class="md-icon md-header__button">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z">
 </path>
 </svg>
 </label>
 <div class="md-search"data-md-component="search"role="dialog">
-<label class="md-search__overlay"for="__search">
+<label for="__search"class="md-search__overlay">
 </label>
 <div class="md-search__inner"role="search">
 <form class="md-search__form"name="search">
-<input class="md-search__input"type="text"aria-label="Search"name="query"autocapitalize="off"autocomplete="off"autocorrect="off"data-md-component="search-query"placeholder="Search"required spellcheck="false">
-<label class="md-icon md-search__icon"for="__search">
+<input type="text"class="md-search__input"aria-label="Search"name="query"autocapitalize="off"autocomplete="off"autocorrect="off"data-md-component="search-query"placeholder="Search"required spellcheck="false">
+<label for="__search"class="md-icon md-search__icon">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z">
 </path>
@@ -157,7 +160,7 @@ GitHub
 <div class="md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a href="../../home/"class="md-tabs__link">
+<a href="../.."class="md-tabs__link">
 <i class="fa-house fa-solid">
 </i>
 </a>
@@ -178,7 +181,7 @@ Blog
 </a>
 </li>
 <li class="md-tabs__item">
-<a href="../../development/backlog/"class="md-tabs__link">
+<a href="../../development/changelog/"class="md-tabs__link">
 Development
 </a>
 </li>
@@ -192,8 +195,8 @@ Development
 <div class="md-sidebar md-sidebar--primary"data-md-component="sidebar"data-md-type="navigation">
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
-<nav class="md-nav md-nav--lifted md-nav--primary"data-md-level="0"aria-label="Navigation">
-<label class="md-nav__title"for="__drawer">
+<nav class="md-nav md-nav--lifted md-nav--primary"aria-label="Navigation"data-md-level="0">
+<label for="__drawer"class="md-nav__title">
 <a href="https://mkusz.github.io/mkdocs-publisher"class="md-logo md-nav__button"title="MkDocs Publisher"data-md-component="logo"aria-label="MkDocs Publisher">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z">
@@ -218,20 +221,20 @@ GitHub
 </div>
 <ul class="md-nav__list"data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../home/"class="md-nav__link">
+<a href="../.."class="md-nav__link">
 <i class="fa-house fa-solid">
 </i>
 </a>
 </li>
 <li class="md-nav__item md-nav__item--nested md-nav__item--active">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_2"checked>
-<label class="md-nav__link"for="__nav_2"id="__nav_2_label"tabindex="0">
+<input type="checkbox"id="__nav_2"class="md-toggle md-nav__toggle"checked>
+<label for="__nav_2"class="md-nav__link"id="__nav_2_label"tabindex="0">
 Setup
 <span class="md-icon md-nav__icon">
 </span>
 </label>
 <nav class="md-nav"data-md-level="1"aria-expanded="true"aria-labelledby="__nav_2_label">
-<label class="md-nav__title"for="__nav_2">
+<label for="__nav_2"class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
 Setup
@@ -242,9 +245,63 @@ Setup
 Installation
 </a>
 </li>
+<li class="md-nav__item md-nav__item--active">
+<input type="checkbox"id="__toc"class="md-toggle md-nav__toggle">
+<label for="__toc"class="md-nav__link md-nav__link--active">
+Setting up meta
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<a href="./"class="md-nav__link md-nav__link--active">
+Setting up meta
+</a>
+<nav class="md-nav md-nav--secondary"aria-label="Table of contents">
+<label for="__toc"class="md-nav__title">
+<span class="md-icon md-nav__icon">
+</span>
+Table of contents
+</label>
+<ul class="md-nav__list"data-md-scrollfix=""data-md-component="toc">
 <li class="md-nav__item">
-<a href="../pub-auto-nav/"class="md-nav__link">
-Setting up an auto-nav
+<a href="#introduction"class="md-nav__link">
+Introduction
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#document-meta-data"class="md-nav__link">
+Document meta-data
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#navigation-automatic-generation"class="md-nav__link">
+Navigation automatic generation
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#configuration"class="md-nav__link">
+Configuration
+</a>
+<nav class="md-nav"aria-label="Configuration">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#enable-meta-plugin"class="md-nav__link">
+Enable meta plugin
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#settings"class="md-nav__link">
+Settings
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="../pub-social/"class="md-nav__link">
+Setting up social cards
 </a>
 </li>
 <li class="md-nav__item">
@@ -253,19 +310,8 @@ Setting up a blog
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../pub-social/"class="md-nav__link">
-Setting up social cards
-</a>
-</li>
-<li class="md-nav__item">
 <a href="../pub-obsidian/"class="md-nav__link">
-Setting up obsidian
-</a>
-</li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__toc">
-<a href="./"class="md-nav__link md-nav__link--active">
-Setting up meta
+Setting up Obsidian
 </a>
 </li>
 <li class="md-nav__item">
@@ -273,40 +319,18 @@ Setting up meta
 Setting up minifier
 </a>
 </li>
-<li class="md-nav__item md-nav__item--nested md-nav__item--section">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_2_8">
-<label class="md-nav__link"for="__nav_2_8"id="__nav_2_8_label"tabindex="0">
-test
-<span class="md-icon md-nav__icon">
-</span>
-</label>
-<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_2_8_label">
-<label class="md-nav__title"for="__nav_2_8">
-<span class="md-icon md-nav__icon">
-</span>
-test
-</label>
-<ul class="md-nav__list"data-md-scrollfix="">
-<li class="md-nav__item">
-<a href="../test/installation/"class="md-nav__link">
-Installation
-</a>
-</li>
-</ul>
-</nav>
-</li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_3">
-<label class="md-nav__link"for="__nav_3"id="__nav_3_label"tabindex="0">
+<input type="checkbox"id="__nav_3"class="md-toggle md-nav__toggle">
+<label for="__nav_3"class="md-nav__link"id="__nav_3_label"tabindex="0">
 How to publish
 <span class="md-icon md-nav__icon">
 </span>
 </label>
 <nav class="md-nav"data-md-level="1"aria-expanded="false"aria-labelledby="__nav_3_label">
-<label class="md-nav__title"for="__nav_3">
+<label for="__nav_3"class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
 How to publish
@@ -321,14 +345,14 @@ First steps
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_4">
-<label class="md-nav__link"for="__nav_4"id="__nav_4_label"tabindex="0">
+<input type="checkbox"id="__nav_4"class="md-toggle md-nav__toggle">
+<label for="__nav_4"class="md-nav__link"id="__nav_4_label"tabindex="0">
 Blog
 <span class="md-icon md-nav__icon">
 </span>
 </label>
 <nav class="md-nav"data-md-level="1"aria-expanded="false"aria-labelledby="__nav_4_label">
-<label class="md-nav__title"for="__nav_4">
+<label for="__nav_4"class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
 Blog
@@ -340,14 +364,14 @@ index-0
 </a>
 </li>
 <li class="md-nav__item md-nav__item--nested md-nav__item--section">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_4_2">
-<label class="md-nav__link"for="__nav_4_2"id="__nav_4_2_label"tabindex="0">
+<input type="checkbox"id="__nav_4_2"class="md-toggle md-nav__toggle">
+<label for="__nav_4_2"class="md-nav__link"id="__nav_4_2_label"tabindex="0">
 Archive
 <span class="md-icon md-nav__icon">
 </span>
 </label>
 <nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_4_2_label">
-<label class="md-nav__title"for="__nav_4_2">
+<label for="__nav_4_2"class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
 Archive
@@ -362,14 +386,14 @@ Archive
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested md-nav__item--section">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_4_3">
-<label class="md-nav__link"for="__nav_4_3"id="__nav_4_3_label"tabindex="0">
+<input type="checkbox"id="__nav_4_3"class="md-toggle md-nav__toggle">
+<label for="__nav_4_3"class="md-nav__link"id="__nav_4_3_label"tabindex="0">
 Categories
 <span class="md-icon md-nav__icon">
 </span>
 </label>
 <nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_4_3_label">
-<label class="md-nav__title"for="__nav_4_3">
+<label for="__nav_4_3"class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
 Categories
@@ -384,14 +408,14 @@ release
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested md-nav__item--section">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_4_4">
-<label class="md-nav__link"for="__nav_4_4"id="__nav_4_4_label"tabindex="0">
+<input type="checkbox"id="__nav_4_4"class="md-toggle md-nav__toggle">
+<label for="__nav_4_4"class="md-nav__link"id="__nav_4_4_label"tabindex="0">
 Tags
 <span class="md-icon md-nav__icon">
 </span>
 </label>
 <nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_4_4_label">
-<label class="md-nav__title"for="__nav_4_4">
+<label for="__nav_4_4"class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
 Tags
@@ -439,27 +463,22 @@ v0.6.0
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-toggle md-nav__toggle"type="checkbox"id="__nav_5">
-<label class="md-nav__link"for="__nav_5"id="__nav_5_label"tabindex="0">
+<input type="checkbox"id="__nav_5"class="md-toggle md-nav__toggle">
+<label for="__nav_5"class="md-nav__link"id="__nav_5_label"tabindex="0">
 Development
 <span class="md-icon md-nav__icon">
 </span>
 </label>
 <nav class="md-nav"data-md-level="1"aria-expanded="false"aria-labelledby="__nav_5_label">
-<label class="md-nav__title"for="__nav_5">
+<label for="__nav_5"class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
 Development
 </label>
 <ul class="md-nav__list"data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../development/backlog/"class="md-nav__link">
-Backlog
-</a>
-</li>
-<li class="md-nav__item">
-<a href="../../development/versioning/"class="md-nav__link">
-Versioning
+<a href="../../development/changelog/"class="md-nav__link">
+Changelog
 </a>
 </li>
 <li class="md-nav__item">
@@ -468,9 +487,36 @@ Development
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../../development/changelog/"class="md-nav__link">
-Changelog
+<a href="../../development/versioning/"class="md-nav__link">
+Versioning
 </a>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input type="checkbox"id="__nav_5_4"class="md-toggle md-nav__toggle">
+<label for="__nav_5_4"class="md-nav__link"id="__nav_5_4_label"tabindex="0">
+Other
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_5_4_label">
+<label for="__nav_5_4"class="md-nav__title">
+<span class="md-icon md-nav__icon">
+</span>
+Other
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../development/other/credits/"class="md-nav__link">
+Credits
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../development/other/backlog/"class="md-nav__link">
+Backlog
+</a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -484,27 +530,244 @@ Changelog
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav class="md-nav md-nav--secondary"aria-label="Table of contents">
+<label for="__toc"class="md-nav__title">
+<span class="md-icon md-nav__icon">
+</span>
+Table of contents
+</label>
+<ul class="md-nav__list"data-md-scrollfix=""data-md-component="toc">
+<li class="md-nav__item">
+<a href="#introduction"class="md-nav__link">
+Introduction
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#document-meta-data"class="md-nav__link">
+Document meta-data
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#navigation-automatic-generation"class="md-nav__link">
+Navigation automatic generation
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#configuration"class="md-nav__link">
+Configuration
+</a>
+<nav class="md-nav"aria-label="Configuration">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#enable-meta-plugin"class="md-nav__link">
+Enable meta plugin
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#settings"class="md-nav__link">
+Settings
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
 </nav>
 </div>
 </div>
 </div>
 <div class="md-content"data-md-component="content">
 <article class="md-typeset md-content__inner">
-<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/documentation/02_setup/06_setting-up-a-meta.md"class="md-icon md-content__button"title="Edit this page">
+<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/documentation/02_setup/02_setting-up-meta.md"class="md-icon md-content__button"title="Edit this page">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z">
 </path>
 </svg>
 </a>
-<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/documentation/02_setup/06_setting-up-a-meta.md"class="md-icon md-content__button"title="View source of this page">
+<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/documentation/02_setup/02_setting-up-meta.md"class="md-icon md-content__button"title="View source of this page">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z">
 </path>
 </svg>
 </a>
-<h1>
-Setting up meta
+<h1 id="setting-up-the-meta-plugin">
+Setting up the meta plugin
 </h1>
+<h2 id="introduction">
+Introduction
+</h2>
+<p>
+As you can see on the left - side menu, this plugin is placed as the first one because this plugin can be considered as one that influences the way, you will be writing a documentation. So, why it's so essential? There are a few reasons:
+</p>
+<ol>
+<li>
+Automatic navigation building based on file and directory names. This simplifies a process of a document navigation creation in
+<code>
+mkdocs.yml
+</code>
+file, described in
+<a href="https://www.mkdocs.org/user-guide/writing-your-docs/#configure-pages-and-navigation">
+official documentation
+</a>
+.
+</li>
+<li>
+Based on file meta-data, you can set document:
+<ul>
+<li>
+URL,
+</li>
+<li>
+creation/update date,
+</li>
+<li>
+document publication state,
+</li>
+<li>
+and some other less important. Most of these options, influence the SEO of the page build using MkDocs.
+</li>
+</ul>
+</li>
+</ol>
+<p>
+Probably you are now wondering why 2 quite different functionalities are placed in one plugin?
+</p>
+<p>
+The answer is not so obvious and a bit technical, but in bigger simplification, it's way simpler and less complex to bound those functionalities together. The main reason for that is how MkDocs internals work. For example, when navigation is built and when final HTML files are generated. Other example could be a document status implementation that influences navigation building, file list creation and
+<code>
+sitemap.xml
+</code>
+creation. This process should be considered as one functionality and splitting it over 2 separate plugins is possible, but it will not only increase code complexity, but also will increase significantly complexity of configuration since many settings used for automatic navigation building are the same for defining file meta-data. So, if we split functionality into 2 separate plugins, the final user (You) will have to maintain consistency in
+<code>
+mkdocs.yml
+</code>
+file. With a single plugin approach, we can reduce this problem to just maintaining a single point of configuration and settings validation.
+</p>
+<div class="admonition warning">
+<p class="admonition-title">
+Important information
+</p>
+<p>
+However, this plugin is not needed for other plugins to work correctly, it's highly recommended to use it.
+</p>
+</div>
+<h2 id="document-meta-data">
+Document meta-data
+</h2>
+<p>
+Markdown documents can contain additional metadata that is not rendered by MkDocs. This metadata is located at the beginning of the file (more information about this you can found in MkDocs documentation in
+<a href="https://www.mkdocs.org/user-guide/writing-your-docs/#meta-data">
+Meta-Data section
+</a>
+).
+</p>
+<p>
+MkDocs supports 2 main formats of meta-data:
+</p>
+<div class="tabbed-alternate tabbed-set"data-tabs="1:2">
+<input type="radio"id="yaml-style-meta-data-preferred"name="__tabbed_1"checked>
+<input type="radio"id="multimarkdown-style-meta-data"name="__tabbed_1">
+<div class="tabbed-labels">
+<label for="yaml-style-meta-data-preferred">
+YAML Style Meta-Data (preferred)
+</label>
+<label for="multimarkdown-style-meta-data">
+MultiMarkdown Style Meta-Data
+</label>
+</div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>
+It's preferred style since more plugins supports it and its the same format as in
+<code>
+mkdocs.yml
+</code>
+file. Also this format is supported by other tools (like
+<a href="https://jekyllrb.com/docs/front-matter/">
+Jekyll
+</a>
+that is used in GitHub or
+<a href="https://docs.gitlab.com/ee/user/markdown.html#front-matter">
+GitLab
+</a>
+)
+</p>
+<div class="highlight language-markdown">
+<pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1"id="__codelineno-0-1"name="__codelineno-0-1"></a>---
+</span><span id="__span-0-2"><a href="#__codelineno-0-2"id="__codelineno-0-2"name="__codelineno-0-2"></a>title: Your document title
+</span><span id="__span-0-3"><a href="#__codelineno-0-3"id="__codelineno-0-3"name="__codelineno-0-3"></a><span class="gu">description: A short description of document content that encourage to read it</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4"id="__codelineno-0-4"name="__codelineno-0-4"></a><span class="gu">---</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5"id="__codelineno-0-5"name="__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6"id="__codelineno-0-6"name="__codelineno-0-6"></a>This is the first paragraph of the document.
+</span></code></pre>
+</div>
+</div>
+<div class="tabbed-block">
+<p>
+This style is NOT prefered since not all plugins and other tools supports it.
+</p>
+<div class="highlight language-markdown">
+<pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1"id="__codelineno-1-1"name="__codelineno-1-1"></a>Title: Your document title
+</span><span id="__span-1-2"><a href="#__codelineno-1-2"id="__codelineno-1-2"name="__codelineno-1-2"></a>Description: A short description of document content that encourage to read it
+</span><span id="__span-1-3"><a href="#__codelineno-1-3"id="__codelineno-1-3"name="__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a href="#__codelineno-1-4"id="__codelineno-1-4"name="__codelineno-1-4"></a>This is the first paragraph of the document.
+</span></code></pre>
+</div>
+</div>
+</div>
+
+
+</div>
+<div class="admonition info">
+<p class="admonition-title">
+YAML front matter
+</p>
+<p>
+Since the YAML front matter format for meta-data is used by a wider set of other plugins and tools, this format will be used in this tool documentation.
+</p>
+</div>
+<h2 id="navigation-automatic-generation">
+Navigation automatic generation
+</h2>
+<h2 id="configuration">
+Configuration
+</h2>
+<h3 id="enable-meta-plugin">
+Enable meta plugin
+</h3>
+<p>
+To enable the built-in meta plugin, the following lines have to be added to
+<code>
+mkdocs.yml
+</code>
+file:
+</p>
+<div class="tabbed-alternate tabbed-set"data-tabs="2:1">
+<input type="radio"id="mkdocsyml"name="__tabbed_2"checked>
+<div class="tabbed-labels">
+<label for="mkdocsyml">
+<span class="twemoji">
+<svg viewbox="0 0 16 16"xmlns="http://www.w3.org/2000/svg">
+<path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
+</path>
+</svg>
+</span>
+mkdocs.yml
+</label>
+</div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight language-yaml">
+<pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1"id="__codelineno-2-1"name="__codelineno-2-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2"id="__codelineno-2-2"name="__codelineno-2-2"></a><span class="hll"><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pub-meta</span>
+</span></span></code></pre>
+</div>
+</div>
+</div>
+
+</div>
+<h3 id="settings">
+Settings
+</h3>
 <hr>
 <p class="obsidian_backlink_title">
 Backlinks:
@@ -512,15 +775,70 @@ Backlinks:
 <div class="obsidian_backlink">
 <details class="backlink">
 <summary>
-v0.6.0 - 2023-05-10
+<i class="fa-house fa-solid">
+</i>
 </summary>
 <p>
 </p><p class="obsidian_backlink">
-This plugin is the one that gets some of the functionalities previously implemented in other plugins (like blog) and extends it for more broad usage for rest of the documents. This plugin allows you to set, a various metadata to the generated file like: update date, file and path URL and others. Some of the settings are common for more plugins. Please take a look at the below list and
-<a href="https://mkusz.github.io/mkdocs-publisher/04_blog/v060-obsidian/#02-setup-06-setting-up-a-meta">
-pub-meta plugin documentation
+- automatic documents navigation creation (
+<a href="https://mkusz.github.io/mkdocs-publisher/#02-setup02-setting-up-meta">
+pub-meta
+</a>
+plugin -
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+v0.6.0),
+</p>
+<hr>
+<p class="obsidian_backlink">
+- documents publication status with additional meta-data like URL names, etc. beneficial for SEO (
+<a href="https://mkusz.github.io/mkdocs-publisher/#02-setup02-setting-up-meta">
+pub-meta
+</a>
+plugin -
+<span class="twemoji">
+<svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+v0.6.0),
+</p>
+<p></p>
+</details>
+<details class="backlink">
+<summary>
+Setting up social cards
+</summary>
+<p>
+</p><p class="obsidian_backlink">
+More about document metadata you can read in document related to setting up the
+<a href="https://mkusz.github.io/mkdocs-publisher/setup/pub-social/#02-setting-up-metadocument-metadata">
+meta plugin
 </a>
 .
+</p>
+<p></p>
+</details>
+<details class="backlink">
+<summary>
+Setting up a blog
+</summary>
+<p>
+</p><p class="obsidian_backlink">
+When
+<a href="https://mkusz.github.io/mkdocs-publisher/setup/pub-blog/#02-setting-up-meta">
+pub-meta
+</a>
+plugin is configured and the directory for blog posts is set up, there is nothing more left to be configured. All the things related to creating a navigation section will be handled automatically by the
+<em>
+pub-meta
+</em>
+plugin.
 </p>
 <p></p>
 </details>
@@ -539,7 +857,7 @@ Back to top
 </main>
 <footer class="md-footer">
 <nav class="md-grid md-footer__inner"aria-label="Footer">
-<a href="../pub-obsidian/"class="md-footer__link md-footer__link--prev"aria-label="Previous: Setting up obsidian"rel="prev">
+<a href="../installation/"class="md-footer__link md-footer__link--prev"aria-label="Previous: Installation"rel="prev">
 <div class="md-icon md-footer__button">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z">
@@ -551,17 +869,17 @@ Back to top
 Previous
 </span>
 <div class="md-ellipsis">
-Setting up obsidian
+Installation
 </div>
 </div>
 </a>
-<a href="../pub-minifier/"class="md-footer__link md-footer__link--next"aria-label="Next: Setting up minifier"rel="next">
+<a href="../pub-social/"class="md-footer__link md-footer__link--next"aria-label="Next: Setting up social cards"rel="next">
 <div class="md-footer__title">
 <span class="md-footer__direction">
 Next
 </span>
 <div class="md-ellipsis">
-Setting up minifier
+Setting up social cards
 </div>
 </div>
 <div class="md-icon md-footer__button">

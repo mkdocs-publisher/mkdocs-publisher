@@ -6,10 +6,10 @@
 <meta content="Installation"name="description">
 <meta content="Maciej 'maQ' Kusz"name="author">
 <link href="https://mkusz.github.io/mkdocs-publisher/setup/installation/"rel="canonical">
-<link href="../../home/"rel="prev">
-<link href="../pub-auto-nav/"rel="next">
+<link href="../.."rel="prev">
+<link href="../pub-meta/"rel="next">
 <link href="../../assets/images/favicon.png"rel="icon">
-<meta content="mkdocs-1.4.3, mkdocs-material-9.1.13"name="generator">
+<meta content="mkdocs-1.4.3, mkdocs-material-9.1.14"name="generator">
 <title>
 Installation - MkDocs Publisher
 </title>
@@ -160,7 +160,7 @@ GitHub
 <div class="md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a href="../../home/"class="md-tabs__link">
+<a href="../.."class="md-tabs__link">
 <i class="fa-house fa-solid">
 </i>
 </a>
@@ -181,7 +181,7 @@ Blog
 </a>
 </li>
 <li class="md-tabs__item">
-<a href="../../development/backlog/"class="md-tabs__link">
+<a href="../../development/changelog/"class="md-tabs__link">
 Development
 </a>
 </li>
@@ -221,7 +221,7 @@ GitHub
 </div>
 <ul class="md-nav__list"data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../home/"class="md-nav__link">
+<a href="../.."class="md-nav__link">
 <i class="fa-house fa-solid">
 </i>
 </a>
@@ -247,13 +247,8 @@ Installation
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../pub-auto-nav/"class="md-nav__link">
-Setting up an auto-nav
-</a>
-</li>
-<li class="md-nav__item">
-<a href="../pub-blog/"class="md-nav__link">
-Setting up a blog
+<a href="../pub-meta/"class="md-nav__link">
+Setting up meta
 </a>
 </li>
 <li class="md-nav__item">
@@ -262,41 +257,19 @@ Setting up social cards
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../pub-obsidian/"class="md-nav__link">
-Setting up obsidian
+<a href="../pub-blog/"class="md-nav__link">
+Setting up a blog
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../pub-meta/"class="md-nav__link">
-Setting up meta
+<a href="../pub-obsidian/"class="md-nav__link">
+Setting up Obsidian
 </a>
 </li>
 <li class="md-nav__item">
 <a href="../pub-minifier/"class="md-nav__link">
 Setting up minifier
 </a>
-</li>
-<li class="md-nav__item md-nav__item--nested md-nav__item--section">
-<input type="checkbox"id="__nav_2_8"class="md-toggle md-nav__toggle">
-<label for="__nav_2_8"class="md-nav__link"id="__nav_2_8_label"tabindex="0">
-test
-<span class="md-icon md-nav__icon">
-</span>
-</label>
-<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_2_8_label">
-<label for="__nav_2_8"class="md-nav__title">
-<span class="md-icon md-nav__icon">
-</span>
-test
-</label>
-<ul class="md-nav__list"data-md-scrollfix="">
-<li class="md-nav__item">
-<a href="../test/installation/"class="md-nav__link">
-Installation
-</a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -456,13 +429,8 @@ Development
 </label>
 <ul class="md-nav__list"data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../development/backlog/"class="md-nav__link">
-Backlog
-</a>
-</li>
-<li class="md-nav__item">
-<a href="../../development/versioning/"class="md-nav__link">
-Versioning
+<a href="../../development/changelog/"class="md-nav__link">
+Changelog
 </a>
 </li>
 <li class="md-nav__item">
@@ -471,9 +439,36 @@ Development
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../../development/changelog/"class="md-nav__link">
-Changelog
+<a href="../../development/versioning/"class="md-nav__link">
+Versioning
 </a>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input type="checkbox"id="__nav_5_4"class="md-toggle md-nav__toggle">
+<label for="__nav_5_4"class="md-nav__link"id="__nav_5_4_label"tabindex="0">
+Other
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav"data-md-level="2"aria-expanded="false"aria-labelledby="__nav_5_4_label">
+<label for="__nav_5_4"class="md-nav__title">
+<span class="md-icon md-nav__icon">
+</span>
+Other
+</label>
+<ul class="md-nav__list"data-md-scrollfix="">
+<li class="md-nav__item">
+<a href="../../development/other/credits/"class="md-nav__link">
+Credits
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../development/other/backlog/"class="md-nav__link">
+Backlog
+</a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -507,9 +502,6 @@ Changelog
 </a>
 <h1 id="installation">
 Installation
-<a href="#installation"class="headerlink"title="Permanent link">
-¶
-</a>
 </h1>
 <p>
 All plugins are part of this package and cannot be installed separately, but not all of them have to be enabled.
@@ -582,7 +574,7 @@ There are also some external tools used, mostly by
 pub-minifier
 </code>
 plugin. Since this plugin is part of this package, but it's optional to use (not enabled by default), the process of installation of those tools is described in this
-<a href="../../02_setup/09_setting-up-a-minifier/#tools-installation"id="09-setting-up-a-minifier-tools-installation">
+<a href="../pub-minifier/#tools-installation"id="06-setting-up-minifiertools-installation">
 plugin installation
 </a>
 .
@@ -599,7 +591,7 @@ First steps
 <p>
 </p><p class="obsidian_backlink">
 Currently, please take a look at
-<a href="https://mkusz.github.io/mkdocs-publisher/03_how-to-publish/01_first_steps/#02-setup-01-installation">
+<a href="https://mkusz.github.io/mkdocs-publisher/how-to-publish/first-steps/#02-setup01-installation">
 installation and each plugin configuration
 </a>
 section of this documentation.
@@ -621,7 +613,7 @@ Back to top
 </main>
 <footer class="md-footer">
 <nav class="md-grid md-footer__inner"aria-label="Footer">
-<a href="../../home/"class="md-footer__link md-footer__link--prev"aria-label="Previous: &lt;i class='fa-solid fa-house'&gt;&lt;/i&gt;"rel="prev">
+<a href="../.."class="md-footer__link md-footer__link--prev"aria-label="Previous: &lt;i class='fa-solid fa-house'&gt;&lt;/i&gt;"rel="prev">
 <div class="md-icon md-footer__button">
 <svg viewbox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
 <path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z">
@@ -638,13 +630,13 @@ Previous
 </div>
 </div>
 </a>
-<a href="../pub-auto-nav/"class="md-footer__link md-footer__link--next"aria-label="Next: Setting up an auto-nav"rel="next">
+<a href="../pub-meta/"class="md-footer__link md-footer__link--next"aria-label="Next: Setting up meta"rel="next">
 <div class="md-footer__title">
 <span class="md-footer__direction">
 Next
 </span>
 <div class="md-ellipsis">
-Setting up an auto-nav
+Setting up meta
 </div>
 </div>
 <div class="md-icon md-footer__button">

@@ -8,13 +8,13 @@ from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.pages import Page
-from pymdownx.slugs import slugify
 
+from mkdocs_publisher._common.url import slugify
 from mkdocs_publisher.blog.plugin import BlogPlugin
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.backlinks")
 
-MARKDOWN_LINK_RE = re.compile(r"\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]+.md)(#[\w\-.]+)?\)")
+MARKDOWN_LINK_RE = re.compile(r"\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]+.md)(#[\w\S]+)?\)")
 HTTP_LINK_RE = re.compile(r"\[([^][\r\n]+)]\((https?://[^][)(\s]+)(#[\w\-.]+)?\)")
 
 
@@ -40,9 +40,9 @@ class Backlink:
         """Create backlink anchor link"""
 
         anchor_link = f"{backlink}{anchor_link}"
-        for r in (("../", ""), (".md", ""), ("#", " "), ("/", " "), ("_", "-")):
+        for r in (("../", ""), (".md", ""), ("#", ""), ("/", ""), ("_", "-")):
             anchor_link = anchor_link.replace(*r)
-        return slugify(case="lower")(text=anchor_link, sep="-")
+        return slugify(text=anchor_link)
 
     @staticmethod
     def _other_link_to_text(match: re.Match) -> str:
@@ -54,6 +54,7 @@ class Backlink:
         anchor_link = match.group(3) if match.group(3) is not None else ""
         backlink = match.group(2)
         backlink_anchor_link = self._build_anchor_link(backlink=backlink, anchor_link=anchor_link)
+        # TODO: create anchor link using slug from meta
         return f"[{match.group(1)}]({backlink}{anchor_link}){{ #{backlink_anchor_link} }}"
 
     def _parse_markdown_link(self, match: re.Match, page: Page, line: str):

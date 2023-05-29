@@ -20,7 +20,9 @@ class _MetaTitleConfig(Config):
 class _MetaStatusConfig(Config):
     warn_on_missing = option.Type(bool, default=True)
     key_name = option.Type(str, default="status")
-    default = option.Choice(choices=["draft", "published", "hidden"], default="draft")
+    search_in_hidden = option.Type(bool, default=False)
+    search_in_draft = option.Type(bool, default=False)
+    default = option.Choice(choices=["draft", "hidden", "published"], default="draft")
 
 
 class MetaPluginConfig(Config):

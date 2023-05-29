@@ -18,7 +18,7 @@ categories: release
 
 If you need support for additional plugins, please make an [issue](https://github.com/mkusz/mkdocs-publisher/issues) with a future description.
 
-For more details about this release, read more below or jump directly to [pub-social](../02_setup/04_setting-up-a-social-cards.md) plugin documentation.
+For more details about this release, read more below or jump directly to [pub-social](../02_setup/03_setting-up-social-cards.md) plugin documentation.
 
 <!-- more -->
 

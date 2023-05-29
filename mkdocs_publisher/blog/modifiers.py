@@ -48,6 +48,7 @@ def blog_post_nav_sorter(
 
 
 def blog_post_nav_remove(
+    start_page: bool,
     blog_config: BlogConfig,
     nav: Navigation,
 ) -> None:
@@ -71,17 +72,17 @@ def blog_post_nav_remove(
                     children.append(section_item)
                 if (
                     isinstance(section_item, Page)
-                    and not blog_config.plugin_config.start_page
+                    and not start_page
                     and str(section_item.title).startswith("index-0")
                 ):
                     children.append(section_item)
             item.children = children
 
 
-def blog_post_nav_next_prev_change(blog_config: BlogConfig, page: Page):
+def blog_post_nav_next_prev_change(start_page: bool, blog_config: BlogConfig, page: Page):
     """Change blog post next/prev navigation"""
 
-    if str(page.title) == "index-0":
+    if (start_page and page.title == "index") or (not start_page and page.title == "index-0"):
         page.title = blog_config.translation.recent_blog_posts_navigation_name
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):
             next_page_copy = cast(Page, deepcopy(page.next_page))

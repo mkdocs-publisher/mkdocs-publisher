@@ -1,4 +1,7 @@
 {
   "cssTheme": "Obsidian Nord",
-  "accentColor": ""
+  "accentColor": "",
+  "enabledCssSnippets": [
+    "pub-additions"
+  ]
 }
