@@ -18,7 +18,7 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "04_blog/v060-obsidian.md",
+                    "file": "02_setup/06_setting-up-minifier.md",
                     "mode": "source",
                     "backlinks": true,
                     "source": true
@@ -124,7 +124,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "04_blog/v060-obsidian.md"
+                "file": "02_setup/06_setting-up-minifier.md"
               }
             }
           },
@@ -152,7 +152,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "04_blog/v060-obsidian.md",
+                "file": "02_setup/06_setting-up-minifier.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +169,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "04_blog/v060-obsidian.md",
+                "file": "02_setup/06_setting-up-minifier.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -200,8 +200,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "086ce72ca8763d71",
+  "active": "c6174c4fcf2d07d9",
   "lastOpenFiles": [
+    "04_blog/v060-obsidian.md",
     "01_home.md",
     "05_dev/other/02_backlog.md",
     "02_setup/04_setting-up-blog.md",
@@ -214,7 +215,6 @@
     "_templates/_setting.md",
     "02_setup/06_setting-up-minifier.md",
     "02_setup/01_installation.md",
-    "04_blog/v060-obsidian.md",
     "04_blog/v020.md",
     "05_dev/01_changelog.md",
     "05_dev/README.md",

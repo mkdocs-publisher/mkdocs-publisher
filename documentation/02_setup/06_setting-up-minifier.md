@@ -33,7 +33,7 @@ To simplify the entire process, below is presented a single way of installation 
 
     ```commandline
     scoop bucket add main
-    scoop install pngquant oxipng nodejs mozjpeg
+    scoop install pngquant oxipng nodejs npm mozjpeg
     npm install -f --no-fund svgo html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
     ```
 
@@ -43,7 +43,7 @@ To simplify the entire process, below is presented a single way of installation 
 
     ```commandline
     sudo apt update
-    sudo apt install rustc pngquant libjpeg-turbo-progs nodejs
+    sudo apt install -y rustc pngquant libjpeg-turbo-progs nodejs npm
     cargo install oxipng
     npm install --no-fund -f svgo html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
     ```
