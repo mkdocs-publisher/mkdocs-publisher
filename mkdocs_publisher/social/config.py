@@ -4,7 +4,7 @@ from mkdocs.config.base import Config
 
 class _SocialOpenGraphConfig(Config):
     enabled = option.Type(bool, default=True)
-    locale = option.Type(str, default="en_us")
+    locale = option.Type(str, default="en_US")
 
 
 class _SocialTwitterConfig(Config):

@@ -21,7 +21,7 @@ class _MinifierHtmlConfig(Config):
     minify_css = option.Type(bool, default=True)
     minify_js = option.Type(bool, default=True)
     remove_comments = option.Type(bool, default=True)
-    remove_tag_whitespace = option.Type(bool, default=True)
+    remove_tag_whitespace = option.Type(bool, default=False)
     collapse_whitespace = option.Type(bool, default=True)
     conservative_collapse = option.Type(bool, default=True)
     collapse_boolean_attributes = option.Type(bool, default=True)
