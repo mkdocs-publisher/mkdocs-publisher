@@ -3,14 +3,14 @@ title: Changelog
 slug: changelog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-06-12 13:47:41
+update: 2023-06-13 12:00:58
 description: Publisher for MkDocs version history
 categories: general changelog
 ---
 
 # Version history
 
-## 1.0.0 – 2023.06.12
+## 1.0.0 – 2023.06.13
 
 ### General
 

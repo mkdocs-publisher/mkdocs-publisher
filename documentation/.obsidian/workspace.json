@@ -31,7 +31,7 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "04_blog/v100-obsidian.md",
+                    "file": "05_dev/01_changelog.md",
                     "mode": "source",
                     "backlinks": true,
                     "source": true
@@ -165,8 +165,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "1ed2fcf609d1f380",
@@ -179,7 +178,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "04_blog/v100-obsidian.md",
+                "file": "05_dev/01_changelog.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -196,7 +195,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "04_blog/v100-obsidian.md",
+                "file": "05_dev/01_changelog.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -222,7 +221,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "04_blog/v100-obsidian.md"
+                "file": "05_dev/01_changelog.md"
               }
             }
           }
@@ -260,10 +259,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2b5423c6023a7c4d",
+  "active": "254ede9cb28a601f",
   "lastOpenFiles": [
-    "01_home.md",
     "04_blog/v100-obsidian.md",
+    "01_home.md",
     "02_setup/05_setting-up-obsidian.md",
     "02_setup/02_setting-up-meta.md",
     "05_dev/other/01_credits.md",
