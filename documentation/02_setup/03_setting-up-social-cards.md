@@ -3,7 +3,7 @@ title: Setting up social cards
 slug: pub-social
 status: published
 date: 2023-04-04 21:14:00
-update: 2023-05-22 14:02:30
+update: 2023-06-09 12:01:11
 description: Setting up social cards plugin
 categories: setup plugin social cards
 ---
@@ -14,7 +14,7 @@ When you are a blogger or a person who wants to publish some documentation, book
 
 ## Document metadata
 
-More about document metadata you can read in document related to setting up the [meta plugin](02_setting-up-meta.md#document-metadata).
+More about document metadata you can read in the document related to setting up the [meta plugin](02_setting-up-meta.md#document-metadata).
 
 Some data used by social cards is global (like site name) but some are unique per document. Data needed and optional that is needed by social card is:
 
@@ -22,16 +22,14 @@ Some data used by social cards is global (like site name) but some are unique pe
 -  (required) `description` - short document description (120–350 characters),
 -  (optional) `image` - link to an image (1200×630 pixels).
 
-===+ ":fontawesome-brands-markdown: Example document with YAML front matter"
+===+ ":octicons-markdown-16: example.md"
 
-	```markdown
+	```yaml hl_lines="2-4"
 	---
 	title: Your document title
 	description: A short description of document content that encourage to read it
 	image: /some/url/to/an/image.jpg
 	---
-
-	This is the first paragraph of the document.
 	```
 
 >  [!WARNING]

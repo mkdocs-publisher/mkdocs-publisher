@@ -1,29 +1,43 @@
 ---
-title: v0.6.0 - 2023-05-19
-slug: v060
+title: v1.0.0 - 2023-06-13
+slug: v100
 status: published
 date: 2023-05-19 15:40:36
-update: 2023-05-19 16:31:24
-tags: [v0.6.0]
+update: 2023-06-13 14:16:52
+tags: [v1.0.0]
 description: MkDosc Publisher plugin v0.6.0
 categories: release
 ---
 
-This was quite a journey to make this release. So far, this whole documentation was created inside the [Obsidian](https://obsidian.md) but since all the files are just a flat text file written using [Markdown syntax](https://www.markdownguide.org), you were unable to see it. The reason for that was simple: integration with Obsidian was not **"mature"** enough to be presented. You can ask: *"Why? Obsidian just uses the same Markdown syntax as MkDocs uses"*. The answer to that is not so obvious. The simple answer is just *"yes"*, but the real answer is *"not always"*. Obsidian introduces some additional syntax options like [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) (equivalent to Markdown [admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)) and [WikiLinks](https://en.wikipedia.org/wiki/Help:Link) for creating internal links. If you use them "as is" in MkDocs, you will see a pure (not parsed) text, not the intended one since MkDocs does not understand this syntax. To make it "understandable" for MkDocs, it has to be "translated" into regular Markdown syntax. For that reason, a new plugin was created, that supports not only the mentioned Obsidian elements, but also some additional ones like:
+This was quite a journey to make this release and push it to v1.0.0. So far, this whole documentation was created inside the [Obsidian](https://obsidian.md) but since all the files are just a flat text file written using [Markdown syntax](https://www.markdownguide.org), you were unable to see it. The reason for that was simple: integration with Obsidian was not *"mature"* enough to be presented. You can ask: *"Why? Obsidian just uses the same Markdown syntax as MkDocs uses"*. The answer to that is not so obvious. The simple answer is just *"yes"*, but the real answer is *"not always"*. Obsidian introduces some additional syntax options like [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) (equivalent to Markdown [admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)) and [WikiLinks](https://en.wikipedia.org/wiki/Help:Link) for creating internal links. If you use them "as is" in MkDocs, you will see a pure (not parsed) text, not the intended one since MkDocs does not understand this syntax. To make it "understandable" for MkDocs, it has to be "translated" into regular Markdown syntax. For that reason, a new plugin was created, that supports not only the mentioned Obsidian elements, but also some additional ones like:
 
 - [backlinks](https://help.obsidian.md/Plugins/Backlinks),
 - [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) ,
 - [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links)
-- [vega charts](https://vega.github.io/vega/) (using [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)) - advanced solution for creating charts,
-- mind maps (using [Mindmap NextGen plugin for Obsidian](https://github.com/verocloud/obsidian-mindmap-nextgen)).
+- [vega charts](https://vega.github.io/vega/) (using [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)) - advanced solution for creating charts.
+
+<!-- more -->
 
 If you need support for additional plugins, please make an [issue](https://github.com/mkusz/mkdocs-publisher/issues) with a future description.
 
 For more details about this release, read more below or jump directly to [pub-obsidian](../02_setup/05_setting-up-obsidian.md) plugin documentation.
 
-PS. I need to start to implement unit tests because this project becomes too big to test it manually and deliver production grade quality. Probably after introducing unit tests, I will end the beta period of this project and consider it as a production ready. It doesn't mean that the project will be complete or free from errors, but at least new releases should not break pages built with this project.
+I need to start to implement unit tests because this project becomes too big to test it manually and deliver production grade quality. Probably after introducing unit tests, I will end the beta period of this project and consider it as a production ready. It doesn't mean that the project will be complete or free from errors, but at least new releases should not break pages built with this project.
 
-<!-- more -->
+Also from now on all new releases will be smaller. I will try to focus on smaller improvements and fixes, so you should fell like this project is more alive.
+
+Last thing is a new project logo:
+
+<figure markdown>
+![MkDocs Publisher logo](../publisher_logo.png)
+</figure>
+
+> [!BUG] Known Issues
+> List of known issues:
+>
+> - internal links in blog teasers are not working,
+> - using icons in page title, will cause problems with title display in the browser window.
+
 
 ## Changelog
 

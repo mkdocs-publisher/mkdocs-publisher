@@ -126,14 +126,15 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     ) -> Optional[LiveReloadServer]:
         server.unwatch(config.docs_dir)
 
-        def no_obsidian_callback(event):
-            """Watcheer implementation that skips .obsidian directory"""
-            if isinstance(event, watchdog.events.FileModifiedEvent) and str(
-                event.src_path
-            ).startswith(str(Path(config.docs_dir) / self.config.obsidian_dir)):
-                return
+        docs_dirs_to_skip = [str(Path(config.docs_dir) / self.config.obsidian_dir)]
 
-            if event.is_directory:
+        def no_obsidian_callback(event):
+            """Watcher implementation that skips .obsidian directory"""
+            if (
+                isinstance(event, watchdog.events.FileModifiedEvent)
+                and any([str(event.src_path).startswith(d) for d in docs_dirs_to_skip])
+                or event.is_directory
+            ):
                 return
             log.debug(str(event))
             with server._rebuild_cond:
@@ -142,8 +143,14 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         handler = watchdog.events.FileSystemEventHandler()
         handler.on_any_event = no_obsidian_callback
+
+        if config.docs_dir in server._watched_paths:
+            server._watched_paths[config.docs_dir] += 1
+            return
+        server._watched_paths[config.docs_dir] = 1
+
         server._watch_refs[config.docs_dir] = server.observer.schedule(
             handler, config.docs_dir, recursive=True
         )
-
+        log.debug(f"Watching '{config.docs_dir}'")
         return server

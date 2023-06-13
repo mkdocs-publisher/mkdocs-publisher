@@ -3,18 +3,19 @@ title: Changelog
 slug: changelog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-05-19 12:04:54
+update: 2023-06-12 13:47:41
 description: Publisher for MkDocs version history
 categories: general changelog
 ---
 
 # Version history
 
-## 0.6.0 – 2023.05.19
+## 1.0.0 – 2023.06.12
 
 ### General
 
 - :material-plus-circle: internal class for HTML modifications
+- :material-plus-circle: project logo
 - :material-sync-circle: project license to MIT
 - :material-sync-circle: project `README.md` cleanup
 - :material-sync-circle: internal method for importing other plugin config (needed for cross functionalities)

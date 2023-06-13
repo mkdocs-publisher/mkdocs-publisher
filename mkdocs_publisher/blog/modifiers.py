@@ -3,7 +3,6 @@ from collections import OrderedDict
 from copy import deepcopy
 from typing import cast
 
-from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
@@ -11,28 +10,6 @@ from mkdocs.structure.pages import Page
 from mkdocs_publisher.blog.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
-
-
-def blog_post_slug_modifier(blog_config: BlogConfig, files: Files) -> Files:
-    """Modify File object destination file paths and url to defined blog post slug."""
-
-    blog_posts = {post.path: post for post in blog_config.blog_posts.values()}  # type: ignore
-    new_files = Files([])
-
-    log.info("Modify blog posts url addresses based on slug")
-    for file in files:
-        if file.src_uri in blog_posts and blog_posts[file.src_uri].slug is not None:
-            url = file.url.split("/")
-            url[-1] = blog_posts[file.src_uri].slug  # type: ignore
-            file.url = f"{'/'.join(url)}/"
-            file.name = str(blog_posts[file.src_uri].slug)
-            url.append(file.dest_uri.split("/")[-1])
-            file.dest_uri = "/".join(url)
-            file.abs_dest_path = str(blog_config.site_dir / file.dest_uri)
-            log.debug(f"Blog post: {blog_posts[file.src_uri].title} url is: {file.url}")
-        new_files.append(file)
-
-    return new_files
 
 
 def blog_post_nav_sorter(

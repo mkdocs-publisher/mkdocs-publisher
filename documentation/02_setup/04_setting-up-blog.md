@@ -24,7 +24,7 @@ This documentation contains a [blog](../../blog/) that is created using this plu
 
 ## Configuration
 
-### Enable blog
+### Enable blog plugin
 
 To enable the built-in blog plugin, the following lines have to be added to `mkdocs.yml` file:
 
@@ -67,7 +67,7 @@ The last thing is to add a blog to a site navigation. There are 2 ways to do it:
 
 
 > [!INFO] Blog standalone mode
-> Standalone mode (blog as a starting page) was removed in version [v0.6.0](../04_blog/v060-obsidian.md) and now this is automatically detected, based on site navigation structure.
+> Standalone mode (blog as a starting page) was removed in version [v0.6.0](../04_blog/v100-obsidian.md) and now this is automatically detected, based on site navigation structure.
 
 ### Settings
 

@@ -1,6 +1,7 @@
 import logging
 from datetime import datetime
 from pathlib import Path
+from typing import Literal
 from typing import Optional
 from typing import cast
 from urllib.parse import quote
@@ -18,6 +19,7 @@ from mkdocs.utils import meta as meta_parser
 
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
+from mkdocs_publisher.meta.config import _MetaStatusConfig
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.meta")
@@ -35,10 +37,11 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         self._blog_config: BlogPluginConfig = cast(BlogPluginConfig, None)
         self._dirs_slugs: dict = {}
         self._dirs_titles: dict = {}
-        self._dirs_to_skip: list = []
+        self._draft_dirs: list = []
         self._draft_files: list = []
         self._hidden_files: list = []
         self._not_other_files: list = []
+        self._on_serve = False
 
     def _build_config_nav(self, directory: Path, relative_to: Path) -> list:
         nav = list()
@@ -50,7 +53,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         sorted_files.extend(other_files)
 
         for file in sorted_files:
-            if not any([s for s in self._dirs_to_skip if str(file).startswith(str(s))]):
+            if not any([s for s in self._draft_dirs if str(file).startswith(str(s))]):
                 if file.is_dir():
                     title = self._dirs_titles.get(file, file.stem)
                     dir_nav = self._build_config_nav(directory=file, relative_to=relative_to)
@@ -64,13 +67,13 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                         # Read document status
                         status = meta.get(self.config.status.key_name)
                         if status is None:
-                            if self.config.status.warn_on_missing:
+                            if self.config.status.file_warn_on_missing:
                                 log.warning(
                                     f'Missing "{self.config.status.key_name}" value in '
                                     f'file "{file.relative_to(relative_to)}". Setting to '
-                                    f'default value: "{self.config.status.default}".'
+                                    f'default value: "{self.config.status.file_default}".'
                                 )
-                            status = self.config.status.default
+                            status = self.config.status.file_default
 
                         if status == "draft":
                             self._draft_files.append(str(file.relative_to(relative_to)))
@@ -104,15 +107,19 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
         return nav
 
+    def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
+        if command == "serve":
+            self._on_serve = True
+
     @event_priority(100)  # Run before any other plugins
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
 
         # Setup some default values
-        self._dirs_to_skip = cast(list, self.config.skip.dirs)
-        self._not_other_files = [INDEX_FILE_NAME, self.config.meta_file_name]
+        self._draft_dirs = list()
+        self._not_other_files = [INDEX_FILE_NAME, self.config.dir_meta_file]
 
-        log.info(f'Reading meta data from "{self.config.meta_file_name}" files')
-        for meta_file in Path(config.docs_dir).glob(f"**/{self.config.meta_file_name}"):
+        log.info(f'Reading meta data from "{self.config.dir_meta_file}" files')
+        for meta_file in Path(config.docs_dir).glob(f"**/{self.config.dir_meta_file}"):
             with meta_file.open(encoding="utf-8-sig", errors="strict") as md_file:
                 markdown, meta = meta_parser.get_data(md_file.read())
 
@@ -126,44 +133,53 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                 if title is not None:
                     self._dirs_titles[meta_file.parent] = title
 
-                # Read skipped directories
-                skip_dir = meta.get(self.config.skip.key_name)
-                if skip_dir:
-                    self._dirs_to_skip.append(str(meta_file.parent.relative_to(config.docs_dir)))
-                elif skip_dir not in [None, False]:
+                # Read directories status
+                status = meta.get(self.config.status.key_name)
+                if status is None:
+                    if self.config.status.dir_warn_on_missing:
+                        log.warning(
+                            f'Missing "{self.config.status.key_name}" value in '
+                            f'file "{meta_file.relative_to(config.docs_dir)}". Setting to '
+                            f'default value: "{self.config.status.dir_default}".'
+                        )
+                    status = self.config.status.dir_default
+                if status == "draft" and not self._on_serve:
+                    self._draft_dirs.append(str(meta_file.parent.relative_to(config.docs_dir)))
+                elif status not in _MetaStatusConfig.dir_default.choices:  # type: ignore
                     log.warning(
-                        f'Wrong key "{self.config.skip.key_name}" value '
-                        f'in file "{meta_file.relative_to(config.docs_dir)}" '
-                        f'(only "true" and "false" are possible)'
+                        f'Wrong key "{self.config.status.key_name}" value '
+                        f'in file "{meta_file.relative_to(config.docs_dir)}" (only '
+                        f"{_MetaStatusConfig.dir_default.choices} are possible)"  # type: ignore
                     )
 
         # Add blog dir to one that will be skipped (blog has its own file resolution order)
         self._blog_config: BlogPluginConfig = config.plugins["pub-blog"].config
         if self._blog_config is not None:
-            if self._blog_config.blog_dir not in self._dirs_to_skip:
-                self._dirs_to_skip.append(self._blog_config.blog_dir)
+            if self._blog_config.blog_dir not in self._draft_dirs:
+                self._draft_dirs.append(self._blog_config.blog_dir)
 
         # Add obsidian dirs to ones that will be skipped
         obsidian_config: ObsidianPluginConfig = config.plugins["pub-obsidian"].config
         if obsidian_config is not None:
-            if obsidian_config.obsidian_dir not in self._dirs_to_skip:
-                self._dirs_to_skip.append(obsidian_config.obsidian_dir)
-            if obsidian_config.templates_dir not in self._dirs_to_skip:
-                self._dirs_to_skip.append(obsidian_config.templates_dir)
+            if obsidian_config.obsidian_dir not in self._draft_dirs:
+                self._draft_dirs.append(obsidian_config.obsidian_dir)
+            if obsidian_config.templates_dir not in self._draft_dirs:
+                self._draft_dirs.append(obsidian_config.templates_dir)
 
-        log.info(f"Skipping directories: {self._dirs_to_skip}")
-        self._dirs_to_skip = [Path(config.docs_dir) / f for f in self._dirs_to_skip]
+        self._draft_dirs = [Path(config.docs_dir) / f for f in self._draft_dirs]
 
-        for skip_dir in self._dirs_to_skip:
-            if not skip_dir.exists():
+        for draft_dir in self._draft_dirs:
+            if not draft_dir.exists():
                 log.warning(
-                    f'Directory "{skip_dir.relative_to(config.docs_dir)}" '
-                    f"doesn't exists and cannot be skipped"
+                    f'Directory "{draft_dir.relative_to(config.docs_dir)}" doesn\'t exists'
                 )
         config.nav = self._build_config_nav(
             directory=Path(config.docs_dir), relative_to=Path(config.docs_dir)
         )
 
+        log.info(
+            f"Draft directories: {[str(d.relative_to(config.docs_dir)) for d in self._draft_dirs]}"
+        )
         log.info(f"Draft files: {self._draft_files}")
         log.info(f"Hidden files: {self._hidden_files}")
 
@@ -172,22 +188,21 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
     @event_priority(-100)
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:
 
-        relative_skip_dirs = [str(f.relative_to(config.docs_dir)) for f in self._dirs_to_skip]
+        relative_draft_dirs = [str(f.relative_to(config.docs_dir)) for f in self._draft_dirs]
         if self._blog_config is not None:
-            relative_skip_dirs.remove(self._blog_config.blog_dir)
+            relative_draft_dirs.remove(self._blog_config.blog_dir)
 
         new_files = Files(files=[])
         for file in files:
             if (
-                not any([file.src_uri.startswith(skip_dir) for skip_dir in relative_skip_dirs])
-                and str(Path(file.src_uri).name) != self.config.meta_file_name
+                not any([file.src_uri.startswith(draft_dir) for draft_dir in relative_draft_dirs])
+                and str(Path(file.src_uri).name) != self.config.dir_meta_file
                 and str(file.src_uri) not in self._draft_files
             ):
                 new_files.append(file)
 
                 if file.is_documentation_page():
 
-                    # TODO: move slug manipulation to external file (to be reused in backlinks)
                     meta_file = Path(file.abs_src_path)
                     with meta_file.open(encoding="utf-8-sig", errors="strict") as md_file:
                         markdown, meta = meta_parser.get_data(md_file.read())

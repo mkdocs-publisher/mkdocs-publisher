@@ -54,7 +54,7 @@ def parse_markdown_files(
     log.info(f"Parsing blog posts from '{blog_config.blog_dir}' directory")
     for file_path in blog_config.docs_dir.glob("**/*.md"):
         if blog_config.meta_config is not None:
-            if file_path.parts[-1] == blog_config.meta_config.meta_file_name:
+            if file_path.parts[-1] == blog_config.meta_config.dir_meta_file:
                 continue
         file_path = Path(file_path)
         path = Path(file_path).relative_to(blog_config.docs_dir)
@@ -70,6 +70,7 @@ def parse_markdown_files(
                     post_meta = dict(post)
 
                     if "status" not in post_meta:
+                        # TODO: read default value from meta config
                         log.info(
                             f"File: {file_path} - missing 1 required positional argument: "
                             f"'status' (setting to default: draft)"

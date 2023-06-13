@@ -63,7 +63,7 @@ class BaseMinifier:
         log.info(f"Minifying {self.extensions} files")
 
         if self._plugin_config.threads < 1:
-            log.warning("Number of 'threads' cannot be smaller than 1 (changing to default 8")
+            log.warning("Number of 'threads' cannot be smaller than 1 (changing to default 8)")
             self._plugin_config.threads = 1
 
         semaphore = Semaphore(self._plugin_config.threads)

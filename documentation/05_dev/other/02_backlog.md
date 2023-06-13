@@ -3,7 +3,7 @@ title: Backlog
 slug: backlog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-04-19 17:59:01
+update: 2023-06-12 14:00:07
 description: Plans for future development of Publisher for MkDocs
 categories: general backlog
 ---
@@ -18,13 +18,16 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 - [ ] Add: blog post reading time + watch time (defined in post meta)
 - [ ] Add: possibility to disable categories and/or tags pages
-- [ ] Add: automatic add [search exclude](https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/#search-exclusion) to draft and hidden pages when using material for MkDocs theme with search plugin enabled
 - [ ] Add: authors and update date in the template
 - [ ] Add: blog posts index template override
 - [ ] Add: language override in YAML file
 - [ ] Add: configurable date format
 - [ ] Add: auto-generate slug based on slugify (+ inject into document metadata)
 - [ ] Change: detect if meta plugin is enabled and based on its configuration use key names
+- [ ] Add: possibility to define blog directory in `README.md` file when meta plugin is enabled
+- [ ] Fix: links when using meta plugin and slugs on post teasers
+- [ ] Fix: internal links in teasers
+- [ ] Change: temporary file location
 
 ### Minifier
 
@@ -32,8 +35,10 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: stats for number of minified/taken from cache files
 - [ ] Add: cache disable (globally and per file type)
 - [ ] Add: configurable file extensions per minifier
+- [ ] Add: documentation for specific settings per file type
+- [ ] Add: support for WebP files
 
-### Meta (new plugin)
+### Meta
 
 - [ ] Add: sitemap optimizations and creation of `robots.txt` file based on document status
 - [ ] Add: multiple HTML `<meta name="author">` based on frontmatter authors
@@ -44,6 +49,8 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: turn off auto nav creation setting
 - [ ] Add: navigation links using `README.md` in fake directory (directory is needed to preserve order of an auto navigation builder)
 - [ ] Add: dynamically generate pages for tags and categories for all documents (just like in blog)
+- [ ] Add: nav name metadata (just like in blog)
+- [ ] Add: configurable key and format for creation and update date of the document
 
 ### Social
 
@@ -56,7 +63,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: metadata key names from meta plugin
 - [ ] Change: detect if meta plugin is enabled and based on its configuration use key names
 
-### Obsidian (new plugin)
+### Obsidian
 
 - [ ] Add: mind maps (using [markmap](https://markmap.js.org/docs/markmap))
 - [ ] Add: simpler charts (using [chart.js](https://www.chartjs.org/docs/latest/samples/bar/border-radius.html))
@@ -64,6 +71,8 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: graph view (long-term goal)
 - [ ] Add: backlinks with unlinked mentions based on page title and aliases (maybe some headings titles?)
 - [ ] Add: disable backlinks on given page (meta-data: `backlinks: false`)
+- [ ] Add: configurable aliases in callouts with auto-add to Obsidian CSS files
+- [ ] Change: backlink anchor link creation using slug information
 
 ## General
 
@@ -96,4 +105,5 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
  - [ ] Unit tests and code coverage with pre-commit
  - [ ] Cleanup list of code TODO's
  - [ ] Drop `python-frontmatter` for MkDocs built-in library for metadata retrieval
+ - [ ] Review `importlib.resources` for [deprecated functions](https://docs.python.org/3/library/importlib.resources.html)
  - [ ] Move translations to jinja templates like Material for MkDocs is doing it

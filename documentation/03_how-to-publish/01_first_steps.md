@@ -8,6 +8,6 @@ description: First steps after installation
 categories: start
 ---
 
-This section is on a #todo list.
+This section is in [backlog](../05_dev/other/02_backlog.md).
 
 Currently, please take a look at [installation and each plugin configuration](../02_setup/01_installation.md) section of this documentation.

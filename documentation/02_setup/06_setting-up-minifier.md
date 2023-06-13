@@ -14,7 +14,7 @@ Even today, when most of us have quite fast internet connection, page size still
 
 ## Basic setup
 
-To simplify the entire process, below is presented a single way of installation of all the tools. If you just want to use a single tool or learn more about what tool is used for what type of file, please take a look below for an [advanced setup](#advanced-setup) section where it's described.
+To simplify the entire process, below is presented a single way of installation of all the tools. If you just want to use a single tool or learn more about what tool is used for what type of file, please take a look below for a [configuration](#configuration) section where it's described.
 
 ### Tools installation
 
@@ -61,7 +61,7 @@ To enable the built-in optimization plugin, the following lines have to be added
 
 Just like that, all optimization tools are enabled with optimal settings (according to my small experiments).
 
-## Advanced setup
+## Configuration
 
 In day to day usage, those advanced settings, should probably not be touched. Those options are exposed, so you can adjust some settings offered by a given tool.
 

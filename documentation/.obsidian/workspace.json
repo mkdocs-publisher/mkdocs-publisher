@@ -13,19 +13,33 @@
             "dimension": 52.365339578454325,
             "children": [
               {
-                "id": "086ce72ca8763d71",
+                "id": "de0c5b335786e572",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "02_setup/06_setting-up-minifier.md",
+                    "file": "02_setup/04_setting-up-blog.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": true
+                  }
+                }
+              },
+              {
+                "id": "254ede9cb28a601f",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "04_blog/v100-obsidian.md",
                     "mode": "source",
                     "backlinks": true,
                     "source": true
                   }
                 }
               }
-            ]
+            ],
+            "currentTab": 1
           },
           {
             "id": "412f1cee2456d476",
@@ -33,19 +47,59 @@
             "dimension": 47.63466042154567,
             "children": [
               {
+                "id": "086ce72ca8763d71",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "04_blog/v100-obsidian.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": true
+                  }
+                }
+              },
+              {
                 "id": "dc264e50e031b4e3",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "02_setup/03_setting-up-social-cards.md",
+                    "file": "02_setup/05_setting-up-obsidian.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": true
+                  }
+                }
+              },
+              {
+                "id": "b54d755db2d033e3",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "05_dev/01_changelog.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": true
+                  }
+                }
+              },
+              {
+                "id": "76bc14de9938b5d8",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "05_dev/other/02_backlog.md",
                     "mode": "source",
                     "backlinks": true,
                     "source": true
                   }
                 }
               }
-            ]
+            ],
+            "currentTab": 1
           }
         ],
         "direction": "horizontal"
@@ -60,7 +114,7 @@
       {
         "id": "32cffcd359b8a04e",
         "type": "tabs",
-        "dimension": 52.08430913348946,
+        "dimension": 70.5136334812936,
         "children": [
           {
             "id": "c6174c4fcf2d07d9",
@@ -78,7 +132,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "v1.0.0",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -111,40 +165,13 @@
               "state": {}
             }
           }
-        ]
-      },
-      {
-        "id": "cc181f4efd5ee66f",
-        "type": "tabs",
-        "dimension": 26.13583138173302,
-        "children": [
-          {
-            "id": "f4b44a034821742f",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "02_setup/06_setting-up-minifier.md"
-              }
-            }
-          },
-          {
-            "id": "75c9ab9eebd23df8",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true
-              }
-            }
-          }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "1ed2fcf609d1f380",
         "type": "tabs",
-        "dimension": 21.779859484777518,
+        "dimension": 29.486366518706404,
         "children": [
           {
             "id": "ddecd4e18ec16ae1",
@@ -152,7 +179,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "02_setup/06_setting-up-minifier.md",
+                "file": "04_blog/v100-obsidian.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +196,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "02_setup/06_setting-up-minifier.md",
+                "file": "04_blog/v100-obsidian.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -184,10 +211,43 @@
   "right": {
     "id": "a0737368d39f299e",
     "type": "split",
-    "children": [],
+    "children": [
+      {
+        "id": "37ce66cb8bdb9b1a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f4b44a034821742f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "04_blog/v100-obsidian.md"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "4430959174e2cc62",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "75c9ab9eebd23df8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false
+              }
+            }
+          }
+        ]
+      }
+    ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 337.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -200,35 +260,38 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c6174c4fcf2d07d9",
+  "active": "2b5423c6023a7c4d",
   "lastOpenFiles": [
-    "04_blog/v060-obsidian.md",
     "01_home.md",
-    "05_dev/other/02_backlog.md",
-    "02_setup/04_setting-up-blog.md",
-    "02_setup/03_setting-up-social-cards.md",
-    "02_setup/02_setting-up-meta.md",
+    "04_blog/v100-obsidian.md",
     "02_setup/05_setting-up-obsidian.md",
-    "03_how-to-publish/README.md",
-    "04_blog/v010-initial-release.md",
+    "02_setup/02_setting-up-meta.md",
     "05_dev/other/01_credits.md",
-    "_templates/_setting.md",
+    "02_setup/04_setting-up-blog.md",
     "02_setup/06_setting-up-minifier.md",
+    "05_dev/01_changelog.md",
+    "05_dev/other/02_backlog.md",
+    "02_setup/03_setting-up-social-cards.md",
+    "05_dev/03_versioning.md",
+    "04_blog/category/test.md",
+    "04_blog/category",
+    "publisher_logo.png",
+    "publisher_icon.png",
+    "03_how-to-publish/01_first_steps.md",
+    "03_how-to-publish/README.md",
+    "05_dev/README.md",
+    "05_dev/other/README.md",
+    "04_blog/README.md",
+    "02_setup/README.md",
+    "04_blog/v010-initial-release.md",
+    "_templates/_setting.md",
     "02_setup/01_installation.md",
     "04_blog/v020.md",
-    "05_dev/01_changelog.md",
-    "05_dev/README.md",
     "04_blog/v040-minifier-and-autonav.md",
     "04_blog/v041.md",
     "04_blog/v050-social.md",
-    "04_blog/README.md",
     "02_setup/test/01_installation1.md",
-    "05_dev/other/README.md",
     "05_dev/other",
-    "05_dev/02_development.md",
-    "05_dev/03_versioning.md",
-    "04_blog/v030.md",
-    "03_how-to-publish/01_first_steps.md",
     "02_setup/test",
     "02_setup/07_obsidian",
     "_templates",
@@ -237,7 +300,6 @@
     "docs/search",
     "docs/blog/tags/v0.5.0/index.html",
     "docs/blog/tags/v0.4.1/index.html",
-    "docs/blog/tags/v0.4.0/index.html",
     "docs/assets/images/favicon.png"
   ]
 }

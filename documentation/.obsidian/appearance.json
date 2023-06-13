@@ -3,5 +3,6 @@
   "accentColor": "",
   "enabledCssSnippets": [
     "pub-additions"
-  ]
+  ],
+  "translucency": false
 }

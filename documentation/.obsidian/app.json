@@ -6,7 +6,8 @@
   "showFrontmatter": true,
   "livePreview": false,
   "spellcheckDictionary": [
-    "minifier"
+    "minifier",
+    "jinja"
   ],
   "userIgnoreFilters": [
     "_templates/"

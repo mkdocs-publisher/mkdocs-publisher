@@ -75,7 +75,8 @@ class MarkdownLinks:
 
     def _normalize_markdown_link_embed(self, match: re.Match) -> str:
         name = match.group(1)
-        link = f"![{name}]({self._get_file_path(match.group(2))})"
+        # TODO: fix for relative links
+        link = f"![{name}](..{self._get_file_path(match.group(2))})"
         if self._links_config.img_lazy_loading and not self._disable_lazy_loading_override:
             link = f"{link}{{ loading=lazy }}"
         return link
