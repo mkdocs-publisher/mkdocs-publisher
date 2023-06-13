@@ -10,10 +10,9 @@ from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
-from mkdocs_publisher import _utils
-from mkdocs_publisher.auto_nav.config import AutoNavPluginConfig
-from mkdocs_publisher.auto_nav.plugin import AutoNavPlugin
+from mkdocs_publisher._common import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
+from mkdocs_publisher.meta.config import MetaPluginConfig
 
 
 @dataclass
@@ -59,7 +58,7 @@ class Translation:
 class BlogConfig:
     mkdocs_config: MkDocsConfig = field(init=False)
     plugin_config: BlogPluginConfig = field(init=False)
-    auto_nav_config: Optional[AutoNavPluginConfig] = field(init=False, default=None)
+    meta_config: Optional[MetaPluginConfig] = field(init=False, default=None)
     translation: Translation = field(init=False)
     temp_dir: Path = field(init=False)
     docs_dir: Path = field(init=False)
@@ -68,18 +67,21 @@ class BlogConfig:
     blog_posts: Dict[datetime, BlogPost] = field(init=False, default_factory=lambda: dict())
     temp_files: Dict[str, Path] = field(init=False, default_factory=lambda: dict())
 
+    @property
+    def temp_files_list(self) -> List[str]:
+        temp_files = []
+        for path in self.temp_files.values():
+            temp_files.append(str(path.relative_to(self.temp_dir)))
+        return temp_files
+
     def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogPluginConfig):
         from mkdocs_publisher.blog.translate import Translate
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
-        self.auto_nav_config = cast(
-            AutoNavPluginConfig,
-            _utils.get_plugin_config(
-                plugin=AutoNavPlugin(),
-                config_file_path=cast(str, plugin_config.config_file_path),
-                yaml_config_key="pub-auto-nav",
-            ),
+        self.meta_config: Optional[MetaPluginConfig] = cast(
+            MetaPluginConfig,
+            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta"),
         )
         self.temp_dir = Path(plugin_config.temp_dir)
         self.docs_dir = Path(mkdocs_config.docs_dir)

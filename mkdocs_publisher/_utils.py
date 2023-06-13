@@ -4,31 +4,9 @@ from hashlib import md5
 from pathlib import Path
 from typing import List
 from typing import Optional
-from typing import cast
 from uuid import uuid4
 
-from mkdocs import utils
-from mkdocs.config import Config
-from mkdocs.plugins import BasePlugin
-
 log = logging.getLogger("mkdocs.plugins.publisher.common")
-
-
-def get_plugin_config(
-    plugin: BasePlugin, config_file_path: str, yaml_config_key: str
-) -> Optional[Config]:
-    options = {}
-    yaml_config_file = cast(dict, utils.yaml_load(open(config_file_path, "rb")))
-    plugin_config_found = False
-    for plugin_config in cast(list, yaml_config_file.get("plugins")):
-        if isinstance(plugin_config, dict) and list(plugin_config.keys())[0] == yaml_config_key:
-            plugin_config_found = True
-            options = list(plugin_config.values())[0]
-        elif isinstance(plugin_config, str) and plugin_config == yaml_config_key:
-            plugin_config_found = True
-    plugin.load_config(options=options, config_file_path=config_file_path)
-
-    return plugin.config if plugin_config_found else None
 
 
 def run_subprocess(cmd) -> int:

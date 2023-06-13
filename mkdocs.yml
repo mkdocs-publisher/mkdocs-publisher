@@ -20,17 +20,21 @@ extra:
   homepage: https://mkusz.github.io/mkdocs-publisher
 
 extra_css:
-  - assets/stylesheets/publisher.css
+  - assets/stylesheets/publisher.min.css
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js
 
 watch:
   - overrides
-  - docs
 
 theme:
   name: material
   language: en
   font: Lato
   custom_dir: overrides
+  logo: publisher_logo.png
+  favicon: publisher_icon.png
 
   palette:
 
@@ -56,6 +60,7 @@ theme:
     - navigation.footer  # Prev/Next page
     - navigation.tracking  # Anchor tracking
     - navigation.top  # Back to top
+    - navigation.sections
     - search.suggest
     - search.highlight
     - search.share
@@ -82,6 +87,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
@@ -94,20 +101,15 @@ markdown_extensions:
       slugify: !!python/object/apply:pymdownx.slugs.slugify
         kwds:
           case: lower
-  - toc:
-      permalink: true
-      slugify: !!python/object/apply:pymdownx.slugs.slugify
-        kwds:
-          case: lower
 
 plugins:
   - search
-  - pub-auto-nav
   - pub-blog:
       blog_dir: 04_blog
-#      start_page: true  # TODO: add detection of this when auto-nav is enabled
   - pub-social
+  - pub-meta
+  - pub-obsidian
   - pub-minifier
 
 #nav:
-#  - 04_blog: 04_blog
+#  - blog: 04_blog

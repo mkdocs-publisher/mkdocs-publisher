@@ -11,8 +11,10 @@ import jinja2
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
+from mkdocs_publisher._common.url import slugify
 from mkdocs_publisher._extra.assets import templates
 from mkdocs_publisher.blog.structures import BlogConfig
+from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog")
 
@@ -38,13 +40,13 @@ def create_blog_files(
 
 
 def create_blog_post_pages(
+    start_page: bool,
     blog_config: BlogConfig,
     config_nav: OrderedDict,
 ) -> None:
     """Create blog posts index files."""
 
     log.info("Creating blog posts index files")
-
     posts_chunks: Dict[str, list] = {}
     archive_chunks: Dict[str, list] = {}
     categories_chunks: Dict[str, list] = {}
@@ -54,12 +56,9 @@ def create_blog_post_pages(
     for index, date in enumerate(sorted(blog_config.blog_posts, reverse=True)):
         index = (
             "index"
-            if blog_config.plugin_config.start_page
-            and index < blog_config.plugin_config.posts_per_page
+            if start_page and index < blog_config.plugin_config.posts_per_page
             else f"index-{str(index//blog_config.plugin_config.posts_per_page)}"
         )
-        # if not blog_config.plugin_config.start_page and index == "index-0":
-        #     index = blog_config.plugin_config.slug
         if index not in posts_chunks:
             posts_chunks[index] = []
         posts_chunks[index].append(blog_config.blog_posts[date])
@@ -90,7 +89,7 @@ def create_blog_post_pages(
 
     # Reorder tags alphabetically
     tags_chunks = {tag: tags_chunks[tag] for tag in sorted(tags_chunks)}
-    config_nav[blog_config.translation.blog_navigation_name] = {}
+    config_nav[blog_config.translation.blog_navigation_name] = []
 
     for key, single_posts_chunk in posts_chunks.items():
         file_name = f"{key}.md"
@@ -106,45 +105,49 @@ def create_blog_post_pages(
         blog_config.temp_files[f"{blog_config.translation.blog_navigation_name}/{key}"] = file_path
         log.debug(f"Creating blog post chunk file: {file_path}")
 
-        config_nav[blog_config.translation.blog_navigation_name][key] = f"{file_name}"
+        config_nav[blog_config.translation.blog_navigation_name].append({key: file_name})
 
-    _create_pages(
-        blog_config=blog_config,
-        posts_chunks=archive_chunks,
-        config_nav=config_nav[blog_config.translation.blog_navigation_name],
-        sub_dir=Path(blog_config.plugin_config.archive_subdir),
-        navigation_name=blog_config.translation.archive_navigation_name,
-        page_title=blog_config.translation.archive_page_title,
+    config_nav[blog_config.translation.blog_navigation_name].append(
+        {
+            blog_config.translation.archive_navigation_name: _create_pages(
+                blog_config=blog_config,
+                posts_chunks=archive_chunks,
+                sub_dir=Path(blog_config.plugin_config.archive_subdir),
+                page_title=blog_config.translation.archive_page_title,
+            )
+        }
     )
 
-    _create_pages(
-        blog_config=blog_config,
-        posts_chunks=categories_chunks,
-        config_nav=config_nav[blog_config.translation.blog_navigation_name],
-        sub_dir=Path(blog_config.plugin_config.categories_subdir),
-        navigation_name=blog_config.translation.categories_navigation_name,
-        page_title=blog_config.translation.categories_page_title,
+    config_nav[blog_config.translation.blog_navigation_name].append(
+        {
+            blog_config.translation.categories_navigation_name: _create_pages(
+                blog_config=blog_config,
+                posts_chunks=categories_chunks,
+                sub_dir=Path(blog_config.plugin_config.categories_subdir),
+                page_title=blog_config.translation.categories_page_title,
+            )
+        }
     )
 
-    _create_pages(
-        blog_config=blog_config,
-        posts_chunks=tags_chunks,
-        config_nav=config_nav[blog_config.translation.blog_navigation_name],
-        sub_dir=Path(blog_config.plugin_config.tags_subdir),
-        navigation_name=blog_config.translation.tags_navigation_name,
-        page_title=blog_config.translation.tags_page_title,
+    config_nav[blog_config.translation.blog_navigation_name].append(
+        {
+            blog_config.translation.tags_navigation_name: _create_pages(
+                blog_config=blog_config,
+                posts_chunks=tags_chunks,
+                sub_dir=Path(blog_config.plugin_config.tags_subdir),
+                page_title=blog_config.translation.tags_page_title,
+            )
+        }
     )
 
 
 def _create_pages(
     blog_config: BlogConfig,
     posts_chunks: Dict[str, list],
-    config_nav: OrderedDict,
     sub_dir: Path,
-    navigation_name: str,
     page_title: str,
-):
-    config_nav[navigation_name] = {}
+) -> list[dict[str, str]]:
+    config_nav = []
 
     # pages_dir = blog_config.docs_dir / blog_config.blog_dir / sub_dir
 
@@ -167,9 +170,8 @@ def _create_pages(
         blog_config.temp_files[f"{sub_dir}/{key}"] = file_path
         log.debug(f"Creating blog post chunk file: {file_path}")
 
-        config_nav[navigation_name][
-            key
-        ] = f"{blog_config.plugin_config.slug}/{sub_dir}/{file_name}"
+        config_nav.append({key: f"{blog_config.plugin_config.slug}/{sub_dir}/{file_name}"})
+    return config_nav
 
 
 def _render_and_write_page(
@@ -190,9 +192,29 @@ def _render_and_write_page(
         "translation": blog_config.translation,
     }
     template = jinja2.Environment(loader=jinja2.BaseLoader()).from_string(index_template)
+    markdown = template.render(context)
 
-    page = frontmatter.Post(content=template.render(context))
+    md_links = MarkdownLinks(
+        mkdocs_config=blog_config.mkdocs_config, disable_lazy_loading_override=True
+    )
+    markdown = md_links.normalize(markdown=markdown, file_path=str(file_path))
+    markdown = md_links.fix_relative_paths(markdown=markdown)
+
+    # TODO: when using pub-meta key name should be taken from plugin config
+    page = frontmatter.Post(content=markdown)
     page["title"] = page_title
+    # TODO: consider moving slugify configuration to mkdocs.yaml
+    if file_path.name.startswith("index-0"):
+        slug = blog_config.plugin_config.slug
+    elif file_path.name.startswith("index"):
+        slug = f"{blog_config.plugin_config.slug}/{file_path.stem.split('-')[-1]}"
+    else:
+        slug = slugify(text=page_title.split("-")[-1].strip())
+    page["slug"] = slug
+
+    page["status"] = "published"
+    if not blog_config.plugin_config.searchable_non_posts:
+        page["search"] = {"exclude": True}
 
     with open(file_path, mode="wb") as teasers_index:
         frontmatter.dump(page, teasers_index)

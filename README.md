@@ -1,21 +1,26 @@
 ---
 date: 2023-02-28 12:30:18
-update: 2023-04-04 23:52:23
+update: 2023-06-12 23:52:23
 ---
 # Publisher plugin for MkDocs
 
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&style=plastic)](https://pypi.org/project/mkdocs-publisher/)
-[![License type](https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&style=plastic)](https://opensource.org/license/bsd-2-clause/)
+[![License type](https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&style=plastic)](https://opensource.org/license/mit/)
 [![PyPI Downloads last month](https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&style=plastic)](https://pypistats.org/search/mkdocs-publisher)
 [![Python versions](https://img.shields.io/pypi/pyversions/mkdocs-publisher?logo=python&style=plastic)](https://www.python.org)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&style=plastic)](https://github.com/mkusz/mkdocs-publisher/commits/main)
 
 Publishing platform plugins for [MkDocs](https://www.mkdocs.org/) that include:
 
-- `pub-auto-nav` – building site navigation right from files (no need for manual definition in config),
 - `pub-blog` – adds blogging capability,
 - `pub-social` – creates social cards for social media sharing using document metadata,
-- `pub-minifier` – file size optimization (good for SEO and overall page size optimization).
+- `pub-obsidian` - bindings for [Obsidina.md](https://obsidian.md) that allows you to use:
+  - wikilinks,
+  - backlinks,
+  - callouts,
+  - vega-charts (plugin),
+- `pub-minifier` – file size optimization (good for SEO and overall page size optimization),
+- `pub-meta` - support for documentation metadata (slug, dates, publication status, directories publication status, automatic navigation building, etc.).
 
 ## Installation
 
@@ -48,85 +53,12 @@ List of included features (more documentation is needed):
 
 ## How To
 
-More detailed information on how to set up, configure and write a blog posts and/or documentation can be found in [documentation](https://mkusz.github.io/mkdocs-publisher/)
+More detailed information on how to set up, configure and write a blog posts and/or documentation can be found in [documentation](https://mkusz.github.io/mkdocs-publisher/) .
 
-## Todo
+## Planned features
 
-A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/dev/backlog/).
+A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/development/backlog/). I'm planning to move it to the project [GitHub issues](https://github.com/mkusz/mkdocs-publisher/issues) with proper badges and longer descriptions, but it's time-consuming and at this stage I'd rather spend it to develop a project.
 
 ## Version history
 
-### 0.5.0 – 2023.04.04
-
-Blog:
-
-- add: index blog post title is now a link to a post
-
-Social (new plugin):
-
-- add: automatic addition of open graph tags directly into HTML code (no template modification is needed) based on document meta
-- add: automatic addition of twitter tags directly into HTML code (no template modification is needed) based on document meta
-
-### 0.4.1 – 2023-03-28
-
-General:
-
-- fix: links in documentation
-- fix: imports of libraries
-- fix: badges links + new added
-
-### 0.4.0 – 2023-03-28
-
-General:
-
-- changed: project rename
-- added: cross configuration of blog and auto-nav plugins:
-  - blog does not add auto-nav meta files
-  - auto-nav automatically adds blog directory to skipped directories since it will be built by blog
-  - if one of the plugins is not enabled, other is not using its values
-- add: documentation
-
-Blog:
-
-- added: possibility to choose a blog as a starting page with option to define manually blog in nav configuration
-- added: `slug` config option for setting an entire blog's main directory URL
-- changed: internal file structure refactor with new global plugin config (`BlogConfig` class) that will help with further development with small fixes and improvements
-- changed: blog subdirectory navigation creation (entry path needs to be equal to subdirectory name)
-- fixed: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
-- fixed: navigation is no longer overridden by a blog (if there is no other nav, blog will create on with recent posts as a main page)
-
-Minifier (new plugin):
-
-- added: PNG image minifier (using: pngquant and oxipng)
-- added: JPG image minifier (using: mozjpeg)
-- added: SVG image minifier (using: svgo)
-- added: HTML file minifier (using: html-minifier)
-- added: CSS file minifier (using: postcss with plugins: cssnano, svgo)
-- added: JS file minifier (using: uglifyjs)
-
-Auto-nav (new plugin):
-
-- added: build navigation based on file names
-- added: directory metadata and additional settings can be set in a frontmatter of `*.md` file (default to `README.md`)
-- added: configuration of sort prefix delimiter
-- added: sort prefix removal in URL and site files
-- added: read file title from `title` metadata key
-
-### 0.3.0 – 2023.02.20
-
-- fixed: for wrong directory structure in site-packages after install
-
-### 0.2.0 – 2023.02.19
-
-- added: sub-pages for archive, categories, blog
-- added: configurable blog posts pagination with page navigation
-- added: interface language change: EN and PL (help wanted with more languages)
-- added: possibility to override for all interface text elements
-
-### 0.1.0 – initial release
-
-- added: blog post update date based on metadata
-- added: blog post URL link based on metadata
-- added: blog post tags and categories based on metadata
-- added: support for blog post teaser
-- added: auto generation of blog posts navigation
+This section becomes too big and hard to navigate. Also it's harder to maintain the same changelog in 2 places. The entire version history can be found in the project [version history](https://mkusz.github.io/mkdocs-publisher/development/changelog/) document and on inside project [GitHub releases](https://github.com/mkusz/mkdocs-publisher/releases).

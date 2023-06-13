@@ -17,12 +17,17 @@ class _BlogTranslationConfig(Config):
     older_posts = option.Optional(option.Type(str))
 
 
+class _BlogCommentsConfig(Config):
+    enabled = option.Type(bool, default=False)
+    key_name = option.Type(str, default="comments")
+
+
 class BlogPluginConfig(Config):
     # General settings
     lang = option.Choice(["en", "pl"], default="en")  # TODO: auto update based on files
     teaser_marker = option.Type(str, default="<!-- more -->")
+    searchable_non_posts = option.Type(bool, default=False)
     posts_per_page = option.Type(int, default=5)
-    start_page = option.Type(bool, default=False)
     slug = option.Type(str, default="blog")
 
     # Directories
@@ -32,5 +37,6 @@ class BlogPluginConfig(Config):
     categories_subdir = option.Type(str, default="categories")
     tags_subdir = option.Type(str, default="tags")
 
+    comments: _BlogCommentsConfig = option.SubConfig(_BlogCommentsConfig)  # type: ignore
     # Values that are in lang files and can be overriden
     translation: _BlogTranslationConfig = option.SubConfig(_BlogTranslationConfig)  # type: ignore

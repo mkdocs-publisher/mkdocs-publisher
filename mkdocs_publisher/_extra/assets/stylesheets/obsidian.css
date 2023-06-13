@@ -1,0 +1,91 @@
+.vega-embed details {
+    display: none;
+}
+
+/* Backlinks styles */
+
+.obsidian_backlink a {
+    color: var(--md-typeset-a-color);
+    background-color: var(--md-default-bg-color);
+    padding: 1px 1px 1px 1px;
+    border: 1px solid var(--md-typeset-a-color);
+}
+
+.obsidian_backlink a:hover {
+    color: var(--md-default-bg-color);
+    background-color: var(--md-typeset-a-color);
+}
+
+.obsidian_backlink i {
+    border-bottom: 1px dotted var(--md-typeset-a-color);
+}
+
+.obsidian_backlink i {
+    border-bottom: 1px dotted var(--md-typeset-a-color);
+}
+
+.obsidian_backlink_title, .obsidian_backlink details, .obsidian_backlink hr, .obsidian_backlink p {
+    margin-top: 0.375em;
+    margin-bottom: 0.375em;
+}
+
+.obsidian_backlink_title {
+    color: var(--md-default-fg-color--light)
+}
+
+.obsidian_backlink svg {
+    height: 0.825rem;
+}
+
+/* Backlink admonition style */
+
+:root {
+    --md-admonition-icon--backlink: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10.59 13.41c.41.39.41 1.03 0 1.42c-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0a5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.982 2.982 0 0 0 0-4.24a2.982 2.982 0 0 0-4.24 0l-3.53 3.53a2.982 2.982 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0a5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.982 2.982 0 0 0 0 4.24a2.982 2.982 0 0 0 4.24 0l3.53-3.53a2.982 2.982 0 0 0 0-4.24a.973.973 0 0 1 0-1.42Z"/></svg>');
+}
+
+.md-typeset .admonition.backlink,
+.md-typeset details.backlink {
+    color: var(--md-default-fg-color--light);
+    border-color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .backlink > .admonition-title,
+.md-typeset .backlink > summary {
+    background-color: var(--md-default-bg-color);
+}
+
+.md-typeset .backlink > .admonition-title::before,
+.md-typeset .backlink > summary::before {
+    background-color: var(--md-default-fg-color--light);
+    -webkit-mask-image: var(--md-admonition-icon--backlink);
+            mask-image: var(--md-admonition-icon--backlink);
+}
+
+/* Settings admonition style */
+
+:root {
+    --md-admonition-icon--settings: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect x="0" y="0" width="24" height="24" fill="none" stroke="none" /><path fill="currentColor" d="m22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9c-2-2-5-2.4-7.4-1.3L9 6L6 9L1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4Z"/></svg>');
+}
+
+.md-typeset .admonition.settings,
+.md-typeset details.settings {
+    margin-left: 1rem;
+    font-size: 0.8rem;
+    box-shadow: none;
+    border: none;
+    border-left: 0.1rem px dotted var(--md-accent-fg-color);
+    padding-right: 0;
+}
+
+.md-typeset .settings > .admonition-title,
+.md-typeset .settings > summary {
+    margin-left: -2rem;
+    background-color: var(--md-code-bg-color);
+}
+
+.md-typeset .settings .admonition-title::before,
+.md-typeset .settings > summary::before {
+    background-color: var(--md-accent-fg-color);
+    -webkit-mask-image: var(--md-admonition-icon--settings);
+            mask-image: var(--md-admonition-icon--settings);
+}

@@ -23,40 +23,42 @@ def count_words(content):
     content = re.sub(r"<!--(.*?)-->", "", content, flags=re.MULTILINE)  # Comments
     content = content.replace("\t", "    ")  # Tabs to spaces
     content = re.sub(r"[ ]{2,}", "    ", content)  # More than 1 space to 4 spaces
-    content = re.sub(r"^\[[^]]*\][^(].*", "", content, flags=re.MULTILINE)  # Footnotes
+    content = re.sub(r"^\[[^]]*][^(].*", "", content, flags=re.MULTILINE)  # Footnotes
     content = re.sub(
         r"^( {4,}[^-*]).*", "", content, flags=re.MULTILINE
     )  # Indented blocks of code
     content = re.sub(r"{#.*}", "", content)  # Custom header IDs
     content = content.replace("\n", " ")  # Replace newlines with spaces for uniform handling
-    content = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", content)  # Remove images
+    content = re.sub(r"!\[[^]]*]\([^)]*\)", "", content)  # Remove images
     content = re.sub(r"</?[^>]*>", "", content)  # Remove HTML tags
     content = re.sub(r"[#*`~\-–^=<>+|/:]", "", content)  # Remove special characters
-    content = re.sub(r"\[[0-9]*\]", "", content)  # Remove footnote references
+    content = re.sub(r"\[[0-9]*]", "", content)  # Remove footnote references
     content = re.sub(r"[0-9#]*\.", "", content)  # Remove enumerations
 
     return len(content.split())
 
 
+# from mkdocs.utils import meta as meta_parser
+# with file.open(encoding="utf-8-sig", errors="strict") as md_file:
+#     markdown, meta = meta_parser.get_data(md_file.read())
+
+
 def parse_markdown_files(
     blog_config: BlogConfig,
     config_nav: OrderedDict,
+    on_serve: bool = False,
 ):
     """Parse all markdown files and extract blog posts from `blog_dir` (default: 'posts').
     BlogPost object is created and filled with content and metadata of the post.
     """
     log.info(f"Parsing blog posts from '{blog_config.blog_dir}' directory")
-    for file_path in blog_config.docs_dir.glob("**/*"):
-        if blog_config.auto_nav_config is not None:
-            if file_path.parts[-1] == blog_config.auto_nav_config.meta_file_name:
+    for file_path in blog_config.docs_dir.glob("**/*.md"):
+        if blog_config.meta_config is not None:
+            if file_path.parts[-1] == blog_config.meta_config.dir_meta_file:
                 continue
         file_path = Path(file_path)
         path = Path(file_path).relative_to(blog_config.docs_dir)
-        if (
-            file_path.is_file()
-            and path.is_relative_to(blog_config.blog_dir)
-            and path.suffix == ".md"
-        ):
+        if path.is_relative_to(blog_config.blog_dir):
             parents = list(path.parents)[:-1]
             with open(file_path) as markdown_file:
                 post: frontmatter.Post = frontmatter.load(markdown_file)
@@ -68,11 +70,17 @@ def parse_markdown_files(
                     post_meta = dict(post)
 
                     if "status" not in post_meta:
+                        # TODO: read default value from meta config
                         log.info(
                             f"File: {file_path} - missing 1 required positional argument: "
                             f"'status' (setting to default: draft)"
                         )
                         post_meta["status"] = "draft"
+
+                    # Skip non published
+                    if not on_serve and post_meta["status"] != "published":
+                        # TODO: make it configurable
+                        continue
 
                     # Convert tags format
                     if "tags" in post_meta and post_meta["tags"] is not None:
