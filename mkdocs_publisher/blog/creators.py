@@ -16,7 +16,7 @@ from mkdocs_publisher._extra.assets import templates
 from mkdocs_publisher.blog.structures import BlogConfig
 from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 
-log = logging.getLogger("mkdocs.plugins.publisher.blog")
+log = logging.getLogger("mkdocs.plugins.publisher.blog.creators")
 
 
 def create_blog_files(
@@ -149,8 +149,6 @@ def _create_pages(
 ) -> list[dict[str, str]]:
     config_nav = []
 
-    # pages_dir = blog_config.docs_dir / blog_config.blog_dir / sub_dir
-
     blog_temp_dir = blog_config.temp_dir / blog_config.plugin_config.slug
     blog_temp_dir.mkdir(exist_ok=True)
 
@@ -199,6 +197,7 @@ def _render_and_write_page(
     )
     markdown = md_links.normalize(markdown=markdown, file_path=str(file_path))
     markdown = md_links.fix_relative_paths(markdown=markdown)
+    markdown = md_links.fix_blog_paths(markdown=markdown, source_file=file_path)
 
     # TODO: when using pub-meta key name should be taken from plugin config
     page = frontmatter.Post(content=markdown)

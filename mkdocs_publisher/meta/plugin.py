@@ -3,7 +3,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal
 from typing import Optional
-from typing import cast
 from urllib.parse import quote
 
 from mkdocs.config import Config
@@ -17,12 +16,13 @@ from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 from mkdocs.utils import meta as meta_parser
 
+from mkdocs_publisher._common import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.config import _MetaStatusConfig
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.meta")
+log = logging.getLogger("mkdocs.plugins.publisher.meta.plugin")
 INDEX_FILE_NAME = "index.md"
 
 
@@ -34,10 +34,11 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         - https://octamedia.pl/blog/mapa-strony-xml/
         - https://octamedia.pl/blog/linkowanie-wewnetrzne/ (useful for obsidian backlinks)
         """
-        self._blog_config: BlogPluginConfig = cast(BlogPluginConfig, None)
+        self._blog_config: Optional[BlogPluginConfig] = None
         self._dirs_slugs: dict = {}
         self._dirs_titles: dict = {}
         self._draft_dirs: list = []
+        self._hidden_dirs: list = []
         self._draft_files: list = []
         self._hidden_files: list = []
         self._not_other_files: list = []
@@ -53,7 +54,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         sorted_files.extend(other_files)
 
         for file in sorted_files:
-            if not any([s for s in self._draft_dirs if str(file).startswith(str(s))]):
+            if not any([d for d in self._draft_dirs if file.is_relative_to(d)]):
                 if file.is_dir():
                     title = self._dirs_titles.get(file, file.stem)
                     dir_nav = self._build_config_nav(directory=file, relative_to=relative_to)
@@ -67,19 +68,24 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                         # Read document status
                         status = meta.get(self.config.status.key_name)
                         if status is None:
+                            log_message = (
+                                f'Missing "{self.config.status.key_name}" value in '
+                                f'file "{file.relative_to(relative_to)}". Setting to '
+                                f'default value: "{self.config.status.file_default}".'
+                            )
                             if self.config.status.file_warn_on_missing:
-                                log.warning(
-                                    f'Missing "{self.config.status.key_name}" value in '
-                                    f'file "{file.relative_to(relative_to)}". Setting to '
-                                    f'default value: "{self.config.status.file_default}".'
-                                )
+                                log.warning(log_message)
+                            else:
+                                log.debug(log_message)
                             status = self.config.status.file_default
 
+                        # Add file to variables used in nav cleanup based on status
                         if status == "draft":
                             self._draft_files.append(str(file.relative_to(relative_to)))
                         elif status == "hidden":
                             self._hidden_files.append(str(file.relative_to(relative_to)))
 
+                        # Add not draft file to navigation (hidden will be removed in nav cleanup)
                         if status != "draft":
                             nav.append({title: str(file.relative_to(relative_to))})
             elif (
@@ -94,7 +100,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
         nav = []
         for item in items:
-            if isinstance(item, Page) and item.file.src_uri not in elements_to_remove:
+            if isinstance(item, Page) and Path(item.file.abs_src_path) not in elements_to_remove:
                 nav.append(item)
             elif isinstance(item, Link):
                 nav.append(item)
@@ -115,13 +121,14 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
 
         # Setup some default values
-        self._draft_dirs = list()
         self._not_other_files = [INDEX_FILE_NAME, self.config.dir_meta_file]
 
         log.info(f'Reading meta data from "{self.config.dir_meta_file}" files')
         for meta_file in Path(config.docs_dir).glob(f"**/{self.config.dir_meta_file}"):
             with meta_file.open(encoding="utf-8-sig", errors="strict") as md_file:
-                markdown, meta = meta_parser.get_data(md_file.read())
+
+                # Add empty line at the end of file and read all data
+                markdown, meta = meta_parser.get_data(f"{md_file.read()}\n")
 
                 # Read slug for directories
                 slug = meta.get(self.config.slug.key_name)
@@ -134,7 +141,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                     self._dirs_titles[meta_file.parent] = title
 
                 # Read directories status
-                status = meta.get(self.config.status.key_name)
+                status = meta.get(str(self.config.status.key_name))
                 if status is None:
                     if self.config.status.dir_warn_on_missing:
                         log.warning(
@@ -143,30 +150,49 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                             f'default value: "{self.config.status.dir_default}".'
                         )
                     status = self.config.status.dir_default
+                dir_path = str(meta_file.parent.relative_to(config.docs_dir))
                 if status == "draft" and not self._on_serve:
-                    self._draft_dirs.append(str(meta_file.parent.relative_to(config.docs_dir)))
+                    self._draft_dirs.append(dir_path)
+                elif status == "hidden":
+                    self._hidden_dirs.append(dir_path)
                 elif status not in _MetaStatusConfig.dir_default.choices:  # type: ignore
                     log.warning(
                         f'Wrong key "{self.config.status.key_name}" value '
                         f'in file "{meta_file.relative_to(config.docs_dir)}" (only '
                         f"{_MetaStatusConfig.dir_default.choices} are possible)"  # type: ignore
                     )
+                log.debug(
+                    f"Title: {title}, status: {status}, slug: {slug} " f'(directory: "{dir_path}")'
+                )
 
         # Add blog dir to one that will be skipped (blog has its own file resolution order)
-        self._blog_config: BlogPluginConfig = config.plugins["pub-blog"].config
+        self._blog_config: Optional[BlogPluginConfig] = mkdocs_utils.get_plugin_config(
+            mkdocs_config=config,
+            plugin_name="pub-blog",
+        )  # type: ignore
         if self._blog_config is not None:
-            if self._blog_config.blog_dir not in self._draft_dirs:
-                self._draft_dirs.append(self._blog_config.blog_dir)
+            if self._blog_config.blog_dir not in self._draft_dirs:  # type: ignore
+                self._draft_dirs.append(self._blog_config.blog_dir)  # type: ignore
 
         # Add obsidian dirs to ones that will be skipped
-        obsidian_config: ObsidianPluginConfig = config.plugins["pub-obsidian"].config
+        obsidian_config: Optional[ObsidianPluginConfig] = mkdocs_utils.get_plugin_config(
+            mkdocs_config=config,
+            plugin_name="pub-obsidian",
+        )  # type: ignore
         if obsidian_config is not None:
-            if obsidian_config.obsidian_dir not in self._draft_dirs:
+            if (
+                obsidian_config.obsidian_dir != ""
+                and obsidian_config.obsidian_dir not in self._draft_dirs
+            ):
                 self._draft_dirs.append(obsidian_config.obsidian_dir)
-            if obsidian_config.templates_dir not in self._draft_dirs:
+            if (
+                obsidian_config.templates_dir != ""
+                and obsidian_config.templates_dir not in self._draft_dirs
+            ):
                 self._draft_dirs.append(obsidian_config.templates_dir)
 
         self._draft_dirs = [Path(config.docs_dir) / f for f in self._draft_dirs]
+        self._hidden_dirs = [Path(config.docs_dir) / f for f in self._hidden_dirs]
 
         for draft_dir in self._draft_dirs:
             if not draft_dir.exists():
@@ -176,9 +202,13 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         config.nav = self._build_config_nav(
             directory=Path(config.docs_dir), relative_to=Path(config.docs_dir)
         )
-
         log.info(
-            f"Draft directories: {[str(d.relative_to(config.docs_dir)) for d in self._draft_dirs]}"
+            f"Draft directories: "
+            f"{[str(d.relative_to(config.docs_dir)) for d in self._draft_dirs]}"
+        )
+        log.info(
+            f"Hidden directories: "
+            f"{[str(d.relative_to(config.docs_dir)) for d in self._hidden_dirs]}"
         )
         log.info(f"Draft files: {self._draft_files}")
         log.info(f"Hidden files: {self._hidden_files}")
@@ -194,6 +224,14 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
         new_files = Files(files=[])
         for file in files:
+
+            file_path = Path(file.abs_src_path)
+            if file_path.suffix == ".md":
+                if any([d for d in self._draft_dirs if file_path.is_relative_to(d)]):
+                    self._draft_files.append(file_path)
+                elif any([d for d in self._hidden_dirs if file_path.is_relative_to(d)]):
+                    self._hidden_files.append(file_path)
+
             if (
                 not any([file.src_uri.startswith(draft_dir) for draft_dir in relative_draft_dirs])
                 and str(Path(file.src_uri).name) != self.config.dir_meta_file
@@ -209,6 +247,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
                         # Read slug
                         slug = meta.get(self.config.slug.key_name)
+                        # TODO: add slugify and config
                         if slug is None and self.config.slug.warn_on_missing:
                             log.warning(
                                 f'File "{file.src_path}" has no '
@@ -267,7 +306,11 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         update_date: datetime = page.meta.get(
             "update", page.meta.get("date", datetime.strptime(page.update_date, "%Y-%m-%d"))
         )
-        page.update_date = update_date.strftime("%Y-%m-%d")
+        try:
+            page.update_date = update_date.strftime("%Y-%m-%d")
+        except AttributeError:
+            # TODO: add format fallback
+            pass
 
         if (
             page.file.src_uri in self._hidden_files and not self.config.status.search_in_hidden

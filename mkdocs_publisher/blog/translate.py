@@ -9,7 +9,7 @@ from mkdocs_publisher.blog import lang as lang_resources
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.blog.structures import Translation
 
-log = logging.getLogger("mkdocs.plugins.publisher.blog")
+log = logging.getLogger("mkdocs.plugins.publisher.blog.translate")
 
 
 class Translate:

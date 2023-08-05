@@ -10,9 +10,10 @@ import frontmatter
 from mkdocs_publisher.blog.structures import BlogConfig
 from mkdocs_publisher.blog.structures import BlogPost
 
-log = logging.getLogger("mkdocs.plugins.publisher.blog")
+log = logging.getLogger("mkdocs.plugins.publisher.blog.parsers")
 
 REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description"]
+# TODO: read it from pub-meta if configured
 
 
 def count_words(content):
@@ -145,5 +146,5 @@ def create_blog_post_teaser(blog_config: BlogConfig):
             blog_config.blog_posts[date].teaser = "\n".join(c for c in content)
         log.debug(
             f"Post: '{blog_config.blog_posts[date].title}' "
-            f"is teaser: {blog_config.blog_posts[date].is_teaser}"
+            f"is a teaser: {blog_config.blog_posts[date].is_teaser}"
         )

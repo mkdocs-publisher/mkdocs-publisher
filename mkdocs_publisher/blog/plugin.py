@@ -23,7 +23,7 @@ from mkdocs_publisher.blog import parsers
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.blog.structures import BlogConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.blog")
+log = logging.getLogger("mkdocs.plugins.publisher.blog.plugin")
 
 
 class BlogPlugin(BasePlugin[BlogPluginConfig]):

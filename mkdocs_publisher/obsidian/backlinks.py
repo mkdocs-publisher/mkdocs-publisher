@@ -104,6 +104,10 @@ class Backlink:
             original_link_source != original_link_destination
             and original_link_source not in temp_blog_files
         ):
+            log.debug(
+                f"Found backlink to: {match.group(2)}"
+                f"{match.group(3) if match.group(3) is not None else ''}"
+            )
             if original_link_destination not in self._backlinks:
                 self._backlinks[original_link_destination] = [link]
             else:

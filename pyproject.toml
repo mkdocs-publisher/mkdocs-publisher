@@ -1,21 +1,25 @@
 [tool.poetry]
 name = "mkdocs-publisher"
-version = "1.0.0"
-description = "Publishing plugins for MkDocs"
+version = "1.1.0"
+description = "Publisher for MkDocs"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
 readme = "README.md"
 keywords = [
     "mkdocs",
     "mkdocs-plugin",
-    "publisher",
     "blog",
-    "minifier",
-    "frontmatter",
-    "tags",
-    "navigation",
+    "categories",
+    "debugger",
+    "docs",
     "documentation",
-    "obsidian"
+    "frontmatter",
+    "markdown",
+    "minifier",
+    "navigation",
+    "obsidian",
+    "publisher",
+    "tags",
 ]
 packages = [
     {include = "mkdocs_publisher"},
@@ -54,9 +58,9 @@ beautifulsoup4 = "^4.12.0"
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
 black = "^22.12.0"
-pyright = "^1.1.291"
 flake8 = "^6.0.0"
 yamllint = "^1.29.0"
+pyright = "1.1.318"
 
 [build-system]
 requires = ["poetry-core"]
@@ -84,12 +88,18 @@ include = [
     "mkdocs_publisher",
     "tests",
 ]
+exclude = [
+    "docs",
+    "mkdocs_publisher_docs",
+]
 reportMissingImports = false
 reportMissingTypeStubs = false
+reportOptionalMemberAccess = false
 typeCheckingMode = "basic"
 
 [tool.poetry.plugins."mkdocs.plugins"]
 pub-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"
+pub-debugger = "mkdocs_publisher.debugger.plugin:DebuggerPlugin"
 pub-meta = "mkdocs_publisher.meta.plugin:MetaPlugin"
 pub-minifier = "mkdocs_publisher.minifier.plugin:MinifierPlugin"
 pub-obsidian = "mkdocs_publisher.obsidian.plugin:ObsidianPlugin"

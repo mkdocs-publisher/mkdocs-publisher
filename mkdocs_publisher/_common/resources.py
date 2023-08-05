@@ -27,4 +27,4 @@ def add_extra_css(stylesheet_file_name: str, config: MkDocsConfig, files: Files)
                     use_directory_urls=config.use_directory_urls,
                 )
             )
-            config.extra_css.append(css_file_path)
+            config.extra_css.append(css_file_path)  # type: ignore

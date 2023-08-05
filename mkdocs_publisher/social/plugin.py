@@ -10,7 +10,7 @@ from mkdocs.structure.pages import Page
 from mkdocs_publisher._common.html_modifiers import HTMLModifier
 from mkdocs_publisher.social.config import SocialConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.social")
+log = logging.getLogger("mkdocs.plugins.publisher.social.plugin")
 
 TWITTER_PROPERTIES = [
     "twitter:title",
@@ -36,7 +36,8 @@ class SocialPlugin(BasePlugin[SocialConfig]):
     def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
         html_modifier = HTMLModifier(markup=output)
 
-        log.debug("Removing old properties")
+        log.debug(f"Processing social properties for file: '{page.file.src_path}'")
+        log.debug("Removing old Twitter and Open Graph properties")
         html_modifier.remove_meta_properties(properties=OPEN_GRAPH_PROPERTIES)
         html_modifier.remove_meta_properties(properties=TWITTER_PROPERTIES)
 
@@ -63,7 +64,7 @@ class SocialPlugin(BasePlugin[SocialConfig]):
         site_name = config.site_name
 
         if self.config.og.enabled and title and description:
-            log.debug("Adding open graph properties")
+            log.debug("Adding Open Graph properties")
             html_modifier.add_meta_property(name="og:type", value="article")
             html_modifier.add_meta_property(name="og:title", value=title)
             html_modifier.add_meta_property(name="og:description", value=description)
@@ -75,7 +76,7 @@ class SocialPlugin(BasePlugin[SocialConfig]):
                 html_modifier.add_meta_property(name="og:image", value=image)
 
         if self.config.twitter.enabled and title and description:
-            log.debug("Adding Twitter cards values")
+            log.debug("Adding Twitter properties")
             card_type = "summary_large_image" if image else "summary"
             html_modifier.add_meta_property(name="twitter:card", value=card_type)
             html_modifier.add_meta_property(name="twitter:title", value=title)

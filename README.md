@@ -2,7 +2,7 @@
 date: 2023-02-28 12:30:18
 update: 2023-06-12 23:52:23
 ---
-# Publisher plugin for MkDocs
+# Publisher for MkDocs
 
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&style=plastic)](https://pypi.org/project/mkdocs-publisher/)
 [![License type](https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&style=plastic)](https://opensource.org/license/mit/)
@@ -10,7 +10,7 @@ update: 2023-06-12 23:52:23
 [![Python versions](https://img.shields.io/pypi/pyversions/mkdocs-publisher?logo=python&style=plastic)](https://www.python.org)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&style=plastic)](https://github.com/mkusz/mkdocs-publisher/commits/main)
 
-Publishing platform plugins for [MkDocs](https://www.mkdocs.org/) that include:
+Publishing for [MkDocs](https://www.mkdocs.org/) is a set of plugins that includes:
 
 - `pub-blog` – adds blogging capability,
 - `pub-social` – creates social cards for social media sharing using document metadata,
@@ -57,7 +57,7 @@ More detailed information on how to set up, configure and write a blog posts and
 
 ## Planned features
 
-A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/development/backlog/). I'm planning to move it to the project [GitHub issues](https://github.com/mkusz/mkdocs-publisher/issues) with proper badges and longer descriptions, but it's time-consuming and at this stage I'd rather spend it to develop a project.
+A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/development/other/backlog/). I'm planning to move it to the project [GitHub issues](https://github.com/mkusz/mkdocs-publisher/issues) with proper badges and longer descriptions, but it's time-consuming and at this stage I'd rather spend it to develop a project.
 
 ## Version history
 

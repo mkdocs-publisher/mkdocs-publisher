@@ -1,7 +1,7 @@
 import logging
 from collections import OrderedDict
 from copy import deepcopy
-from typing import cast
+from typing import Optional
 
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
@@ -9,7 +9,7 @@ from mkdocs.structure.pages import Page
 
 from mkdocs_publisher.blog.structures import BlogConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.blog")
+log = logging.getLogger("mkdocs.plugins.publisher.blog.modifiers")
 
 
 def blog_post_nav_sorter(
@@ -60,19 +60,19 @@ def blog_post_nav_next_prev_change(start_page: bool, blog_config: BlogConfig, pa
     """Change blog post next/prev navigation"""
 
     if (start_page and page.title == "index") or (not start_page and page.title == "index-0"):
-        page.title = blog_config.translation.recent_blog_posts_navigation_name
+        page.title = blog_config.translation.recent_blog_posts_navigation_name  # type: ignore
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):
-            next_page_copy = cast(Page, deepcopy(page.next_page))
-            next_page_copy.title = blog_config.translation.older_posts
+            next_page_copy: Page = deepcopy(page.next_page)
+            next_page_copy.title = blog_config.translation.older_posts  # type: ignore
             page.next_page = next_page_copy
     elif str(page.title).startswith("index") or (
         page.previous_page is not None and str(page.previous_page.title).startswith("index")
     ):
-        page.title = blog_config.translation.older_posts
-        previous_page_copy = cast(Page, deepcopy(page.previous_page))
-        previous_page_copy.title = blog_config.translation.newer_posts
+        page.title = blog_config.translation.older_posts  # type: ignore
+        previous_page_copy: Optional[Page] = deepcopy(page.previous_page)
+        previous_page_copy.title = blog_config.translation.newer_posts  # type: ignore
         page.previous_page = previous_page_copy
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):
-            next_page_copy = cast(Page, deepcopy(page.next_page))
-            next_page_copy.title = blog_config.translation.older_posts
+            next_page_copy: Page = deepcopy(page.next_page)
+            next_page_copy.title = blog_config.translation.older_posts  # type: ignore
             page.next_page = next_page_copy

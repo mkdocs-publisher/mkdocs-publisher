@@ -13,7 +13,7 @@ from mkdocs_publisher.minifier import minifiers
 from mkdocs_publisher.minifier.base import CachedFile
 from mkdocs_publisher.minifier.config import MinifierConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.minifier")
+log = logging.getLogger("mkdocs.plugins.publisher.minifier.plugin")
 
 
 class MinifierPlugin(BasePlugin[MinifierConfig]):

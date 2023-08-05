@@ -6,14 +6,13 @@ from typing import List
 from typing import Optional
 from uuid import uuid4
 
-log = logging.getLogger("mkdocs.plugins.publisher.common")
+log = logging.getLogger(__name__)
 
 
-def run_subprocess(cmd) -> int:
+def run_subprocess(cmd) -> subprocess.CompletedProcess:
     cmd = [arg for arg in cmd if arg is not None]
     log.debug(f"Run cmd: {' '.join(cmd)}")
-    call_output = subprocess.run(cmd)
-    return call_output.returncode
+    return subprocess.run(cmd, capture_output=True)
 
 
 def remove_dir(directory: Path):
