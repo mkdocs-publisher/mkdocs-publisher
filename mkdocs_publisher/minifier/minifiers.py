@@ -1,7 +1,8 @@
 import logging
 from typing import Optional
 
-from mkdocs_publisher import _utils
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher.minifier.base import BaseMinifier
 from mkdocs_publisher.minifier.base import CachedFile
 
@@ -32,7 +33,7 @@ class PngMinifier(BaseMinifier):
                     str(output_file),
                     str(input_file),
                 ]
-                if _utils.run_subprocess(cmd=pngquant_cmd).returncode != 0:
+                if file_utils.run_subprocess(cmd=pngquant_cmd).returncode != 0:
                     output_file.unlink(missing_ok=True)
                     return None
 
@@ -48,7 +49,7 @@ class PngMinifier(BaseMinifier):
                     str(output_file) if not minify_options.pngquant_enabled else None,
                     str(input_file) if not minify_options.pngquant_enabled else str(output_file),
                 ]
-                if _utils.run_subprocess(cmd=oxipng_cmd).returncode != 0:
+                if file_utils.run_subprocess(cmd=oxipng_cmd).returncode != 0:
                     output_file.unlink(missing_ok=True)
                     return None
 
@@ -60,11 +61,11 @@ class PngMinifier(BaseMinifier):
         return None
 
 
-class JpgMinifier(BaseMinifier):
+class JpegMinifier(BaseMinifier):
     extensions = [".jpg", ".jpeg"]
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
-        minify_options = self._plugin_config.jpg
+        minify_options = self._plugin_config.jpeg
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -76,7 +77,7 @@ class JpgMinifier(BaseMinifier):
                 str(output_file.with_suffix(".tga")),
                 str(input_file),
             ]
-            if _utils.run_subprocess(cmd=djpg_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=djpg_cmd).returncode != 0:
                 output_file.with_suffix(".tga").unlink(missing_ok=True)
                 return None
 
@@ -91,7 +92,7 @@ class JpgMinifier(BaseMinifier):
                 str(output_file.with_suffix(".jpg_")),
                 str(output_file.with_suffix(".tga")),
             ]
-            if _utils.run_subprocess(cmd=cjpg_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=cjpg_cmd).returncode != 0:
                 output_file.with_suffix(".jpg_").unlink(missing_ok=True)
                 return None
             output_file.with_suffix(".tga").unlink(missing_ok=True)
@@ -106,7 +107,7 @@ class JpgMinifier(BaseMinifier):
                 str(output_file),
                 str(output_file.with_suffix(".jpg_")),
             ]
-            if _utils.run_subprocess(cmd=jpegtran_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=jpegtran_cmd).returncode != 0:
                 output_file.unlink(missing_ok=True)
                 return None
             output_file.with_suffix(".jpg_").unlink(missing_ok=True)
@@ -137,7 +138,7 @@ class SvgMinifier(BaseMinifier):
                 "--input",
                 str(input_file),
             ]
-            if _utils.run_subprocess(cmd=svgo_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=svgo_cmd).returncode != 0:
                 output_file.unlink(missing_ok=True)
                 return None
 
@@ -181,7 +182,7 @@ class HtmlMinifier(BaseMinifier):
                 str(output_file),
                 str(input_file),
             ]
-            if _utils.run_subprocess(cmd=html_minifier_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=html_minifier_cmd).returncode != 0:
                 output_file.unlink(missing_ok=True)
                 return None
 
@@ -214,7 +215,7 @@ class CssMinifier(BaseMinifier):
                 str(output_file),
                 str(input_file),
             ]
-            if _utils.run_subprocess(cmd=css_minifier_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=css_minifier_cmd).returncode != 0:
                 output_file.unlink(missing_ok=True)
                 return None
 
@@ -245,7 +246,7 @@ class JsMinifier(BaseMinifier):
                 str(output_file),
                 str(input_file),
             ]
-            if _utils.run_subprocess(cmd=js_minifier_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=js_minifier_cmd).returncode != 0:
                 output_file.unlink(missing_ok=True)
                 return None
 

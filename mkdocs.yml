@@ -21,7 +21,7 @@ extra:
   homepage: https://mkusz.github.io/mkdocs-publisher
 
 extra_css:
-  - assets/stylesheets/publisher.min.css
+  - assets/stylesheets/publisher.css
 
 extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js
@@ -57,11 +57,12 @@ theme:
 
   features:
     - navigation.tabs
-    - navigation.tabs.sticky
+#    - navigation.tabs.sticky
     - navigation.footer  # Prev/Next page
     - navigation.tracking  # Anchor tracking
     - navigation.top  # Back to top
     - navigation.sections
+    - navigation.instant
     - search.suggest
     - search.highlight
     - search.share
@@ -106,14 +107,19 @@ markdown_extensions:
 plugins:
   - pub-debugger:
       console_log:
-#        show_code_link: True
+        show_code_link: True
 #        log_level: DEBUG
         filter_logger_names:
           - mkdocs.commands.build
+          - mkdocs.commands.serve
           - mkdocs.plugins
           - mkdocs.plugins.publisher.minifier.base
           - mkdocs.plugins.publisher.social.plugin
+          - mkdocs.plugins.publisher.blog.creators
+          - mkdocs.plugins.publisher.blog.parsers
+          - mkdocs.plugins.publisher.blog.modifiers
           - mkdocs.structure.files
+          - mkdocs.livereload
       file_log:
         filter_logger_names:
           - mkdocs.commands.build

@@ -3,6 +3,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal
 from typing import Optional
+from typing import cast
 from urllib.parse import quote
 
 from mkdocs.config import Config
@@ -16,7 +17,8 @@ from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 from mkdocs.utils import meta as meta_parser
 
-from mkdocs_publisher._common import mkdocs_utils
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.config import _MetaStatusConfig
@@ -78,6 +80,10 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                             else:
                                 log.debug(log_message)
                             status = self.config.status.file_default
+
+                        # TODO: make it configurable
+                        if status == "draft" and self._on_serve:
+                            status = "published"
 
                         # Add file to variables used in nav cleanup based on status
                         if status == "draft":
@@ -151,7 +157,12 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                         )
                     status = self.config.status.dir_default
                 dir_path = str(meta_file.parent.relative_to(config.docs_dir))
-                if status == "draft" and not self._on_serve:
+
+                # TODO: make it configurable
+                if status == "draft" and self._on_serve:
+                    status = "published"
+
+                if status == "draft":
                     self._draft_dirs.append(dir_path)
                 elif status == "hidden":
                     self._hidden_dirs.append(dir_path)
@@ -161,6 +172,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                         f'in file "{meta_file.relative_to(config.docs_dir)}" (only '
                         f"{_MetaStatusConfig.dir_default.choices} are possible)"  # type: ignore
                     )
+
                 log.debug(
                     f"Title: {title}, status: {status}, slug: {slug} " f'(directory: "{dir_path}")'
                 )
@@ -171,8 +183,13 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             plugin_name="pub-blog",
         )  # type: ignore
         if self._blog_config is not None:
-            if self._blog_config.blog_dir not in self._draft_dirs:  # type: ignore
-                self._draft_dirs.append(self._blog_config.blog_dir)  # type: ignore
+            blog_dir = cast(BlogPluginConfig, self._blog_config).blog_dir
+            # TODO: cleanup mess with short directory names in self._draft_dirs
+            if (
+                blog_dir not in self._draft_dirs
+                and Path(config.docs_dir) / blog_dir not in self._draft_dirs
+            ):  # type: ignore
+                self._draft_dirs.append(blog_dir)
 
         # Add obsidian dirs to ones that will be skipped
         obsidian_config: Optional[ObsidianPluginConfig] = mkdocs_utils.get_plugin_config(
@@ -180,20 +197,21 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             plugin_name="pub-obsidian",
         )  # type: ignore
         if obsidian_config is not None:
+            # TODO: cleanup mess with short directory names in self._draft_dirs
             if (
                 obsidian_config.obsidian_dir != ""
                 and obsidian_config.obsidian_dir not in self._draft_dirs
+                and Path(config.docs_dir) / obsidian_config.obsidian_dir not in self._draft_dirs
             ):
                 self._draft_dirs.append(obsidian_config.obsidian_dir)
             if (
                 obsidian_config.templates_dir != ""
                 and obsidian_config.templates_dir not in self._draft_dirs
+                and Path(config.docs_dir) / obsidian_config.templates_dir not in self._draft_dirs
             ):
                 self._draft_dirs.append(obsidian_config.templates_dir)
-
         self._draft_dirs = [Path(config.docs_dir) / f for f in self._draft_dirs]
         self._hidden_dirs = [Path(config.docs_dir) / f for f in self._hidden_dirs]
-
         for draft_dir in self._draft_dirs:
             if not draft_dir.exists():
                 log.warning(
@@ -227,9 +245,15 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
             file_path = Path(file.abs_src_path)
             if file_path.suffix == ".md":
-                if any([d for d in self._draft_dirs if file_path.is_relative_to(d)]):
+                if (
+                    any([d for d in self._draft_dirs if file_path.is_relative_to(d)])
+                    and Path(file_path) not in self._draft_files
+                ):
                     self._draft_files.append(file_path)
-                elif any([d for d in self._hidden_dirs if file_path.is_relative_to(d)]):
+                elif (
+                    any([d for d in self._hidden_dirs if file_path.is_relative_to(d)])
+                    and Path(file_path) not in self._hidden_files
+                ):
                     self._hidden_files.append(file_path)
 
             if (

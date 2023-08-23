@@ -9,7 +9,8 @@ from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 
-from mkdocs_publisher._common import mkdocs_utils
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
 

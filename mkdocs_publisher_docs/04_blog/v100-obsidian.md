@@ -27,7 +27,7 @@ For that reason, a new plugin was created, that supports not only the mentioned 
 
 If you need support for additional plugins, please make an [issue](https://github.com/mkusz/mkdocs-publisher/issues) with a future description.
 
-For more details about this release, read more below or jump directly to [pub-obsidian](../02_setup/05_setting-up-obsidian.md) plugin documentation.
+For more details about this release, read more below or jump directly to [pub-obsidian](../02_setup/02_general/03_setting-up-obsidian.md) plugin documentation.
 
 I need to start to implement unit tests because this project becomes too big to test it manually and deliver production grade quality. Probably after introducing unit tests, I will end the beta period of this project and consider it as a production ready. It doesn't mean that the project will be complete or free from errors, but at least new releases should not break pages built with this project.
 

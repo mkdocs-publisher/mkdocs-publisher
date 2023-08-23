@@ -9,7 +9,7 @@
 <link href="../v041/" rel="prev">
 <link href="../v030/" rel="next">
 <link href="../../publisher_icon.png" rel="icon">
-<meta content="mkdocs-1.5.1, mkdocs-material-9.1.21" name="generator">
+<meta content="mkdocs-1.5.2, mkdocs-material-9.1.21" name="generator">
 <title>
 v0.4.0 - 2023-03-28 - Publisher for MkDocs
 </title>
@@ -18,7 +18,7 @@ v0.4.0 - 2023-03-28 - Publisher for MkDocs
 <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet">
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-<link href="../../assets/stylesheets/publisher.min.css" rel="stylesheet">
+<link href="../../assets/stylesheets/publisher.css" rel="stylesheet">
 <link href="../../assets/stylesheets/blog.min.css" rel="stylesheet">
 <link href="../../assets/stylesheets/obsidian.min.css" rel="stylesheet">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -45,7 +45,7 @@ Skip to content
 </div>
 <div data-md-component="announce">
 </div>
-<header class="md-header md-header--lifted md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
 <nav class="md-grid md-header__inner" aria-label="Header">
 <a href="https://mkusz.github.io/mkdocs-publisher" class="md-header__button md-logo" title="Publisher for MkDocs" data-md-component="logo" aria-label="Publisher for MkDocs">
 <img alt="logo" src="../../publisher_logo.png">
@@ -153,6 +153,8 @@ mkusz/mkdocs-publisher
 </a>
 </div>
 </nav>
+</header>
+<div class="md-container" data-md-component="container">
 <nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
 <div class="md-grid">
 <ul class="md-tabs__list">
@@ -185,8 +187,6 @@ Development
 </ul>
 </div>
 </nav>
-</header>
-<div class="md-container" data-md-component="container">
 <main class="md-main" data-md-component="main">
 <div class="md-grid md-main__inner">
 <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
@@ -239,30 +239,64 @@ Setup
 Installation
 </a>
 </li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input class="md-toggle md-nav__toggle" type="checkbox" id="__nav_2_2">
+<label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+General
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav" data-md-level="2" aria-expanded="false" aria-labelledby="__nav_2_2_label">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-icon md-nav__icon">
+</span>
+General
+</label>
+<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../setup/pub-meta/" class="md-nav__link">
+<a href="../../setup/general/pub-meta/" class="md-nav__link">
 Setting up meta
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../../setup/pub-social/" class="md-nav__link">
-Setting up social cards
-</a>
-</li>
-<li class="md-nav__item">
-<a href="../../setup/pub-blog/" class="md-nav__link">
+<a href="../../setup/general/pub-blog/" class="md-nav__link">
 Setting up a blog
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../../setup/pub-obsidian/" class="md-nav__link">
+<a href="../../setup/general/pub-obsidian/" class="md-nav__link">
 Setting up Obsidian
 </a>
 </li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input class="md-toggle md-nav__toggle" type="checkbox" id="__nav_2_3">
+<label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+SEO &amp; Sharing
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav" data-md-level="2" aria-expanded="false" aria-labelledby="__nav_2_3_label">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-icon md-nav__icon">
+</span>
+SEO &amp; Sharing
+</label>
+<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../setup/pub-minifier/" class="md-nav__link">
+<a href="../../setup/seo-and-sharing/pub-social/" class="md-nav__link">
+Setting up social cards
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../setup/seo-and-sharing/pub-minifier/" class="md-nav__link">
 Setting up minifier
 </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -899,7 +933,7 @@ Material for MkDocs
 </div>
 </div>
 <script id="__config" type="application/json">
-{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.footer", "navigation.tracking", "navigation.top", "navigation.sections", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}
+{"base": "../..", "features": ["navigation.tabs", "navigation.footer", "navigation.tracking", "navigation.top", "navigation.sections", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}
 </script>
 <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>

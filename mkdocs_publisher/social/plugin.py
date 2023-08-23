@@ -7,7 +7,8 @@ from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
 from mkdocs.structure.pages import Page
 
-from mkdocs_publisher._common.html_modifiers import HTMLModifier
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared.html_modifiers import HTMLModifier
 from mkdocs_publisher.social.config import SocialConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.social.plugin")

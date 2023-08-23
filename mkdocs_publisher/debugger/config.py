@@ -6,6 +6,7 @@ from mkdocs.config.base import Config
 
 class _DebuggerConsoleConfig(Config):
     enabled = option.Type(bool, default=True)
+    # noinspection PyUnresolvedReferences,PyProtectedMember
     log_level = option.Choice(choices=logging._nameToLevel.keys(), default="INFO")
     show_code_link = option.Type(bool, default=False)
     show_logger_name = option.Type(bool, default=True)
@@ -16,6 +17,7 @@ class _DebuggerConsoleConfig(Config):
 
 class _DebuggerFileConfig(Config):
     enabled = option.Type(bool, default=True)
+    # noinspection PyUnresolvedReferences,PyProtectedMember
     log_level = option.Choice(choices=logging._nameToLevel.keys(), default="DEBUG")
     log_format = option.Type(
         str, default="[%(created).14s][%(levelname)-5.5s][%(project_path)s:%(lineno)d] %(message)s"

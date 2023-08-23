@@ -49,9 +49,8 @@ documentation = "https://mkusz.github.io/mkdocs-publisher"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-python-frontmatter = "^1.0.0"
 mkdocs = "^1.4.2"
-mkdocs-material = "^9.1.3"
+mkdocs-material = "9.1.21"
 pymdown-extensions = "^10"
 beautifulsoup4 = "^4.12.0"
 
@@ -60,7 +59,7 @@ isort = "^5.12.0"
 black = "^22.12.0"
 flake8 = "^6.0.0"
 yamllint = "^1.29.0"
-pyright = "1.1.318"
+pyright = "1.1.323"
 
 [build-system]
 requires = ["poetry-core"]

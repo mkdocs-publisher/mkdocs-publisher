@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "c1506c894d13176e",
+        "id": "6fa085a07c3ac184",
         "type": "split",
         "children": [
           {
-            "id": "bd59e2d44c204190",
+            "id": "433ee94613de70e4",
             "type": "tabs",
             "children": [
               {
@@ -17,26 +17,7 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "04_blog/v110-debugger.md",
-                    "mode": "source",
-                    "backlinks": true,
-                    "source": true
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "id": "61b7ce323526ce7c",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "68a2afb784030195",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "_templates/_post.md",
+                    "file": "02_setup/99_development/01_setting-up-debugger.md",
                     "mode": "source",
                     "backlinks": true,
                     "source": true
@@ -44,12 +25,58 @@
                 }
               },
               {
-                "id": "de0c5b335786e572",
+                "id": "643b75a8dd9323d9",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "02_setup/99_setting-up-debugger.md",
+                    "file": "05_dev/other/02_backlog.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": true
+                  }
+                }
+              },
+              {
+                "id": "ee35d1a37e753dec",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "02_setup/02_general/01_setting-up-meta.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": true
+                  }
+                }
+              }
+            ],
+            "currentTab": 2
+          },
+          {
+            "id": "80b213fc2e754073",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "282775730692db96",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "02_setup/02_general/03_setting-up-obsidian.md",
+                    "mode": "source",
+                    "backlinks": true,
+                    "source": true
+                  }
+                }
+              },
+              {
+                "id": "107b089ccb7fee09",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "02_setup/02_general/02_setting-up-blog.md",
                     "mode": "source",
                     "backlinks": true,
                     "source": true
@@ -136,7 +163,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "04_blog/v110-debugger.md",
+                "file": "02_setup/02_general/01_setting-up-meta.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -153,7 +180,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "04_blog/v110-debugger.md",
+                "file": "02_setup/02_general/01_setting-up-meta.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -179,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "04_blog/v110-debugger.md"
+                "file": "02_setup/02_general/01_setting-up-meta.md"
               }
             }
           }
@@ -218,34 +245,38 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "c6174c4fcf2d07d9",
+  "active": "ee35d1a37e753dec",
   "lastOpenFiles": [
-    "04_blog/v010-initial-release.md",
-    "04_blog/v020.md",
-    "04_blog/v030.md",
-    "04_blog/v040-minifier-and-autonav.md",
-    "04_blog/v041.md",
-    "04_blog/v050-social.md",
-    "04_blog/v100-obsidian.md",
+    "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
     "04_blog/v110-debugger.md",
-    "04_blog/_temp_w4re78su.md",
-    "04_blog/_temp_3u2bz9rb.md",
-    "04_blog/_temp_nyhd7nxc.md",
-    "02_setup/99_setting-up-debugger.md",
-    "02_setup/04_setting-up-blog.md",
-    "05_dev/01_changelog.md",
-    "01_home.md",
+    "05_dev/other/02_backlog.md",
+    "02_setup/99_development/01_setting-up-debugger.md",
+    "02_setup/02_general/02_setting-up-blog.md",
+    "02_setup/02_general/03_setting-up-obsidian.md",
+    "attachments/debugger_console_example.png",
+    "attachments",
+    "02_setup/03_seo_and_sharing/README.md",
+    "02_setup/03_seo_and_sharing/01_setting-up-social-cards.md",
     "05_dev/02_development.md",
     "05_dev/03_versioning.md",
-    "05_dev/other/01_credits.md",
-    "05_dev/other/02_backlog.md",
-    "02_setup/01_installation.md",
-    "02_setup/06_setting-up-minifier.md",
-    "02_setup/05_setting-up-obsidian.md",
-    "02_setup/02_setting-up-meta.md",
-    "02_setup/03_setting-up-social-cards.md",
-    "_templates/_page.md",
+    "_templates/_README.md",
     "_templates/_post.md",
+    "_templates/_option.md",
+    "_templates/_page.md",
+    "04_blog/v100-obsidian.md",
+    "02_setup/02_general/01_setting-up-meta.md",
+    "02_setup/99_development/README.md",
+    "02_setup/02_general/README.md",
+    "02_setup/99_development",
+    "02_setup/README.md",
+    "05_dev/README.md",
+    "05_dev/other/README.md",
+    "02_setup/02_general",
+    "02_setup/03_seo_and_sharing",
+    "02_setup/01_installation.md",
+    "01_home.md",
+    "05_dev/other/01_credits.md",
+    "04_blog/v010-initial-release.md",
     "04_blog/category",
     "publisher_logo.png",
     "publisher_icon.png",
@@ -254,10 +285,6 @@
     "02_setup/07_obsidian",
     "_templates",
     "mkdocs_publisher/blog/structures.py.isorted",
-    "docs/search/search_index.json",
-    "docs/search",
-    "docs/blog/tags/v0.5.0/index.html",
-    "docs/blog/tags/v0.4.1/index.html",
     "docs/assets/images/favicon.png"
   ]
 }

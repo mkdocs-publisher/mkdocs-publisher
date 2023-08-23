@@ -10,7 +10,7 @@ update: 2023-06-12 23:52:23
 [![Python versions](https://img.shields.io/pypi/pyversions/mkdocs-publisher?logo=python&style=plastic)](https://www.python.org)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&style=plastic)](https://github.com/mkusz/mkdocs-publisher/commits/main)
 
-Publishing for [MkDocs](https://www.mkdocs.org/) is a set of plugins that includes:
+Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that includes:
 
 - `pub-blog` – adds blogging capability,
 - `pub-social` – creates social cards for social media sharing using document metadata,
@@ -20,7 +20,8 @@ Publishing for [MkDocs](https://www.mkdocs.org/) is a set of plugins that includ
   - callouts,
   - vega-charts (plugin),
 - `pub-minifier` – file size optimization (good for SEO and overall page size optimization),
-- `pub-meta` - support for documentation metadata (slug, dates, publication status, directories publication status, automatic navigation building, etc.).
+- `pub-meta` - support for documentation metadata (slug, dates, publication status, directories publication status, automatic navigation building, etc.),
+- `pub-debugger` - logging on steroids with possibility for creation of ZIP file with logs, etc. for better issue reporting
 
 ## Installation
 

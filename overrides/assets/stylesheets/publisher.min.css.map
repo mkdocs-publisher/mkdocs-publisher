@@ -1,1 +1,0 @@
-{"version":3,"sources":["publisher.css"],"names":[],"mappings":"AAAA,YACI,mDACJ,CAEA,wBACI,eAAgB,CAChB,oBACJ","file":"publisher.min.css","sourcesContent":[".tabbed-set {\n    border-bottom: 0.1rem solid var(--md-accent-fg-color);\n}\n\n.tabbed-set .tabbed-set {\n    border-bottom: 0;\n    padding-bottom: 0.5rem;\n}\n"]}

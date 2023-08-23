@@ -20,9 +20,14 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 from mkdocs.utils import meta as meta_parser
 
-from mkdocs_publisher._common import resources
-from mkdocs_publisher._common.html_modifiers import HTMLModifier
+# noinspection PyProtectedMember
 from mkdocs_publisher._extra.assets import templates
+
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import resources
+
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared.html_modifiers import HTMLModifier
 from mkdocs_publisher.obsidian.backlinks import Backlink
 from mkdocs_publisher.obsidian.backlinks import Link
 from mkdocs_publisher.obsidian.callouts import CalloutToAdmonition
@@ -122,6 +127,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         return output
 
+    # noinspection PyProtectedMember
     def on_serve(
         self, server: LiveReloadServer, *, config: MkDocsConfig, builder: Callable
     ) -> Optional[LiveReloadServer]:
@@ -129,6 +135,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         docs_dirs_to_skip = [str(Path(config.docs_dir) / self.config.obsidian_dir)]
 
+        # noinspection PyProtectedMember
         def no_obsidian_callback(event):
             """Watcher implementation that skips .obsidian directory"""
             if (
@@ -139,6 +146,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 return
             log.debug(str(event))
             with server._rebuild_cond:
+                # noinspection PyProtectedMember
                 server._to_rebuild[server.builder] = True
                 server._rebuild_cond.notify_all()
 

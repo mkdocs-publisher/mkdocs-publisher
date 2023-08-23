@@ -15,8 +15,9 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
-from mkdocs_publisher import _utils
-from mkdocs_publisher._common import resources
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import file_utils
+from mkdocs_publisher._shared import resources
 from mkdocs_publisher.blog import creators
 from mkdocs_publisher.blog import modifiers
 from mkdocs_publisher.blog import parsers
@@ -122,9 +123,9 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:
 
-        _utils.remove_dir(directory=self.blog_config.temp_dir)
+        file_utils.remove_dir(directory=self.blog_config.temp_dir)
 
     @event_priority(-100)  # Run after all other plugins
     def on_shutdown(self) -> None:
 
-        _utils.remove_dir(directory=self.blog_config.temp_dir)
+        file_utils.remove_dir(directory=self.blog_config.temp_dir)

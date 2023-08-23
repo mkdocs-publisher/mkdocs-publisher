@@ -53,6 +53,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: dynamically generate pages for tags and categories for all documents (just like in blog)
 - [ ] Add: nav name metadata (just like in blog)
 - [ ] Add: configurable key and format for creation and update date of the document
+- [ ] Add: file/directory redirections
 
 ### Social
 
@@ -103,7 +104,6 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Documentation
 
-- [ ] Auto-nav plugin
 - [ ] Integration with RSS plugin
 - [ ] How to set up and use docker image
 - [ ] Setting up CI/CD in GitHub Actions
@@ -117,6 +117,4 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
  - [ ] GitHub repo with preconfigured pages, etc. (can be integrated with Docker Image creation)
  - [ ] Unit tests and code coverage with pre-commit
  - [ ] Cleanup list of code TODO's
- - [ ] Drop `python-frontmatter` for MkDocs built-in library for metadata retrieval
- - [ ] Review `importlib.resources` for [deprecated functions](https://docs.python.org/3/library/importlib.resources.html)
  - [ ] Move translations to jinja templates like Material for MkDocs is doing it

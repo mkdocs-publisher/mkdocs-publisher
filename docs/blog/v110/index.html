@@ -7,7 +7,7 @@
 <meta content="Maciej 'maQ' Kusz" name="author">
 <link href="https://mkusz.github.io/mkdocs-publisher/blog/v110/" rel="canonical">
 <link href="../../publisher_icon.png" rel="icon">
-<meta content="mkdocs-1.5.1, mkdocs-material-9.1.21" name="generator">
+<meta content="mkdocs-1.5.2, mkdocs-material-9.1.21" name="generator">
 <title>
 v1.1.0 - 2023-08-01 - Publisher for MkDocs
 </title>
@@ -16,7 +16,7 @@ v1.1.0 - 2023-08-01 - Publisher for MkDocs
 <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet">
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-<link href="../../assets/stylesheets/publisher.min.css" rel="stylesheet">
+<link href="../../assets/stylesheets/publisher.css" rel="stylesheet">
 <link href="../../assets/stylesheets/blog.min.css" rel="stylesheet">
 <link href="../../assets/stylesheets/obsidian.min.css" rel="stylesheet">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -43,7 +43,7 @@ Skip to content
 </div>
 <div data-md-component="announce">
 </div>
-<header class="md-header md-header--lifted md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
 <nav class="md-grid md-header__inner" aria-label="Header">
 <a href="https://mkusz.github.io/mkdocs-publisher" class="md-header__button md-logo" title="Publisher for MkDocs" data-md-component="logo" aria-label="Publisher for MkDocs">
 <img alt="logo" src="../../publisher_logo.png">
@@ -151,6 +151,8 @@ mkusz/mkdocs-publisher
 </a>
 </div>
 </nav>
+</header>
+<div class="md-container" data-md-component="container">
 <nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
 <div class="md-grid">
 <ul class="md-tabs__list">
@@ -183,8 +185,6 @@ Development
 </ul>
 </div>
 </nav>
-</header>
-<div class="md-container" data-md-component="container">
 <main class="md-main" data-md-component="main">
 <div class="md-grid md-main__inner">
 <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
@@ -237,30 +237,64 @@ Setup
 Installation
 </a>
 </li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input class="md-toggle md-nav__toggle" type="checkbox" id="__nav_2_2">
+<label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+General
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav" data-md-level="2" aria-expanded="false" aria-labelledby="__nav_2_2_label">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-icon md-nav__icon">
+</span>
+General
+</label>
+<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../setup/pub-meta/" class="md-nav__link">
+<a href="../../setup/general/pub-meta/" class="md-nav__link">
 Setting up meta
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../../setup/pub-social/" class="md-nav__link">
-Setting up social cards
-</a>
-</li>
-<li class="md-nav__item">
-<a href="../../setup/pub-blog/" class="md-nav__link">
+<a href="../../setup/general/pub-blog/" class="md-nav__link">
 Setting up a blog
 </a>
 </li>
 <li class="md-nav__item">
-<a href="../../setup/pub-obsidian/" class="md-nav__link">
+<a href="../../setup/general/pub-obsidian/" class="md-nav__link">
 Setting up Obsidian
 </a>
 </li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input class="md-toggle md-nav__toggle" type="checkbox" id="__nav_2_3">
+<label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+SEO &amp; Sharing
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<nav class="md-nav" data-md-level="2" aria-expanded="false" aria-labelledby="__nav_2_3_label">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-icon md-nav__icon">
+</span>
+SEO &amp; Sharing
+</label>
+<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../setup/pub-minifier/" class="md-nav__link">
+<a href="../../setup/seo-and-sharing/pub-social/" class="md-nav__link">
+Setting up social cards
+</a>
+</li>
+<li class="md-nav__item">
+<a href="../../setup/seo-and-sharing/pub-minifier/" class="md-nav__link">
 Setting up minifier
 </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -466,8 +500,8 @@ Blog
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#social" class="md-nav__link">
-Social
+<a href="#minifier" class="md-nav__link">
+Minifier
 </a>
 </li>
 <li class="md-nav__item">
@@ -512,7 +546,7 @@ v1.1.0 - 2023-08-01
 </h1>
 <p>
 Here we are with a new version of Publisher for MkDocs plugins. I have promised to make smaller releases, but my brain is refusing me to work on a small scale. It's really hard to achieve that, especially when you're starting to have some feedback from you, users of this tool. Because of that feedback and some problems you encountered, I decided to focus in this release on 2 main topics: some bug fixing and introducing a new plugin called
-<a href="../02_setup/99_setting-up-debugger.md" id="02-setup99-setting-up-debugger">
+<a href="../02_setup/99_development/01_setting-up-debugger.md" id="02-setup99-development01-setting-up-debugger">
 pub-debugger
 </a>
 . This plugin allows for an insight into all messages produced by plugins while building (or serving) a web page. Also, it's able to produce a ZIP file, with some basic information that could help me, whenever you will need to report an
@@ -521,19 +555,95 @@ issue
 </a>
 .
 </p>
-<div class="admonition info">
+<div class="admonition warning">
 <p class="admonition-title">
 Privacy disclaimer
 </p>
 <p>
-Those ZIP files are produced on your machine, and you should make a review of the files that are included, before you share them over the internet.
+<code>
+pub-debugger
+</code>
+plugin do not send any files over the internet, but if you want to use a Zip file as an attachment for an issue submission or share it with anybody, before please make a review of the content of this archive file.
 </p>
+<div class="admonition warning">
+<p class="admonition-title">
+Please remember
+</p>
+<p>
+It's your data and your responsibility what you are publishing over the internet. This plugin is only giving you the tool that should help, and you cannot blame me (the author of this plugin) for any potential data leaks.
+</p>
+</div>
 </div>
 <p>
 There is also one very crucial topic related to this project name. When I shared information about Publisher for MkDocs over an
 <a href="https://forum.obsidian.md/top?period=daily">
 official Obsidian.md community forum
 </a>
+the developer of an Obsidian
+<a href="https://github.com/ObsidianPublisher/obsidian-github-publisher">
+GitHub Publisher plugin
+</a>
+provided me information that we have some conflict related to our plugins name. We were also spoke privately over Discord and came to some agreement related to our work. More information can be found in
+<a href="https://forum.obsidian.md/t/self-hosted-notes-by-using-mkdocs-with-blogging-capability/61643/6">
+this thread
+</a>
+, but in short:
+</p>
+<ul>
+<li>
+My set of MkDocs plugins will be called
+<strong>
+Publisher for MkDocs
+</strong>
+since my work is related to MkDocs with additional support for Obsidian as an IDE/text editor,
+</li>
+<li>
+<a href="https://github.com/Lisandra-dev">
+Mara-Li
+</a>
+Obsidian plugin will be called
+<a href="https://github.com/ObsidianPublisher/obsidian-github-publisher">
+GitHub Publisher
+</a>
+since her work is related to Obsidian with the possibility to use MkDocs as a beck-end for publication.
+</li>
+</ul>
+<p>
+In the feature, some elements of this project could be part of Mara-Li work, but it's her decision. I will continue working on this project and help her with some potential issues solving.
+</p>
+<p>
+I have also spent some time on unification of look the setup documentation. Previously documentation was created similar way as Material for MkDocs is doing it, but I decided to drop this approach and simplify it a little bit. Most of the work was around configuration options, that was to verbose. Right now, all configuration options related to given functionality are gathered in a single code block with their default values, so it's easier to copy it to yours
+<code>
+mkdocs.yaml
+</code>
+file. Because of that, all descriptions related to those options are placed below this code block, so it's easy to find the information about it. I hope it's now easier to navigate and understand all the configuration options.
+</p>
+<p>
+A lot of you have been asking me about comparison to other tools and I have answered to them in this
+<a href="https://www.reddit.com/r/ObsidianMD/comments/149z9fe/mkdocs_publisher_as_an_alternative_for_official/">
+Reddit thread
+</a>
+. I have a plan to gather all this information and create a separate document about this (and also to some credits to projects I get inspiration from), but simply didn't have time for that so far.
+</p>
+<p>
+There were also some requests related to the publication process. I'm aware that this is the biggest lacking right now of this project that is supposed to be related to publishing, and I will definitely solve this soon. There is an upcoming update related to that as:
+</p>
+<ul>
+<li>
+GitHub template repository,
+</li>
+<li>
+Docker image,
+</li>
+<li>
+GitHub Action,
+</li>
+<li>
+documentation.
+</li>
+</ul>
+<p>
+I don't promise that all of the above will be ready in the next release, but some of them will be for sure.
 </p>
 <h2 id="changelog">
 Changelog
@@ -543,32 +653,276 @@ General
 </h3>
 <ul>
 <li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
 rename of directory with documentation files
 </li>
 <li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
 Python libraries update
 </li>
 <li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
 project naming unification
 </li>
 <li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+pre-commit JSON check and obsidian file exclusion
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+some links updates in documentation
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+code type hinting updates
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+logger names unification -
+<a href="../02_setup/99_development/01_setting-up-debugger.md#python-logging-for-mkdocs" id="02-setup99-development01-setting-up-debuggerpython-logging-for-mkdocs">
+it's related to pub-debugger plugin
+</a>
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+code refactor and cleanup
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13H7v-2h10m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+drop
+<code>
+python-frontmatter
+</code>
+from Python libraries
 </li>
 </ul>
 <h3 id="blog">
 Blog
 </h3>
-<h3 id="social">
-Social
+<ul>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
+</path>
+</svg>
+</span>
+minor fix for internal linking (still not full solution)
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+fix for deprecated warning regarding
+<code>
+importlib.resources
+</code>
+</li>
+</ul>
+<h3 id="minifier">
+Minifier
 </h3>
+<ul>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+small code reformat related to shared library changes
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
+</path>
+</svg>
+</span>
+files are not minified when using
+<code>
+mkdocs serve
+</code>
+(this is default behaviour, but it can be changed)
+</li>
+</ul>
 <h3 id="meta">
 Meta
 </h3>
+<ul>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+possibility to declare whole directory as hidden
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+more logging messages
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+better support for
+<code>
+pub-obsidian
+</code>
+plugin (template and obsidian directory are now always drafts)
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
+</path>
+</svg>
+</span>
+error with reading
+<code>
+README.md
+</code>
+when no empty line at the end of file
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
+</path>
+</svg>
+</span>
+fix for adding again the same directory to draft directories when using
+<code>
+mkdocs serve
+</code>
+</li>
+</ul>
 <h3 id="obsidian">
 Obsidian
 </h3>
+<ul>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
+</path>
+</svg>
+</span>
+minor fix for internal linking (still not full fix)
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z">
+</path>
+</svg>
+</span>
+fix for preserving new line in callouts
+</li>
+</ul>
 <h3 id="debugger-new-plugin">
 Debugger (new plugin)
 </h3>
+<ul>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+console log reformatting with configuration
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+added logging into
+<code>
+*.log
+</code>
+file with configuration
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+added old log file replacement
+</li>
+<li>
+<span class="twemoji">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+</path>
+</svg>
+</span>
+ZIP file creation with log output and some additional files
+</li>
+</ul>
 <hr>
 <div class="admonition info">
 <p class="admonition-title">
@@ -644,7 +998,7 @@ Material for MkDocs
 </div>
 </div>
 <script id="__config" type="application/json">
-{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.footer", "navigation.tracking", "navigation.top", "navigation.sections", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}
+{"base": "../..", "features": ["navigation.tabs", "navigation.footer", "navigation.tracking", "navigation.top", "navigation.sections", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}
 </script>
 <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>

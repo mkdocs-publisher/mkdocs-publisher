@@ -24,6 +24,7 @@ CALLOUT_MAPPING = {
     "success": ["check", "done", "success"],
     "warning": ["attention", "caution", "warning"],
     "settings": ["settings"],
+    "yaml": ["yaml"],
 }
 ADMONITION_MAPPING = {
     callout: admonition for admonition, callouts in CALLOUT_MAPPING.items() for callout in callouts
@@ -60,7 +61,7 @@ class CalloutToAdmonition:
         indentation = self._callout_indentation(
             match=match, match_group=1, text_indentation=text_indentation
         )
-        return f"    {indentation} {match.group(3)}"
+        return f"    {indentation} {match.group(3)}\n"
 
     def _callout_block(self, match: re.Match, text_indentation: str = "spaces") -> str:
         # TODO: add possibility to inject customized callout/admonition from CSS/config

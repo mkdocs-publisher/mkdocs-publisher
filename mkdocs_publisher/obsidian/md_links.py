@@ -5,8 +5,11 @@ from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 
-from mkdocs_publisher._common import mkdocs_utils
-from mkdocs_publisher._common.url import slugify
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import mkdocs_utils
+
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared.urls import slugify
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.obsidian.config import _ObsidianLinksConfig
 
@@ -94,7 +97,8 @@ class MarkdownLinks:
         link = f"[{match.group(1)}]({link}{anchor_link})"
         return link
 
-    def _fix_anchor_links(self, match: re.Match) -> str:
+    @staticmethod
+    def _fix_anchor_links(match: re.Match) -> str:
         anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
         link = f"[{match.group(1)}]({match.group(2)}{anchor_link})"
         return link
@@ -117,7 +121,6 @@ class MarkdownLinks:
         link = self._get_file_path(file_path=match.group(2))
         anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
         link = f"[{match.group(1)}](../..{link}{anchor_link})"
-        log.error(self._current_file_path)
         return link
 
     def _fix_blog_main_paths(self, match: re.Match) -> str:

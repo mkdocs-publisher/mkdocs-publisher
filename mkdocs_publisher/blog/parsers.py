@@ -5,7 +5,7 @@ from dataclasses import fields
 from datetime import datetime
 from pathlib import Path
 
-import frontmatter
+from mkdocs.utils import meta as meta_parser
 
 from mkdocs_publisher.blog.structures import BlogConfig
 from mkdocs_publisher.blog.structures import BlogPost
@@ -61,14 +61,13 @@ def parse_markdown_files(
         path = Path(file_path).relative_to(blog_config.docs_dir)
         if path.is_relative_to(blog_config.blog_dir):
             parents = list(path.parents)[:-1]
-            with open(file_path) as markdown_file:
-                post: frontmatter.Post = frontmatter.load(markdown_file)
+            with file_path.open(encoding="utf-8-sig", errors="strict") as md_file:
+                content, post_meta = meta_parser.get_data(md_file.read())
                 if not parents:
-                    for line in post.content.split("\n"):
+                    for line in content.split("\n"):
                         if line.startswith("# "):
                             config_nav[line[2:]] = str(path)
                 elif str(parents[0]) == str(blog_config.blog_dir):
-                    post_meta = dict(post)
 
                     if "status" not in post_meta:
                         # TODO: read default value from meta config
@@ -78,7 +77,7 @@ def parse_markdown_files(
                         )
                         post_meta["status"] = "draft"
 
-                    # Skip non published
+                    # Skip non-published
                     if not on_serve and post_meta["status"] != "published":
                         # TODO: make it configurable
                         continue
@@ -86,6 +85,7 @@ def parse_markdown_files(
                     # Convert tags format
                     if "tags" in post_meta and post_meta["tags"] is not None:
                         if "," in post_meta["tags"]:
+                            # noinspection PyUnresolvedReferences
                             post_meta["tags"] = [t.strip() for t in post_meta["tags"].split(",")]
                         elif isinstance(post_meta["tags"], str):
                             post_meta["tags"] = [post_meta["tags"]]
@@ -110,9 +110,13 @@ def parse_markdown_files(
                     # Create a new blog post
                     blog_post_keys = [f.name for f in fields(BlogPost)]
                     post_data = {k: v for k, v in post_meta.items() if k in blog_post_keys}
-                    post_data["content"] = post.content
+                    post_data["content"] = content
                     post_data["path"] = str(path)
-                    if "slug" in post_meta and post_meta["slug"].strip() != "":
+                    if (
+                        "slug" in post_meta
+                        and post_meta["slug"] is not None
+                        and post_meta["slug"].strip() != ""
+                    ):
                         post_data["slug"] = post_meta["slug"]
                     try:
                         blog_post: BlogPost = BlogPost(**post_data)

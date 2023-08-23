@@ -7,18 +7,13 @@ from typing import Literal
 from zipfile import ZIP_DEFLATED
 from zipfile import ZipFile
 
-# from mkdocs.config import Config
-# from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
 
-from mkdocs_publisher import _utils
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import file_utils
+from mkdocs_publisher.debugger import loggers
 from mkdocs_publisher.debugger.config import DebuggerConfig
-from mkdocs_publisher.debugger.loggers import DatedFileHandler
-from mkdocs_publisher.debugger.loggers import ProjectPathConsoleFilter
-from mkdocs_publisher.debugger.loggers import ProjectPathFileFilter
-from mkdocs_publisher.debugger.loggers import ProjectPathFileFormatter
-from mkdocs_publisher.debugger.loggers import ProjectPathStreamFormatter
 
 log = logging.getLogger("mkdocs.plugins.publisher.debug.plugin")
 
@@ -34,11 +29,12 @@ FILES_TO_ZIP_LIST = [
 PIP_FREEZE_FILENAME = "requirements_freeze.txt"
 
 
+# noinspection PyProtectedMember
 class DebuggerPlugin(BasePlugin[DebuggerConfig]):
     def __init__(self):
         self._mkdocs_log_stream_handler: logging.Handler = logging.getLogger("mkdocs").handlers[0]
 
-        self._mkdocs_log_file_handler: DatedFileHandler = DatedFileHandler(
+        self._mkdocs_log_file_handler: loggers.DatedFileHandler = loggers.DatedFileHandler(
             filename=f"%Y%m%d_%H%M%S{LOG_FILENAME_SUFFIX}"
         )
 
@@ -50,11 +46,12 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
 
         if self.config.console_log.enabled:
             self._mkdocs_log_stream_handler.setFormatter(
-                ProjectPathStreamFormatter(console_config=self.config.console_log)
+                loggers.ProjectPathStreamFormatter(console_config=self.config.console_log)
             )
             self._mkdocs_log_stream_handler.addFilter(
-                ProjectPathConsoleFilter(console_config=self.config.console_log)
+                loggers.ProjectPathConsoleFilter(console_config=self.config.console_log)
             )
+            # noinspection PyUnresolvedReferences
             self._mkdocs_log_stream_handler.level = logging._nameToLevel[
                 self.config.console_log.log_level
             ]
@@ -63,11 +60,12 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
 
         if self.config.file_log.enabled:
             self._mkdocs_log_file_handler.setFormatter(
-                ProjectPathFileFormatter(fmt=self.config.file_log.log_format)
+                loggers.ProjectPathFileFormatter(fmt=self.config.file_log.log_format)
             )
             self._mkdocs_log_file_handler.addFilter(
-                ProjectPathFileFilter(file_config=self.config.file_log)
+                loggers.ProjectPathFileFilter(file_config=self.config.file_log)
             )
+            # noinspection PyUnresolvedReferences
             self._mkdocs_log_file_handler.level = logging._nameToLevel[
                 self.config.file_log.log_level
             ]
@@ -110,7 +108,7 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
 
                 # Write pip freeze as file
                 if self.config.zip_log.add_pip_freeze:
-                    pip_run = _utils.run_subprocess(["pip", "freeze", "--local"])
+                    pip_run = file_utils.run_subprocess(["pip", "freeze", "--local"])
                     archive_file.writestr(
                         zinfo_or_arcname=PIP_FREEZE_FILENAME,
                         data=pip_run.stdout.decode("utf-8"),

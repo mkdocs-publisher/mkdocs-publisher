@@ -3,7 +3,7 @@ title: <i class='fa-solid fa-house'></i>
 slug: .
 status: published
 date: 2023-03-12 12:27:00
-update: 2023-08-01 12:01:05
+update: 2023-08-10 19:56:27
 description: Installation
 categories:
   - start
@@ -38,12 +38,12 @@ Publisher for MkDocs is a set of plugins that was created with the below concept
 
 The list of most important features built into MkDocs Publisher:
 
-- creating a blog posts with automatic build of archive, categories, tags, and index pages ([pub-blog](02_setup/04_setting-up-blog.md) plugin),
-- social cards metadata creation based on document metadata ([pub-social](02_setup/03_setting-up-social-cards.md) plugin - :material-plus-circle: [v0.5.0](04_blog/v050-social.md)),
-- file size optimizations, that is beneficial for site download speed and SEO ([pub-minifier](02_setup/06_setting-up-minifier.md) plugin - :material-plus-circle: [v0.4.0](04_blog/v040-minifier-and-autonav.md)),
-- automatic documents navigation creation ([pub-meta](02_setup/02_setting-up-meta.md) plugin - :material-plus-circle: [v1.0.0](04_blog/v100-obsidian.md)),
-- documents publication status with additional meta-data like URL names, etc. beneficial for SEO ([pub-meta](02_setup/02_setting-up-meta.md) plugin - :material-plus-circle: [v1.0.0](04_blog/v100-obsidian.md)),
-- integration with [Obsidian.md](https://obsidian.md/) as documentation editor with support for some Markdown syntax specific to it and some plugins ([pub-obsidian](02_setup/05_setting-up-obsidian.md) plugin :material-plus-circle: [v1.0.0](04_blog/v100-obsidian.md)):
+- creating a blog posts with automatic build of archive, categories, tags, and index pages ([pub-blog](02_setup/02_general/02_setting-up-blog.md) plugin),
+- social cards metadata creation based on document metadata ([pub-social](02_setup/03_seo_and_sharing/01_setting-up-social-cards.md) plugin - :material-plus-circle: [v0.5.0](04_blog/v050-social.md)),
+- file size optimizations, that is beneficial for site download speed and SEO ([pub-minifier](02_setup/03_seo_and_sharing/02_setting-up-minifier.md) plugin - :material-plus-circle: [v0.4.0](04_blog/v040-minifier-and-autonav.md)),
+- automatic documents navigation creation ([pub-meta](02_setup/02_general/01_setting-up-meta.md) plugin - :material-plus-circle: [v1.0.0](04_blog/v100-obsidian.md)),
+- documents publication status with additional meta-data like URL names, etc. beneficial for SEO ([pub-meta](02_setup/02_general/01_setting-up-meta.md) plugin - :material-plus-circle: [v1.0.0](04_blog/v100-obsidian.md)),
+- integration with [Obsidian.md](https://obsidian.md/) as documentation editor with support for some Markdown syntax specific to it and some plugins ([pub-obsidian](02_setup/02_general/03_setting-up-obsidian.md) plugin :material-plus-circle: [v1.0.0](04_blog/v100-obsidian.md)):
 	- [backlinks](https://help.obsidian.md/Plugins/Backlinks),
 	- [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) ,
 	- [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links)
