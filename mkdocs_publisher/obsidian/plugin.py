@@ -1,6 +1,3 @@
-import importlib
-import importlib.resources
-import importlib.util
 import logging
 from pathlib import Path
 from typing import Callable
@@ -19,9 +16,6 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 from mkdocs.utils import meta as meta_parser
-
-# noinspection PyProtectedMember
-from mkdocs_publisher._extra.assets import templates
 
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared import resources
@@ -95,7 +89,9 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             page_backlinks = self._backlink_links.get(f"{page.file.src_uri}", None)
             if page_backlinks is not None:
                 log.debug(f"Adding backlinks to '{page.file.src_uri}'")
-                backlink_template = importlib.resources.read_text(templates, "backlinks.html")
+                backlink_template = resources.read_template_file(
+                    template_file_name="backlinks.html"
+                )
                 context = {
                     "backlinks": page_backlinks,
                     "title": "Backlinks",  # TODO: move to translations

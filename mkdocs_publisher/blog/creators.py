@@ -1,4 +1,3 @@
-import importlib.resources
 import logging
 from collections import OrderedDict
 from datetime import datetime
@@ -12,7 +11,7 @@ from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
 # noinspection PyProtectedMember
-from mkdocs_publisher._extra.assets import templates
+from mkdocs_publisher._shared import resources
 
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared.urls import slugify
@@ -185,7 +184,8 @@ def _render_and_write_page(
     # templates = jinja2.Environment(loader=jinja2.FileSystemLoader("templates/"))
     # print(templates.list_templates())
     # template = templates.get_template("index.html")
-    index_template = importlib.resources.read_text(templates, "posts-list.html")
+
+    index_template = resources.read_template_file(template_file_name="posts-list.html")
     context = {
         "posts": single_posts_chunk,
         "site_url": str(blog_config.mkdocs_config.site_url),
