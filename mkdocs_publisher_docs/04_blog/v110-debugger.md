@@ -3,7 +3,7 @@ title: v1.1.0 - 2023-08-01
 slug: v110
 status: draft
 date: 2023-08-14 11:50:56
-update: 2023-08-23 15:30:00
+update: 2023-08-23 17:38:49
 tags:
   - v1.x
 description: Publisher for MkDocs v1.1.0
@@ -16,7 +16,7 @@ Here we are with a new version of Publisher for MkDocs plugins. I have promised 
 
 > [!WARNING] Privacy disclaimer
 > `pub-debugger` plugin do not send any files over the internet, but if you want to use a Zip file as an attachment for an issue submission or share it with anybody, before please make a review of the content of this archive file.
-> > [!WARNING] Please remember
+> > [!DANGER] Please remember
 > > It's your data and your responsibility what you are publishing over the internet. This plugin is only giving you the tool that should help, and you cannot blame me (the author of this plugin) for any potential data leaks.
 
 There is also one very crucial topic related to this project name. When I shared information about Publisher for MkDocs over an [official Obsidian.md community forum](https://forum.obsidian.md/top?period=daily) the developer of an Obsidian [GitHub Publisher plugin](https://github.com/ObsidianPublisher/obsidian-github-publisher) provided me information that we have some conflict related to our plugins name. We were also spoke privately over Discord and came to some agreement related to our work. More information can be found in [this thread](https://forum.obsidian.md/t/self-hosted-notes-by-using-mkdocs-with-blogging-capability/61643/6), but in short:

@@ -110,22 +110,11 @@ plugins:
         show_code_link: True
 #        log_level: DEBUG
         filter_logger_names:
-          - mkdocs.commands.build
-          - mkdocs.commands.serve
           - mkdocs.plugins
-          - mkdocs.plugins.publisher.minifier.base
-          - mkdocs.plugins.publisher.social.plugin
-          - mkdocs.plugins.publisher.blog.creators
-          - mkdocs.plugins.publisher.blog.parsers
-          - mkdocs.plugins.publisher.blog.modifiers
           - mkdocs.structure.files
-          - mkdocs.livereload
       file_log:
         filter_logger_names:
-          - mkdocs.commands.build
           - mkdocs.plugins
-          - mkdocs.plugins.publisher.minifier.base
-          - mkdocs.plugins.publisher.social.plugin
           - mkdocs.structure.files
   - search
   - pub-blog:

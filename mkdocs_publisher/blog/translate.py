@@ -24,7 +24,6 @@ class Translate:
         lang_yaml_oath = Path(
             str(importlib.resources.files(lang_path).joinpath(f"{self._config.lang}.yaml"))
         )
-        log.error(BlogPluginConfig.lang.default)
         if not lang_yaml_oath.exists():
             log.warning(
                 f"There is no translation for '{self._config.lang}' language, "

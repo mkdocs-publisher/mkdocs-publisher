@@ -31,7 +31,7 @@ Each good developer knows, how important is the possibility to read proper logs 
 ## Python logging for MkDocs
 
 > [!INFO] Information
-> This section is for any MkDocs plugin creator.
+> This section is for any MkDocs plugin developer.
 
 Because MkDocs is written in Python, whenever someone wants to write a new plugin and see some information during documentation build, he has to use a [logging library](https://docs.python.org/3/library/logging.html). The usual use of this library is to do something like this:
 
@@ -48,7 +48,7 @@ The biggest problem with this approach is that `__name__` becomes a file name (w
 
 
 > [!TIP] The best practice for logger naming
-> Logger name should be build according to given structure:
+> Logger name should be built according to given structure:
 > `mkdocs.plugins.[project_name].[directory].[optional_sub_directories].[file_name]`.
 
 Let's take a look at [one of the files from this project repository](https://github.com/mkusz/mkdocs-publisher/blob/main/mkdocs_publisher/minifier/minifiers.py).
@@ -85,14 +85,14 @@ To enable the built-in debugger plugin, the following lines have to be added to 
       - pub-debugger
     ```
 
-### Logging to the console
+### Console logging
 
 
 
-![](../../attachments/debugger_console_example.png)
+![](../../_attachments/debugger_console_example.png)
 
-### Logging to the file
+### File logging
 
 
 
-### Generating Zip file
+### Zip file generation

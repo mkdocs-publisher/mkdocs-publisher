@@ -13,5 +13,6 @@
     "_templates/"
   ],
   "foldIndent": false,
-  "foldHeading": false
+  "foldHeading": false,
+  "attachmentFolderPath": "_attachments"
 }

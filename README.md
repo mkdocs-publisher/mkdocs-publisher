@@ -1,7 +1,3 @@
----
-date: 2023-02-28 12:30:18
-update: 2023-06-12 23:52:23
----
 # Publisher for MkDocs
 
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&style=plastic)](https://pypi.org/project/mkdocs-publisher/)
@@ -35,7 +31,7 @@ pip install mkdocs-publisher
 > As a base for any development, [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) theme was used. If you are willing to use any other theme, you may (or may not) face some issues. If this happens, please submit an [issue](https://github.com/mkusz/mkdocs-publisher/issues).
 
 > **Warning**
-> Consider this plugin as a beta, so before any use make sure you have a backup of your data.
+> Before any use make sure you have a backup of your data.
 
 If you have found any issue, have an idea for a feature, please submit an issue.
 
