@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "01_home.md",
+                "file": "04_blog/v110-debugger.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
@@ -96,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "01_home.md",
+                "file": "04_blog/v110-debugger.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "01_home.md",
+                "file": "04_blog/v110-debugger.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "01_home.md"
+                "file": "04_blog/v110-debugger.md"
               }
             }
           }
@@ -178,10 +178,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "643b75a8dd9323d9",
+  "active": "c6174c4fcf2d07d9",
   "lastOpenFiles": [
-    "02_setup/99_development/01_setting-up-debugger.md",
     "01_home.md",
+    "02_setup/99_development/01_setting-up-debugger.md",
     "02_setup/99_development/README.md",
     "05_dev/01_changelog.md",
     "README.md",

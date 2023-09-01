@@ -30,7 +30,7 @@ Archive - 2023 - Publisher for MkDocs
 <label class="md-overlay" for="__drawer">
 </label>
 <div data-md-component="skip">
-<a href="#v100-2023-06-13" class="md-skip">
+<a href="#v110-2023-09-01" class="md-skip">
 Skip to content
 </a>
 </div>
@@ -387,6 +387,11 @@ Table of contents
 </label>
 <ul class="md-nav__list" data-md-scrollfix="" data-md-component="toc">
 <li class="md-nav__item">
+<a href="#v110-2023-09-01" class="md-nav__link">
+v1.1.0 - 2023-09-01
+</a>
+</li>
+<li class="md-nav__item">
 <a href="#v100-2023-06-13" class="md-nav__link">
 v1.0.0 - 2023-06-13
 </a>
@@ -549,6 +554,11 @@ Table of contents
 </label>
 <ul class="md-nav__list" data-md-scrollfix="" data-md-component="toc">
 <li class="md-nav__item">
+<a href="#v110-2023-09-01" class="md-nav__link">
+v1.1.0 - 2023-09-01
+</a>
+</li>
+<li class="md-nav__item">
 <a href="#v100-2023-06-13" class="md-nav__link">
 v1.0.0 - 2023-06-13
 </a>
@@ -593,6 +603,129 @@ v0.1.0 - Initial release
 <h1>
 2023
 </h1>
+<h2 id="v110-2023-09-01">
+<a href="https://mkusz.github.io/mkdocs-publisher/blog/v110/">
+v1.1.0 - 2023-09-01
+</a>
+</h2>
+<div class="post-extra">
+<div class="col">
+<p class="post-date">
+2023-09-01 11:50:56
+</p>
+</div>
+<div class="col">
+<a href="https://mkusz.github.io/mkdocs-publisher/blog/tags/v1.x/">
+#v1.x
+</a>
+</div>
+</div>
+<p>
+Here I am with a new version of Publisher for MkDocs plugins. I have promised to make smaller releases, but my brain is refusing me to work on a small scale. It's really hard to achieve that, especially when I started to have some feedback from you, users of this tool. Because of that feedback and some problems you encountered, I decided to focus in this release on 2 main topics: some bug fixing and introducing a new plugin called
+<a href="../../../setup/development/pub-debugger/" id="02-setup99-development01-setting-up-debugger">
+pub-debugger
+</a>
+. This plugin allows for an insight into all messages produced by plugins while building (or serving) a web page. Also, it's able to produce a ZIP file, with some basic information that could help me, whenever you will need to report an
+<a href="https://github.com/mkusz/mkdocs-publisher/issues">
+issue
+</a>
+.
+</p>
+<div class="admonition warning">
+<p class="admonition-title">
+Privacy disclaimer
+</p>
+<p>
+<code>
+pub-debugger
+</code>
+plugin do not send any files over the internet, but if you want to use a Zip file as an attachment for an issue submission or share it with anybody, please make a review of the content of this archive file.
+</p>
+<div class="admonition danger">
+<p class="admonition-title">
+Please remember
+</p>
+<p>
+It's your data and your responsibility what you are publishing over the internet. This plugin is only giving you the tool that should help, and you cannot blame me (the author of this plugin) for any potential data leaks.
+</p>
+</div>
+</div>
+<p>
+There is also one very crucial topic related to this project name. When I shared information about Publisher for MkDocs over an
+<a href="https://forum.obsidian.md/top?period=daily">
+official Obsidian.md community forum
+</a>
+the developer of an Obsidian
+<a href="https://github.com/ObsidianPublisher/obsidian-github-publisher">
+GitHub Publisher plugin
+</a>
+provided me information that we have some conflict related to our plugins name. We were also spoken privately over Discord and came to some agreement related to our work. More information can be found in
+<a href="https://forum.obsidian.md/t/self-hosted-notes-by-using-mkdocs-with-blogging-capability/61643/6">
+this thread
+</a>
+, but in short:
+</p>
+<ul>
+<li>
+My set of MkDocs plugins will be called
+<strong>
+Publisher for MkDocs
+</strong>
+since my work is related to MkDocs with additional support for Obsidian as an IDE/text editor,
+</li>
+<li>
+<a href="https://github.com/Lisandra-dev">
+Mara-Li
+</a>
+Obsidian plugin will be called
+<a href="https://github.com/ObsidianPublisher/obsidian-github-publisher">
+GitHub Publisher
+</a>
+since her work is related to Obsidian with the possibility to use MkDocs as a beck-end for publication.
+</li>
+</ul>
+<p>
+In the feature, some elements of this project could be part of Mara-Li work, but it's her decision. I will continue working on this project and help her with some potential issues solving.
+</p>
+<p>
+I have also spent some time on unification of look the setup documentation. Previously, documentation was created a similar way as Material for MkDocs is doing it, but I decided to drop this approach and simplify it a little bit. Most of the work was around configuration options, that was too verbose. Currently, all configuration options related to given functionality are gathered in a single code block with their default values, so it's easier to copy it to yours
+<code>
+mkdocs.yaml
+</code>
+file. As a result, all descriptions related to those options are placed below this code block, so it's easy to find the information about it. I hope it's now easier to navigate and understand all the configuration options.
+</p>
+<p>
+A lot of you have been asking me about comparison to other tools and I have answered to them in this
+<a href="https://www.reddit.com/r/ObsidianMD/comments/149z9fe/mkdocs_publisher_as_an_alternative_for_official/">
+Reddit thread
+</a>
+. I have a plan to gather all this information and create a separate document about this (and also to some credits to projects I get inspiration from), but simply didn't have time for that so far.
+</p>
+<p>
+There were also some requests related to the publication process. I'm aware that this is the biggest lacking right now of this project that is supposed to be related to publishing, and I will definitely solve this soon. There is an upcoming update related to that as:
+</p>
+<ul>
+<li>
+GitHub template repository,
+</li>
+<li>
+Docker image,
+</li>
+<li>
+GitHub Action,
+</li>
+<li>
+documentation.
+</li>
+</ul>
+<p>
+I don't promise that all of the above will be ready in the next release, but some of them will be for sure.
+</p>
+<div class="post-link">
+<a href="https://mkusz.github.io/mkdocs-publisher/blog/v110/" title="{ post.title }">
+Read more
+</a>
+</div>
 <h2 id="v100-2023-06-13">
 <a href="https://mkusz.github.io/mkdocs-publisher/blog/v100/">
 v1.0.0 - 2023-06-13

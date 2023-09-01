@@ -1,9 +1,9 @@
 ---
 title: v1.1.0 - 2023-09-01
 slug: v110
-status: draft
+status: published
 date: 2023-09-01 11:50:56
-update: 2023-09-01 13:09:06
+update: 2023-09-01 14:38:45
 tags:
   - v1.x
 description: Publisher for MkDocs v1.1.0
