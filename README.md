@@ -11,7 +11,7 @@ Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that helps w
 ## Features
 
 - [pub-meta](https://mkusz.github.io/mkdocs-publisher/setup/general/pub-meta/) – support for:
-	- automatic [document layout build](https://www.mkdocs.org/user-guide/configuration/#nav) based on file names order,
+	- automatic [document navigation](https://www.mkdocs.org/user-guide/configuration/#nav) creation based on file names order,
 	- document publication status,
 	- possibility to define document and directories URL (good for SEO),
 	- document creation and update date (good for SEO),
@@ -21,8 +21,8 @@ Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that helps w
 	- automatic creation of pages for archive, categories and tags,
 - [pub-obsidian](https://mkusz.github.io/mkdocs-publisher/setup/general/pub-obsidian/) – bindings for [Obsidina.md](https://obsidian.md) that allows you to use:
 	- [backlinks](https://help.obsidian.md/Plugins/Backlinks),
-	- [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) ,
-	- [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links)
+	- [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts),
+	- [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links),
 	- [vega charts](https://vega.github.io/vega/) (using [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)) - advanced solution for creating charts,
 - [pub-social](https://mkusz.github.io/mkdocs-publisher/setup/seo-and-sharing/pub-social/) – social cards for social media sharing using document metadata,
 - [pub-minifier](https://mkusz.github.io/mkdocs-publisher/setup/seo-and-sharing/pub-minifier/) – file size optimization (good for SEO and overall page size optimization),

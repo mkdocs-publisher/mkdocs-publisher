@@ -11,7 +11,7 @@ Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that helps w
 ## Features
 
 - [pub-meta](https://mkusz.github.io/mkdocs-publisher/setup/general/pub-meta/) – support for:
-	- automatic [document layout build](https://www.mkdocs.org/user-guide/configuration/#nav) based on file names order,
+	- automatic [document navigation](https://www.mkdocs.org/user-guide/configuration/#nav) creation based on file names order,
 	- document publication status,
 	- possibility to define document and directories URL (good for SEO),
 	- document creation and update date (good for SEO),

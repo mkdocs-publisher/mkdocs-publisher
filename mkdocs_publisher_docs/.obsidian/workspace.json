@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02_setup/02_general/03_setting-up-obsidian.md",
+                "file": "README.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
@@ -96,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "02_setup/02_general/03_setting-up-obsidian.md",
+                "file": "README.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "02_setup/02_general/03_setting-up-obsidian.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "02_setup/02_general/03_setting-up-obsidian.md"
+                "file": "README.md"
               }
             }
           }
@@ -178,8 +178,9 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "643b75a8dd9323d9",
+  "active": "c6174c4fcf2d07d9",
   "lastOpenFiles": [
+    "02_setup/02_general/03_setting-up-obsidian.md",
     "02_setup/02_general/README.md",
     "04_blog/v100-obsidian.md",
     "README.md",
@@ -189,7 +190,6 @@
     "04_blog/v110-debugger.md",
     "02_setup/99_development/01_setting-up-debugger.md",
     "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
-    "02_setup/02_general/03_setting-up-obsidian.md",
     "02_setup/02_general/02_setting-up-blog.md",
     "05_dev/02_development.md",
     "02_setup/02_general/01_setting-up-meta.md",
