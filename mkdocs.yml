@@ -107,8 +107,7 @@ markdown_extensions:
 plugins:
   - pub-debugger:
       console_log:
-        show_code_link: True
-#        log_level: DEBUG
+        enabled: true
         filter_logger_names:
           - mkdocs.plugins
           - mkdocs.structure.files

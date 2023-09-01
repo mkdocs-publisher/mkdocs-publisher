@@ -12,9 +12,49 @@ categories:
 
 # Version history
 
-## 1.1.0
+## 1.1.0 - 2023.09.01
 
+### General
 
+- :material-sync-circle: rename of directory with documentation files
+- :material-sync-circle: Python libraries update
+- :material-sync-circle: project naming unification
+- :material-sync-circle: pre-commit JSON check and obsidian file exclusion
+- :material-sync-circle: some links updates in documentation
+- :material-sync-circle: code type hinting updates
+- :material-sync-circle: logger names unification - [it's related to pub-debugger plugin](../02_setup/99_development/01_setting-up-debugger.md#python-logging-for-mkdocs)
+- :material-sync-circle: code refactor and cleanup
+- :material-minus-circle: drop `python-frontmatter` from Python libraries
+
+### Blog
+
+- :material-check-circle: minor fix for internal linking (still not full solution)
+- :material-sync-circle: fix for deprecated warning regarding `importlib.resources`
+
+### Minifier
+
+- :material-sync-circle: small code reformat related to shared library changes
+- :material-sync-circle: files are not minified when using `mkdocs serve` (this is default behavior, but it can be changed)
+
+### Meta
+
+- :material-plus-circle: possibility to declare whole directory as hidden
+- :material-plus-circle: more logging messages
+- :material-plus-circle: better support for `pub-obsidian` plugin (template and obsidian directory are now always drafts)
+- :material-check-circle: fix for error with reading `README.md` when no empty line at the end of file
+- :material-check-circle: fix for adding again the same directory to draft directories when using `mkdocs serve`
+
+### Obsidian
+
+- :material-check-circle: minor fix for internal linking (still not full fix)
+- :material-check-circle: fix for preserving new line in callouts
+
+### Debugger (new plugin)
+
+- :material-plus-circle: console log reformatting with configuration
+- :material-plus-circle: added logging into `*.log` file with configuration
+- :material-plus-circle: added old log file replacement
+- :material-plus-circle: ZIP file creation with log output and some additional files
 
 ## 1.0.0 – 2023.06.13
 

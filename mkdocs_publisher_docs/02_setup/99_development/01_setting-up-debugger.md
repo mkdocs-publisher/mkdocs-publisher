@@ -3,7 +3,7 @@ title: Setting up debugger
 slug: pub-debugger
 status: draft
 date: 2023-08-01 11:49:05
-update: 2023-08-19 23:13:41
+update: 2023-09-01 12:42:25
 description: Setting up a Publisher for MkDocs debugger plugin for development purposes
 categories:
   - plugin
@@ -87,12 +87,103 @@ To enable the built-in debugger plugin, the following lines have to be added to 
 
 ### Console logging
 
-
+By default, MkDocs produces a console log, that contains only basic information like log level and log message. In normal usage, this information is quite sufficient, but when any problem with a build process occurs, it's quite hard to find a specific line where the problem has happened. Because of that, `pub-debugger` allows you to override the default console logger with one that contains more information. Below you can find what does it look like:
 
 ![](../../_attachments/debugger_console_example.png)
 
+> [!INFO] Code link
+> Be aware, that the above screenshot is the most future rich output. The default plugin configuration doesn't enable the **code link** section (it has to be enabled).
+
+===+ ":octicons-file-code-16: mkdocs.yml"
+
+``` yaml hl_lines="3-10"
+plugins:
+  - pub-debugger:
+	console_log:
+	  enabled: true
+	  log_level: INFO
+	  show_code_link: false
+	  show_logger_name: true
+	  show_entry_time: true
+	  entry_time_format: "%H:%M:%S.%f"
+	  filter_logger_names: []
+```
+
+Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [enabled](#+debugger.console.enabled){#+debugger.zip.enabled}
+> Controls if console log will be replaced with a new, richer format.
+
+> [!SETTINGS]- [log_level](#+debugger.console.log_level){#+debugger.zip.log_level}
+> Set the [log level](https://docs.python.org/3/library/logging.html#logging-levels).
+
+> [!SETTINGS]- [show_code_link](#+debugger.console.show_code_link){#+debugger.zip.show_code_link}
+> Controls if the code link part is visible in the log message (useful for IDE like PyCharm).
+
+> [!SETTINGS]- [show_logger_name](#+debugger.console.show_logger_name){#+debugger.zip.show_logger_name}
+> Controls if the logger name part is visible in the log message (useful when you want to filter some of the messages or plugins).
+
+> [!SETTINGS]- [show_entry_time](#+debuggerconsoleshow_entry_time){#+debugger.zip.show_entry_time}
+> Controls if the time entry part is visible in the log message.
+
+> [!SETTINGS]- [entry_time_format](#+debugger.console.entry_time_format){#+debugger.zip.entry_time_format}
+> Defines [time format](https://docs.python.org/3/library/logging.html#logging.Formatter.formatTime).
+
+> [!SETTINGS]- [filter_logger_names](#+debugger.console.filter_logger_names){#+debugger.zip.filter_logger_names}
+> Define a list of logger names that will be filtered out of the log messages.
+
 ### File logging
 
+===+ ":octicons-file-code-16: mkdocs.yml"
 
+``` yaml hl_lines="3-8"
+plugins:
+  - pub-debugger:
+	file_log:
+	  enabled: true
+	  log_level: DEBUG
+	  log_format: "[%(created).14s][%(levelname)-5.5s][%(project_path)s:%(lineno)d] %(message)s"
+	  remove_old_files: true
+	  filter_logger_names: []
+```
+
+Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [enabled](#+debugger.file.enabled){#+debugger.zip.enabled}
+> Controls if log file will be created.
+
+> [!SETTINGS]- [log_level](#+debugger.file.log_level){#+debugger.zip.log_level}
+> Set the [log level](https://docs.python.org/3/library/logging.html#logging-levels).
+
+> [!SETTINGS]- [log_format](#+debugger.file.log_format){#+debugger.zip.log_format}
+> Defines [format](https://docs.python.org/3/library/logging.html#logrecord-attributes) of the message that will be put into the log file.
+
+> [!SETTINGS]- [remove_old_files](#+debugger.file.remove_old_files){#+debugger.zip.remove_old_files}
+> Controls if previously created log files will be removed while creating a new one.
+
+> [!SETTINGS]- [filter_logger_names](#+debugger.file.filter_logger_names){#+debugger.zip.filter_logger_names}
+> Define a list of logger names that will be filtered out of the log messages.
 
 ### Zip file generation
+
+===+ ":octicons-file-code-16: mkdocs.yml"
+
+``` yaml hl_lines="3-6"
+plugins:
+  - pub-debugger:
+	zip_log:
+	  enabled: true
+	  remove_old_files: true
+	  add_pip_freeze: true
+```
+
+Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [enabled](#+debugger.zip.enabled){#+debugger.zip.enabled}
+> Controls if zip file will be created.
+
+> [!SETTINGS]- [remove_old_files](#+debugger.zip.remove_old_files){#+debugger.zip.remove_old_files}
+> Controls if previously created zip files will be removed while creating a new one.
+
+> [!SETTINGS]- [add_pip_freeze](#+debugger.zip.add_pip_freeze){#+debugger.zip.add_pip_freeze}
+> Controls if zip file will contain a `requirements.txt` file with a list of Python libraries (it's helpful with issue reproduction when you want to report one).

@@ -3,7 +3,7 @@ title: Backlog
 slug: backlog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-08-01 12:00:13
+update: 2023-09-01 13:46:13
 description: Plans for future development of Publisher for MkDocs
 categories:
   - general
@@ -29,6 +29,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: possibility to define blog directory in `README.md` file when meta plugin is enabled
 - [ ] Fix: links when using meta plugin and slugs on post teasers
 - [ ] Fix: internal links in teasers
+- [ ] Fix: date format and solve the problem, when multiple posts have the same date
 - [ ] Change: temporary file location
 
 ### Minifier
@@ -54,6 +55,8 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: nav name metadata (just like in blog)
 - [ ] Add: configurable key and format for creation and update date of the document
 - [ ] Add: file/directory redirections
+- [ ] Add: publication date in the future
+- [ ] Add: creating subpages for tags and categories (need to be separated from the blog posts)
 
 ### Social
 
@@ -76,17 +79,28 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: disable backlinks on given page (meta-data: `backlinks: false`)
 - [ ] Add: configurable aliases in callouts with auto-add to Obsidian CSS files
 - [ ] Add: internal link's tooltip preview (use [tippy.js](https://atomiks.github.io/tippyjs/))
+- [ ] Fix: not needed new/blank lines inside code blocks
 - [ ] Change: backlink anchor link creation using slug information
 
 ### Debugger
 
 - [ ] Add: option to add markdown files to ZIP archive
 - [ ] Add: option to add graphic files and replace them with 1x1 pixel files (size reduction and anonymization)
+- [ ] Add: minifier tools version output or missing
 
 ### Offline (plugin idea)
 
 - [ ] Add: download JS files from the internet to local directory and replace links in HTML output files
 - [ ] Add: detect, download and replace other types of files
+
+### RSS (plugin idea)
+
+- [ ] Add: possibility to create multiple rss feeds (blog, other pages/directories, etc.)
+
+### Common (plugin idea)
+
+- [ ] Add: date format
+- [ ] Add: auto-add this plugin into `mkdocs.yml` by other plugins
 
 ## General
 
@@ -98,6 +112,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: check for minifier tools
 - [ ] Add: clean minifier cache
 - [ ] Add: minify single file using minifier
+- [ ] Add: minifier tools installation
 - [ ] Add: document/blog post publication state change
 - [ ] Add: CONTRIBUTING.md file to the repo
 - [ ] Add: issues templates in the project repository issues

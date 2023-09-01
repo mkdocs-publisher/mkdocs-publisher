@@ -27,6 +27,16 @@ All the above documents are created outside `docs` directory, so they are not vi
 
 This documentation contains a [blog](../../../blog/) that is created using this plugin, so you can take a look at a living example.
 
+
+> [!TIP] Date format
+> Currently, the date format of a blog posts is not configurable and has to look like this:
+> ``` yaml
+> ---
+> date: 2023-02-12 22:00:00
+> ---
+> ```
+> There is also a requirement, that each blog post, have to contain an unique date because without this, the algorithm responsible for posts display ordering (from newest to oldest) will not work correctly.
+
 ## Configuration
 
 To enable the built-in obsidian blog, the following lines have to be added to `mkdocs.yml` file:

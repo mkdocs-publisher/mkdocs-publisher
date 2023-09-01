@@ -9,7 +9,7 @@
 <link href="../../publisher_icon.png" rel="icon">
 <meta content="mkdocs-1.5.2, mkdocs-material-9.1.21" name="generator">
 <title>
-v1.1.0 - 2023-08-01 - Publisher for MkDocs
+v1.1.0 - 2023-09-01 - Publisher for MkDocs
 </title>
 <link href="../../assets/stylesheets/main.eebd395e.min.css" rel="stylesheet">
 <link href="../../assets/stylesheets/palette.ecc896b0.min.css" rel="stylesheet">
@@ -21,13 +21,13 @@ v1.1.0 - 2023-08-01 - Publisher for MkDocs
 <link href="../../assets/stylesheets/obsidian.min.css" rel="stylesheet">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta content="article" property="og:type">
-<meta content="v1.1.0 - 2023-08-01" property="og:title">
+<meta content="v1.1.0 - 2023-09-01" property="og:title">
 <meta content="Publisher for MkDocs v1.1.0" property="og:description">
 <meta content="Publisher for MkDocs" property="og:site_name">
 <meta content="en_US" property="og:locale">
 <meta content="https://mkusz.github.io/mkdocs-publisher/blog/v110/" property="og:url">
 <meta content="summary" property="twitter:card">
-<meta content="v1.1.0 - 2023-08-01" property="twitter:title">
+<meta content="v1.1.0 - 2023-09-01" property="twitter:title">
 <meta content="Publisher for MkDocs v1.1.0" property="twitter:description">
 </head>
 <body data-md-color-accent="orange" data-md-color-primary="orange" data-md-color-scheme="default" dir="ltr">
@@ -63,7 +63,7 @@ Publisher for MkDocs
 </div>
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
-v1.1.0 - 2023-08-01
+v1.1.0 - 2023-09-01
 </span>
 </div>
 </div>
@@ -542,10 +542,10 @@ Debugger (new plugin)
 </svg>
 </a>
 <h1>
-v1.1.0 - 2023-08-01
+v1.1.0 - 2023-09-01
 </h1>
 <p>
-Here we are with a new version of Publisher for MkDocs plugins. I have promised to make smaller releases, but my brain is refusing me to work on a small scale. It's really hard to achieve that, especially when you're starting to have some feedback from you, users of this tool. Because of that feedback and some problems you encountered, I decided to focus in this release on 2 main topics: some bug fixing and introducing a new plugin called
+Here I am with a new version of Publisher for MkDocs plugins. I have promised to make smaller releases, but my brain is refusing me to work on a small scale. It's really hard to achieve that, especially when I started to have some feedback from you, users of this tool. Because of that feedback and some problems you encountered, I decided to focus in this release on 2 main topics: some bug fixing and introducing a new plugin called
 <a href="../02_setup/99_development/01_setting-up-debugger.md" id="02-setup99-development01-setting-up-debugger">
 pub-debugger
 </a>
@@ -563,7 +563,7 @@ Privacy disclaimer
 <code>
 pub-debugger
 </code>
-plugin do not send any files over the internet, but if you want to use a Zip file as an attachment for an issue submission or share it with anybody, before please make a review of the content of this archive file.
+plugin do not send any files over the internet, but if you want to use a Zip file as an attachment for an issue submission or share it with anybody, please make a review of the content of this archive file.
 </p>
 <div class="admonition danger">
 <p class="admonition-title">
@@ -583,7 +583,7 @@ the developer of an Obsidian
 <a href="https://github.com/ObsidianPublisher/obsidian-github-publisher">
 GitHub Publisher plugin
 </a>
-provided me information that we have some conflict related to our plugins name. We were also spoke privately over Discord and came to some agreement related to our work. More information can be found in
+provided me information that we have some conflict related to our plugins name. We were also spoken privately over Discord and came to some agreement related to our work. More information can be found in
 <a href="https://forum.obsidian.md/t/self-hosted-notes-by-using-mkdocs-with-blogging-capability/61643/6">
 this thread
 </a>
@@ -612,11 +612,11 @@ since her work is related to Obsidian with the possibility to use MkDocs as a be
 In the feature, some elements of this project could be part of Mara-Li work, but it's her decision. I will continue working on this project and help her with some potential issues solving.
 </p>
 <p>
-I have also spent some time on unification of look the setup documentation. Previously documentation was created similar way as Material for MkDocs is doing it, but I decided to drop this approach and simplify it a little bit. Most of the work was around configuration options, that was to verbose. Right now, all configuration options related to given functionality are gathered in a single code block with their default values, so it's easier to copy it to yours
+I have also spent some time on unification of look the setup documentation. Previously, documentation was created a similar way as Material for MkDocs is doing it, but I decided to drop this approach and simplify it a little bit. Most of the work was around configuration options, that was too verbose. Currently, all configuration options related to given functionality are gathered in a single code block with their default values, so it's easier to copy it to yours
 <code>
 mkdocs.yaml
 </code>
-file. Because of that, all descriptions related to those options are placed below this code block, so it's easy to find the information about it. I hope it's now easier to navigate and understand all the configuration options.
+file. As a result, all descriptions related to those options are placed below this code block, so it's easy to find the information about it. I hope it's now easier to navigate and understand all the configuration options.
 </p>
 <p>
 A lot of you have been asking me about comparison to other tools and I have answered to them in this
@@ -791,7 +791,7 @@ files are not minified when using
 <code>
 mkdocs serve
 </code>
-(this is default behaviour, but it can be changed)
+(this is default behavior, but it can be changed)
 </li>
 </ul>
 <h3 id="meta">
@@ -836,7 +836,7 @@ plugin (template and obsidian directory are now always drafts)
 </path>
 </svg>
 </span>
-error with reading
+fix for error with reading
 <code>
 README.md
 </code>
