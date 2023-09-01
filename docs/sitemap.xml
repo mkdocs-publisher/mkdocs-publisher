@@ -36,6 +36,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://mkusz.github.io/mkdocs-publisher/setup/development/pub-debugger/</loc>
+         <lastmod>2023-09-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://mkusz.github.io/mkdocs-publisher/how-to-publish/first-steps/</loc>
          <lastmod>2023-04-24</lastmod>
          <changefreq>daily</changefreq>
