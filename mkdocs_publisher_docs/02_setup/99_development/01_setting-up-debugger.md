@@ -1,7 +1,7 @@
 ---
 title: Setting up debugger
 slug: pub-debugger
-status: draft
+status: published
 date: 2023-08-01 11:49:05
 update: 2023-09-01 12:42:25
 description: Setting up a Publisher for MkDocs debugger plugin for development purposes
