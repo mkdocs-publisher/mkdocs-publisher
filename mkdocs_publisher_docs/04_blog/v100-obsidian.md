@@ -19,8 +19,8 @@ This was quite a journey to make this release and push it to v1.0.0. So far, thi
 For that reason, a new plugin was created, that supports not only the mentioned Obsidian elements, but also some additional ones like:
 
 - [backlinks](https://help.obsidian.md/Plugins/Backlinks),
-- [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) ,
-- [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links)
+- [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts),
+- [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links),
 - [vega charts](https://vega.github.io/vega/) (using [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)) - advanced solution for creating charts.
 
 <!-- more -->
