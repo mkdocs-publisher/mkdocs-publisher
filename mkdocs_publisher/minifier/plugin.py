@@ -2,6 +2,7 @@ import logging
 from multiprocessing import cpu_count
 from pathlib import Path
 from typing import Dict
+from typing import Literal
 from typing import cast
 
 import yaml
@@ -13,10 +14,17 @@ from mkdocs_publisher.minifier import minifiers
 from mkdocs_publisher.minifier.base import CachedFile
 from mkdocs_publisher.minifier.config import MinifierConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.minifier")
+log = logging.getLogger("mkdocs.plugins.publisher.minifier.plugin")
 
 
 class MinifierPlugin(BasePlugin[MinifierConfig]):
+    def __init__(self):
+        self._on_serve: bool = False
+
+    def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
+        if command == "serve":
+            self._on_serve = True
+
     @event_priority(-100)  # Run after all other plugins
     def on_post_build(self, *, config: MkDocsConfig) -> None:
 
@@ -27,6 +35,9 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
 
         if self.config.threads == 0:
             self.config.threads = int(cpu_count())
+        if self.config.threads < 1:
+            log.warning("Number of 'threads' cannot be smaller than 1 (changing to minimal 1)")
+            self.config.threads = 1
         log.info(f"Threads used for minifiers: {self.config.threads}")
 
         cached_files_list: Path = Path(self.config.cache_dir) / self.config.cache_file
@@ -40,32 +51,44 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
                 log.warning(f"File '{cached_files_list}' corrupted. Rebuilding cache.")
                 log.debug(e)
 
-        if self.config.png.enabled:
+        if self.config.png.enabled and (
+            (not self._on_serve) or (self._on_serve and self.config.png.enabled_on_serve)
+        ):
             minifiers.PngMinifier(
                 plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
             )()
 
-        if self.config.jpg.enabled:
-            minifiers.JpgMinifier(
+        if self.config.jpeg.enabled and (
+            (not self._on_serve) or (self._on_serve and self.config.jpeg.enabled_on_serve)
+        ):
+            minifiers.JpegMinifier(
                 plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
             )()
 
-        if self.config.svg.enabled:
+        if self.config.svg.enabled and (
+            (not self._on_serve) or (self._on_serve and self.config.svg.enabled_on_serve)
+        ):
             minifiers.SvgMinifier(
                 plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
             )()
 
-        if self.config.html.enabled:
+        if self.config.html.enabled and (
+            (not self._on_serve) or (self._on_serve and self.config.html.enabled_on_serve)
+        ):
             minifiers.HtmlMinifier(
                 plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
             )()
 
-        if self.config.css.enabled:
+        if self.config.css.enabled and (
+            (not self._on_serve) or (self._on_serve and self.config.css.enabled_on_serve)
+        ):
             minifiers.CssMinifier(
                 plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
             )()
 
-        if self.config.js.enabled:
+        if self.config.js.enabled and (
+            (not self._on_serve) or (self._on_serve and self.config.js.enabled_on_serve)
+        ):
             minifiers.JsMinifier(
                 plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
             )()

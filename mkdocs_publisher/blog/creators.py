@@ -1,4 +1,3 @@
-import importlib.resources
 import logging
 from collections import OrderedDict
 from datetime import datetime
@@ -6,17 +5,20 @@ from pathlib import Path
 from typing import Dict
 from typing import cast
 
-import frontmatter
 import jinja2
+import yaml
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
-from mkdocs_publisher._common.url import slugify
-from mkdocs_publisher._extra.assets import templates
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import resources
+
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared.urls import slugify
 from mkdocs_publisher.blog.structures import BlogConfig
 from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 
-log = logging.getLogger("mkdocs.plugins.publisher.blog")
+log = logging.getLogger("mkdocs.plugins.publisher.blog.creators")
 
 
 def create_blog_files(
@@ -149,8 +151,6 @@ def _create_pages(
 ) -> list[dict[str, str]]:
     config_nav = []
 
-    # pages_dir = blog_config.docs_dir / blog_config.blog_dir / sub_dir
-
     blog_temp_dir = blog_config.temp_dir / blog_config.plugin_config.slug
     blog_temp_dir.mkdir(exist_ok=True)
 
@@ -184,7 +184,8 @@ def _render_and_write_page(
     # templates = jinja2.Environment(loader=jinja2.FileSystemLoader("templates/"))
     # print(templates.list_templates())
     # template = templates.get_template("index.html")
-    index_template = importlib.resources.read_text(templates, "posts-list.html")
+
+    index_template = resources.read_template_file(template_file_name="posts-list.html")
     context = {
         "posts": single_posts_chunk,
         "site_url": str(blog_config.mkdocs_config.site_url),
@@ -199,10 +200,10 @@ def _render_and_write_page(
     )
     markdown = md_links.normalize(markdown=markdown, file_path=str(file_path))
     markdown = md_links.fix_relative_paths(markdown=markdown)
+    markdown = md_links.fix_blog_paths(markdown=markdown, source_file=file_path)
 
     # TODO: when using pub-meta key name should be taken from plugin config
-    page = frontmatter.Post(content=markdown)
-    page["title"] = page_title
+    page_meta = {"title": page_title}
     # TODO: consider moving slugify configuration to mkdocs.yaml
     if file_path.name.startswith("index-0"):
         slug = blog_config.plugin_config.slug
@@ -210,11 +211,11 @@ def _render_and_write_page(
         slug = f"{blog_config.plugin_config.slug}/{file_path.stem.split('-')[-1]}"
     else:
         slug = slugify(text=page_title.split("-")[-1].strip())
-    page["slug"] = slug
+    page_meta["slug"] = slug
 
-    page["status"] = "published"
+    page_meta["status"] = "published"
     if not blog_config.plugin_config.searchable_non_posts:
-        page["search"] = {"exclude": True}
+        page_meta["search"] = {"exclude": True}  # type: ignore
 
-    with open(file_path, mode="wb") as teasers_index:
-        frontmatter.dump(page, teasers_index)
+    with open(file_path, mode="w") as teasers_index:
+        teasers_index.write(f"---\n{yaml.dump(page_meta)}\n---\n\n{markdown}")

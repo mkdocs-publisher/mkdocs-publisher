@@ -6,11 +6,11 @@ from pathlib import Path
 from typing import Dict
 from typing import List
 from typing import Optional
-from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
-from mkdocs_publisher._common import mkdocs_utils
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
 
@@ -79,17 +79,13 @@ class BlogConfig:
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
-        self.meta_config: Optional[MetaPluginConfig] = cast(
-            MetaPluginConfig,
-            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta"),
-        )
+        self.meta_config: Optional[MetaPluginConfig] = mkdocs_utils.get_plugin_config(
+            mkdocs_config=mkdocs_config, plugin_name="pub-meta"
+        )  # type: ignore
         self.temp_dir = Path(plugin_config.temp_dir)
         self.docs_dir = Path(mkdocs_config.docs_dir)
         self.blog_dir = Path(plugin_config.blog_dir)
         self.site_dir = Path(mkdocs_config.site_dir)
         self.translation = Translate(config=plugin_config).translation
 
-        self.create_dirs()
-
-    def create_dirs(self):
         self.temp_dir.mkdir(exist_ok=True)

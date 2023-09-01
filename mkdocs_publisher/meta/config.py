@@ -9,13 +9,13 @@ class _MetaSlugConfig(Config):
 
 
 class _MetaStatusConfig(Config):
-    key_name = option.Type(str, default="status")
     search_in_hidden = option.Type(bool, default=False)
     search_in_draft = option.Type(bool, default=False)
     file_default = option.Choice(choices=["draft", "hidden", "published"], default="draft")
     file_warn_on_missing = option.Type(bool, default=True)
-    dir_default = option.Choice(choices=["draft", "published"], default="published")
+    dir_default = option.Choice(choices=["draft", "hidden", "published"], default="published")
     dir_warn_on_missing = option.Type(bool, default=False)
+    key_name = option.Type(str, default="status")
 
 
 class _MetaTitleConfig(Config):

@@ -1,0 +1,95 @@
+import logging
+import site
+from datetime import datetime
+from pathlib import Path
+
+import colorama
+
+from mkdocs_publisher.debugger.config import _DebuggerConsoleConfig
+from mkdocs_publisher.debugger.config import _DebuggerFileConfig
+
+colorama.init()
+
+SITE_PACKAGES_DIR = Path(site.getsitepackages()[0])
+LOG_LEVEL_COLOR_MAPPING = {
+    logging.DEBUG: colorama.Fore.BLUE,
+    logging.INFO: colorama.Fore.GREEN,
+    logging.WARNING: colorama.Fore.YELLOW,
+    logging.ERROR: colorama.Fore.RED,
+    logging.CRITICAL: colorama.Fore.RED,
+}
+
+
+class DatedFileHandler(logging.FileHandler):
+    def __init__(self, filename):
+        dated_filename = datetime.utcnow().strftime(str(filename))
+        Path(dated_filename).parent.mkdir(parents=True, exist_ok=True)
+        super().__init__(filename=dated_filename)
+
+
+class ProjectPathStreamFormatter(logging.Formatter):
+    def __init__(self, console_config: _DebuggerConsoleConfig):
+        self._console_config: _DebuggerConsoleConfig = console_config
+
+        super().__init__()
+
+    def format(self, record: logging.LogRecord) -> str:
+        path = Path(record.pathname)
+        try:
+            record.project_path = str(path.relative_to(path.cwd()))
+        except ValueError:
+            record.project_path = str(path)
+
+        fmt = "%(project_path)s:%(lineno)d " if self._console_config.show_code_link else ""
+
+        if self._console_config.show_entry_time:
+            fmt = f"{fmt}{colorama.Fore.MAGENTA}%(asctime)s{colorama.Fore.RESET} "
+
+        fmt = (
+            f'{fmt}[{LOG_LEVEL_COLOR_MAPPING.get(record.levelno) or ""}'
+            f"%(levelname)-5.5s{colorama.Fore.RESET}] %(message)s"
+        )
+
+        if self._console_config.show_logger_name:
+            fmt = f"{fmt} {colorama.Fore.CYAN}[%(name)s]{colorama.Fore.RESET}"
+
+        self._style._fmt = fmt
+        self.datefmt = str(self._console_config.entry_time_format).replace(
+            "%f", str(record.msecs)[0:3]
+        )
+
+        return super().format(record=record)
+
+
+class ProjectPathFileFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        project_file_path = Path(record.pathname)
+        try:
+            record.project_path = str(
+                project_file_path.relative_to(
+                    SITE_PACKAGES_DIR
+                    if "site-packages" in str(project_file_path)
+                    else project_file_path.cwd()
+                )
+            )
+        except ValueError:
+            record.project_path = str(project_file_path)
+        return super().format(record=record)
+
+
+class ProjectPathConsoleFilter(logging.Filter):
+    def __init__(self, console_config: _DebuggerConsoleConfig):
+        self._console_config: _DebuggerConsoleConfig = console_config
+        super().__init__()
+
+    def filter(self, record):
+        return record if record.name not in self._console_config.filter_logger_names else None
+
+
+class ProjectPathFileFilter(logging.Filter):
+    def __init__(self, file_config: _DebuggerFileConfig):
+        self._file_config: _DebuggerFileConfig = file_config
+        super().__init__()
+
+    def filter(self, record):
+        return record if record.name not in self._file_config.filter_logger_names else None

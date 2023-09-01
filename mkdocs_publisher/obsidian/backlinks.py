@@ -9,7 +9,8 @@ from typing import cast
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.pages import Page
 
-from mkdocs_publisher._common.url import slugify
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared.urls import slugify
 from mkdocs_publisher.blog.plugin import BlogPlugin
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.backlinks")
@@ -50,7 +51,7 @@ class Backlink:
         return match.group(1)
 
     def _create_anchor_link(self, match: re.Match):
-        """Create an a backlink with an additional anchor link"""
+        """Create a backlink with an additional anchor link"""
         anchor_link = match.group(3) if match.group(3) is not None else ""
         backlink = match.group(2)
         backlink_anchor_link = self._build_anchor_link(backlink=backlink, anchor_link=anchor_link)
@@ -104,6 +105,10 @@ class Backlink:
             original_link_source != original_link_destination
             and original_link_source not in temp_blog_files
         ):
+            log.debug(
+                f"Found backlink to: {match.group(2)}"
+                f"{match.group(3) if match.group(3) is not None else ''}"
+            )
             if original_link_destination not in self._backlinks:
                 self._backlinks[original_link_destination] = [link]
             else:

@@ -5,5 +5,8 @@
 .venv
 __pycache__
 .idea
+.env
 dist
+*_mkdocs_build.log
+*_mkdocs_debug.zip
 */.obsidian/plugins/obsidian-languagetool-plugin

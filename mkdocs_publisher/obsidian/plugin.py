@@ -1,13 +1,9 @@
-import importlib
-import importlib.resources
-import importlib.util
 import logging
 from pathlib import Path
 from typing import Callable
 from typing import Dict
 from typing import List
 from typing import Optional
-from typing import cast
 
 import jinja2
 import watchdog.events
@@ -21,24 +17,26 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 from mkdocs.utils import meta as meta_parser
 
-from mkdocs_publisher._common import resources
-from mkdocs_publisher._common.html_modifiers import HTMLModifier
-from mkdocs_publisher._extra.assets import templates
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import resources
+
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared.html_modifiers import HTMLModifier
 from mkdocs_publisher.obsidian.backlinks import Backlink
 from mkdocs_publisher.obsidian.backlinks import Link
-from mkdocs_publisher.obsidian.callout import CalloutToAdmonition
+from mkdocs_publisher.obsidian.callouts import CalloutToAdmonition
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 from mkdocs_publisher.obsidian.vega import VegaCharts
 
-log = logging.getLogger("mkdocs.plugins.publisher.obsidian")
+log = logging.getLogger("mkdocs.plugins.publisher.obsidian.plugin")
 
 
 class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def __init__(self):
-        self._backlink: Backlink = cast(Backlink, None)
+        self._backlink: Optional[Backlink] = None
         self._backlink_links: Dict[str, List[Link]] = {}
-        self._md_links: MarkdownLinks = cast(MarkdownLinks, None)
+        self._md_links: Optional[MarkdownLinks] = None
         self._vega_pages: List[Page] = list()
 
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
@@ -50,17 +48,19 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         self, nav: Navigation, *, config: MkDocsConfig, files: Files
     ) -> Optional[Navigation]:
 
-        for file in files:
-            if file.page is not None and self.config.backlinks.enabled:
-                log.debug(f"Parse backlinks for backlinks in '{file.src_path}'")
-                with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
-                    markdown, meta = meta_parser.get_data(md_file.read())
+        if self.config.backlinks.enabled:
+            log.info("Parsing backlinks")
+            for file in files:
+                if file.page is not None:
+                    log.debug(f"Parsing backlinks in file '{file.src_path}'")
+                    with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
+                        markdown, meta = meta_parser.get_data(md_file.read())
 
-                    markdown = self._md_links.normalize(
-                        markdown=markdown, file_path=str(file.src_uri)
-                    )
+                        markdown = self._md_links.normalize(
+                            markdown=markdown, file_path=str(file.src_uri)
+                        )
 
-                    self._backlink.find_markdown_links(markdown=markdown, page=file.page)
+                        self._backlink.find_markdown_links(markdown=markdown, page=file.page)
         return nav
 
     @event_priority(100)  # Run before all other plugins
@@ -88,8 +88,10 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             markdown = self._backlink.convert_to_anchor_link(markdown=markdown)
             page_backlinks = self._backlink_links.get(f"{page.file.src_uri}", None)
             if page_backlinks is not None:
-                log.debug(f"Add backlinks to '{page.file.src_uri}'")
-                backlink_template = importlib.resources.read_text(templates, "backlinks.html")
+                log.debug(f"Adding backlinks to '{page.file.src_uri}'")
+                backlink_template = resources.read_template_file(
+                    template_file_name="backlinks.html"
+                )
                 context = {
                     "backlinks": page_backlinks,
                     "title": "Backlinks",  # TODO: move to translations
@@ -121,6 +123,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         return output
 
+    # noinspection PyProtectedMember
     def on_serve(
         self, server: LiveReloadServer, *, config: MkDocsConfig, builder: Callable
     ) -> Optional[LiveReloadServer]:
@@ -128,6 +131,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         docs_dirs_to_skip = [str(Path(config.docs_dir) / self.config.obsidian_dir)]
 
+        # noinspection PyProtectedMember
         def no_obsidian_callback(event):
             """Watcher implementation that skips .obsidian directory"""
             if (
@@ -138,6 +142,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 return
             log.debug(str(event))
             with server._rebuild_cond:
+                # noinspection PyProtectedMember
                 server._to_rebuild[server.builder] = True
                 server._rebuild_cond.notify_all()
 

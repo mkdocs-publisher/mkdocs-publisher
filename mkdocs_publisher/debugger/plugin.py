@@ -1,0 +1,122 @@
+import logging
+import platform
+import sys
+from io import BytesIO
+from pathlib import Path
+from typing import Literal
+from zipfile import ZIP_DEFLATED
+from zipfile import ZipFile
+
+from mkdocs.plugins import BasePlugin
+from mkdocs.plugins import event_priority
+
+# noinspection PyProtectedMember
+from mkdocs_publisher._shared import file_utils
+from mkdocs_publisher.debugger import loggers
+from mkdocs_publisher.debugger.config import DebuggerConfig
+
+log = logging.getLogger("mkdocs.plugins.publisher.debug.plugin")
+
+LOG_FILENAME_SUFFIX = "_mkdocs_build.log"
+ZIP_FILENAME_SUFFIX = "_mkdocs_debug.zip"
+FILES_TO_ZIP_LIST = [
+    "mkdocs.yml",
+    "requirements.txt",
+    "pyproject.toml",
+    "poetry.lock",
+    ".gitignore",
+]
+PIP_FREEZE_FILENAME = "requirements_freeze.txt"
+
+
+# noinspection PyProtectedMember
+class DebuggerPlugin(BasePlugin[DebuggerConfig]):
+    def __init__(self):
+        self._mkdocs_log_stream_handler: logging.Handler = logging.getLogger("mkdocs").handlers[0]
+
+        self._mkdocs_log_file_handler: loggers.DatedFileHandler = loggers.DatedFileHandler(
+            filename=f"%Y%m%d_%H%M%S{LOG_FILENAME_SUFFIX}"
+        )
+
+        self._mkdocs_log_file: str = str(Path(self._mkdocs_log_file_handler.baseFilename).name)
+        self._mkdocs_log_date: str = self._mkdocs_log_file.replace(LOG_FILENAME_SUFFIX, "")
+
+    @event_priority(-100)  # Run before all other plugins
+    def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
+
+        if self.config.console_log.enabled:
+            self._mkdocs_log_stream_handler.setFormatter(
+                loggers.ProjectPathStreamFormatter(console_config=self.config.console_log)
+            )
+            self._mkdocs_log_stream_handler.addFilter(
+                loggers.ProjectPathConsoleFilter(console_config=self.config.console_log)
+            )
+            # noinspection PyUnresolvedReferences
+            self._mkdocs_log_stream_handler.level = logging._nameToLevel[
+                self.config.console_log.log_level
+            ]
+
+            logging.getLogger("root").handlers = [self._mkdocs_log_stream_handler]
+
+        if self.config.file_log.enabled:
+            self._mkdocs_log_file_handler.setFormatter(
+                loggers.ProjectPathFileFormatter(fmt=self.config.file_log.log_format)
+            )
+            self._mkdocs_log_file_handler.addFilter(
+                loggers.ProjectPathFileFilter(file_config=self.config.file_log)
+            )
+            # noinspection PyUnresolvedReferences
+            self._mkdocs_log_file_handler.level = logging._nameToLevel[
+                self.config.file_log.log_level
+            ]
+
+            logging.getLogger("mkdocs").handlers.append(self._mkdocs_log_file_handler)
+
+            if self.config.file_log.remove_old_files:
+                for log_file in Path(".").rglob(f"*{LOG_FILENAME_SUFFIX}"):
+                    if str(log_file) != self._mkdocs_log_file:
+                        log_file.unlink(missing_ok=True)
+
+    @event_priority(100)  # Run after  all other plugins
+    def on_shutdown(self) -> None:
+        if self.config.file_log.enabled:
+            log.info(f"Platform: {platform.platform()}")
+            log.info(
+                f"Python version: {platform.python_version()} "
+                f"(using virtual environment: {str(sys.prefix != sys.base_prefix).lower()})"
+            )
+            log.info(f"Build log file: {self._mkdocs_log_file_handler.baseFilename}")
+
+        if self.config.zip_log.enabled:
+            zip_file_name = f"{self._mkdocs_log_date}{ZIP_FILENAME_SUFFIX}"
+
+            if self.config.zip_log.remove_old_files:
+                for log_file in Path(".").rglob(f"*{ZIP_FILENAME_SUFFIX}"):
+                    if str(log_file) != zip_file_name:
+                        log_file.unlink(missing_ok=True)
+
+            archive = BytesIO()
+            with ZipFile(archive, "a", ZIP_DEFLATED, False) as archive_file:
+
+                # Zip files from list
+                for file_to_zip in FILES_TO_ZIP_LIST:
+                    if Path(file_to_zip).exists():
+                        log.debug(f"File: {file_to_zip} added to archive")
+                        archive_file.write(filename=file_to_zip, arcname=file_to_zip)
+                    else:
+                        log.debug(f"File: {file_to_zip} doesn't exists and not added to archive")
+
+                # Write pip freeze as file
+                if self.config.zip_log.add_pip_freeze:
+                    pip_run = file_utils.run_subprocess(["pip", "freeze", "--local"])
+                    archive_file.writestr(
+                        zinfo_or_arcname=PIP_FREEZE_FILENAME,
+                        data=pip_run.stdout.decode("utf-8"),
+                    )
+
+                # Write build log file
+                archive_file.write(filename=self._mkdocs_log_file, arcname=self._mkdocs_log_file)
+
+            with open(zip_file_name, "wb") as zip_file:
+                zip_file.write(archive.getvalue())
+                log.info(f"Debugger ZIP file: {zip_file_name}")

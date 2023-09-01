@@ -11,13 +11,15 @@ repos:
 #        files: (?<!\.min)\.css$
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.4.0
     hooks:
-      - id: check-json
       - id: end-of-file-fixer
+        exclude: ^(docs|mkdocs_publisher_docs/.obsidian)/
       - id: trailing-whitespace
+        exclude: ^(docs|mkdocs_publisher_docs/.obsidian)/
       - id: check-shebang-scripts-are-executable
       - id: check-symlinks
+      - id: check-json
       - id: check-toml
       - id: detect-private-key
       - id: no-commit-to-branch
