@@ -3,8 +3,16 @@ repos:
     rev: v1.5.4
     hooks:
       - id: insert-license
+        name: insert project license into Python files
+        files: ^mkdocs_publisher/
+        types: [file, text, python]
+        args:
+          - --license-filepath
+          - LICENSE
+          - --use-current-year
+          - --allow-past-years
+      - id: insert-license
         name: insert project license into HTML files
-        verbose: true
         files: ^mkdocs_publisher/
         types: [file, text, html]
         args:
@@ -13,6 +21,31 @@ repos:
           - --comment-style
           - <!--|  ~|  -->
           - --use-current-year
+          - --allow-past-years
+      - id: insert-license
+        name: insert project license into CSS files
+        files: ^mkdocs_publisher/
+        exclude: \.min.css$
+        types: [file, text, css]
+        args:
+          - --license-filepath
+          - LICENSE
+          - --comment-style
+          - /*| *| */
+          - --use-current-year
+          - --allow-past-years
+      - id: insert-license
+        name: insert project license into JS files
+        files: ^mkdocs_publisher/
+        exclude: \.min.js$
+        types: [file, text, javascript]
+        args:
+          - --license-filepath
+          - LICENSE
+          - --comment-style
+          - //
+          - --use-current-year
+          - --allow-past-years
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
