@@ -1,14 +1,18 @@
 repos:
-#  - repo: local
-#    hooks:
-#      - id: process-css
-#        name: .min.css and .min.css.map files generation
-#        description: Generate CSS min and map files.
-#        entry: postcss
-#        args: ['-m', '-u', 'cssnano', 'postcss-svgo',
-#               '--ext', '.min.css', '--dir', '.', '--base', '.']
-#        language: system
-#        files: (?<!\.min)\.css$
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+      - id: insert-license
+        name: insert project license into HTML files
+        verbose: true
+        files: ^mkdocs_publisher/
+        types: [file, text, html]
+        args:
+          - --license-filepath
+          - LICENSE
+          - --comment-style
+          - <!--|  ~|  -->
+          - --use-current-year
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
