@@ -4,7 +4,7 @@ repos:
     hooks:
       - id: insert-license
         name: insert project license into Python files
-        files: ^mkdocs_publisher/
+        files: ^(mkdocs_publisher|tests)/
         types: [file, text, python]
         args:
           - --license-filepath
@@ -60,6 +60,8 @@ repos:
       - id: check-toml
       - id: detect-private-key
       - id: no-commit-to-branch
+      - id: name-tests-test
+        files: ^tests/
 
   - repo: local
     hooks:
@@ -101,3 +103,10 @@ repos:
         language: system
         types:
           - python
+
+      - id: pytest-check
+        name: run unittests
+        entry: poetry run pytest
+        language: system
+        pass_filenames: false
+        always_run: true

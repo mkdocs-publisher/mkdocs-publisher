@@ -39,7 +39,9 @@ log = logging.getLogger("mkdocs.plugins.publisher._shared.resources")
 
 def _add_extra_file(
     resource_file_path: Path,
-    config: MkDocsConfig,
+    site_dir: str,
+    use_directory_urls: bool,
+    config_extra_files: list,
     files: Files,
 ):
     assets_path = Path(str(importlib.resources.files(assets)))
@@ -49,11 +51,11 @@ def _add_extra_file(
             File(
                 path=extra_file_path,
                 src_dir=str(assets_path.parent),
-                dest_dir=str(config.site_dir),
-                use_directory_urls=config.use_directory_urls,
+                dest_dir=str(site_dir),
+                use_directory_urls=use_directory_urls,
             )
         )
-        config.extra_css.append(extra_file_path)
+        config_extra_files.append(extra_file_path)
         log.debug(f"Extra file added: {extra_file_path}")
     else:
         log.error(f"Extra file doesn't exists: {extra_file_path}")
@@ -67,13 +69,25 @@ def add_extra_css(
     css_file_path = Path(
         str(importlib.resources.files(stylesheets).joinpath(stylesheet_file_name))
     )
-    _add_extra_file(resource_file_path=css_file_path, config=config, files=files)
+    _add_extra_file(
+        resource_file_path=css_file_path,
+        site_dir=config.site_dir,
+        use_directory_urls=config.use_directory_urls,
+        config_extra_files=config.extra_css,
+        files=files,
+    )
 
     if add_map:
         css_map_file_path = Path(
             str(importlib.resources.files(stylesheets).joinpath(f"{stylesheet_file_name}.map"))
         )
-        _add_extra_file(resource_file_path=css_map_file_path, config=config, files=files)
+        _add_extra_file(
+            resource_file_path=css_map_file_path,
+            site_dir=config.site_dir,
+            use_directory_urls=config.use_directory_urls,
+            config_extra_files=config.extra_css,
+            files=files,
+        )
 
 
 def read_template_file(template_file_name: str) -> str:

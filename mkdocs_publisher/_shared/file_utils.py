@@ -28,7 +28,7 @@ from typing import List
 from typing import Optional
 from uuid import uuid4
 
-log = logging.getLogger(__name__)
+log = logging.getLogger("mkdocs.plugins.publisher._shared.file_utils")
 
 
 def run_subprocess(cmd, capture_output: bool = True) -> subprocess.CompletedProcess:

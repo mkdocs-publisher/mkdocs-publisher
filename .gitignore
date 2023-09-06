@@ -1,11 +1,14 @@
 # created by virtualenv automatically
 .DS_Store
 .cache
+.coverage
+.pytest_cache
 .temp
 .venv
 __pycache__
 .idea
 .env
+htmlcov
 dist
 *_mkdocs_build.log
 *_mkdocs_debug.zip
