@@ -3,7 +3,7 @@ title: Setting up a blog
 slug: pub-blog
 status: published
 date: 2023-02-12 22:00:00
-update: 2023-08-14 11:16:21
+update: 2023-09-14 17:24:42
 description: Setting up a Publisher for MkDocs blog plugin for blogging functionality
 categories:
   - setup
@@ -89,7 +89,7 @@ The last thing is to add a blog to a site navigation. There are 2 ways to do it:
 	```yaml hl_lines="3-6"
 	plugins:
 	  - pub-blog:
-		  teaser_marker: `<!-- more -->`
+		  teaser_marker: "<!-- more -->"
 		  searchable_non_posts: false
 		  posts_per_page: 5
 		  slug: blog
@@ -165,7 +165,7 @@ To set up one of the above languages, the following line has to be added to the 
 ```yaml hl_lines="3"
 plugin:
   - pub-blog:
-      lang: 'pl'
+      lang: "pl"
 ```
 
 #### Translation

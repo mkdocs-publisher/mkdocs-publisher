@@ -77,9 +77,8 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                     log.debug(f"Parsing backlinks in file '{file.src_path}'")
                     with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
                         markdown, meta = meta_parser.get_data(md_file.read())
-
-                        markdown = self._md_links.normalize(
-                            markdown=markdown, file_path=str(file.src_uri)
+                        markdown = self._md_links.normalize_links(
+                            markdown=markdown, current_file_path=str(file.src_uri)
                         )
 
                         self._backlink.find_markdown_links(markdown=markdown, page=file.page)
@@ -90,7 +89,9 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
     ) -> Optional[str]:
         # TODO: add verification if relative backlinks are enabled in .obsidian config
-        markdown = self._md_links.normalize(markdown=markdown, file_path=str(page.file.src_uri))
+        markdown = self._md_links.normalize_links(
+            markdown=markdown, current_file_path=str(page.file.src_uri)
+        )
 
         if self.config.callouts.enabled:
             # TODO: add verification if all things are enabled in mkdocs.yaml config file

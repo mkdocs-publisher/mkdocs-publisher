@@ -110,7 +110,7 @@ reportOptionalMemberAccess = false
 typeCheckingMode = "basic"
 
 [tool.pytest.ini_options]
-addopts = "--tb=short --cov-report=html --cov=mkdocs_publisher"
+addopts = "--tb=short --log-level=DEBUG --cov-report=html --cov=mkdocs_publisher"
 markers = [
     "deprecated: Tests no longer used",
     ]

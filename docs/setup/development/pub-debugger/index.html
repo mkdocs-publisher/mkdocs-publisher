@@ -19,10 +19,10 @@ Setting up debugger - Publisher for MkDocs
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet">
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
 <link href="../../../assets/stylesheets/publisher.css" rel="stylesheet">
-<link href="../../../assets/stylesheets/blog.min.css" rel="stylesheet">
-<link href="../../../assets/stylesheets/blog.min.css.map" rel="stylesheet">
 <link href="../../../assets/stylesheets/obsidian.min.css" rel="stylesheet">
 <link href="../../../assets/stylesheets/obsidian.min.css.map" rel="stylesheet">
+<link href="../../../assets/stylesheets/blog.min.css" rel="stylesheet">
+<link href="../../../assets/stylesheets/blog.min.css.map" rel="stylesheet">
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta content="article" property="og:type">
 <meta content="Setting up debugger" property="og:title">
@@ -626,19 +626,19 @@ plugin. It's built with 3 main modules:
 </p>
 <ul>
 <li>
-<a href="#logging-to-the-console">
+<a href="#Logging%20to%20the%20console">
 console logger
 </a>
 that allows to change the output produced to the console,
 </li>
 <li>
-<a href="#logging-to-the-file">
+<a href="#Logging%20to%20the%20file">
 file logger
 </a>
 that allows to produce the log file,
 </li>
 <li>
-<a href="#generating-zip-file">
+<a href="#Generating%20Zip%20file">
 Zip file generator
 </a>
 that allows to produce a Zip file with log file produced by previous module and some additional files like
@@ -891,14 +891,14 @@ mkdocs.yml
 <div class="highlight language-yaml">
 <pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-debugger</span><span class="p">:</span>
-</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="hll"><span class="w">    </span><span class="nt">console_log</span><span class="p">:</span>
-</span></span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="hll"><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="hll"><span class="w">      </span><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
-</span></span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="hll"><span class="w">      </span><span class="nt">show_code_link</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span></span><span id="__span-4-7"><a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="hll"><span class="w">      </span><span class="nt">show_logger_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-4-8"><a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="hll"><span class="w">      </span><span class="nt">show_entry_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-4-9"><a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="hll"><span class="w">      </span><span class="nt">entry_time_format</span><span class="p">:</span><span class="w"> </span><span class="s">"%H:%M:%S.%f"</span>
-</span></span><span id="__span-4-10"><a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="hll"><span class="w">      </span><span class="nt">filter_logger_names</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="hll"><span class="w">      </span><span class="nt">console_log</span><span class="p">:</span>
+</span></span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="hll"><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="hll"><span class="w">        </span><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
+</span></span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="hll"><span class="w">        </span><span class="nt">show_code_link</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span></span><span id="__span-4-7"><a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="hll"><span class="w">        </span><span class="nt">show_logger_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></span><span id="__span-4-8"><a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="hll"><span class="w">        </span><span class="nt">show_entry_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></span><span id="__span-4-9"><a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="hll"><span class="w">        </span><span class="nt">entry_time_format</span><span class="p">:</span><span class="w"> </span><span class="s">"%H:%M:%S.%f"</span>
+</span></span><span id="__span-4-10"><a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="hll"><span class="w">        </span><span class="nt">filter_logger_names</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 </span></span></code></pre>
 </div>
 <p>
@@ -906,7 +906,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#debuggerconsoleenabled" id="+debugger.zip.enabled">
+<a href="#+debugger.console.enabled" id="+debugger.zip.enabled">
 enabled
 </a>
 </summary>
@@ -916,7 +916,7 @@ Controls if console log will be replaced with a new, richer format.
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerconsolelog_level" id="+debugger.zip.log_level">
+<a href="#+debugger.console.log_level" id="+debugger.zip.log_level">
 log_level
 </a>
 </summary>
@@ -930,7 +930,7 @@ log level
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerconsoleshow_code_link" id="+debugger.zip.show_code_link">
+<a href="#+debugger.console.show_code_link" id="+debugger.zip.show_code_link">
 show_code_link
 </a>
 </summary>
@@ -940,7 +940,7 @@ Controls if the code link part is visible in the log message (useful for IDE lik
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerconsoleshow_logger_name" id="+debugger.zip.show_logger_name">
+<a href="#+debugger.console.show_logger_name" id="+debugger.zip.show_logger_name">
 show_logger_name
 </a>
 </summary>
@@ -950,7 +950,7 @@ Controls if the logger name part is visible in the log message (useful when you 
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerconsoleshow_entry_time" id="+debugger.zip.show_entry_time">
+<a href="#+debuggerconsoleshow_entry_time" id="+debugger.zip.show_entry_time">
 show_entry_time
 </a>
 </summary>
@@ -960,7 +960,7 @@ Controls if the time entry part is visible in the log message.
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerconsoleentry_time_format" id="+debugger.zip.entry_time_format">
+<a href="#+debugger.console.entry_time_format" id="+debugger.zip.entry_time_format">
 entry_time_format
 </a>
 </summary>
@@ -974,7 +974,7 @@ time format
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerconsolefilter_logger_names" id="+debugger.zip.filter_logger_names">
+<a href="#+debugger.console.filter_logger_names" id="+debugger.zip.filter_logger_names">
 filter_logger_names
 </a>
 </summary>
@@ -1007,12 +1007,12 @@ mkdocs.yml
 <div class="highlight language-yaml">
 <pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-debugger</span><span class="p">:</span>
-</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="hll"><span class="w">    </span><span class="nt">file_log</span><span class="p">:</span>
-</span></span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="hll"><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-5-5"><a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="hll"><span class="w">      </span><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span>
-</span></span><span id="__span-5-6"><a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="hll"><span class="w">      </span><span class="nt">log_format</span><span class="p">:</span><span class="w"> </span><span class="s">"[%(created).14s][%(levelname)-5.5s][%(project_path)s:%(lineno)d]</span><span class="nv"> </span><span class="s">%(message)s"</span>
-</span></span><span id="__span-5-7"><a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="hll"><span class="w">      </span><span class="nt">remove_old_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-5-8"><a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="hll"><span class="w">      </span><span class="nt">filter_logger_names</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="hll"><span class="w">      </span><span class="nt">file_log</span><span class="p">:</span>
+</span></span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="hll"><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></span><span id="__span-5-5"><a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="hll"><span class="w">        </span><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span>
+</span></span><span id="__span-5-6"><a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="hll"><span class="w">        </span><span class="nt">log_format</span><span class="p">:</span><span class="w"> </span><span class="s">"[%(created).14s][%(levelname)-5.5s][%(project_path)s:%(lineno)d]</span><span class="nv"> </span><span class="s">%(message)s"</span>
+</span></span><span id="__span-5-7"><a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="hll"><span class="w">        </span><span class="nt">remove_old_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></span><span id="__span-5-8"><a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="hll"><span class="w">        </span><span class="nt">filter_logger_names</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 </span></span></code></pre>
 </div>
 <p>
@@ -1020,7 +1020,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#debuggerfileenabled" id="+debugger.zip.enabled">
+<a href="#+debugger.file.enabled" id="+debugger.zip.enabled">
 enabled
 </a>
 </summary>
@@ -1030,7 +1030,7 @@ Controls if log file will be created.
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerfilelog_level" id="+debugger.zip.log_level">
+<a href="#+debugger.file.log_level" id="+debugger.zip.log_level">
 log_level
 </a>
 </summary>
@@ -1044,7 +1044,7 @@ log level
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerfilelog_format" id="+debugger.zip.log_format">
+<a href="#+debugger.file.log_format" id="+debugger.zip.log_format">
 log_format
 </a>
 </summary>
@@ -1058,7 +1058,7 @@ of the message that will be put into the log file.
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerfileremove_old_files" id="+debugger.zip.remove_old_files">
+<a href="#+debugger.file.remove_old_files" id="+debugger.zip.remove_old_files">
 remove_old_files
 </a>
 </summary>
@@ -1068,7 +1068,7 @@ Controls if previously created log files will be removed while creating a new on
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerfilefilter_logger_names" id="+debugger.zip.filter_logger_names">
+<a href="#+debugger.file.filter_logger_names" id="+debugger.zip.filter_logger_names">
 filter_logger_names
 </a>
 </summary>
@@ -1101,10 +1101,10 @@ mkdocs.yml
 <div class="highlight language-yaml">
 <pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-6-2"><a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-debugger</span><span class="p">:</span>
-</span><span id="__span-6-3"><a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="hll"><span class="w">    </span><span class="nt">zip_log</span><span class="p">:</span>
-</span></span><span id="__span-6-4"><a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="hll"><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-6-5"><a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="hll"><span class="w">      </span><span class="nt">remove_old_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-6-6"><a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="hll"><span class="w">      </span><span class="nt">add_pip_freeze</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-6-3"><a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="hll"><span class="w">      </span><span class="nt">zip_log</span><span class="p">:</span>
+</span></span><span id="__span-6-4"><a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="hll"><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></span><span id="__span-6-5"><a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="hll"><span class="w">        </span><span class="nt">remove_old_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></span><span id="__span-6-6"><a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="hll"><span class="w">        </span><span class="nt">add_pip_freeze</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></span></code></pre>
 </div>
 <p>
@@ -1112,7 +1112,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#debuggerzipenabled" id="+debugger.zip.enabled">
+<a href="#+debugger.zip.enabled" id="+debugger.zip.enabled">
 enabled
 </a>
 </summary>
@@ -1122,7 +1122,7 @@ Controls if zip file will be created.
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerzipremove_old_files" id="+debugger.zip.remove_old_files">
+<a href="#+debugger.zip.remove_old_files" id="+debugger.zip.remove_old_files">
 remove_old_files
 </a>
 </summary>
@@ -1132,7 +1132,7 @@ Controls if previously created zip files will be removed while creating a new on
 </details>
 <details class="settings">
 <summary>
-<a href="#debuggerzipadd_pip_freeze" id="+debugger.zip.add_pip_freeze">
+<a href="#+debugger.zip.add_pip_freeze" id="+debugger.zip.add_pip_freeze">
 add_pip_freeze
 </a>
 </summary>

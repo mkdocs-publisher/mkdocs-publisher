@@ -3,7 +3,7 @@ title: v1.0.0 - 2023-06-13
 slug: v100
 status: published
 date: 2023-05-19 15:40:36
-update: 2023-08-01 11:51:14
+update: 2023-09-1 11:51:14
 tags:
   - v1.x
 description: Publisher for MkDocs v0.6.0

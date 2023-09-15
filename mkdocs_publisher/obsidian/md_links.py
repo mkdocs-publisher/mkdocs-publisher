@@ -22,8 +22,10 @@
 
 import logging
 import re
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
+from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
@@ -37,125 +39,231 @@ from mkdocs_publisher.obsidian.config import _ObsidianLinksConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.md_links")
 
+ANCHOR_RE_PART = r"((#(?P<anchor>([^|\][()]+)))?)"
+EXTRA_RE_PART = r"( *({(?P<extra>[\w+=. ]+)})?)"
+IMAGE_RE_PART = r"((\|(?P<image>([0-9x]+)))?)"
+LINK_RE_PART = r"(?P<link>(?!https?://)[^#()\s]+)"
+TEXT_RE_PART = r"(?P<text>[ \S]+)"
 
-WIKI_LINK_RE = re.compile(r"(?<!!)\[\[(\S+[|[ \S]+]*)]]")
-WIKI_LINK_EMBED_RE = re.compile(r"!\[\[(\S+[|[ \S]+]*)]]")
-MARKDOWN_LINK_RE = re.compile(r"(?<!!)\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]?)(#[\w\S]+)?\)")
-MARKDOWN_LINK_EMBED_RE = re.compile(r"!\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]+)\)")
-MARKDOWN_FILE_RE = re.compile(r"\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]+.md)(#[\w\S]+)?\)")
+WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[(?P<link>[^#()\s]+){ANCHOR_RE_PART}[|]{TEXT_RE_PART}]]")
+WIKI_EMBED_LINK_RE = re.compile(
+    rf"!\[\[{LINK_RE_PART}{ANCHOR_RE_PART}{IMAGE_RE_PART}]]{EXTRA_RE_PART}"
+)
+MD_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}\)")
+MD_EMBED_LINK_RE = re.compile(rf"!\[{TEXT_RE_PART}]\({LINK_RE_PART}\){EXTRA_RE_PART}")
+RELATIVE_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}\)")
+
+
+class RelativePathFinder:
+    def __init__(self, current_file_path: Path, docs_dir: Path, relative_path: Path):
+        self._current_file_path: Path = current_file_path
+        self._docs_dir: Path = docs_dir
+        self._relative_path: Path = relative_path
+
+    @property
+    def current_file_path(self) -> Path:
+        return self._current_file_path
+
+    @property
+    def relative_path(self) -> Path:
+        return self._relative_path
+
+    def get_full_file_path(self, file_path: Path) -> Optional[Path]:
+        full_file_path = self._docs_dir / file_path
+        log.debug(f"Looking for file: {str(full_file_path)}")
+        if not full_file_path.is_file():
+            found_files_list: list[Path] = [f for f in self._docs_dir.glob(f"**/{file_path}")]
+            log.debug(f"List of found files: {found_files_list}")
+
+            for found_file in found_files_list:
+                found_file_path = found_file.resolve(strict=True)
+                if found_file_path.is_file():
+                    log.debug(f"File found: {found_file_path}")
+                    full_file_path = found_file_path
+                    break
+            else:
+                full_file_path = None
+                log.error(f'File: "{file_path}" doesn\'t exists (from: "{self._docs_dir}")')
+        return full_file_path
+
+    def get_relative_file_path(self, file_path: Path) -> Path:
+        current_file_parts = list(Path(self._current_file_path).parts)
+        current_file_parts[0] = str(self._relative_path)
+        found_file_parts = list(file_path.relative_to(self._docs_dir).parts)
+        relative_file_parts = []
+        relative_file_missing_pieces = found_file_parts[:]
+        index = 0
+        for index, part in enumerate(current_file_parts[:-1]):
+            try:
+                if part == found_file_parts[index]:
+                    del relative_file_missing_pieces[0]
+                else:
+                    relative_file_parts.append("..")
+            except IndexError:
+                relative_file_parts.append("..")
+                relative_file_parts.extend(relative_file_missing_pieces)
+        if index < len(found_file_parts):
+            relative_file_parts.extend(relative_file_missing_pieces)
+        return Path(*relative_file_parts)
+
+
+@dataclass
+class LinkMatch:
+    link: str
+    text: str
+    anchor: Optional[str]
+    is_wiki: bool = False
+
+    def __repr__(self):
+        if self.anchor:
+            anchor = f"#{slugify(text=self.anchor)}"
+        else:
+            anchor = ""
+        if self.is_wiki:
+            link = f"{self.link}.md"
+        else:
+            link = self.link
+        return f"[{self.text}]({link}{anchor})"
+
+
+@dataclass
+class WikiEmbedLinkMatch:
+    link: str
+    image: Optional[str]
+    anchor: Optional[str]
+    extra: Optional[str]
+
+    def __repr__(self):
+        if self.extra:
+            extra: list = self.extra.strip().split(" ")
+        else:
+            extra = []
+        if self.image:
+            try:
+                width, height = self.image.split("x")
+            except ValueError:
+                width = self.image
+                height = None
+            extra.append(f"width={width}")
+            if height:
+                extra.append(f"height={height}")
+        if str(self.link).lower().endswith(".pdf"):
+            extra.append("pdfjs")
+            if self.anchor:
+                extra.append(self.anchor)
+            self.anchor = None
+        link_extra = f'{{{" ".join(extra)}}}' if extra else ""
+        return f"![{self.link.split('/')[-1]}]({self.link}){link_extra}"
+
+
+@dataclass
+class MdEmbedLinkMatch:
+    link: str
+    text: str
+    extra: Optional[str]
+    is_loading_lazy: bool = True
+
+    def __repr__(self):
+        if self.extra:
+            extra: list = self.extra.strip().split(" ")
+        else:
+            extra = []
+        if self.is_loading_lazy and "loading=lazy" not in extra:
+            extra.append("loading=lazy")
+        if extra:
+            link_extra = f'{{{" ".join(extra)}}}'
+        else:
+            link_extra = ""
+        return f"![{self.text}]({self.link}){link_extra}"
+
+
+@dataclass
+class RelativeLinkMatch:
+    link: str
+    text: str
+    anchor: Optional[str]
+    relative_path_finder: Optional[RelativePathFinder] = None
+
+    def __repr__(self):
+        if self.anchor:
+            anchor = f"#{slugify(text=self.anchor)}"
+        else:
+            anchor = ""
+        # The same page anchor link doesn't have file part
+        if self.link.startswith("#"):
+            return f"[{self.text}]({self.link})"
+        # Link from blog sub pages have to be recalculated for a new relative value
+        if str(self.relative_path_finder.current_file_path).startswith(
+            str(self.relative_path_finder.relative_path)
+        ) or str(self.relative_path_finder.current_file_path).startswith("index-"):
+            file_path = self.relative_path_finder.get_full_file_path(file_path=Path(self.link))
+            if file_path is not None:
+                link = str(self.relative_path_finder.get_relative_file_path(file_path=file_path))
+            else:
+                link = ""
+        else:
+            link = self.link
+        return f"[{self.text}]({link}{anchor})"
 
 
 class MarkdownLinks:
-    def __init__(self, mkdocs_config: MkDocsConfig, disable_lazy_loading_override: bool = False):
+    def __init__(self, mkdocs_config: MkDocsConfig):
+        self._current_file_path: Optional[str] = None
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._links_config: _ObsidianLinksConfig = mkdocs_config.plugins[
             "pub-obsidian"
         ].config.links
-        self._current_file_path: Optional[str] = None
-        self._disable_lazy_loading_override: bool = disable_lazy_loading_override
         self._blog_config: Optional[BlogPluginConfig] = mkdocs_utils.get_plugin_config(
             mkdocs_config=mkdocs_config, plugin_name="pub-blog"
         )  # type: ignore
 
-    def _parse_wiki_link(self, link: str) -> tuple[str, str]:
-        if "|" in link:
-            try:
-                link, name = link.split("|")
-            except ValueError:
-                log.warning(f'Error in link: {link} (from: "{self._current_file_path}")')
-                return "", ""
-        else:
-            name = link.split("/")[-1]
-        return link, name
-
-    def _get_file_path(self, file_path: str) -> str:
-
-        file_path = file_path.replace("../", "")
-        full_file_path = Path(self._mkdocs_config.docs_dir) / file_path
-        if not full_file_path.exists():
-            found_files_list: list[Path] = [
-                f for f in Path(self._mkdocs_config.docs_dir).glob(f"**/{file_path}")
-            ]
-            for found_file in found_files_list:
-                if found_file.resolve().exists():
-                    full_file_path = found_file
-                    break
-            else:
-                log.warning(
-                    f'File: "{full_file_path}" doesn\'t exists (from: "{self._current_file_path}")'
-                )
-                return ""
-
-        return f"/{full_file_path.relative_to(self._mkdocs_config.docs_dir)}"
-
-    def _normalize_wiki_link_embed(self, match: re.Match) -> str:
-        link, name = self._parse_wiki_link(link=match.group(1))
-
-        # TODO: parse from 'name' variable image size, etc.
-        # (https://help.obsidian.md/Linking+notes+and+files/Embedding+files)
-
-        link = self._get_file_path(link)
-        link = f"![{name}]({link})"
-        return link
-
-    def _normalize_wiki_link(self, match: re.Match) -> str:
-        link, name = self._parse_wiki_link(link=match.group(1))
-        link = self._get_file_path(f"{link}.md")
-        link = f"[{name}]({link})"
-        return link
-
-    def _normalize_markdown_link_embed(self, match: re.Match) -> str:
-        name = match.group(1)
-        link = f"![{name}]({self._get_file_path(match.group(2))})"
-        if self._links_config.img_lazy_loading and not self._disable_lazy_loading_override:
-            link = f"{link}{{ loading=lazy }}"
-        return link
-
-    def _fix_relative_path(self, match: re.Match) -> str:
-        """Fix relative links in dynamically created documents
-        like categories, tags and post previews"""
-        anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
-        link = self._get_file_path(file_path=match.group(2))
-        link = f"[{match.group(1)}]({link}{anchor_link})"
-        return link
+    @staticmethod
+    def _normalize_wiki_embed_link(match: re.Match) -> str:
+        wiki_embed_link = str(WikiEmbedLinkMatch(**match.groupdict()))
+        log.debug(f"Normalizing wiki embed link: {match.group(0)} > {wiki_embed_link}")
+        return wiki_embed_link
 
     @staticmethod
-    def _fix_anchor_links(match: re.Match) -> str:
-        anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
-        link = f"[{match.group(1)}]({match.group(2)}{anchor_link})"
-        return link
+    def _normalize_wiki_link(match: re.Match) -> str:
+        wiki_link_obj = LinkMatch(**match.groupdict())
+        wiki_link_obj.is_wiki = True
+        wiki_link = str(wiki_link_obj)
+        log.debug(f"Normalizing wiki link: {match.group(0)} > {wiki_link}")
+        return wiki_link
 
-    def normalize(self, markdown: str, file_path: str) -> str:
-        self._current_file_path = file_path
+    def _normalize_md_embed_link(self, match: re.Match) -> str:
+        md_embed_link_obj = MdEmbedLinkMatch(**match.groupdict())
+        md_embed_link_obj.is_loading_lazy = self._links_config.img_lazy_loading
+        md_embed_link = str(md_embed_link_obj)
+        log.debug(f"Normalizing md embed link: {match.group(0)} > {md_embed_link}")
+        return md_embed_link
+
+    @staticmethod
+    def _normalize_md_links(match: re.Match) -> str:
+        md_link = str(LinkMatch(**match.groupdict()))
+        log.debug(f"Normalizing md link: {match.group(0)} > {md_link}")
+        return md_link
+
+    def normalize_links(self, markdown: str, current_file_path: str) -> str:
+        self._current_file_path = current_file_path
         if self._links_config.wikilinks_enabled:
             markdown = re.sub(WIKI_LINK_RE, self._normalize_wiki_link, markdown)
-            markdown = re.sub(WIKI_LINK_EMBED_RE, self._normalize_wiki_link_embed, markdown)
-        markdown = re.sub(MARKDOWN_LINK_EMBED_RE, self._normalize_markdown_link_embed, markdown)
-        markdown = re.sub(MARKDOWN_LINK_RE, self._fix_anchor_links, markdown)
+            markdown = re.sub(WIKI_EMBED_LINK_RE, self._normalize_wiki_embed_link, markdown)
+        markdown = re.sub(MD_EMBED_LINK_RE, self._normalize_md_embed_link, markdown)
+        markdown = re.sub(MD_LINK_RE, self._normalize_md_links, markdown)
         return markdown
 
-    def fix_relative_paths(self, markdown: str) -> str:
-        markdown = re.sub(MARKDOWN_FILE_RE, self._fix_relative_path, markdown)
-        return markdown
+    def _normalize_relative_link(self, match: re.Match) -> str:
+        md_link_obj = RelativeLinkMatch(**match.groupdict())
+        md_link_obj.relative_path_finder = RelativePathFinder(
+            current_file_path=Path(cast(str, self._current_file_path)),
+            docs_dir=Path(self._mkdocs_config.docs_dir),
+            relative_path=Path(cast(str, self._blog_config.blog_dir)),
+        )
+        md_link = str(md_link_obj)
+        return md_link
 
-    def _fix_blog_sub_paths(self, match: re.Match) -> str:
-        # TODO: remove this method when rewriting blog engine
-        link = self._get_file_path(file_path=match.group(2))
-        anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
-        link = f"[{match.group(1)}](../..{link}{anchor_link})"
-        return link
-
-    def _fix_blog_main_paths(self, match: re.Match) -> str:
-        # TODO: remove this method when rewriting blog engine
-        link = self._get_file_path(file_path=match.group(2))
-        anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
-        link = f"[{match.group(1)}]({link[1:]}{anchor_link})"
-        return link
-
-    def fix_blog_paths(self, markdown: str, source_file: Path) -> str:
-        # TODO: remove this method when rewriting blog engine
-        if str(source_file).startswith(f"{self._blog_config.temp_dir}/{self._blog_config.slug}"):
-            markdown = re.sub(MARKDOWN_FILE_RE, self._fix_blog_sub_paths, markdown)
-        elif str(source_file).startswith(self._blog_config.temp_dir):
-            markdown = re.sub(MARKDOWN_FILE_RE, self._fix_blog_main_paths, markdown)
+    def normalize_relative_links(self, markdown: str, current_file_path: str) -> str:
+        self._current_file_path = current_file_path
+        markdown = re.sub(RELATIVE_LINK_RE, self._normalize_relative_link, markdown)
         return markdown

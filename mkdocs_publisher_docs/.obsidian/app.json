@@ -14,5 +14,6 @@
   ],
   "foldIndent": false,
   "foldHeading": false,
-  "attachmentFolderPath": "_attachments"
+  "attachmentFolderPath": "_attachments",
+  "showLineNumber": true
 }

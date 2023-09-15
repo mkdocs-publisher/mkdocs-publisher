@@ -102,6 +102,7 @@ def test_add_stylesheet_file_with_map():
 
 
 def test_add_stylesheet_file_without_map():
+
     mkdocs_files = Files(files=[])
     mkdocs_config = cast(MkDocsConfig, MkDocsConfig())
     expected_file_path = str(Path(STYLESHEET_DIR) / STYLESHEET_FILE)
@@ -119,7 +120,8 @@ def test_add_stylesheet_file_without_map():
 
 
 def test_read_template_file():
+    """Test if content of the template file is read correctly"""
     template_path = Path().cwd() / EXTRA_DIR / TEMPLATES_DIR / TEMPLATE_FILE
     with open(template_path, "r") as template_file:
-        backling_template_text = str(template_file.read())
-    assert resources.read_template_file(TEMPLATE_FILE) == backling_template_text
+        backlink_template_text = str(template_file.read())
+    assert resources.read_template_file(TEMPLATE_FILE) == backlink_template_text

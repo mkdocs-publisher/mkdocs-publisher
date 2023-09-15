@@ -62,6 +62,7 @@ repos:
       - id: no-commit-to-branch
       - id: name-tests-test
         files: ^tests/
+        exclude: \.md$
 
   - repo: local
     hooks:

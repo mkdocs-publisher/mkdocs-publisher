@@ -13,7 +13,7 @@ docs_dir: mkdocs_publisher_docs
 site_dir: docs
 
 use_directory_urls: true
-#strict: true
+strict: true
 
 dev_addr: 127.0.0.1:8666
 
@@ -116,9 +116,9 @@ plugins:
           - mkdocs.plugins
           - mkdocs.structure.files
   - search
+  - pub-obsidian
   - pub-blog:
       blog_dir: 04_blog
   - pub-social
   - pub-meta
-  - pub-obsidian
   - pub-minifier

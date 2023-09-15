@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02_setup/02_general/01_setting-up-meta.md",
+                "file": "02_setup/02_general/02_setting-up-blog.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
@@ -96,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "02_setup/02_general/01_setting-up-meta.md",
+                "file": "02_setup/02_general/02_setting-up-blog.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "02_setup/02_general/01_setting-up-meta.md",
+                "file": "02_setup/02_general/02_setting-up-blog.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,17 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "02_setup/02_general/01_setting-up-meta.md"
+                "file": "02_setup/02_general/02_setting-up-blog.md"
+              }
+            }
+          },
+          {
+            "id": "1fec53bf54956e1f",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency"
               }
             }
           }
@@ -180,7 +190,21 @@
   },
   "active": "643b75a8dd9323d9",
   "lastOpenFiles": [
+    "04_blog/v100-obsidian.md",
+    "04_blog/v050-social.md",
+    "04_blog/v041.md",
+    "05_dev/other/01_credits.md",
+    "01_home.md",
+    "04_blog/v040-minifier-and-autonav.md",
+    "02_setup/02_general/03_setting-up-obsidian.md",
+    "02_setup/99_development/01_setting-up-debugger.md",
+    "02_setup/02_general/02_setting-up-blog.md",
+    "pexels-valeriia-miller-18244142.jpg",
+    "pexels-héctor-garcía-18128034.jpg",
+    "03_how-to-publish/01_first_steps.md",
     "05_dev/other/02_backlog.md",
+    "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
+    "02_setup/02_general/01_setting-up-meta.md",
     "05_dev/02_development.md",
     "05_dev/01_changelog.md",
     "_templates/_option.md",
@@ -188,29 +212,17 @@
     "_templates/_README.md",
     "_templates/_post.md",
     "_templates/_page.md",
-    "02_setup/02_general/01_setting-up-meta.md",
-    "01_home.md",
     "04_blog/v110-debugger.md",
-    "02_setup/99_development/01_setting-up-debugger.md",
     "02_setup/99_development/README.md",
-    "02_setup/02_general/03_setting-up-obsidian.md",
     "02_setup/02_general/README.md",
-    "04_blog/v100-obsidian.md",
-    "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
-    "02_setup/02_general/02_setting-up-blog.md",
     "_attachments/debugger_console_example.png",
     "_attachments",
     "02_setup/03_seo_and_sharing/README.md",
     "02_setup/03_seo_and_sharing/01_setting-up-social-cards.md",
     "05_dev/03_versioning.md",
     "02_setup/99_development",
-    "02_setup/README.md",
-    "05_dev/README.md",
-    "05_dev/other/README.md",
     "02_setup/02_general",
     "02_setup/03_seo_and_sharing",
-    "02_setup/01_installation.md",
-    "05_dev/other/01_credits.md",
     "04_blog/category",
     "publisher_logo.png",
     "publisher_icon.png",

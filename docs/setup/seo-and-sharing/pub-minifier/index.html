@@ -19,10 +19,10 @@ Setting up minifier - Publisher for MkDocs
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet">
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
 <link href="../../../assets/stylesheets/publisher.css" rel="stylesheet">
-<link href="../../../assets/stylesheets/blog.min.css" rel="stylesheet">
-<link href="../../../assets/stylesheets/blog.min.css.map" rel="stylesheet">
 <link href="../../../assets/stylesheets/obsidian.min.css" rel="stylesheet">
 <link href="../../../assets/stylesheets/obsidian.min.css.map" rel="stylesheet">
+<link href="../../../assets/stylesheets/blog.min.css" rel="stylesheet">
+<link href="../../../assets/stylesheets/blog.min.css.map" rel="stylesheet">
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta content="article" property="og:type">
 <meta content="Setting up minifier" property="og:title">
@@ -1234,7 +1234,7 @@ directory and the directory structure looks like this:
 </div>
 <details class="settings">
 <summary>
-<a href="#minifierthreads" id="+minifier.threads">
+<a href="#+minifier.threads" id="+minifier.threads">
 threads
 </a>
 </summary>
@@ -1244,7 +1244,7 @@ File optimization process is a CPU intensive. Most modern computers have process
 </details>
 <details class="settings">
 <summary>
-<a href="#minifiercache_dir" id="+minifier.cache_dir">
+<a href="#+minifier.cache_dir" id="+minifier.cache_dir">
 cache_dir
 </a>
 </summary>
@@ -1258,7 +1258,7 @@ plugin is enabled, caching is enabled by default and cannot be turned off. Cachi
 </details>
 <details class="settings">
 <summary>
-<a href="#minifiercache_file" id="+minifier.cache_file">
+<a href="#+minifier.cache_file" id="+minifier.cache_file">
 cache_file
 </a>
 </summary>
@@ -1308,7 +1308,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#minifierjpegenabled" id="+minifier.jpeg.enabled">
+<a href="#+minifier.jpeg.enabled" id="+minifier.jpeg.enabled">
 enabled
 </a>
 </summary>
@@ -1318,7 +1318,7 @@ Control if JPEG minifier is enabled.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjpegenabled_on_serve" id="+minifier.jpeg.enabled_on_serve">
+<a href="#+minifier.jpeg.enabled_on_serve" id="+minifier.jpeg.enabled_on_serve">
 enabled_on_serve
 </a>
 </summary>
@@ -1328,7 +1328,7 @@ Control if JPEG minifier is enabled while page is being served locally (mostly u
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjpegdjpeg_path" id="+minifier.jpeg.djpeg_path">
+<a href="#+minifier.jpeg.djpeg_path" id="+minifier.jpeg.djpeg_path">
 djpeg_path
 </a>
 </summary>
@@ -1342,7 +1342,7 @@ tool (part of MozJPEG package).
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjpegcjpeg_path" id="+minifier.jpeg.cjpeg_path">
+<a href="#+minifier.jpeg.cjpeg_path" id="+minifier.jpeg.cjpeg_path">
 cjpeg_path
 </a>
 </summary>
@@ -1356,7 +1356,7 @@ tool (part of MozJPEG package).
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjpegjpegtran_path" id="+minifier.jpeg.jpegtran_path">
+<a href="#+minifier.jpeg.jpegtran_path" id="+minifier.jpeg.jpegtran_path">
 jpegtran_path
 </a>
 </summary>
@@ -1370,7 +1370,7 @@ tool (part of MozJPEG package).
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjpegoptimise" id="+minifier.jpeg.optimise">
+<a href="#+minifier.jpeg.optimise" id="+minifier.jpeg.optimise">
 optimise
 </a>
 </summary>
@@ -1380,7 +1380,7 @@ Optimize Huffman table (smaller file, but slow compression).
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjpegprogressive" id="+minifier.jpeg.progressive">
+<a href="#+minifier.jpeg.progressive" id="+minifier.jpeg.progressive">
 progressive
 </a>
 </summary>
@@ -1390,7 +1390,7 @@ Create progressive JPEG file.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjpegcopy_meta" id="+minifier.jpeg.copy_meta">
+<a href="#+minifier.jpeg.copy_meta" id="+minifier.jpeg.copy_meta">
 copy_meta
 </a>
 </summary>
@@ -1416,7 +1416,7 @@ all
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjpegsmooth" id="+minifier.jpeg.smooth">
+<a href="#+minifier.jpeg.smooth" id="+minifier.jpeg.smooth">
 smooth
 </a>
 </summary>
@@ -1438,7 +1438,7 @@ Level of image smoothness:
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjpegquality" id="+minifier.jpeg.quality">
+<a href="#+minifier.jpeg.quality" id="+minifier.jpeg.quality">
 quality
 </a>
 </summary>
@@ -1502,7 +1502,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#minifierpngenabled" id="+minifier.png.enabled">
+<a href="#+minifier.png.enabled" id="+minifier.png.enabled">
 enabled
 </a>
 </summary>
@@ -1512,7 +1512,7 @@ Control if PNG minifier is enabled.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierpngenabled_on_serve" id="+minifier.png.enabled_on_serve">
+<a href="#+minifier.png.enabled_on_serve" id="+minifier.png.enabled_on_serve">
 enabled_on_serve
 </a>
 </summary>
@@ -1522,7 +1522,7 @@ Control if PNG minifier is enabled while page is being served locally (mostly us
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierpngpngquant_enabled" id="+minifier.png.pngquant_enabled">
+<a href="#+minifier.png.pngquant_enabled" id="+minifier.png.pngquant_enabled">
 pngquant_enabled
 </a>
 </summary>
@@ -1536,7 +1536,7 @@ tool is enabled.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierpngpngquant_path" id="+minifier.png.pngquant_path">
+<a href="#+minifier.png.pngquant_path" id="+minifier.png.pngquant_path">
 pngquant_path
 </a>
 </summary>
@@ -1550,7 +1550,7 @@ tool.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierpngpngquant_speed" id="+minifier.png.pngquant_speed">
+<a href="#+minifier.png.pngquant_speed" id="+minifier.png.pngquant_speed">
 pngquant_speed
 </a>
 </summary>
@@ -1572,7 +1572,7 @@ Compression speed:
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierpngpngquant_quality" id="+minifier.png.pngquant_quality">
+<a href="#+minifier.png.pngquant_quality" id="+minifier.png.pngquant_quality">
 pngquant_quality
 </a>
 </summary>
@@ -1594,7 +1594,7 @@ Image quality:
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierpngoxipng_enabled" id="+minifier.png.oxipng_enabled">
+<a href="#+minifier.png.oxipng_enabled" id="+minifier.png.oxipng_enabled">
 oxipng_enabled
 </a>
 </summary>
@@ -1608,7 +1608,7 @@ tool is enabled.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierpngoxipng_path" id="+minifier.png.oxipng_path">
+<a href="#+minifier.png.oxipng_path" id="+minifier.png.oxipng_path">
 oxipng_path
 </a>
 </summary>
@@ -1622,7 +1622,7 @@ oxipng
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierpngoxipng_path" id="+minifier.png.oxipng_max_compression">
+<a href="#+minifier.png.oxipng_path" id="+minifier.png.oxipng_max_compression">
 oxipng_max_compression
 </a>
 </summary>
@@ -1632,7 +1632,7 @@ Use max possible compression.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierpngoxipng_path" id="+minifier.png.strip">
+<a href="#+minifier.png.oxipng_path" id="+minifier.png.strip">
 strip
 </a>
 </summary>
@@ -1688,7 +1688,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#minifiersvgenabled" id="+minifier.svg.enabled">
+<a href="#+minifier.svg.enabled" id="+minifier.svg.enabled">
 enabled
 </a>
 </summary>
@@ -1698,7 +1698,7 @@ Control if SVG minifier is enabled.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifiersvgenabled_on_serve" id="+minifier.svg.enabled_on_serve">
+<a href="#+minifier.svg.enabled_on_serve" id="+minifier.svg.enabled_on_serve">
 enabled_on_serve
 </a>
 </summary>
@@ -1708,7 +1708,7 @@ Control if SVG minifier is enabled while page is being served locally (mostly us
 </details>
 <details class="settings">
 <summary>
-<a href="#minifiersvgsvgo_path" id="+minifier.svg.svgo_path">
+<a href="#+minifier.svg.svgo_path" id="+minifier.svg.svgo_path">
 svgo_path
 </a>
 </summary>
@@ -1722,7 +1722,7 @@ tool.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifiersvgmultipass" id="+minifier.svg.multipass">
+<a href="#+minifier.svg.multipass" id="+minifier.svg.multipass">
 multipass
 </a>
 </summary>
@@ -1789,7 +1789,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlenabled" id="+minifier.html.enabled">
+<a href="#+minifier.html.enabled" id="+minifier.html.enabled">
 enabled
 </a>
 </summary>
@@ -1799,7 +1799,7 @@ Control if HTML minifier is enabled.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlenabled_on_serve" id="+minifier.html.enabled_on_serve">
+<a href="#+minifier.html.enabled_on_serve" id="+minifier.html.enabled_on_serve">
 enabled_on_serve
 </a>
 </summary>
@@ -1809,7 +1809,7 @@ Control if HTML minifier is enabled while page is being served locally (mostly u
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlhtml_minifier_path" id="+minifier.html.html_minifier_path">
+<a href="#+minifier.html.html_minifier_path" id="+minifier.html.html_minifier_path">
 html_minifier_path
 </a>
 </summary>
@@ -1823,7 +1823,7 @@ tool.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlcase_sensitive" id="+minifier.html.case_sensitive">
+<a href="#+minifier.html.case_sensitive" id="+minifier.html.case_sensitive">
 case_sensitive
 </a>
 </summary>
@@ -1833,7 +1833,7 @@ Treat attributes in case sensitive manner.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlminify_css" id="+minifier.html.minify_css">
+<a href="#+minifier.html.minify_css" id="+minifier.html.minify_css">
 minify_css
 </a>
 </summary>
@@ -1847,7 +1847,7 @@ celan-css
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlminify_js" id="+minifier.html.minify_js">
+<a href="#+minifier.html.minify_js" id="+minifier.html.minify_js">
 minify_js
 </a>
 </summary>
@@ -1861,7 +1861,7 @@ uglify-js
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlremove_comments" id="+minifier.html.remove_comments">
+<a href="#+minifier.html.remove_comments" id="+minifier.html.remove_comments">
 remove_comments
 </a>
 </summary>
@@ -1871,7 +1871,7 @@ Strip HTML comments.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlremove_tag_whitespace" id="+minifier.html.remove_tag_whitespace">
+<a href="#+minifier.html.remove_tag_whitespace" id="+minifier.html.remove_tag_whitespace">
 remove_tag_whitespace
 </a>
 </summary>
@@ -1889,7 +1889,7 @@ Enabling this setting may lead to problems with code blocks, etc.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlcollapse_whitespace" id="+minifier.html.collapse_whitespace">
+<a href="#+minifier.html.collapse_whitespace" id="+minifier.html.collapse_whitespace">
 collapse_whitespace
 </a>
 </summary>
@@ -1899,7 +1899,7 @@ Collapse white space that contributes to text nodes in a document tree.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlconservative_collapse" id="+minifier.html.conservative_collapse">
+<a href="#+minifier.html.conservative_collapse" id="+minifier.html.conservative_collapse">
 conservative_collapse
 </a>
 </summary>
@@ -1909,7 +1909,7 @@ Always collapse to 1 space (never remove it entirely).
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlcollapse_boolean_attributes" id="+minifier.html.collapse_boolean_attributes">
+<a href="#+minifier.html.collapse_boolean_attributes" id="+minifier.html.collapse_boolean_attributes">
 collapse_boolean_attributes
 </a>
 </summary>
@@ -1919,7 +1919,7 @@ Omit attribute values from boolean attributes.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlpreserve_line_breaks" id="+minifier.html.preserve_line_breaks">
+<a href="#+minifier.html.preserve_line_breaks" id="+minifier.html.preserve_line_breaks">
 preserve_line_breaks
 </a>
 </summary>
@@ -1929,7 +1929,7 @@ Always collapse to 1 line break (never remove it entirely) when whitespace betwe
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlsort_attributes" id="+minifier.html.sort_attributes">
+<a href="#+minifier.html.sort_attributes" id="+minifier.html.sort_attributes">
 sort_attributes
 </a>
 </summary>
@@ -1939,7 +1939,7 @@ Sort attributes by frequency.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlsort_class_name" id="+minifier.html.sort_class_name">
+<a href="#+minifier.html.sort_class_name" id="+minifier.html.sort_class_name">
 sort_class_name
 </a>
 </summary>
@@ -1949,7 +1949,7 @@ Sort style classes by frequency.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierhtmlmax_line_length" id="+minifier.html.max_line_length">
+<a href="#+minifier.html.max_line_length" id="+minifier.html.max_line_length">
 max_line_length
 </a>
 </summary>
@@ -2045,7 +2045,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#minifiercssenabled" id="+minifier.css.enabled">
+<a href="#+minifier.css.enabled" id="+minifier.css.enabled">
 enabled
 </a>
 </summary>
@@ -2055,7 +2055,7 @@ Control if CSS minifier is enabled.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifiercssenabled_on_serve" id="+minifier.css.enabled_on_serve">
+<a href="#+minifier.css.enabled_on_serve" id="+minifier.css.enabled_on_serve">
 enabled_on_serve
 </a>
 </summary>
@@ -2065,7 +2065,7 @@ Control if CSS minifier is enabled while page is being served locally (mostly us
 </details>
 <details class="settings">
 <summary>
-<a href="#minifiercsspostcss_path" id="+minifier.css.postcss_path">
+<a href="#+minifier.css.postcss_path" id="+minifier.css.postcss_path">
 postcss_path
 </a>
 </summary>
@@ -2079,7 +2079,7 @@ tool.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifiercssskip_minified" id="+minifier.css.skip_minified">
+<a href="#+minifier.css.skip_minified" id="+minifier.css.skip_minified">
 skip_minified
 </a>
 </summary>
@@ -2135,7 +2135,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#minifierjsenabled" id="+minifier.js.enabled">
+<a href="#+minifier.js.enabled" id="+minifier.js.enabled">
 enabled
 </a>
 </summary>
@@ -2145,7 +2145,7 @@ Control if JS minifier is enabled.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjsenabled_on_serve" id="+minifier.js.enabled_on_serve">
+<a href="#+minifier.js.enabled_on_serve" id="+minifier.js.enabled_on_serve">
 enabled_on_serve
 </a>
 </summary>
@@ -2155,7 +2155,7 @@ Control if JS minifier is enabled while page is being served locally (mostly use
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjsuglifyjs_path" id="+minifier.js.uglifyjs_path">
+<a href="#+minifier.js.uglifyjs_path" id="+minifier.js.uglifyjs_path">
 uglifyjs_path
 </a>
 </summary>
@@ -2169,7 +2169,7 @@ tool.
 </details>
 <details class="settings">
 <summary>
-<a href="#minifierjsskip_minified" id="+minifier.js.skip_minified">
+<a href="#+minifier.js.skip_minified" id="+minifier.js.skip_minified">
 skip_minified
 </a>
 </summary>

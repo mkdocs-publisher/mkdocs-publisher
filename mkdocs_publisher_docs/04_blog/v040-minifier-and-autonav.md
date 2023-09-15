@@ -3,7 +3,7 @@ title: v0.4.0 - 2023-03-28
 slug: v040
 status: published
 date: 2023-03-28 02:00:00
-update: 2023-08-01 11:51:08
+update: 2023-09-11 23:00:24
 tags:
   - v0.x
 description: Publisher for MkDocs v0.4.0

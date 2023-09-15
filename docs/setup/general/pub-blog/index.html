@@ -19,10 +19,10 @@ Setting up a blog - Publisher for MkDocs
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet">
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
 <link href="../../../assets/stylesheets/publisher.css" rel="stylesheet">
-<link href="../../../assets/stylesheets/blog.min.css" rel="stylesheet">
-<link href="../../../assets/stylesheets/blog.min.css.map" rel="stylesheet">
 <link href="../../../assets/stylesheets/obsidian.min.css" rel="stylesheet">
 <link href="../../../assets/stylesheets/obsidian.min.css.map" rel="stylesheet">
+<link href="../../../assets/stylesheets/blog.min.css" rel="stylesheet">
+<link href="../../../assets/stylesheets/blog.min.css.map" rel="stylesheet">
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta content="article" property="og:type">
 <meta content="Setting up a blog" property="og:title">
@@ -854,7 +854,7 @@ mkdocs.yml
 <div class="highlight language-yaml">
 <pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="hll"><span class="w">      </span><span class="nt">teaser_marker</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">&lt;!-- more --&gt;`</span>
+</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="hll"><span class="w">      </span><span class="nt">teaser_marker</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;!--</span><span class="nv"> </span><span class="s">more</span><span class="nv"> </span><span class="s">--&gt;"</span>
 </span></span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="hll"><span class="w">      </span><span class="nt">searchable_non_posts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </span></span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="hll"><span class="w">      </span><span class="nt">posts_per_page</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 </span></span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="hll"><span class="w">      </span><span class="nt">slug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blog</span>
@@ -869,7 +869,7 @@ Above you can find all possible settings with their default values. You don't ha
 </p>
 <details class="settings">
 <summary>
-<a href="#blogteaser_marker" id="+blog.teaser_marker">
+<a href="#+blog.teaser_marker" id="+blog.teaser_marker">
 teaser_marker
 </a>
 </summary>
@@ -883,7 +883,7 @@ in some line inside a content of your blog post. This value is a valid HTML comm
 </details>
 <details class="settings">
 <summary>
-<a href="#blogposts_per_page" id="+blog.posts_per_page">
+<a href="#+blog.posts_per_page" id="+blog.posts_per_page">
 posts_per_page
 </a>
 </summary>
@@ -893,7 +893,7 @@ When you gather over time some amount of blog posts, their index even with short
 </details>
 <details class="settings">
 <summary>
-<a href="#blogsearchable_non_posts" id="+blog.searchable_non_posts">
+<a href="#+blog.searchable_non_posts" id="+blog.searchable_non_posts">
 searchable_non_posts
 </a>
 </summary>
@@ -907,7 +907,7 @@ for all dynamically created blog documents that are not blog posts. There is no 
 </details>
 <details class="settings">
 <summary>
-<a href="#blogslug" id="+blog.slug">
+<a href="#+blog.slug" id="+blog.slug">
 slug
 </a>
 </summary>
@@ -994,7 +994,7 @@ configuration file.
 </div>
 <details class="settings">
 <summary>
-<a href="#blogtemp_dir" id="+blog.temp_dir">
+<a href="#+blog.temp_dir" id="+blog.temp_dir">
 temp_dir
 </a>
 </summary>
@@ -1004,7 +1004,7 @@ Temporary directory is used by a blog engine to create an index files with a blo
 </details>
 <details class="settings">
 <summary>
-<a href="#blogarchive_subdir" id="+blog.archive_subdir">
+<a href="#+blog.archive_subdir" id="+blog.archive_subdir">
 archive_subdir
 </a>
 </summary>
@@ -1014,7 +1014,7 @@ Archive subdirectory is used to store dynamically generated documents that conta
 </details>
 <details class="settings">
 <summary>
-<a href="#blogcategories_subdir" id="+blog.categories_subdir">
+<a href="#+blog.categories_subdir" id="+blog.categories_subdir">
 categories_subdir
 </a>
 </summary>
@@ -1024,7 +1024,7 @@ Categories subdirectory is used to store dynamically generated documents that co
 </details>
 <details class="settings">
 <summary>
-<a href="#blogtags" id="+blog.tags">
+<a href="#+blog.tags" id="+blog.tags">
 tags
 </a>
 </summary>
@@ -1089,7 +1089,7 @@ mkdocs.yml
 <div class="highlight language-yaml">
 <pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nt">plugin</span><span class="p">:</span>
 </span><span id="__span-7-2"><a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
-</span><span id="__span-7-3"><a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="hll"><span class="w">      </span><span class="nt">lang</span><span class="p">:</span><span class="w"> </span><span class="s">'pl'</span>
+</span><span id="__span-7-3"><a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="hll"><span class="w">      </span><span class="nt">lang</span><span class="p">:</span><span class="w"> </span><span class="s">"pl"</span>
 </span></span></code></pre>
 </div>
 <h4 id="translation">

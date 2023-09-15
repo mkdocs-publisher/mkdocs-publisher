@@ -38,7 +38,6 @@ from mkdocs_publisher._shared import resources
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared.urls import slugify
 from mkdocs_publisher.blog.structures import BlogConfig
-from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog.creators")
 
@@ -49,11 +48,8 @@ def create_blog_files(
 ):
     for temp_file in blog_config.temp_files.values():
         try:
-            parts = [p for p in Path(temp_file).relative_to(blog_config.temp_dir).parts]
-            if parts[0] == blog_config.plugin_config.blog_dir:
-                parts[0] = blog_config.plugin_config.slug
             file = File(
-                path=str(Path(*parts)),
+                path=str(Path(temp_file).relative_to(blog_config.temp_dir)),
                 src_dir=str(blog_config.temp_dir),
                 dest_dir=str(blog_config.site_dir),
                 use_directory_urls=blog_config.mkdocs_config.use_directory_urls,
@@ -173,7 +169,7 @@ def _create_pages(
 ) -> list[dict[str, str]]:
     config_nav = []
 
-    blog_temp_dir = blog_config.temp_dir / blog_config.plugin_config.slug
+    blog_temp_dir = blog_config.temp_dir / blog_config.plugin_config.blog_dir
     blog_temp_dir.mkdir(exist_ok=True)
 
     pages_dir = blog_temp_dir / sub_dir
@@ -192,7 +188,7 @@ def _create_pages(
         blog_config.temp_files[f"{sub_dir}/{key}"] = file_path
         log.debug(f"Creating blog post chunk file: {file_path}")
 
-        config_nav.append({key: f"{blog_config.plugin_config.slug}/{sub_dir}/{file_name}"})
+        config_nav.append({key: f"{blog_config.plugin_config.blog_dir}/{sub_dir}/{file_name}"})
     return config_nav
 
 
@@ -216,13 +212,6 @@ def _render_and_write_page(
     }
     template = jinja2.Environment(loader=jinja2.BaseLoader()).from_string(index_template)
     markdown = template.render(context)
-
-    md_links = MarkdownLinks(
-        mkdocs_config=blog_config.mkdocs_config, disable_lazy_loading_override=True
-    )
-    markdown = md_links.normalize(markdown=markdown, file_path=str(file_path))
-    markdown = md_links.fix_relative_paths(markdown=markdown)
-    markdown = md_links.fix_blog_paths(markdown=markdown, source_file=file_path)
 
     # TODO: when using pub-meta key name should be taken from plugin config
     page_meta = {"title": page_title}
