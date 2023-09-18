@@ -1,7 +1,7 @@
 ---
 title: Setting up minifier
 slug: pub-minifier
-status: published
+visibility: published
 date: 2023-02-02 22:00:00
 update: 2023-08-18 12:05:23
 description: Setting up Publisher for MkDocs minifier plugin for page size optimization

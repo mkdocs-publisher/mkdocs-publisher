@@ -1,7 +1,7 @@
 ---
 title: Credits
 slug: credits
-status: draft
+visibility: draft
 date: 2023-05-17 21:32:00
 update: 2023-09-11 18:10:11
 description: Credits to other plugins and creators

@@ -34,7 +34,7 @@ from mkdocs_publisher.blog.structures import BlogPost
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog.parsers")
 
-REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description"]
+REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description", "visibility"]
 # TODO: read it from pub-meta if configured
 
 
@@ -91,16 +91,16 @@ def parse_markdown_files(
                             config_nav[line[2:]] = str(path)
                 elif str(parents[0]) == str(blog_config.blog_dir):
 
-                    if "status" not in post_meta:
+                    if "visibility" not in post_meta:
                         # TODO: read default value from meta config
                         log.info(
                             f"File: {file_path} - missing 1 required positional argument: "
-                            f"'status' (setting to default: draft)"
+                            f"'visibility' (setting to default: draft)"
                         )
-                        post_meta["status"] = "draft"
+                        post_meta["visibility"] = "draft"
 
                     # Skip non-published
-                    if not on_serve and post_meta["status"] != "published":
+                    if not on_serve and post_meta["visibility"] != "published":
                         # TODO: make it configurable
                         continue
 

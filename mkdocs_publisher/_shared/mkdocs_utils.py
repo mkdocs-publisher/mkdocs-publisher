@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 from typing import Optional
+from typing import cast
 
 from mkdocs.config.base import Config
 from mkdocs.config.defaults import MkDocsConfig
@@ -31,3 +32,10 @@ def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> Optional
         return mkdocs_config.plugins[plugin_name].config
     except KeyError:
         return None
+
+
+def get_mkdocs_config() -> MkDocsConfig:
+    config = MkDocsConfig()
+    with open("mkdocs.yml", mode="r") as mkdocs_yml:
+        config.load_file(mkdocs_yml)
+    return cast(MkDocsConfig, config)

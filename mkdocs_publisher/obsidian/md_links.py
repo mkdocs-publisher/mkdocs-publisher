@@ -69,24 +69,34 @@ class RelativePathFinder:
         return self._relative_path
 
     def get_full_file_path(self, file_path: Path) -> Optional[Path]:
+        """Find full file path."""
         full_file_path = self._docs_dir / file_path
         log.debug(f"Looking for file: {str(full_file_path)}")
         if not full_file_path.is_file():
-            found_files_list: list[Path] = [f for f in self._docs_dir.glob(f"**/{file_path}")]
-            log.debug(f"List of found files: {found_files_list}")
-
-            for found_file in found_files_list:
-                found_file_path = found_file.resolve(strict=True)
-                if found_file_path.is_file():
-                    log.debug(f"File found: {found_file_path}")
-                    full_file_path = found_file_path
-                    break
-            else:
-                full_file_path = None
+            # Build list of unique found files paths
+            found_files_list: list[Path] = []
+            for f in self._docs_dir.glob(f"**/{file_path}"):
+                f = f.resolve(strict=True)
+                if f not in found_files_list:  # pragma: no cover
+                    found_files_list.append(f)
+            # Check how many files were found (there should be only one)
+            no_of_found_files = len(found_files_list)
+            if no_of_found_files == 1:
+                full_file_path = found_files_list[0]
+                log.debug(f'File: "{file_path} found: "{full_file_path}"')
+            elif no_of_found_files <= 0:
                 log.error(f'File: "{file_path}" doesn\'t exists (from: "{self._docs_dir}")')
+                full_file_path = None
+            else:
+                log.error(
+                    f"Too much files found: "
+                    f"{[str(f.relative_to(self._docs_dir)) for f in found_files_list]}"
+                )
+                full_file_path = None
         return full_file_path
 
     def get_relative_file_path(self, file_path: Path) -> Path:
+        """Get file path relative to currently opened file."""
         current_file_parts = list(Path(self._current_file_path).parts)
         current_file_parts[0] = str(self._relative_path)
         found_file_parts = list(file_path.relative_to(self._docs_dir).parts)
@@ -193,9 +203,15 @@ class RelativeLinkMatch:
         if self.link.startswith("#"):
             return f"[{self.text}]({self.link})"
         # Link from blog sub pages have to be recalculated for a new relative value
-        if str(self.relative_path_finder.current_file_path).startswith(
-            str(self.relative_path_finder.relative_path)
-        ) or str(self.relative_path_finder.current_file_path).startswith("index-"):
+        if (
+            str(self.relative_path_finder.current_file_path).startswith(
+                str(self.relative_path_finder.relative_path)
+            )
+            or str(self.relative_path_finder.current_file_path).startswith("index-")
+        ) and (
+            # TODO: rethink RSS file filtering
+            not self.link.endswith(".xml")  # RSS feed exclusion
+        ):
             file_path = self.relative_path_finder.get_full_file_path(file_path=Path(self.link))
             if file_path is not None:
                 link = str(self.relative_path_finder.get_relative_file_path(file_path=file_path))
@@ -260,8 +276,7 @@ class MarkdownLinks:
             docs_dir=Path(self._mkdocs_config.docs_dir),
             relative_path=Path(cast(str, self._blog_config.blog_dir)),
         )
-        md_link = str(md_link_obj)
-        return md_link
+        return str(md_link_obj)
 
     def normalize_relative_links(self, markdown: str, current_file_path: str) -> str:
         self._current_file_path = current_file_path

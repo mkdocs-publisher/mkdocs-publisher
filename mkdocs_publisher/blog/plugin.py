@@ -39,12 +39,14 @@ from mkdocs.structure.pages import Page
 
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher._shared import resources
 from mkdocs_publisher.blog import creators
 from mkdocs_publisher.blog import modifiers
 from mkdocs_publisher.blog import parsers
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.blog.structures import BlogConfig
+from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog.plugin")
@@ -143,15 +145,19 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         )
         return context
 
+    @event_priority(-100)  # Run after all other plugins
     def on_page_markdown(
         self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
     ) -> Optional[str]:
 
-        md_links = MarkdownLinks(mkdocs_config=config)
-        markdown = md_links.normalize_relative_links(
-            markdown=markdown, current_file_path=page.file.src_path
-        )
-
+        obsidian_plugin: Optional[ObsidianPluginConfig] = mkdocs_utils.get_plugin_config(
+            mkdocs_config=config, plugin_name="pub-obsidian"
+        )  # type: ignore
+        if obsidian_plugin is not None:
+            md_links = MarkdownLinks(mkdocs_config=config)
+            markdown = md_links.normalize_relative_links(
+                markdown=markdown, current_file_path=page.file.src_path
+            )
         return markdown
 
     @event_priority(-100)  # Run after all other plugins

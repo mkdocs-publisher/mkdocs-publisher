@@ -76,7 +76,15 @@ repos:
       - id: format
         name: format Python code
         description: Pre-format python code.
-        entry: poetry run black
+        entry: poetry run black --quiet
+        language: system
+        types:
+          - python
+
+      - id: sort-imports
+        name: sort Python imports
+        description: Sort python imports.
+        entry: poetry run isort --quiet
         language: system
         types:
           - python
@@ -85,14 +93,6 @@ repos:
         name: lint Python
         description: Lint python code.
         entry: poetry run flake8
-        language: system
-        types:
-          - python
-
-      - id: sort-imports
-        name: sort Python imports
-        description: Sort python imports.
-        entry: poetry run isort
         language: system
         types:
           - python

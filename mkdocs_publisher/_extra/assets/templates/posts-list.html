@@ -21,6 +21,7 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
+
 {% for post in posts %}
 ## [{{ post.title }}]({{ site_url }}{{ config.slug }}/{{ post.slug }}/)
 
@@ -39,7 +40,6 @@
 {{ post.teaser }}
 
 {{ post.is_short }}
-
 
 <div class="post-link">
 {% if post.is_teaser %}

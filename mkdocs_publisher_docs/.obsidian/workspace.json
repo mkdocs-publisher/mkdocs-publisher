@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02_setup/02_general/02_setting-up-blog.md",
+                "file": "05_dev/03_versioning.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
@@ -96,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "02_setup/02_general/02_setting-up-blog.md",
+                "file": "05_dev/03_versioning.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "02_setup/02_general/02_setting-up-blog.md",
+                "file": "05_dev/03_versioning.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "02_setup/02_general/02_setting-up-blog.md"
+                "file": "05_dev/03_versioning.md"
               }
             }
           },
@@ -188,38 +188,38 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "643b75a8dd9323d9",
+  "active": "c6174c4fcf2d07d9",
   "lastOpenFiles": [
-    "04_blog/v100-obsidian.md",
-    "04_blog/v050-social.md",
-    "04_blog/v041.md",
-    "05_dev/other/01_credits.md",
+    "04_blog/v010-initial-release.md",
     "01_home.md",
-    "04_blog/v040-minifier-and-autonav.md",
-    "02_setup/02_general/03_setting-up-obsidian.md",
-    "02_setup/99_development/01_setting-up-debugger.md",
+    "05_dev/other/02_backlog.md",
+    "05_dev/other/01_credits.md",
+    "02_setup/02_general/01_setting-up-meta.md",
     "02_setup/02_general/02_setting-up-blog.md",
+    "02_setup/02_general/03_setting-up-obsidian.md",
+    "02_setup/03_seo_and_sharing/01_setting-up-social-cards.md",
+    "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
+    "02_setup/03_seo_and_sharing/README.md",
+    "02_setup/99_development/README.md",
+    "02_setup/99_development/01_setting-up-debugger.md",
+    "02_setup/01_installation.md",
+    "03_how-to-publish/01_first_steps.md",
+    "04_blog/README.md",
+    "04_blog/v020.md",
+    "04_blog/v030.md",
+    "04_blog/v040-minifier-and-autonav.md",
+    "04_blog/v041.md",
+    "04_blog/v050-social.md",
+    "04_blog/v110-debugger.md",
+    "04_blog/v100-obsidian.md",
+    "05_dev/other/README.md",
+    "05_dev/01_changelog.md",
+    "05_dev/02_development.md",
+    "05_dev/03_versioning.md",
     "pexels-valeriia-miller-18244142.jpg",
     "pexels-héctor-garcía-18128034.jpg",
-    "03_how-to-publish/01_first_steps.md",
-    "05_dev/other/02_backlog.md",
-    "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
-    "02_setup/02_general/01_setting-up-meta.md",
-    "05_dev/02_development.md",
-    "05_dev/01_changelog.md",
-    "_templates/_option.md",
-    "README.md",
-    "_templates/_README.md",
-    "_templates/_post.md",
-    "_templates/_page.md",
-    "04_blog/v110-debugger.md",
-    "02_setup/99_development/README.md",
-    "02_setup/02_general/README.md",
     "_attachments/debugger_console_example.png",
     "_attachments",
-    "02_setup/03_seo_and_sharing/README.md",
-    "02_setup/03_seo_and_sharing/01_setting-up-social-cards.md",
-    "05_dev/03_versioning.md",
     "02_setup/99_development",
     "02_setup/02_general",
     "02_setup/03_seo_and_sharing",

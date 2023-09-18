@@ -1,7 +1,7 @@
 ---
 title: Versioning
 slug: versioning
-status: published
+visibility: published
 date: 2023-03-30 13:12:26
 update: 2023-08-01 12:00:53
 description: Approach to versioning

@@ -19,6 +19,8 @@ dev_addr: 127.0.0.1:8666
 
 extra:
   homepage: https://mkusz.github.io/mkdocs-publisher
+  status:
+    published: test
 
 extra_css:
   - assets/stylesheets/publisher.css
@@ -32,7 +34,8 @@ watch:
 theme:
   name: material
   language: en
-  font: Lato
+  font:
+    code: Lato
   custom_dir: overrides
   logo: publisher_logo.png
   favicon: publisher_icon.png
@@ -116,9 +119,9 @@ plugins:
           - mkdocs.plugins
           - mkdocs.structure.files
   - search
-  - pub-obsidian
   - pub-blog:
       blog_dir: 04_blog
+  - pub-obsidian
   - pub-social
   - pub-meta
   - pub-minifier

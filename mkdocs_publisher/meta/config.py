@@ -37,7 +37,7 @@ class _MetaStatusConfig(Config):
     file_warn_on_missing = option.Type(bool, default=True)
     dir_default = option.Choice(choices=["draft", "hidden", "published"], default="published")
     dir_warn_on_missing = option.Type(bool, default=False)
-    key_name = option.Type(str, default="status")
+    key_name = option.Type(str, default="visibility")
 
 
 class _MetaTitleConfig(Config):

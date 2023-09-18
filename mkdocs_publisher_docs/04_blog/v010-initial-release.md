@@ -1,7 +1,7 @@
 ---
 title: v0.1.0 - Initial release
 slug: v010
-status: published
+visibility: published
 date: 2023-02-02 22:00:00
 update: 2023-08-01 11:50:56
 tags:

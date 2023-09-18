@@ -224,7 +224,7 @@ def _render_and_write_page(
         slug = slugify(text=page_title.split("-")[-1].strip())
     page_meta["slug"] = slug
 
-    page_meta["status"] = "published"
+    page_meta["visibility"] = "published"
     if not blog_config.plugin_config.searchable_non_posts:
         page_meta["search"] = {"exclude": True}  # type: ignore
 

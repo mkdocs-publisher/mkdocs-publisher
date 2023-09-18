@@ -1,7 +1,7 @@
 ---
 title: Development
 slug: development
-status: published
+visibility: published
 date: 2023-03-21 11:27:00
 update: 2023-08-01 12:00:42
 description: Development of this plugin how to

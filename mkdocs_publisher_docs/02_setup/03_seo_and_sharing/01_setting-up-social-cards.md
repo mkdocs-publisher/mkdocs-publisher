@@ -1,7 +1,7 @@
 ---
 title: Setting up social cards
 slug: pub-social
-status: published
+visibility: published
 date: 2023-04-04 21:14:00
 update: 2023-08-01 11:51:44
 description: Setting up Publisher for MkDocs social cards plugin for social services sharing

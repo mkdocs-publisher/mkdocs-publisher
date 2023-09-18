@@ -22,7 +22,6 @@
 
 import logging
 from pathlib import Path
-from unittest.mock import patch
 
 import pytest
 from mkdocs.config.defaults import MkDocsConfig
@@ -147,20 +146,18 @@ def test_relative_path_finder_get_non_existing_file_path(
     )
 
 
-def test_relative_path_finder_get_non_existing_but_found_file_path(
+def test_relative_path_finder_multiple_file_found(
     caplog: LogCaptureFixture,
     test_data_path: Path,
     relative_path_finder: md_links.RelativePathFinder,
 ):
-    with patch.object(Path, "is_file") as mock_is_file:
-        mock_is_file.return_value = False
-        file_path = relative_path_finder.get_full_file_path(file_path=Path("rel_file.md"))
-        assert file_path is None
-        assert caplog.records[-1].levelno == logging.ERROR
-        assert (
-            caplog.records[-1].message == f'File: "rel_file.md" doesn\'t exists '
-            f'(from: "{test_data_path}")'
-        )
+    file_path = relative_path_finder.get_full_file_path(file_path=Path("other_rel_file.md"))
+    assert file_path is None
+    assert caplog.records[-1].levelno == logging.ERROR
+    assert (
+        caplog.records[-1].message == "Too much files found: ['relative/other_rel_file.md', "
+        "'current/cur_sub/other_rel_file.md']"
+    )
 
 
 @pytest.mark.parametrize(

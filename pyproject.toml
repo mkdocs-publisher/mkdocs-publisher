@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-publisher"
-version = "1.1.0"
+version = "1.1.1"
 description = "Publisher for MkDocs - set of plugions for content creators"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
@@ -22,7 +22,7 @@ keywords = [
     "tags",
 ]
 packages = [
-    {include = "*", from = "mkdocs_publisher"},
+    {include = "mkdocs_publisher"},
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -60,9 +60,9 @@ documentation = "https://mkusz.github.io/mkdocs-publisher"
 [tool.poetry.dependencies]
 python = "^3.9"
 mkdocs = "^1.4.2"
-mkdocs-material = "9.1.21"
 pymdown-extensions = "^10"
 beautifulsoup4 = "^4.12.0"
+mkdocs-material = "^9.3.1"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
