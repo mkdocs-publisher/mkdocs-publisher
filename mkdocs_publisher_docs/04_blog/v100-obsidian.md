@@ -1,7 +1,7 @@
 ---
 title: v1.0.0 - 2023-06-13
 slug: v100
-visibility: published
+publish: published
 date: 2023-05-19 15:40:36
 update: 2023-09-1 11:51:14
 tags:

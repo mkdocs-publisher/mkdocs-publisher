@@ -19,8 +19,6 @@ dev_addr: 127.0.0.1:8666
 
 extra:
   homepage: https://mkusz.github.io/mkdocs-publisher
-  status:
-    published: test
 
 extra_css:
   - assets/stylesheets/publisher.css

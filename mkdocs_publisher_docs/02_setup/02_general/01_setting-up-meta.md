@@ -1,10 +1,10 @@
 ---
 title: Setting up meta
 slug: pub-meta
+publish: published
 date: 2023-05-15 16:00:00
-update: 2023-09-17 23:01:02
+update: 2023-09-22 10:38:38
 description: Setting up Publisher for MkDocs meta plugin for metadata retrival and automatic navigation building
-visibility: published
 categories:
   - setup
   - plugin

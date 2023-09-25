@@ -1,7 +1,7 @@
 ---
 title: Setting up a blog
 slug: pub-blog
-visibility: published
+publish: published
 date: 2023-02-12 22:00:00
 update: 2023-09-14 17:24:42
 description: Setting up a Publisher for MkDocs blog plugin for blogging functionality

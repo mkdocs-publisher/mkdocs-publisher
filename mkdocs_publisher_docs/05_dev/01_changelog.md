@@ -1,7 +1,7 @@
 ---
 title: Changelog
 slug: changelog
-visibility: published
+publish: published
 date: 2023-02-12 22:00:00
 update: 2023-08-01 12:00:33
 description: Publisher for MkDocs version history

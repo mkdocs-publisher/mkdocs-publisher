@@ -30,14 +30,18 @@ class _MetaSlugConfig(Config):
     key_name = option.Type(str, default="slug")
 
 
-class _MetaStatusConfig(Config):
+class _MetaPublishConfig(Config):
     search_in_hidden = option.Type(bool, default=False)
     search_in_draft = option.Type(bool, default=False)
-    file_default = option.Choice(choices=["draft", "hidden", "published"], default="draft")
+    file_default = option.Choice(
+        choices=["draft", "hidden", "published", True, False], default=False
+    )
     file_warn_on_missing = option.Type(bool, default=True)
-    dir_default = option.Choice(choices=["draft", "hidden", "published"], default="published")
+    dir_default = option.Choice(
+        choices=["draft", "hidden", "published", True, False], default=True
+    )
     dir_warn_on_missing = option.Type(bool, default=False)
-    key_name = option.Type(str, default="visibility")
+    key_name = option.Type(str, default="publish")
 
 
 class _MetaTitleConfig(Config):
@@ -48,5 +52,5 @@ class MetaPluginConfig(Config):
     dir_meta_file = option.Type(str, default="README.md")
 
     slug: _MetaSlugConfig = option.SubConfig(_MetaSlugConfig)  # type: ignore
-    status: _MetaStatusConfig = option.SubConfig(_MetaStatusConfig)  # type: ignore
+    publish: _MetaPublishConfig = option.SubConfig(_MetaPublishConfig)  # type: ignore
     title: _MetaTitleConfig = option.SubConfig(_MetaTitleConfig)  # type: ignore

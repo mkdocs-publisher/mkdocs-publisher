@@ -1,7 +1,7 @@
 ---
 title: v0.5.0 - 2023-04-04
 slug: v050
-visibility: published
+publish: published
 date: 2023-04-04 21:26:12
 update: 2023-08-01 11:51:12
 tags:

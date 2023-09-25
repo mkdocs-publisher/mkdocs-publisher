@@ -1,7 +1,7 @@
 ---
 title: Installation
 slug: installation
-visibility: published
+publish: published
 date: 2023-03-16 18:27:00
 update: 2023-04-17 12:17:19
 description: Installation

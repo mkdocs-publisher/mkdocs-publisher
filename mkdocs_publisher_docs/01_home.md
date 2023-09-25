@@ -4,7 +4,7 @@ slug: .
 date: 2023-03-12 12:27:00
 update: 2023-09-17 23:02:52
 description: Installation
-visibility: published
+publish: published
 categories:
   - start
 hide: [toc, navigation]

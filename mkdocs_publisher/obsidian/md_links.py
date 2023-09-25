@@ -229,9 +229,10 @@ class MarkdownLinks:
         self._links_config: _ObsidianLinksConfig = mkdocs_config.plugins[
             "pub-obsidian"
         ].config.links
-        self._blog_config: Optional[BlogPluginConfig] = mkdocs_utils.get_plugin_config(
-            mkdocs_config=mkdocs_config, plugin_name="pub-blog"
-        )  # type: ignore
+        self._blog_config: Optional[BlogPluginConfig] = cast(
+            BlogPluginConfig,
+            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-blog"),
+        )
 
     @staticmethod
     def _normalize_wiki_embed_link(match: re.Match) -> str:

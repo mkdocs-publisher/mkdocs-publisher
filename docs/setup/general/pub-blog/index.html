@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width,initial-scale=1" name="viewport">
-<meta content="Setting up a Publisher for MkDocs debugger plugin for development purposes" name="description">
+<meta content="Setting up a Publisher for MkDocs blog plugin for blogging functionality" name="description">
 <meta content="Maciej 'maQ' Kusz" name="author">
-<link href="https://mkusz.github.io/mkdocs-publisher/02_setup/development/pub-debugger/" rel="canonical">
-<link href="../../seo-and-sharing/pub-minifier/" rel="prev">
-<link href="../../../how-to-publish/first-steps/" rel="next">
+<link href="https://mkusz.github.io/mkdocs-publisher/setup/general/pub-blog/" rel="canonical">
+<link href="../pub-meta/" rel="prev">
+<link href="../pub-obsidian/" rel="next">
 <link href="../../../publisher_icon.png" rel="icon">
 <meta content="mkdocs-1.5.2, mkdocs-material-9.3.1" name="generator">
 <title>
-Setting up debugger - Publisher for MkDocs
+Setting up a blog - Publisher for MkDocs
 </title>
 <link href="../../../assets/stylesheets/main.046329b4.min.css" rel="stylesheet">
 <link href="../../../assets/stylesheets/palette.85d0ee34.min.css" rel="stylesheet">
@@ -25,14 +25,14 @@ Setting up debugger - Publisher for MkDocs
 <link href="../../../assets/stylesheets/obsidian.min.css.map" rel="stylesheet">
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta content="article" property="og:type">
-<meta content="Setting up debugger" property="og:title">
-<meta content="Setting up a Publisher for MkDocs debugger plugin for development purposes" property="og:description">
+<meta content="Setting up a blog" property="og:title">
+<meta content="Setting up a Publisher for MkDocs blog plugin for blogging functionality" property="og:description">
 <meta content="Publisher for MkDocs" property="og:site_name">
 <meta content="en_US" property="og:locale">
-<meta content="https://mkusz.github.io/mkdocs-publisher/02_setup/development/pub-debugger/" property="og:url">
+<meta content="https://mkusz.github.io/mkdocs-publisher/setup/general/pub-blog/" property="og:url">
 <meta content="summary" property="twitter:card">
-<meta content="Setting up debugger" property="twitter:title">
-<meta content="Setting up a Publisher for MkDocs debugger plugin for development purposes" property="twitter:description">
+<meta content="Setting up a blog" property="twitter:title">
+<meta content="Setting up a Publisher for MkDocs blog plugin for blogging functionality" property="twitter:description">
 </head>
 <body data-md-color-accent="orange" data-md-color-primary="orange" data-md-color-scheme="default" dir="ltr">
 <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
@@ -41,7 +41,7 @@ Setting up debugger - Publisher for MkDocs
 <label for="__drawer" class="md-overlay">
 </label>
 <div data-md-component="skip">
-<a href="#setting-up-a-debugger-plugin" class="md-skip">
+<a href="#setting-up-a-blog-plugin" class="md-skip">
 Skip to content
 </a>
 </div>
@@ -67,7 +67,7 @@ Publisher for MkDocs
 </div>
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
-Setting up debugger
+Setting up a blog
 </span>
 </div>
 </div>
@@ -168,7 +168,7 @@ mkusz/mkdocs-publisher
 </li>
 <li class="md-tabs__item md-tabs__item--active">
 <a href="../../installation/" class="md-tabs__link">
-02_setup
+Setup
 </a>
 </li>
 <li class="md-tabs__item">
@@ -228,7 +228,7 @@ mkusz/mkdocs-publisher
 <input type="checkbox" id="__nav_2" class="md-toggle md-nav__toggle" checked>
 <label for="__nav_2" class="md-nav__link" id="__nav_2_label" tabindex="0">
 <span class="md-ellipsis">
-02_setup
+Setup
 </span>
 <span class="md-icon md-nav__icon">
 </span>
@@ -237,7 +237,7 @@ mkusz/mkdocs-publisher
 <label for="__nav_2" class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
-02_setup
+Setup
 </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
@@ -247,8 +247,8 @@ Installation
 </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--nested md-nav__item--section">
-<input type="checkbox" id="__nav_2_2" class="md-toggle md-nav__toggle">
+<li class="md-nav__item md-nav__item--nested md-nav__item--section md-nav__item--active">
+<input type="checkbox" id="__nav_2_2" class="md-toggle md-nav__toggle" checked>
 <label for="__nav_2_2" class="md-nav__link" id="__nav_2_2_label" tabindex="0">
 <span class="md-ellipsis">
 General
@@ -256,7 +256,7 @@ General
 <span class="md-icon md-nav__icon">
 </span>
 </label>
-<nav class="md-nav" data-md-level="2" aria-expanded="false" aria-labelledby="__nav_2_2_label">
+<nav class="md-nav" data-md-level="2" aria-expanded="true" aria-labelledby="__nav_2_2_label">
 <label for="__nav_2_2" class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
@@ -264,21 +264,76 @@ General
 </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a href="../../general/pub-meta/" class="md-nav__link">
+<a href="../pub-meta/" class="md-nav__link">
 <span class="md-ellipsis">
 Setting up meta
 </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a href="../../general/pub-blog/" class="md-nav__link">
+<li class="md-nav__item md-nav__item--active">
+<input type="checkbox" id="__toc" class="md-toggle md-nav__toggle">
+<label for="__toc" class="md-nav__link md-nav__link--active">
+<span class="md-ellipsis">
+Setting up a blog
+</span>
+<span class="md-icon md-nav__icon">
+</span>
+</label>
+<a href="./" class="md-nav__link md-nav__link--active">
 <span class="md-ellipsis">
 Setting up a blog
 </span>
 </a>
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<label for="__toc" class="md-nav__title">
+<span class="md-icon md-nav__icon">
+</span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-scrollfix="" data-md-component="toc">
+<li class="md-nav__item">
+<a href="#introduction" class="md-nav__link">
+Introduction
+</a>
 </li>
 <li class="md-nav__item">
-<a href="../../general/pub-obsidian/" class="md-nav__link">
+<a href="#configuration" class="md-nav__link">
+Configuration
+</a>
+<nav class="md-nav" aria-label="Configuration">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#general" class="md-nav__link">
+General
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#directories" class="md-nav__link">
+Directories
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#language" class="md-nav__link">
+Language
+</a>
+<nav class="md-nav" aria-label="Language">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#translation" class="md-nav__link">
+Translation
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="../pub-obsidian/" class="md-nav__link">
 <span class="md-ellipsis">
 Setting up Obsidian
 </span>
@@ -320,8 +375,8 @@ Setting up minifier
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested md-nav__item--section md-nav__item--active">
-<input type="checkbox" id="__nav_2_4" class="md-toggle md-nav__toggle" checked>
+<li class="md-nav__item md-nav__item--nested md-nav__item--section">
+<input type="checkbox" id="__nav_2_4" class="md-toggle md-nav__toggle">
 <label for="__nav_2_4" class="md-nav__link" id="__nav_2_4_label" tabindex="0">
 <span class="md-ellipsis">
 Development
@@ -329,70 +384,19 @@ Development
 <span class="md-icon md-nav__icon">
 </span>
 </label>
-<nav class="md-nav" data-md-level="2" aria-expanded="true" aria-labelledby="__nav_2_4_label">
+<nav class="md-nav" data-md-level="2" aria-expanded="false" aria-labelledby="__nav_2_4_label">
 <label for="__nav_2_4" class="md-nav__title">
 <span class="md-icon md-nav__icon">
 </span>
 Development
 </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input type="checkbox" id="__toc" class="md-toggle md-nav__toggle">
-<label for="__toc" class="md-nav__link md-nav__link--active">
-<span class="md-ellipsis">
-Setting up debugger
-</span>
-<span class="md-icon md-nav__icon">
-</span>
-</label>
-<a href="./" class="md-nav__link md-nav__link--active">
+<li class="md-nav__item">
+<a href="../../development/pub-debugger/" class="md-nav__link">
 <span class="md-ellipsis">
 Setting up debugger
 </span>
 </a>
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-<label for="__toc" class="md-nav__title">
-<span class="md-icon md-nav__icon">
-</span>
-Table of contents
-</label>
-<ul class="md-nav__list" data-md-scrollfix="" data-md-component="toc">
-<li class="md-nav__item">
-<a href="#introduction" class="md-nav__link">
-Introduction
-</a>
-</li>
-<li class="md-nav__item">
-<a href="#python-logging-for-mkdocs" class="md-nav__link">
-Python logging for MkDocs
-</a>
-</li>
-<li class="md-nav__item">
-<a href="#configuration" class="md-nav__link">
-Configuration
-</a>
-<nav class="md-nav" aria-label="Configuration">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a href="#console-logging" class="md-nav__link">
-Console logging
-</a>
-</li>
-<li class="md-nav__item">
-<a href="#file-logging" class="md-nav__link">
-File logging
-</a>
-</li>
-<li class="md-nav__item">
-<a href="#zip-file-generation" class="md-nav__link">
-Zip file generation
-</a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -624,30 +628,34 @@ Introduction
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#python-logging-for-mkdocs" class="md-nav__link">
-Python logging for MkDocs
-</a>
-</li>
-<li class="md-nav__item">
 <a href="#configuration" class="md-nav__link">
 Configuration
 </a>
 <nav class="md-nav" aria-label="Configuration">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a href="#console-logging" class="md-nav__link">
-Console logging
+<a href="#general" class="md-nav__link">
+General
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#file-logging" class="md-nav__link">
-File logging
+<a href="#directories" class="md-nav__link">
+Directories
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#zip-file-generation" class="md-nav__link">
-Zip file generation
+<a href="#language" class="md-nav__link">
+Language
 </a>
+<nav class="md-nav" aria-label="Language">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#translation" class="md-nav__link">
+Translation
+</a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -659,182 +667,102 @@ Zip file generation
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-typeset md-content__inner">
-<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/mkdocs_publisher_docs/02_setup/99_development/01_setting-up-debugger.md" class="md-icon md-content__button" title="Edit this page">
+<a href="https://github.com/mkusz/mkdocs-publisher/edit/main/mkdocs_publisher_docs/02_setup/02_general/02_setting-up-blog.md" class="md-icon md-content__button" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 <path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z">
 </path>
 </svg>
 </a>
-<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/mkdocs_publisher_docs/02_setup/99_development/01_setting-up-debugger.md" class="md-icon md-content__button" title="View source of this page">
+<a href="https://github.com/mkusz/mkdocs-publisher/raw/main/mkdocs_publisher_docs/02_setup/02_general/02_setting-up-blog.md" class="md-icon md-content__button" title="View source of this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 <path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z">
 </path>
 </svg>
 </a>
-<h1 id="setting-up-a-debugger-plugin">
-Setting up a debugger plugin
+<h1 id="setting-up-a-blog-plugin">
+Setting up a blog plugin
 </h1>
 <h2 id="introduction">
 Introduction
 </h2>
 <p>
-Each good developer knows, how important is the possibility to read proper logs from running application when there is some issue. MkDocs by default produces some logs while documentation is being built or while the built-in server is running. Because the whole MkDocs is written using the Python programming language, there is a possibility to configure a debugger in tools like PyCharm or VsCode. But how to handle logging when you are just a user and do not have a needed knowledge and just want to submit an issue because you have found some problem? To help with debugging by logging and producing additional files that can be attached to the issue submission, Publisher for MkDocs contains a
-<code>
-pub-debugger
-</code>
-plugin. It's built with 3 main modules:
+<strong>
+Publisher for MkDocs
+</strong>
+allows you to create a blog. A blog can be a sidecar for your current documentation, or it can be configured as a standalone. The entire blogging engine is created and preconfigured, so you can focus on content creation. It will handle creation of:
 </p>
 <ul>
 <li>
-<a href="#Logging%20to%20the%20console">
-console logger
-</a>
-that allows to change the output produced to the console,
+indexes,
 </li>
 <li>
-<a href="#Logging%20to%20the%20file">
-file logger
-</a>
-that allows to produce the log file,
+archive,
 </li>
 <li>
-<a href="#Generating%20Zip%20file">
-Zip file generator
-</a>
-that allows to produce a Zip file with log file produced by previous module and some additional files like
-<code>
-mkdocs.yml
-</code>
-and Python package files like
-<code>
-requirements.txt
-</code>
-or
-<code>
-pyproject.tml
-</code>
-and
-<code>
-poetry.lock
-</code>
-(depends on type of Python package manager you have used).
+categories,
+</li>
+<li>
+tags,
+</li>
+<li>
+pagination.
 </li>
 </ul>
-<div class="admonition info">
-<p class="admonition-title">
-Console and file logger settings
-</p>
 <p>
-Both console and file loggers are configured separately and their defaults settings are different.
-</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">
-Privacy disclaimer
-</p>
-<p>
+All the above documents are created outside
 <code>
-pub-debugger
+docs
 </code>
-plugin do not send any files over the internet, but if you want to use a Zip file as an attachment for an issue submission or share it with anybody, before please make a review of the content of this archive file.
-</p>
-<div class="admonition danger">
-<p class="admonition-title">
-Please remember
+directory, so they are not visible and do not interfere with your content.
 </p>
 <p>
-It's your data and your responsibility what you are publishing over the internet. This plugin is only giving you the tool that should help, and you cannot blame me (the author of this plugin) for any potential data leaks.
-</p>
-</div>
-</div>
-<h2 id="python-logging-for-mkdocs">
-Python logging for MkDocs
-</h2>
-<div class="admonition info">
-<p class="admonition-title">
-Information
-</p>
-<p>
-This section is for any MkDocs plugin developer.
-</p>
-</div>
-<p>
-Because MkDocs is written in Python, whenever someone wants to write a new plugin and see some information during documentation build, he has to use a
-<a href="https://docs.python.org/3/library/logging.html">
-logging library
+This documentation contains a
+<a href="../../../blog/">
+blog
 </a>
-. The usual use of this library is to do something like this:
-</p>
-<div class="tabbed-alternate tabbed-set" data-tabs="1:1">
-<input type="radio" id="new_mkdocs_pluginpy" name="__tabbed_1" checked>
-<div class="tabbed-labels">
-<label for="new_mkdocs_pluginpy">
-<span class="twemoji">
-<svg viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-<path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
-</path>
-</svg>
-</span>
-new_mkdocs_plugin.py
-</label>
-</div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-</div>
-</div>
-
-</div>
-<div class="highlight language-python">
-<pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">logging</span>
-</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="hll"><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span></span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="hll"><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Some output"</span><span class="p">)</span>
-</span></span></code></pre>
-</div>
-<p>
-The biggest problem with this approach is that
-<code>
-__name__
-</code>
-becomes a file name (without extension), so the logger for the above example is
-<code>
-new_mkdocs_plugin
-</code>
-. Since all loggers inside MkDocs have a name corresponding to a directory structure that leads to the file where logger is used, any MkDocs plugin developer should do the same.
+that is created using this plugin, so you can take a look at a living example.
 </p>
 <div class="admonition tip">
 <p class="admonition-title">
-The best practice for logger naming
+Date format
 </p>
 <p>
-Logger name should be built according to given structure:
+Currently, the date format of a blog posts is not configurable and has to look like this:
 </p>
-<p>
-<code>
-mkdocs.plugins.[project_name].[directory].[optional_sub_directories].[file_name]
-</code>
-.
-</p>
+<div class="highlight language-yaml">
+<pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nn">---</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2023-02-12 22:00:00</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="nn">---</span>
+</span></code></pre>
 </div>
 <p>
-Let's take a look at
-<a href="https://github.com/mkusz/mkdocs-publisher/blob/main/mkdocs_publisher/minifier/minifiers.py">
-one of the files from this project repository
-</a>
-.
+There is also a requirement, that each blog post, have to contain an unique date because without this, the algorithm responsible for posts display ordering (from newest to oldest) will not work correctly.
 </p>
-<div class="tabbed-alternate tabbed-set" data-tabs="2:2">
-<input type="radio" id="minifierpy" name="__tabbed_2" checked>
-<input type="radio" id="_1" name="__tabbed_2">
+</div>
+<h2 id="configuration">
+Configuration
+</h2>
+<p>
+To enable the built-in obsidian blog, the following lines have to be added to
+<code>
+mkdocs.yml
+</code>
+file:
+</p>
+<div class="tabbed-alternate tabbed-set" data-tabs="1:2">
+<input type="radio" id="mkdocsyml" name="__tabbed_1" checked>
+<input type="radio" id="_1" name="__tabbed_1">
 <div class="tabbed-labels">
-<label for="minifierpy">
+<label for="mkdocsyml">
 <span class="twemoji">
 <svg viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
 </path>
 </svg>
 </span>
-minifier.py
+mkdocs.yml
 </label>
 <label for="_1">
 <span class="twemoji">
@@ -848,89 +776,82 @@ minifier.py
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight language-python">
-<pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">logging</span>
-</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="o">...</span>
-</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>
-</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="hll"><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"mkdocs.plugins.publisher.minifier.minifiers"</span><span class="p">)</span>
+<div class="highlight language-yaml">
+<pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="hll"><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pub-blog</span>
 </span></span></code></pre>
 </div>
 </div>
 <div class="tabbed-block">
-<div class="highlight language-console">
-<pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="hll"><span class="go">.</span>
-</span></span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="hll"><span class="go">└─ mkdocs_publisher/</span>
-</span></span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="hll"><span class="go">  └─ minifier/</span>
-</span></span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="hll"><span class="go">    └─ minifiers.py</span>
-</span></span></code></pre>
-</div>
-</div>
-</div>
-
-
-</div>
-<h2 id="configuration">
-Configuration
-</h2>
 <p>
-To enable the built-in debugger plugin, the following lines have to be added to
+By default, the blogging plugin assumes that blog posts are located inside
 <code>
-mkdocs.yml
+blog
 </code>
-file:
+subdirectory. You have to create this directory manually, so the directory structure will look like this:
 </p>
-<div class="tabbed-alternate tabbed-set" data-tabs="3:1">
-<input type="radio" id="mkdocsyml" name="__tabbed_3" checked>
+<div class="highlight language-console">
+<pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="go">.</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="go">├─ docs/</span>
+</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="hll"><span class="go">│  └─ blog/</span>
+</span></span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="go">└─ mkdocs.yml</span>
+</span></code></pre>
+</div>
+</div>
+</div>
+
+
+</div>
+<p>
+The last thing is to add a blog to a site navigation. There are 2 ways to do it:
+</p>
+<div class="tabbed-alternate tabbed-set" data-tabs="2:2">
+<input type="radio" id="using-pub-meta-plugin" name="__tabbed_2" checked>
+<input type="radio" id="add-to-existing-site-layout" name="__tabbed_2">
 <div class="tabbed-labels">
-<label for="mkdocsyml">
-<span class="twemoji">
-<svg viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-<path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
-</path>
-</svg>
-</span>
-mkdocs.yml
+<label for="using-pub-meta-plugin">
+Using
+<em>
+pub-meta
+</em>
+plugin
+</label>
+<label for="add-to-existing-site-layout">
+Add to existing site layout
 </label>
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="hll"><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pub-debugger</span>
-</span></span></code></pre>
-</div>
-</div>
-</div>
-
-</div>
-<h3 id="console-logging">
-Console logging
-</h3>
 <p>
-By default, MkDocs produces a console log, that contains only basic information like log level and log message. In normal usage, this information is quite sufficient, but when any problem with a build process occurs, it's quite hard to find a specific line where the problem has happened. Because of that,
+When
+<a href="../pub-meta/" id="01-setting-up-meta">
+pub-meta
+</a>
+plugin is configured and the directory for blog posts is set up, there is nothing more left to be configured. All the things related to creating a navigation section will be handled automatically by the
+<em>
+pub-meta
+</em>
+plugin.
+</p>
+</div>
+<div class="tabbed-block">
+<p>
+If an existing pages are created in MkDocs, it's simple to just add a blog functionality. To achieve it,
+<em>
+Any name
+</em>
+with path to a blog subdirectory name (by default it's a
 <code>
-pub-debugger
+blog
 </code>
-allows you to override the default console logger with one that contains more information. Below you can find what does it look like:
+) has to be added to the
+<code>
+mkdocs.yml
+</code>
+file and blogging engine will handle everything else.
 </p>
-<p>
-<img alt="" src="../../../_attachments/debugger_console_example.png">
-</p>
-<div class="admonition info">
-<p class="admonition-title">
-Code link
-</p>
-<p>
-Be aware, that the above screenshot is the most future rich output. The default plugin configuration doesn't enable the
-<strong>
-code link
-</strong>
-section (it has to be enabled).
-</p>
-</div>
-<div class="tabbed-alternate tabbed-set" data-tabs="4:1">
-<input type="radio" id="mkdocsyml_1" name="__tabbed_4" checked>
+<div class="tabbed-alternate tabbed-set" data-tabs="3:1">
+<input type="radio" id="mkdocsyml_1" name="__tabbed_3" checked>
 <div class="tabbed-labels">
 <label for="mkdocsyml_1">
 <span class="twemoji">
@@ -944,109 +865,39 @@ mkdocs.yml
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
+<div class="highlight language-yaml">
+<pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">nav</span><span class="p">:</span>
+</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"> </span><span class="c1"># Previous navigation elements</span>
+</span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="hll"><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Any name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blog</span>
+</span></span><span id="__span-3-4"><a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"> </span><span class="c1"># Next navigation elements</span>
+</span></code></pre>
+</div>
 </div>
 </div>
 
 </div>
-<div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-debugger</span><span class="p">:</span>
-</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="hll"><span class="w">      </span><span class="nt">console_log</span><span class="p">:</span>
-</span></span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="hll"><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="hll"><span class="w">        </span><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
-</span></span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="hll"><span class="w">        </span><span class="nt">show_code_link</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span></span><span id="__span-4-7"><a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="hll"><span class="w">        </span><span class="nt">show_logger_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-4-8"><a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="hll"><span class="w">        </span><span class="nt">show_entry_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-4-9"><a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="hll"><span class="w">        </span><span class="nt">entry_time_format</span><span class="p">:</span><span class="w"> </span><span class="s">"%H:%M:%S.%f"</span>
-</span></span><span id="__span-4-10"><a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="hll"><span class="w">        </span><span class="nt">filter_logger_names</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-</span></span></code></pre>
 </div>
-<p>
-Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+</div>
+
+
+</div>
+<div class="admonition info">
+<p class="admonition-title">
+Blog standalone mode
 </p>
-<details class="settings">
-<summary>
-<a href="#+debugger.console.enabled" id="+debugger.zip.enabled">
-enabled
-</a>
-</summary>
 <p>
-Controls if console log will be replaced with a new, richer format.
+Standalone mode (blog as a starting page) was removed in version
+<a href="../../../blog/v100/" id="04-blogv100-obsidian">
+v0.6.0
+</a>
+and now this is automatically detected, based on site navigation structure.
 </p>
-</details>
-<details class="settings">
-<summary>
-<a href="#+debugger.console.log_level" id="+debugger.zip.log_level">
-log_level
-</a>
-</summary>
-<p>
-Set the
-<a href="https://docs.python.org/3/library/logging.html#logging-levels">
-log level
-</a>
-.
-</p>
-</details>
-<details class="settings">
-<summary>
-<a href="#+debugger.console.show_code_link" id="+debugger.zip.show_code_link">
-show_code_link
-</a>
-</summary>
-<p>
-Controls if the code link part is visible in the log message (useful for IDE like PyCharm).
-</p>
-</details>
-<details class="settings">
-<summary>
-<a href="#+debugger.console.show_logger_name" id="+debugger.zip.show_logger_name">
-show_logger_name
-</a>
-</summary>
-<p>
-Controls if the logger name part is visible in the log message (useful when you want to filter some of the messages or plugins).
-</p>
-</details>
-<details class="settings">
-<summary>
-<a href="#+debuggerconsoleshow_entry_time" id="+debugger.zip.show_entry_time">
-show_entry_time
-</a>
-</summary>
-<p>
-Controls if the time entry part is visible in the log message.
-</p>
-</details>
-<details class="settings">
-<summary>
-<a href="#+debugger.console.entry_time_format" id="+debugger.zip.entry_time_format">
-entry_time_format
-</a>
-</summary>
-<p>
-Defines
-<a href="https://docs.python.org/3/library/logging.html#logging.Formatter.formatTime">
-time format
-</a>
-.
-</p>
-</details>
-<details class="settings">
-<summary>
-<a href="#+debugger.console.filter_logger_names" id="+debugger.zip.filter_logger_names">
-filter_logger_names
-</a>
-</summary>
-<p>
-Define a list of logger names that will be filtered out of the log messages.
-</p>
-</details>
-<h3 id="file-logging">
-File logging
+</div>
+<h3 id="general">
+General
 </h3>
-<div class="tabbed-alternate tabbed-set" data-tabs="5:1">
-<input type="radio" id="mkdocsyml_2" name="__tabbed_5" checked>
+<div class="tabbed-alternate tabbed-set" data-tabs="4:1">
+<input type="radio" id="mkdocsyml_2" name="__tabbed_4" checked>
 <div class="tabbed-labels">
 <label for="mkdocsyml_2">
 <span class="twemoji">
@@ -1060,89 +911,226 @@ mkdocs.yml
 </div>
 <div class="tabbed-content">
 <div class="tabbed-block">
+<div class="highlight language-yaml">
+<pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
+</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="hll"><span class="w">      </span><span class="nt">teaser_marker</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;!--</span><span class="nv"> </span><span class="s">more</span><span class="nv"> </span><span class="s">--&gt;"</span>
+</span></span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="hll"><span class="w">      </span><span class="nt">searchable_non_posts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span></span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="hll"><span class="w">      </span><span class="nt">posts_per_page</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+</span></span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="hll"><span class="w">      </span><span class="nt">slug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blog</span>
+</span></span></code></pre>
+</div>
 </div>
 </div>
 
-</div>
-<div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-debugger</span><span class="p">:</span>
-</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="hll"><span class="w">      </span><span class="nt">file_log</span><span class="p">:</span>
-</span></span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="hll"><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-5-5"><a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="hll"><span class="w">        </span><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span>
-</span></span><span id="__span-5-6"><a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="hll"><span class="w">        </span><span class="nt">log_format</span><span class="p">:</span><span class="w"> </span><span class="s">"[%(created).14s][%(levelname)-5.5s][%(project_path)s:%(lineno)d]</span><span class="nv"> </span><span class="s">%(message)s"</span>
-</span></span><span id="__span-5-7"><a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="hll"><span class="w">        </span><span class="nt">remove_old_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-5-8"><a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="hll"><span class="w">        </span><span class="nt">filter_logger_names</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-</span></span></code></pre>
 </div>
 <p>
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
 </p>
 <details class="settings">
 <summary>
-<a href="#+debugger.file.enabled" id="+debugger.zip.enabled">
-enabled
+<a href="#+blog.teaser_marker" id="+blog.teaser_marker">
+teaser_marker
 </a>
 </summary>
 <p>
-Controls if log file will be created.
+This option gives you an ability to split a blog posts that are a massive chunk of text into two parts: blog post teaser visible on blog posts index page and the full article. To split the blog post, you have to put a
+<code>
+&lt;!-- more --&gt;
+</code>
+in some line inside a content of your blog post. This value is a valid HTML comment, so it will not be rendered.
 </p>
 </details>
 <details class="settings">
 <summary>
-<a href="#+debugger.file.log_level" id="+debugger.zip.log_level">
-log_level
+<a href="#+blog.posts_per_page" id="+blog.posts_per_page">
+posts_per_page
 </a>
 </summary>
 <p>
-Set the
-<a href="https://docs.python.org/3/library/logging.html#logging-levels">
-log level
-</a>
-.
+When you gather over time some amount of blog posts, their index even with short teasers, they can take quite much space over a single page and scrolling down is not a convenient solution. To avoid this, blogging engine allows splitting index pages when they contain a certain amount of blog posts.
 </p>
 </details>
 <details class="settings">
 <summary>
-<a href="#+debugger.file.log_format" id="+debugger.zip.log_format">
-log_format
+<a href="#+blog.searchable_non_posts" id="+blog.searchable_non_posts">
+searchable_non_posts
 </a>
 </summary>
 <p>
-Defines
-<a href="https://docs.python.org/3/library/logging.html#logrecord-attributes">
-format
+This option controls the behavior of
+<a href="https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/">
+a search plugin
 </a>
-of the message that will be put into the log file.
+for all dynamically created blog documents that are not blog posts. There is no need to make those pages visible, since all the text in those pages is a copy of the part of the blog post.
 </p>
 </details>
 <details class="settings">
 <summary>
-<a href="#+debugger.file.remove_old_files" id="+debugger.zip.remove_old_files">
-remove_old_files
+<a href="#+blog.slug" id="+blog.slug">
+slug
 </a>
 </summary>
 <p>
-Controls if previously created log files will be removed while creating a new one.
+This option gives you an ability to go to specify your blog direct URL, like
+<code>
+https://yourblog.com/blog/
+</code>
+. The
+<code>
+blog
+</code>
+part of the URL can be configured to a non-standard value.
 </p>
 </details>
-<details class="settings">
-<summary>
-<a href="#+debugger.file.filter_logger_names" id="+debugger.zip.filter_logger_names">
-filter_logger_names
-</a>
-</summary>
-<p>
-Define a list of logger names that will be filtered out of the log messages.
-</p>
-</details>
-<h3 id="zip-file-generation">
-Zip file generation
+<h3 id="directories">
+Directories
 </h3>
-<div class="tabbed-alternate tabbed-set" data-tabs="6:1">
-<input type="radio" id="mkdocsyml_3" name="__tabbed_6" checked>
+<p>
+This plugin to work correctly, needs to create and/or use some directories. Those settings should be considered as advanced and for day to day use, you should not change them.
+</p>
+<div class="tabbed-alternate tabbed-set" data-tabs="5:2">
+<input type="radio" id="mkdocsyml_3" name="__tabbed_5" checked>
+<input type="radio" id="_2" name="__tabbed_5">
 <div class="tabbed-labels">
 <label for="mkdocsyml_3">
+<span class="twemoji">
+<svg viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
+</path>
+</svg>
+</span>
+mkdocs.yml
+</label>
+<label for="_2">
+<span class="twemoji">
+<svg viewbox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+<!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.-->
+<path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32v352c0 35.3 28.7 64 64 64h192v-64H64V160h192V96H64V32zm224 160c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32v160zm0 288c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32h-98.7c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4H320c-17.7 0-32 14.3-32 32V480z">
+</path>
+</svg>
+</span>
+</label>
+</div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight language-yaml">
+<pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
+</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="hll"><span class="w">      </span><span class="nt">temp_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.temp</span>
+</span></span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="hll"><span class="w">      </span><span class="nt">archive_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">archive</span>
+</span></span><span id="__span-5-5"><a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="hll"><span class="w">      </span><span class="nt">categories_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">categories</span>
+</span></span><span id="__span-5-6"><a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="hll"><span class="w">      </span><span class="nt">tags_subdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tags</span>
+</span></span></code></pre>
+</div>
+</div>
+<div class="tabbed-block">
+<p>
+Temporary directory is created at the same level as main
+<code>
+docs
+</code>
+directory and
+<code>
+mkdocs.yml
+</code>
+configuration file.
+</p>
+<div class="highlight language-console">
+<pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="go">.</span>
+</span><span id="__span-6-2"><a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="hll"><span class="go">├─ .temp/</span>
+</span></span><span id="__span-6-3"><a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="hll"><span class="go">│  ├─ archive/</span>
+</span></span><span id="__span-6-4"><a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="hll"><span class="go">│  ├─ categories/</span>
+</span></span><span id="__span-6-5"><a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="hll"><span class="go">│  └─ tags/</span>
+</span></span><span id="__span-6-6"><a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="go">├─ docs/</span>
+</span><span id="__span-6-7"><a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="go">│  └─ blog/</span>
+</span><span id="__span-6-8"><a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="go">└─ mkdocs.yml</span>
+</span></code></pre>
+</div>
+</div>
+</div>
+
+
+</div>
+<details class="settings">
+<summary>
+<a href="#+blog.temp_dir" id="+blog.temp_dir">
+temp_dir
+</a>
+</summary>
+<p>
+Temporary directory is used by a blog engine to create an index files with a blog post teasers and other files like a list of archive, categories, and tags pages.
+</p>
+</details>
+<details class="settings">
+<summary>
+<a href="#+blog.archive_subdir" id="+blog.archive_subdir">
+archive_subdir
+</a>
+</summary>
+<p>
+Archive subdirectory is used to store dynamically generated documents that contain archive indexes.
+</p>
+</details>
+<details class="settings">
+<summary>
+<a href="#+blog.categories_subdir" id="+blog.categories_subdir">
+categories_subdir
+</a>
+</summary>
+<p>
+Categories subdirectory is used to store dynamically generated documents that contain categories indexes.
+</p>
+</details>
+<details class="settings">
+<summary>
+<a href="#+blog.tags" id="+blog.tags">
+tags
+</a>
+</summary>
+<p>
+Tags subdirectory is used to store dynamically generated documents that contain tags indexes.
+</p>
+</details>
+<h3 id="language">
+Language
+</h3>
+<p>
+By default, the blogging plugin is set to use
+<em>
+English
+</em>
+(
+<code>
+en
+</code>
+) translation. Currently, available languages:
+</p>
+<ul>
+<li>
+<code>
+en
+</code>
+- English,
+</li>
+<li>
+<code>
+pl
+</code>
+- Polish.
+</li>
+</ul>
+<p>
+To set up one of the above languages, the following line has to be added to the
+<code>
+mkdocs.yml
+</code>
+file:
+</p>
+<div class="tabbed-alternate tabbed-set" data-tabs="6:1">
+<input type="radio" id="mkdocsyml_4" name="__tabbed_6" checked>
+<div class="tabbed-labels">
+<label for="mkdocsyml_4">
 <span class="twemoji">
 <svg viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
@@ -1159,51 +1147,61 @@ mkdocs.yml
 
 </div>
 <div class="highlight language-yaml">
-<pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nt">plugins</span><span class="p">:</span>
-</span><span id="__span-6-2"><a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-debugger</span><span class="p">:</span>
-</span><span id="__span-6-3"><a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="hll"><span class="w">      </span><span class="nt">zip_log</span><span class="p">:</span>
-</span></span><span id="__span-6-4"><a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="hll"><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-6-5"><a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="hll"><span class="w">        </span><span class="nt">remove_old_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></span><span id="__span-6-6"><a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="hll"><span class="w">        </span><span class="nt">add_pip_freeze</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nt">plugin</span><span class="p">:</span>
+</span><span id="__span-7-2"><a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pub-blog</span><span class="p">:</span>
+</span><span id="__span-7-3"><a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="hll"><span class="w">      </span><span class="nt">lang</span><span class="p">:</span><span class="w"> </span><span class="s">"pl"</span>
 </span></span></code></pre>
 </div>
+<h4 id="translation">
+Translation
+</h4>
 <p>
-Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
-</p>
-<details class="settings">
-<summary>
-<a href="#+debugger.zip.enabled" id="+debugger.zip.enabled">
-enabled
-</a>
-</summary>
-<p>
-Controls if zip file will be created.
-</p>
-</details>
-<details class="settings">
-<summary>
-<a href="#+debugger.zip.remove_old_files" id="+debugger.zip.remove_old_files">
-remove_old_files
-</a>
-</summary>
-<p>
-Controls if previously created zip files will be removed while creating a new one.
-</p>
-</details>
-<details class="settings">
-<summary>
-<a href="#+debugger.zip.add_pip_freeze" id="+debugger.zip.add_pip_freeze">
-add_pip_freeze
-</a>
-</summary>
-<p>
-Controls if zip file will contain a
+If there is no language that suits you best, you can translate part of the interface by providing values for the below keys inside the configuration
 <code>
-requirements.txt
+mkdocs.yml
 </code>
-file with a list of Python libraries (it's helpful with issue reproduction when you want to report one).
+files. Providing those values overrides values for setup of a given language, and this way it's possible to change only some of them.
 </p>
-</details>
+<p>
+Below, you can find a list of settings keys with English values that allow to translate some parts of the interface:
+</p>
+<div class="tabbed-alternate tabbed-set" data-tabs="7:1">
+<input type="radio" id="mkdocsyml_5" name="__tabbed_7" checked>
+<div class="tabbed-labels">
+<label for="mkdocsyml_5">
+<span class="twemoji">
+<svg viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z">
+</path>
+</svg>
+</span>
+mkdocs.yml
+</label>
+</div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+</div>
+</div>
+
+</div>
+<div class="highlight language-yaml">
+<pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-8-2"><a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">  </span><span class="nt">pub-blog</span><span class="p">:</span>
+</span><span id="__span-8-3"><a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="hll"><span class="w">    </span><span class="nt">translation</span><span class="p">:</span>
+</span></span><span id="__span-8-4"><a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="hll"><span class="w">      </span><span class="nt">teaser_link_text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read more</span>
+</span></span><span id="__span-8-5"><a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="hll"><span class="w">      </span><span class="nt">blog_page_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Blog</span>
+</span></span><span id="__span-8-6"><a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="hll"><span class="w">      </span><span class="nt">blog_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Blog</span>
+</span></span><span id="__span-8-7"><a href="#__codelineno-8-7" id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="hll"><span class="w">      </span><span class="nt">recent_blog_posts_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Recent posts</span>
+</span></span><span id="__span-8-8"><a href="#__codelineno-8-8" id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="hll"><span class="w">      </span><span class="nt">archive_page_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Archive</span>
+</span></span><span id="__span-8-9"><a href="#__codelineno-8-9" id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="hll"><span class="w">      </span><span class="nt">archive_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Archive</span>
+</span></span><span id="__span-8-10"><a href="#__codelineno-8-10" id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="hll"><span class="w">      </span><span class="nt">categories_page_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Category</span>
+</span></span><span id="__span-8-11"><a href="#__codelineno-8-11" id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="hll"><span class="w">      </span><span class="nt">categories_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Categories</span>
+</span></span><span id="__span-8-12"><a href="#__codelineno-8-12" id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="hll"><span class="w">      </span><span class="nt">tags_page_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tag</span>
+</span></span><span id="__span-8-13"><a href="#__codelineno-8-13" id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="hll"><span class="w">      </span><span class="nt">tags_navigation_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tags</span>
+</span></span><span id="__span-8-14"><a href="#__codelineno-8-14" id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="hll"><span class="w">      </span><span class="nt">newer_posts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Newer posts</span>
+</span></span><span id="__span-8-15"><a href="#__codelineno-8-15" id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="hll"><span class="w">      </span><span class="nt">older_posts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Older posts</span>
+</span></span></code></pre>
+</div>
 <hr>
 <p class="obsidian_backlink_title">
 Backlinks:
@@ -1216,66 +1214,33 @@ Backlinks:
 </summary>
 <p>
 </p><p class="obsidian_backlink">
-- debugger and logging on steroids - useful for issue reporting and for MkDocs plugin development (
-<a href="https://mkusz.github.io/mkdocs-publisher/#02-setup99-development01-setting-up-debugger">
-pub-debugger
+- creating a blog posts with automatic build of archive, categories, tags, and index pages (
+<a href="https://mkusz.github.io/mkdocs-publisher/#02-setup02-general02-setting-up-blog">
+pub-blog
 </a>
-plugin
-<span class="twemoji">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
-</path>
-</svg>
-</span>
-v1.1.0).
+plugin),
 </p>
 <p></p>
 </details>
 <details class="backlink">
 <summary>
-v1.1.0 - 2023-09-01
+Setting up meta
 </summary>
 <p>
 </p><p class="obsidian_backlink">
-Here I am with a new version of Publisher for MkDocs plugins. I have promised to make smaller releases, but my brain is refusing me to work on a small scale. It's really hard to achieve that, especially when I started to have some feedback from you, users of this tool. Because of that feedback and some problems you encountered, I decided to focus in this release on 2 main topics: some bug fixing and introducing a new plugin called
-<a href="https://mkusz.github.io/mkdocs-publisher/blog/v110/#02-setup99-development01-setting-up-debugger">
-pub-debugger
+As described in the previous section, you can provide additional meta-data that is unique for that document, and can change some behavior of the meta plugin, but not only. Some other MkDocs plugins also utilize these types of settings. One of the plugins is
+<a href="https://mkusz.github.io/mkdocs-publisher/setup/general/pub-meta/#02-setting-up-blog">
+pub-blog
 </a>
-. This plugin allows for an insight into all messages produced by plugins while building (or serving) a web page. Also, it's able to produce a ZIP file, with some basic information that could help me, whenever you will need to report an issue.
+or plugins included in Material for MkDocs.
 </p>
 <hr>
 <p class="obsidian_backlink">
--
-<span class="twemoji">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
-</path>
-</svg>
-</span>
-logger names unification -
-<a href="https://mkusz.github.io/mkdocs-publisher/blog/v110/#02-setup99-development01-setting-up-debuggerpython-logging-for-mkdocs">
-it's related to pub-debugger plugin
+This defines a value for the document's creation date. It's also used by
+<a href="https://mkusz.github.io/mkdocs-publisher/setup/general/pub-meta/#02-setting-up-blog">
+a blog plugin
 </a>
-</p>
-<p></p>
-</details>
-<details class="backlink">
-<summary>
-Changelog
-</summary>
-<p>
-</p><p class="obsidian_backlink">
--
-<span class="twemoji">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M2 12A10 10 0 1 0 12 2 10 10 0 0 0 2 12m13.6 1.72A4 4 0 0 0 16 12a4 4 0 0 0-4-4v2L8.88 7 12 4v2a6 6 0 0 1 6 6 5.9 5.9 0 0 1-.93 3.19M6 12a5.9 5.9 0 0 1 .93-3.19l1.47 1.47A4 4 0 0 0 8 12a4 4 0 0 0 4 4v-2l3 3-3 3v-2a6 6 0 0 1-6-6Z">
-</path>
-</svg>
-</span>
-logger names unification -
-<a href="https://mkusz.github.io/mkdocs-publisher/development/changelog/#02-setup99-development01-setting-up-debuggerpython-logging-for-mkdocs">
-it's related to pub-debugger plugin
-</a>
+for blog posts ordering and a meta plugin for updating a sitemap file.
 </p>
 <p></p>
 </details>
@@ -1294,7 +1259,7 @@ Back to top
 </main>
 <footer class="md-footer">
 <nav class="md-grid md-footer__inner" aria-label="Footer">
-<a href="../../seo-and-sharing/pub-minifier/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Setting up minifier" rel="prev">
+<a href="../pub-meta/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Setting up meta" rel="prev">
 <div class="md-icon md-footer__button">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 <path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z">
@@ -1306,17 +1271,17 @@ Back to top
 Previous
 </span>
 <div class="md-ellipsis">
-Setting up minifier
+Setting up meta
 </div>
 </div>
 </a>
-<a href="../../../how-to-publish/first-steps/" class="md-footer__link md-footer__link--next" aria-label="Next: First steps" rel="next">
+<a href="../pub-obsidian/" class="md-footer__link md-footer__link--next" aria-label="Next: Setting up Obsidian" rel="next">
 <div class="md-footer__title">
 <span class="md-footer__direction">
 Next
 </span>
 <div class="md-ellipsis">
-First steps
+Setting up Obsidian
 </div>
 </div>
 <div class="md-icon md-footer__button">

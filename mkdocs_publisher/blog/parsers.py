@@ -34,7 +34,7 @@ from mkdocs_publisher.blog.structures import BlogPost
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog.parsers")
 
-REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description", "visibility"]
+REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description", "publish"]
 # TODO: read it from pub-meta if configured
 
 
@@ -91,16 +91,16 @@ def parse_markdown_files(
                             config_nav[line[2:]] = str(path)
                 elif str(parents[0]) == str(blog_config.blog_dir):
 
-                    if "visibility" not in post_meta:
+                    if "publish" not in post_meta:
                         # TODO: read default value from meta config
                         log.info(
                             f"File: {file_path} - missing 1 required positional argument: "
-                            f"'visibility' (setting to default: draft)"
+                            f"'publish' (setting to default: draft)"
                         )
-                        post_meta["visibility"] = "draft"
+                        post_meta["publish"] = "draft"
 
                     # Skip non-published
-                    if not on_serve and post_meta["visibility"] != "published":
+                    if not on_serve and post_meta["publish"] not in ["published", "true", True]:
                         # TODO: make it configurable
                         continue
 
@@ -140,15 +140,15 @@ def parse_markdown_files(
                         and post_meta["slug"].strip() != ""
                     ):
                         post_data["slug"] = post_meta["slug"]
-                    try:
-                        blog_post: BlogPost = BlogPost(**post_data)
+                    # try:
+                    blog_post: BlogPost = BlogPost(**post_data)
 
-                        # Add new post to blog posts collection
-                        blog_config.blog_posts[blog_post.date] = blog_post
-                        log.debug(f"New blog posts: {blog_post.title}")
-                    except TypeError as e:
-                        msg = str(e).replace("__init__()", f"File: {file_path} -")
-                        log.warning(msg)
+                    # Add new post to blog posts collection
+                    blog_config.blog_posts[blog_post.date] = blog_post
+                    log.debug(f"New blog posts: {blog_post.title}")
+                    # except TypeError as e:
+                    #     msg = str(e).replace("__init__()", f"File: {file_path} -")
+                    #     log.warning(msg)
 
                     # TODO: add reading time
                     # print(f"{file_path} - {count_words(post.content) / 265 * 60}")

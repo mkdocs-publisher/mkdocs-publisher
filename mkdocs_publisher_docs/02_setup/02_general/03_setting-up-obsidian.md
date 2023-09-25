@@ -1,7 +1,7 @@
 ---
 title: Setting up Obsidian
 slug: pub-obsidian
-visibility: published
+publish: published
 date: 2023-04-20 12:07:21
 update: 2023-08-12 21:13:31
 description: Setting up a Publisher for MkDocs obsidian plugin for integration with an Obsidian note taking tool
