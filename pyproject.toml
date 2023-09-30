@@ -86,7 +86,6 @@ py_version=39
 profile = "black"
 line_length = 99
 force_single_line = true
-verbose = true
 src_paths = [
     "mkdocs_publisher",
     "tests",

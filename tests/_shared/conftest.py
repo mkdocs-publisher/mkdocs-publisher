@@ -24,36 +24,31 @@ from pathlib import Path
 
 import pytest
 
-from mkdocs_publisher.obsidian import md_links
+from mkdocs_publisher._shared import links
 
 
 @pytest.fixture()
-def test_data_path() -> Path:
-    return Path().cwd() / "tests/obsidian/tests_data"
-
-
-@pytest.fixture()
-def relative_path_finder(test_data_path: Path) -> md_links.RelativePathFinder:
-    return md_links.RelativePathFinder(
+def relative_path_finder(test_data_dir: Path) -> links.RelativePathFinder:
+    return links.RelativePathFinder(
         current_file_path=Path("current/file.md"),
-        docs_dir=test_data_path,
+        docs_dir=test_data_dir,
         relative_path=Path("relative"),
     )
 
 
 @pytest.fixture()
-def relative_sub_path_finder(test_data_path: Path) -> md_links.RelativePathFinder:
-    return md_links.RelativePathFinder(
+def relative_sub_path_finder(test_data_dir: Path) -> links.RelativePathFinder:
+    return links.RelativePathFinder(
         current_file_path=Path("current/cur_sub/cur_sub_file.md"),
-        docs_dir=test_data_path,
+        docs_dir=test_data_dir,
         relative_path=Path("relative"),
     )
 
 
 @pytest.fixture()
-def relative_blog_path_finder(test_data_path: Path) -> md_links.RelativePathFinder:
-    return md_links.RelativePathFinder(
+def relative_blog_path_finder(test_data_dir: Path) -> links.RelativePathFinder:
+    return links.RelativePathFinder(
         current_file_path=Path("relative/rel_file.md"),
-        docs_dir=test_data_path,
+        docs_dir=test_data_dir,
         relative_path=Path("relative"),
     )

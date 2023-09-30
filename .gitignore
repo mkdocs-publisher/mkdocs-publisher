@@ -1,15 +1,16 @@
 # created by virtualenv automatically
-.DS_Store
 .cache
-.coverage
+.idea
 .pytest_cache
 .temp
 .venv
 __pycache__
-.idea
-.env
-htmlcov
 dist
+htmlcov
+*/.obsidian/plugins/obsidian-languagetool-plugin
+.coverage
+.env
+.DS_Store
 *_mkdocs_build.log
 *_mkdocs_debug.zip
-*/.obsidian/plugins/obsidian-languagetool-plugin
+sandbox*.py

@@ -44,7 +44,7 @@ from mkdocs_publisher._shared import resources
 
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
-from mkdocs_publisher.obsidian.backlinks import Backlink
+from mkdocs_publisher.obsidian.backlinks import BacklinkLinks
 from mkdocs_publisher.obsidian.backlinks import Link
 from mkdocs_publisher.obsidian.callouts import CalloutToAdmonition
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
@@ -56,13 +56,13 @@ log = logging.getLogger("mkdocs.plugins.publisher.obsidian.plugin")
 
 class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def __init__(self):
-        self._backlink: Optional[Backlink] = None
-        self._backlink_links: Dict[str, List[Link]] = {}
+        self._backlink_links: Optional[BacklinkLinks] = None
+        self._backlinks: Dict[str, List[Link]] = {}
         self._md_links: Optional[MarkdownLinks] = None
         self._vega_pages: List[Page] = list()
 
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
-        self._backlink = Backlink(mkdocs_config=config, backlinks=self._backlink_links)
+        self._backlink_links = BacklinkLinks(mkdocs_config=config, backlinks=self._backlinks)
         self._md_links = MarkdownLinks(mkdocs_config=config)
         return config
 
@@ -81,7 +81,9 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                             markdown=markdown, current_file_path=str(file.src_uri)
                         )
 
-                        self._backlink.find_markdown_links(markdown=markdown, page=file.page)
+                        self._backlink_links.find_markdown_links(markdown=markdown, page=file.page)
+            for key, value in self._backlinks.items():
+                log.warning(f"{key} - {len(value)}")
         return nav
 
     @event_priority(100)  # Run before all other plugins
@@ -108,8 +110,8 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 self._vega_pages.append(page)
 
         if self.config.backlinks.enabled:
-            markdown = self._backlink.convert_to_anchor_link(markdown=markdown)
-            page_backlinks = self._backlink_links.get(f"{page.file.src_uri}", None)
+            markdown = self._backlink_links.convert_to_anchor_link(markdown=markdown)
+            page_backlinks = self._backlinks.get(f"{page.file.src_uri}", None)
             if page_backlinks is not None:
                 log.debug(f"Adding backlinks to '{page.file.src_uri}'")
                 backlink_template = resources.read_template_file(

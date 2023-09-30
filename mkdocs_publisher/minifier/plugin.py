@@ -58,7 +58,7 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
         if self.config.threads == 0:
             self.config.threads = int(cpu_count())
         if self.config.threads < 1:
-            log.warning("Number of 'threads' cannot be smaller than 1 (changing to minimal 1)")
+            log.info('Number of "threads" cannot be smaller than 1 (changing to minimal 1)')
             self.config.threads = 1
         log.info(f"Threads used for minifiers: {self.config.threads}")
 

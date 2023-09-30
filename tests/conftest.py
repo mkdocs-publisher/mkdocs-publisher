@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 import tempfile
+from pathlib import Path
 
 import pytest
 import yaml
@@ -29,6 +30,11 @@ from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher.blog.plugin import BlogPlugin
 from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
+
+
+@pytest.fixture()
+def test_data_dir() -> Path:
+    return Path().cwd() / "tests/_tests_data"
 
 
 @pytest.fixture(scope="function")

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "01_home.md",
+                "file": "README.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
@@ -96,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "01_home.md",
+                "file": "README.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "01_home.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "01_home.md"
+                "file": "README.md"
               }
             }
           },
@@ -188,19 +188,19 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "c6174c4fcf2d07d9",
+  "active": "643b75a8dd9323d9",
   "lastOpenFiles": [
+    "05_dev/01_changelog.md",
+    "01_home.md",
     "05_dev/other/README.md",
     "04_blog/README.md",
     "02_setup/02_general/01_setting-up-meta.md",
     "04_blog/v010-initial-release.md",
     "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
     "README.md",
-    "01_home.md",
     "05_dev/README.md",
     "05_dev/03_versioning.md",
     "05_dev/02_development.md",
-    "05_dev/01_changelog.md",
     "05_dev/other/02_backlog.md",
     "05_dev/other/01_credits.md",
     "04_blog/v110-debugger.md",
