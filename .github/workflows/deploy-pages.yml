@@ -30,6 +30,8 @@ jobs:
           node-version: '18'
           architecture: 'x64'
           cache: 'npm'
+      - name: Create Node.js lock file
+        run: npm i --package-lock-only
       - name: Install npm packages
         # yamllint disable-line rule:line-length
         run: npm install --no-fund -f -g svgo html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
