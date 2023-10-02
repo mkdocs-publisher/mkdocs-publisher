@@ -20,18 +20,25 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from typing import Optional
+import logging
 from typing import cast
 
-from mkdocs.config.base import Config
 from mkdocs.config.defaults import MkDocsConfig
 
+log = logging.getLogger("mkdocs.plugins.publisher._shared.mkdosc_utils")
 
-def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> Optional[Config]:
-    try:
+
+def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> dict:
+    plugins = mkdocs_config.plugins
+    if isinstance(plugins, list):
+        for plugin in plugins:
+            if isinstance(plugin, dict) and list(plugin.keys())[0] == plugin_name:
+                return plugin[list(plugin.keys())[0]]
+            elif isinstance(plugin, str) and plugin == plugin_name:
+                return {}
+        raise SystemError("Break")
+    else:
         return mkdocs_config.plugins[plugin_name].config
-    except KeyError:
-        return None
 
 
 def get_mkdocs_config() -> MkDocsConfig:

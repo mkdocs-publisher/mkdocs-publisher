@@ -91,7 +91,6 @@ class BacklinkLinks:
 
     def _parse_markdown_link(self, match: re.Match, page: Page, line: str):
         """Parse markdown link"""
-        log.warning(match.groupdict())
         anchor_link = match.group(3) if match.group(3) is not None else ""
         original_link_destination = match.group(2)
         original_link_text = f"[{match.group(1)}]({original_link_destination}{anchor_link})"

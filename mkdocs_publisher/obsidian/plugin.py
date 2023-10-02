@@ -82,8 +82,6 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                         )
 
                         self._backlink_links.find_markdown_links(markdown=markdown, page=file.page)
-            for key, value in self._backlinks.items():
-                log.warning(f"{key} - {len(value)}")
         return nav
 
     @event_priority(100)  # Run before all other plugins

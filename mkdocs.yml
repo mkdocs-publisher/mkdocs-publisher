@@ -109,17 +109,18 @@ plugins:
   - pub-debugger:
       console_log:
         enabled: true
-        filter_logger_names:
-          - mkdocs.plugins
-          - mkdocs.structure.files
-          - mkdocs.plugins.publisher.meta.plugin
-          - mkdocs.plugins.publisher.blog.creators
-          - mkdocs.plugins.publisher.blog.modifiers
-          - mkdocs.plugins.publisher.blog.parsers
-          - mkdocs.plugins.publisher.debug.plugin
-          - mkdocs.plugins.publisher.minifier.base
-          - mkdocs.plugins.publisher.minifier.plugin
-          - mkdocs.commands.build
+#        filter_logger_names:
+#          - mkdocs.plugins
+#          - mkdocs.structure.files
+#          - mkdocs.structure.pages
+#          - mkdocs.plugins.publisher.meta.plugin
+#          - mkdocs.plugins.publisher.blog.creators
+#          - mkdocs.plugins.publisher.blog.modifiers
+#          - mkdocs.plugins.publisher.blog.parsers
+#          - mkdocs.plugins.publisher.debug.plugin
+#          - mkdocs.plugins.publisher.minifier.base
+#          - mkdocs.plugins.publisher.minifier.plugin
+#          - mkdocs.commands.build
       file_log:
         filter_logger_names:
           - mkdocs.plugins
