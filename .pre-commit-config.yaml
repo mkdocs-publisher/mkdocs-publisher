@@ -32,6 +32,7 @@ repos:
         entry: poetry run yamllint
         language: system
         files: \.(yml|yaml)$
+        exclude: ^.github
 
       - id: format
         name: format Python code
