@@ -31,16 +31,16 @@ from mkdocs_publisher._shared.urls import slugify
 log = logging.getLogger("mkdocs.plugins.publisher._shared.links")
 
 
-ANCHOR_RE_PART = r"((#(?P<anchor>([^ |\][()]+)))?)"
+ANCHOR_RE_PART = r"((#(?P<anchor>([^|\][()'\"]+)))?)"
 EXTRA_RE_PART = r"( *({(?P<extra>[\w+=. ]+)})?)"
 IMAGE_RE_PART = r"((\|(?P<image>([0-9x]+)))?)"
-LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^#()\s]+)"
+LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^|#()\s]+)"
 URL_RE_PART = r"(?P<link>((https?|ftp)://)?[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
 TEXT_RE_PART = r"(?P<text>[^\][)(|]+)"
 LINK_TITLE_RE_PART = r"( \"(?P<title>[ \S]+)\")?"
 
 HTTP_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}]\({URL_RE_PART}\)")
-WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[{LINK_RE_PART}{ANCHOR_RE_PART}[|]{TEXT_RE_PART}]]")
+WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[{LINK_RE_PART}{ANCHOR_RE_PART}(\|{TEXT_RE_PART})?]]")
 WIKI_EMBED_LINK_RE = re.compile(
     rf"!\[\[{LINK_RE_PART}{ANCHOR_RE_PART}{IMAGE_RE_PART}]]{EXTRA_RE_PART}"
 )
@@ -121,7 +121,7 @@ class RelativePathFinder:
 @dataclass
 class LinkMatch:
     link: str
-    text: str
+    text: Optional[str]
     anchor: Optional[str]
     title: Optional[str] = None
     is_wiki: bool = False
@@ -136,9 +136,15 @@ class LinkMatch:
         else:
             title = ""
         if self.is_wiki:
+            # Make it configurable and add tests
+            if self.text is None and self.anchor:
+                self.text = f"{self.link} > {self.anchor}"
+            elif self.text is None:
+                self.text = self.link
             link = f"{self.link}.md"
         else:
             link = self.link
+
         return f"[{self.text}]({link}{anchor}{title})"
 
 
