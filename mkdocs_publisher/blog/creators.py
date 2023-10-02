@@ -203,14 +203,10 @@ def _render_and_write_page(
     # print(templates.list_templates())
     # template = templates.get_template("index.html")
 
-    site_url = ""
-    if blog_config.mkdocs_config.site_url is not None:
-        site_url = str(blog_config.mkdocs_config.site_url)
-
     index_template = resources.read_template_file(template_file_name="posts-list.html")
     context = {
         "posts": single_posts_chunk,
-        "site_url": site_url,
+        "site_url": str(blog_config.mkdocs_config.site_url),
         "config": blog_config.plugin_config,
         "translation": blog_config.translation,
     }
