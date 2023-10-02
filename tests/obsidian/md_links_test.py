@@ -147,11 +147,6 @@ def test_normalize_links(
         ),
     },
 )
-@pytest.mark.parametrize(
-    "mkdocs_config",
-    [{"docs_dir": "tests/obsidian/tests_data"}],
-    indirect=True,
-)
 def test_normalize_relative_links(
     markdown: str,
     expected: str,

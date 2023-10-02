@@ -39,10 +39,22 @@ def test_data_dir() -> Path:
 
 @pytest.fixture(scope="function")
 def mkdocs_config(request: SubRequest) -> MkDocsConfig:
+    """Fixture returning MkDocsConfig
+
+    How to change configuration:
+
+    ```python
+    @pytest.mark.parametrize(
+        "mkdocs_config",
+        [{"docs_dir": "tests/_tests_data"}],
+        indirect=True,
+    )
+    ```
+    """
     try:
         config_dict = request.param
     except AttributeError:
-        config_dict = {}
+        config_dict = {"docs_dir": "tests/_tests_data"}
     config = MkDocsConfig()
     with tempfile.NamedTemporaryFile(mode="w+") as config_file:
         yaml.safe_dump(data=config_dict, stream=config_file)
