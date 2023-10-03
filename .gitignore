@@ -10,7 +10,8 @@ __pycache__
 .coverage
 htmlcov
 
-# Project specifig
+# Project specific
+docs
 */.obsidian/plugins/obsidian-languagetool-plugin
 
 # Logs
