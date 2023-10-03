@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "mkdocs-publisher"
 version = "1.1.1"
-description = "Publisher for MkDocs - set of plugions for content creators"
+description = "Publisher for MkDocs - set of plugins for content creators"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
 readme = "README.md"
@@ -48,7 +48,6 @@ classifiers = [
     "Topic :: Text Processing :: Markup",
     "Topic :: Text Processing :: Markup :: Markdown",
     "Topic :: Utilities",
-
 ]
 homepage = "https://github.com/mkusz/mkdocs-publisher"
 repository = "https://github.com/mkusz/mkdocs-publisher"
@@ -59,19 +58,21 @@ documentation = "https://mkusz.github.io/mkdocs-publisher"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-mkdocs = "^1.4.2"
+mkdocs = "^1.5.3"
 pymdown-extensions = "^10"
-beautifulsoup4 = "^4.12.0"
+beautifulsoup4 = "^4.12.2"
 mkdocs-material = "^9.3.1"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
 black = "^22.12.0"
-flake8 = "^6.0.0"
 yamllint = "^1.29.0"
 pyright = "1.1.323"
-coverage = "^7.3.0"
-pytest = "^7.4.1"
+ruff = "^0.0.292"
+
+[tool.poetry.group.test.dependencies]
+coverage = "^7.3.2"
+pytest = "^7.4.2"
 pytest-cov = "^4.1.0"
 
 [build-system]
@@ -116,6 +117,13 @@ markers = [
 testpaths = [
     "tests",
 ]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 99
+
+[tool.ruff.mccabe]
+max-complexity = 10
 
 [tool.coverage.run]
 branch = true

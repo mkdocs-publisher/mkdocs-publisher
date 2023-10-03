@@ -48,8 +48,10 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
             'Lorem ipsum dolor sit [amet](file.md "title"), consectetur adipiscing elit.',
         ),
         (
-            'Lorem ipsum dolor sit [amet](file.md#anchor part "title"), consectetur adipiscing elit.',
-            'Lorem ipsum dolor sit [amet](file.md#anchor-part "title"), consectetur adipiscing elit.',
+            'Lorem ipsum dolor sit [amet](file.md#anchor part "title"), '
+            "consectetur adipiscing elit.",
+            'Lorem ipsum dolor sit [amet](file.md#anchor-part "title"), '
+            "consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file]], consectetur adipiscing elit.",
@@ -57,7 +59,8 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
         (
             "Lorem ipsum dolor sit [[file#anchor part]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [file > anchor part](file.md#anchor-part), consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [file > anchor part](file.md#anchor-part), "
+            "consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file|amet]], consectetur adipiscing elit.",

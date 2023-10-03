@@ -1,0 +1,29 @@
+{
+  "name": "mkdocs-publisher",
+  "version": "1.1.1",
+  "description": "Publisher for MkDocs - set of plugins for content creators",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"No tests required\" && exit 0"
+  },
+  "keywords": [
+    "mkdocs",
+    "mkdocs-plugin",
+    "blog",
+    "categories",
+    "debugger",
+    "docs",
+    "documentation",
+    "frontmatter",
+    "markdown",
+    "minifier",
+    "navigation",
+    "obsidian",
+    "publisher",
+    "tags"
+  ],
+  "author": "Maciej \"maQ\" Kusz",
+  "license": "MIT License"
+}

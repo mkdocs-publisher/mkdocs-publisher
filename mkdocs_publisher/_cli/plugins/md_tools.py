@@ -71,7 +71,10 @@ def key_rename():
                     output = f"{output}{yaml.safe_dump({key: post_meta[key]}, indent=2)}"
                     post_meta.pop(key, None)
                 elif key in [old_key_name, new_key_name] and old_key_name in post_meta:
-                    output = f"{output}{yaml.safe_dump({new_key_name: post_meta[old_key_name]}, indent=2)}"
+                    yaml_text_dump = yaml.safe_dump(
+                        {new_key_name: post_meta[old_key_name]}, indent=2
+                    )
+                    output = f"{output}{yaml_text_dump}"
                     post_meta.pop(old_key_name, None)
             for key in post_meta.keys():
                 output = f"{output}{yaml.safe_dump({key: post_meta[key]}, indent=2)}"

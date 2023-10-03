@@ -53,7 +53,7 @@ class BlogPluginConfig(Config):
     slug = option.Type(str, default="blog")
 
     # Directories
-    temp_dir = option.Type(str, default=".temp")
+    temp_dir = option.Type(str, default=".pub_blog_temp")
     blog_dir = option.Type(str, default="blog")
     archive_subdir = option.Type(str, default="archive")
     categories_subdir = option.Type(str, default="categories")

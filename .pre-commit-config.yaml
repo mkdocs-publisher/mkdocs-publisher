@@ -92,7 +92,7 @@ repos:
       - id: lint-python
         name: lint Python
         description: Lint python code.
-        entry: poetry run flake8
+        entry: poetry run ruff check
         language: system
         types:
           - python
