@@ -71,6 +71,7 @@ repos:
         description: Copy README.md file from documentation
         entry: bash -c "cmp --silent mkdocs_publisher_docs/README.md README.md || cp mkdocs_publisher_docs/README.md README.md"
         language: system
+        pass_filenames: false
 
       - id: lint-yaml
         name: lint YAML files
