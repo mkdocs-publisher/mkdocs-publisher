@@ -1,9 +1,10 @@
 ---
 title: Changelog
+icon: material/file-replace-outline
 slug: changelog
 publish: published
 date: 2023-02-12 22:00:00
-update: 2023-08-01 12:00:33
+update: 2023-10-04 13:31:20
 description: Publisher for MkDocs version history
 categories:
   - general
@@ -12,9 +13,49 @@ categories:
 
 # Version history
 
+## 1.1.1
+
+> :material-plus-circle:{title=added} added
+> :material-minus-circle:{title=removed} removed
+> :material-check-circle:{title=fixed} fixed
+> :material-sync-circle:{title=changed} changed
+
+### :material-list-box: General
+
+- :material-plus-circle: license info added to all project files
+- :material-plus-circle: code coverage
+- :material-plus-circle: unit test to part of the code (journey begins)
+- :material-sync-circle: flake8 linter has been replaced with [ruff](https://github.com/astral-sh/ruff)
+- :material-sync-circle: internal code refactoring and simplifications
+- :material-sync-circle: project dependencies has been separated into 3 groups: **general**, **test** and **dev**
+- :material-sync-circle: main project dependencies has been updated:
+	- `mkdocs >= 1.5.3`
+	- `mkdocs-material >= 9.4.3`
+
+### :material-newspaper-variant-multiple: Blog
+
+- :material-check-circle: relative links are fixed
+- :material-check-circle: meta field `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming into `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
+
+### :material-file-tree: Meta
+
+- :material-check-circle: meta field `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming into `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
+
+### :simple-obsidian: Obsidian
+
+- :material-check-circle: links and wiki links are fixed
+
+### :material-share: Social
+
+### :material-run-fast: Minifier
+
+### :material-shield-bug: Debugger
+
+- :material-check-circle: configuration warnings are now captured and can be part of the log file and new console log look & feel
+
 ## 1.1.0 - 2023.09.01
 
-### General
+### :material-list-box: General
 
 - :material-sync-circle: rename of directory with documentation files
 - :material-sync-circle: Python libraries update
@@ -26,17 +67,17 @@ categories:
 - :material-sync-circle: code refactor and cleanup
 - :material-minus-circle: drop `python-frontmatter` from Python libraries
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
 - :material-check-circle: minor fix for internal linking (still not full solution)
 - :material-sync-circle: fix for deprecated warning regarding `importlib.resources`
 
-### Minifier
+### :material-run-fast: Minifier
 
 - :material-sync-circle: small code reformat related to shared library changes
 - :material-sync-circle: files are not minified when using `mkdocs serve` (this is default behavior, but it can be changed)
 
-### Meta
+### :material-file-tree: Meta
 
 - :material-plus-circle: possibility to declare whole directory as hidden
 - :material-plus-circle: more logging messages
@@ -44,12 +85,12 @@ categories:
 - :material-check-circle: fix for error with reading `README.md` when no empty line at the end of file
 - :material-check-circle: fix for adding again the same directory to draft directories when using `mkdocs serve`
 
-### Obsidian
+### :simple-obsidian: Obsidian
 
 - :material-check-circle: minor fix for internal linking (still not full fix)
 - :material-check-circle: fix for preserving new line in callouts
 
-### Debugger (new plugin)
+### :material-shield-bug: Debugger (new plugin)
 
 - :material-plus-circle: console log reformatting with configuration
 - :material-plus-circle: added logging into `*.log` file with configuration
@@ -58,7 +99,7 @@ categories:
 
 ## 1.0.0 – 2023.06.13
 
-### General
+### :material-list-box: General
 
 - :material-plus-circle: internal class for HTML modifications
 - :material-plus-circle: project logo
@@ -66,11 +107,11 @@ categories:
 - :material-sync-circle: project `README.md` cleanup
 - :material-sync-circle: internal method for importing other plugin config (needed for cross functionalities)
 
-### Auto-nav (plugin removed)
+### :material-navigation: Auto-nav (plugin removed)
 
 The whole functionality of this plugin has been moved to a new [Meta plugin](#meta-new-plugin).
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
 - :material-plus-circle: exclude from search blog posts teaser/index, category, tag or archive pages
 - :material-check-circle: internal links for blog posts teaser/index, category, tag or archive pages
@@ -78,11 +119,11 @@ The whole functionality of this plugin has been moved to a new [Meta plugin](#me
 - :material-sync-circle: automatic detection of the blog as starting page (config value for this setting was removed)
 - :material-plus-circle: post publication state (provided by [Meta plugin](#meta-new-plugin) )
 
-### Social
+### :material-share: Social
 
 - :material-sync-circle: code refactor of HTML modification elements and logging added
 
-### Meta (new plugin)
+### :material-file-tree: Meta (new plugin)
 
 This plugin is a Swiss army knife that helps a lot with various tasks related to publication, SEO, etc. Take a look at the below changelog to see what is offered by this plugin.
 
@@ -98,7 +139,7 @@ This plugin is a Swiss army knife that helps a lot with various tasks related to
 	- possibility to define `skip_dir`(this affects only the directory and all subdirectories where the file is located)
 	- possibility to define `hidden_dir`(this affects only the directory and all subdirectories where the file is located)
 
-### Obsidian (new plugin)
+### :simple-obsidian: Obsidian (new plugin)
 
 This plugin is a set of functionalities and should be split into various smaller plugins, but due to some cross functionalities, it has been integrated into the bigger one. Each sub plugin can be controlled separately, so if you don't need all the functionalities, you can just disable them or simply do not enable one that are disabled by default.
 
@@ -128,85 +169,85 @@ This plugin is a set of functionalities and should be split into various smaller
 
 ## 0.5.0 – 2023.04.04
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
-- add: index blog post title is now a link to a post
+- :material-plus-circle: index blog post title is now a link to a post
 
 ### Social (new plugin)
 
-- add: automatic addition of open graph tags directly into HTML code (no template modification is needed) based on document meta
-- add: automatic addition of twitter tags directly into HTML code (no template modification is needed) based on document meta
+- :material-plus-circle: automatic addition of open graph tags directly into HTML code (no template modification is needed) based on document meta
+- :material-plus-circle: automatic addition of twitter tags directly into HTML code (no template modification is needed) based on document meta
 
 ## 0.4.1 - 2023-03-28
 
-### General
+### :material-list-box: General
 
-- fix: links in documentation
-- fix: imports of libraries
-- fix: badges links + new added
+- :material-check-circle: links in documentation
+- :material-check-circle: imports of libraries
+- :material-check-circle: badges links + new added
 
 ## 0.4.0 - 2023-03-28
 
-### General
+### :material-list-box: General
 
-- changed: project rename
-- added: cross configuration of blog and auto-nav plugins:
+- :material-sync-circle: project rename
+- :material-plus-circle: cross configuration of blog and auto-nav plugins:
   - blog does not add auto-nav meta files
   - auto-nav automatically adds blog directory to skipped directories since it will be built by blog
   - if one of the plugins is not enabled, other is not using its values
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
-- added: possibility to choose a blog as a starting page with option to define manually blog in nav configuration
-- added: `slug` config option for setting an entire blog's main directory URL
-- changed: internal file structure refactor with new global plugin config (BlogConfig class) that will help with further development with small fixes and improvements
-- changed: blog subdirectory navigation creation (entry path needs to be equal to subdirectory name)
-- fixed: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
-- fixed: navigation is no longer overridden by a blog (if there is no other nav, blog will create on with recent posts as a main page)
+- :material-plus-circle: possibility to choose a blog as a starting page with option to define manually blog in nav configuration
+- :material-plus-circle:: `slug` config option for setting an entire blog's main directory URL
+- :material-sync-circle: internal file structure refactor with new global plugin config (BlogConfig class) that will help with further development with small fixes and improvements
+- :material-sync-circle: blog subdirectory navigation creation (entry path needs to be equal to subdirectory name)
+- :material-check-circle: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
+- :material-check-circle: navigation is no longer overridden by a blog (if there is no other nav, blog will create on with recent posts as a main page)
 
-### Minifier (new plugin)
+### :material-run-fast: Minifier (new plugin)
 
-- added: PNG image minifier (using: pngquant and oxipng)
-- added: JPG image minifier (using: mozjpeg)
-- added: SVG image minifier (using: svgo)
-- added: HTML file minifier (using: html-minifier)
-- added: CSS file minifier (using: postcss with plugins: cssnano, svgo)
-- added: JS file minifier (using: uglifyjs)
-- added: read number of threads from system
+- :material-plus-circle: PNG image minifier (using: pngquant and oxipng)
+- :material-plus-circle: JPG image minifier (using: mozjpeg)
+- :material-plus-circle: SVG image minifier (using: svgo)
+- :material-plus-circle: HTML file minifier (using: html-minifier)
+- :material-plus-circle: CSS file minifier (using: postcss with plugins: cssnano, svgo)
+- :material-plus-circle: JS file minifier (using: uglifyjs)
+- :material-plus-circle: read number of threads from system
 
-### Auto-nav (new plugin)
+### :material-navigation: Auto-nav (new plugin)
 
-- added: build navigation based on file names
-- added: directory metadata and additional settings can be set in a frontmatter of `*.md` file (default to `README.md`)
-- added: configuration of sort prefix delimiter
-- added: sort prefix removal in URL and site files
+- :material-plus-circle: build navigation based on file names
+- :material-plus-circle: directory metadata and additional settings can be set in a frontmatter of `*.md` file (default to `README.md`)
+- :material-plus-circle: configuration of sort prefix delimiter
+- :material-plus-circle: sort prefix removal in URL and site files
 
 ## 0.3.0 - 2023.02.20
 
-- fixed: for wrong directory structure in site-packages after install
+- :material-check-circle: for wrong directory structure in site-packages after install
 
 ## 0.2.0 - 2023.02.20
 
-- added: sub-pages for archive, categories, blog
-- added: configurable blog posts pagination with page navigation
-- added: interface language change: EN and PL (help wanted with more languages)
-- added: possibility to override for all interface text elements
+- :material-plus-circle: sub-pages for archive, categories, blog
+- :material-plus-circle: configurable blog posts pagination with page navigation
+- :material-plus-circle: interface language change: EN and PL (help wanted with more languages)
+- :material-plus-circle: possibility to override for all interface text elements
 
 ## 0.1.0 - initial release
 
-- added: blog post update date based on metadata
-- added: blog post URL link based on metadata
-- added: blog post tags and categories based on metadata
-- added: support for blog post teaser
-- added: auto generation of blog posts navigation
+- :material-plus-circle: blog post update date based on metadata
+- :material-plus-circle: blog post URL link based on metadata
+- :material-plus-circle: blog post tags and categories based on metadata
+- :material-plus-circle: support for blog post teaser
+- :material-plus-circle: auto generation of blog posts navigation
 
 ---
 
 > [!info] Legend
-> :material-plus-circle: - added
+> :material-plus-circle:{title=added} added
 >
-> :material-minus-circle: - removed
+> :material-minus-circle:{title=removed} removed
 >
-> :material-check-circle: - fixed
+> :material-check-circle:{title=fixed} fixed
 >
-> :material-sync-circle: - changed
+> :material-sync-circle:{title=changed} changed

@@ -1,5 +1,6 @@
 ---
 title: Credits
+icon: material/hand-okay
 slug: credits
 publish: draft
 date: 2023-05-17 21:32:00

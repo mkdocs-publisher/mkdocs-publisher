@@ -1,10 +1,11 @@
 ---
 title: Backlog
+icon: material/list-status
 slug: backlog
-date: 2023-02-12 22:00:00
-update: 2023-09-17 23:01:54
-description: Plans for future development of Publisher for MkDocs
 publish: published
+date: 2023-02-12 22:00:00
+update: 2023-10-03 15:07:24
+description: Plans for future development of Publisher for MkDocs
 categories:
   - general
   - backlog

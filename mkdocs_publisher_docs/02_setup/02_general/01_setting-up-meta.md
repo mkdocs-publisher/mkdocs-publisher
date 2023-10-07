@@ -1,9 +1,10 @@
 ---
 title: Setting up meta
+icon: material/file-tree
 slug: pub-meta
 publish: published
 date: 2023-05-15 16:00:00
-update: 2023-09-22 10:38:38
+update: 2023-10-03 12:23:15
 description: Setting up Publisher for MkDocs meta plugin for metadata retrival and automatic navigation building
 categories:
   - setup
@@ -181,7 +182,7 @@ Status can also be set for whole directories. This gives you a control over the 
 
 	When the status is set to `published` in `README.md` file, the directory will appear in navigation and link to it and documents in this directory, will be visible on the generated web page.
 
-=== ":octicons-markdown-16: README.md for hidden directory :new:"
+=== ":octicons-markdown-16: README.md for hidden directory"
 
 	```yaml hl_lines="2"
 	---

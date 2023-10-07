@@ -1,9 +1,10 @@
 ---
 title: Versioning
+icon: octicons/number-24
 slug: versioning
 publish: published
 date: 2023-03-30 13:12:26
-update: 2023-08-01 12:00:53
+update: 2023-10-03 15:09:11
 description: Approach to versioning
 categories:
   - general

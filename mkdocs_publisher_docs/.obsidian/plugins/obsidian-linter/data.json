@@ -35,7 +35,7 @@
     },
     "yaml-key-sort": {
       "enabled": true,
-      "yaml-key-priority-sort-order": "title\nslug\npublish\ndate\nupdate\ntags\ncategory\ndescription\ntemplate\nimage",
+      "yaml-key-priority-sort-order": "title\nicon\nslug\npublish\ndate\nupdate\ntags\ncategory\ndescription\ntemplate\nimage",
       "priority-keys-at-start-of-yaml": true,
       "yaml-sort-order-for-other-keys": "Ascending Alphabetical"
     },

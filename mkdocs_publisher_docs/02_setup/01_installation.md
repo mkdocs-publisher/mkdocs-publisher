@@ -1,11 +1,13 @@
 ---
 title: Installation
+icon: material/laptop
 slug: installation
 publish: published
 date: 2023-03-16 18:27:00
-update: 2023-04-17 12:17:19
+update: 2023-10-03 12:30:52
 description: Installation
-categories: start
+categories:
+  - start
 ---
 
 # Installation
