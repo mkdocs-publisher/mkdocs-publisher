@@ -2,7 +2,7 @@
 title: Development
 icon: material/keyboard
 slug: development
-publish: published
+publish: true
 date: 2023-03-21 11:27:00
 update: 2023-10-03 15:11:14
 description: Development of this plugin how to

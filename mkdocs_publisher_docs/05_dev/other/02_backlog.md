@@ -2,7 +2,7 @@
 title: Backlog
 icon: material/list-status
 slug: backlog
-publish: published
+publish: true
 date: 2023-02-12 22:00:00
 update: 2023-10-03 15:07:24
 description: Plans for future development of Publisher for MkDocs

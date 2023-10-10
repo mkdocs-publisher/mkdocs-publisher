@@ -1,7 +1,7 @@
 ---
 title: v1.1.1 - 2023.10.09
 slug: v111
-publish: draft
+publish: true
 date: 2023-10-09 09:28:53
 update: 2023-10-10 12:15:33
 tags:

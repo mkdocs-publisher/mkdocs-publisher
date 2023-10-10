@@ -2,7 +2,7 @@
 title: Setting up debugger
 icon: material/shield-bug
 slug: pub-debugger
-publish: published
+publish: true
 date: 2023-08-01 11:49:05
 update: 2023-10-03 12:18:33
 description: Setting up a Publisher for MkDocs debugger plugin for development purposes

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "04_blog/v111-wikilinks.md",
+                "file": "02_setup/01_installation.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
@@ -96,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "04_blog/v111-wikilinks.md",
+                "file": "02_setup/01_installation.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "04_blog/v111-wikilinks.md",
+                "file": "02_setup/01_installation.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "04_blog/v111-wikilinks.md"
+                "file": "02_setup/01_installation.md"
               }
             }
           },
@@ -188,34 +188,34 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "c6174c4fcf2d07d9",
+  "active": "0584193f4f1c577e",
   "lastOpenFiles": [
-    "04_blog/v110-debugger.md",
-    "04_blog/v111-wikilinks.md",
+    "02_setup/99_development/01_setting-up-debugger.md",
+    "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
+    "02_setup/03_seo_and_sharing/01_setting-up-social-cards.md",
+    "02_setup/02_general/03_setting-up-obsidian.md",
+    "02_setup/02_general/02_setting-up-blog.md",
+    "02_setup/02_general/01_setting-up-meta.md",
+    "05_dev/03_versioning.md",
+    "05_dev/02_development.md",
     "05_dev/01_changelog.md",
-    "04_blog/v030.md",
+    "05_dev/other/02_backlog.md",
+    "05_dev/other/01_credits.md",
+    "01_home.md",
     "04_blog/v010-initial-release.md",
     "04_blog/v020.md",
+    "04_blog/v030.md",
     "04_blog/v040-minifier-and-autonav.md",
     "04_blog/v041.md",
     "04_blog/v050-social.md",
     "04_blog/v100-obsidian.md",
+    "04_blog/v110-debugger.md",
+    "04_blog/v111-wikilinks.md",
+    "_templates/_changelog.md",
+    "_templates/_option.md",
     "README.md",
     "_templates/_README.md",
     "_templates/_post.md",
-    "_templates/_page.md",
-    "_templates/_changelog.md",
-    "05_dev/README.md",
-    "02_setup/02_general/02_setting-up-blog.md",
-    "05_dev/other/01_credits.md",
-    "04_blog/README.md",
-    "02_setup/02_general/01_setting-up-meta.md",
-    "01_home.md",
-    "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
-    "05_dev/other/02_backlog.md",
-    "05_dev/02_development.md",
-    "05_dev/03_versioning.md",
-    "02_setup/99_development/01_setting-up-debugger.md",
     "publisher_logo.png",
     "publisher_icon.png",
     "_templates",
