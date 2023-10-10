@@ -48,7 +48,7 @@ jobs:
       - name: Restore MkDocs cached files
         uses: actions/cache@v3
         with:
-          path: .pub_cache
+          path: .pub_min_cache
           key: mkdocs-publisher-cache-${{ github.run_id }}
           restore-keys: mkdocs-publisher-cache-
       - name: Build mkdocs-publisher documentation
@@ -67,5 +67,5 @@ jobs:
       - name: Save MkDocs files cache
         uses: actions/cache/save@v3
         with:
-          path: .pub_cache
+          path: .pub_min_cache
           key: mkdocs-publisher-cache-${{ github.run_id }}

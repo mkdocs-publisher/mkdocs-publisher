@@ -211,7 +211,7 @@ Just like that, all optimization tools are enabled with optimal settings (accord
 	plugins:
 	  - pub-minifier:
 		  threads: 0
-		  cache_dir: .cache
+		  cache_dir: .pub_min_cache
 		  cache_file: .cache_files_list.yml
 	```
 
@@ -221,7 +221,7 @@ Just like that, all optimization tools are enabled with optimal settings (accord
 
 	```commandline hl_lines="2-3"
 		.
-		├─ .cache/
+		├─ .pub_min_cache/
 		│  └─ .cache_files_list.yml
 		├─ docs/
 		└─ mkdocs.yml

@@ -92,7 +92,7 @@ class _MinifierPngConfig(Config):
 
 
 class MinifierConfig(Config):
-    cache_dir = option.Type(str, default=".pub_cache")
+    cache_dir = option.Type(str, default=".pub_min_cache")
     cache_file = option.Type(str, default=".cached_files_list.yml")
     threads = option.Type(int, default=0)  # 0 - default (read from system)
 

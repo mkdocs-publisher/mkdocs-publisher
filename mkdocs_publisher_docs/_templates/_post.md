@@ -13,17 +13,19 @@ categories: release
 
 ## Changelog
 
-### General
+### :material-list-box: General
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
-### Social
+### :material-file-tree: Meta
 
-### Meta
+### :simple-obsidian: Obsidian
 
-### Obsidian
+### :material-share: Social
 
-### Debugger
+### :material-run-fast: Minifier
+
+### :material-shield-bug: Debugger
 
 ---
 

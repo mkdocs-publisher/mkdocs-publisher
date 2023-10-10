@@ -15,11 +15,6 @@ categories:
 
 ## 1.1.1
 
-> :material-plus-circle:{title=added} added
-> :material-minus-circle:{title=removed} removed
-> :material-check-circle:{title=fixed} fixed
-> :material-sync-circle:{title=changed} changed
-
 ### :material-list-box: General
 
 - :material-plus-circle: license info added to all project files
@@ -35,19 +30,15 @@ categories:
 ### :material-newspaper-variant-multiple: Blog
 
 - :material-check-circle: relative links are fixed
-- :material-check-circle: meta field `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming into `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
+- :material-check-circle: metadata key `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming to `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
 
 ### :material-file-tree: Meta
 
-- :material-check-circle: meta field `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming into `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
+- :material-check-circle: metadata key `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming to `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
 
 ### :simple-obsidian: Obsidian
 
 - :material-check-circle: links and wiki links are fixed
-
-### :material-share: Social
-
-### :material-run-fast: Minifier
 
 ### :material-shield-bug: Debugger
 

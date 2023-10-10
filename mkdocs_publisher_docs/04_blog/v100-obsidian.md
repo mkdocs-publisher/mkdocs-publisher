@@ -3,7 +3,7 @@ title: v1.0.0 - 2023-06-13
 slug: v100
 publish: published
 date: 2023-05-19 15:40:36
-update: 2023-10-03 13:16:01
+update: 2023-10-09 10:28:28
 tags:
   - v1.x
 description: Publisher for MkDocs v0.6.0
@@ -47,18 +47,18 @@ Last thing is a new project logo:
 
 ## Changelog
 
-### General
+### :material-list-box: General
 
 - :material-plus-circle: internal class for HTML modifications
 - :material-sync-circle: project license to MIT
 - :material-sync-circle: project `README.md` cleanup
 - :material-sync-circle: internal method for importing other plugin config (needed for cross functionalities)
 
-### Auto-nav (plugin removed)
+### :material-navigation: Auto-nav (plugin removed)
 
 The whole functionality of this plugin has been moved to a new [Meta plugin](#meta-new-plugin).
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
 - :material-plus-circle: exclude from search blog posts teaser/index, category, tag or archive pages
 - :material-plus-circle: exclude comments in blog posts teaser/index, category, tag or archive pages
@@ -67,11 +67,11 @@ The whole functionality of this plugin has been moved to a new [Meta plugin](#me
 - :material-sync-circle: automatic detection of the blog as starting page (config value for this setting was removed)
 - :material-plus-circle: post publication state (provided by [Meta plugin](#meta-new-plugin))
 
-### Social
+### :material-share: Social
 
 - :material-sync-circle: code refactor of HTML modification elements and logging added
 
-### Meta (new plugin)
+### :material-file-tree: Meta (new plugin)
 
 This plugin is a Swiss army knife that helps a lot with various tasks related to publication, SEO, etc. Take a look at the below changelog to see what is offered by this plugin.
 
@@ -88,7 +88,7 @@ This plugin is a Swiss army knife that helps a lot with various tasks related to
 	- possibility to define `hidden_dir`(this affects only the directory and all subdirectories where the file is located)
 - :material-plus-circle: while serve page locally, all hidden and draft pages becomes published (this setting, helps with document preview while writing)
 
-### Obsidian (new plugin)
+### :simple-obsidian: Obsidian (new plugin)
 
 This plugin is a set of functionalities and should be split into various smaller plugins, but due to some cross functionalities, it has been integrated into the bigger one. Each sub plugin can be controlled separately, so if you don't need all the functionalities, you can just disable them or simply do not enable one that are disabled by default.
 

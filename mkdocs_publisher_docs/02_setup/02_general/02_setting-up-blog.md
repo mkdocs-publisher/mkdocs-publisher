@@ -119,7 +119,7 @@ This plugin to work correctly, needs to create and/or use some directories. Thos
 	``` yaml hl_lines="3-6"
 	plugins:
 	  - pub-blog:
-		  temp_dir: .temp
+		  temp_dir: .pub_blog_temp
 		  archive_subdir: archive
 		  categories_subdir: categories
 		  tags_subdir: tags
@@ -131,7 +131,7 @@ This plugin to work correctly, needs to create and/or use some directories. Thos
 
 	```console hl_lines="2-5"
 	.
-	├─ .temp/
+	├─ .pub_blog_temp/
 	│  ├─ archive/
 	│  ├─ categories/
 	│  └─ tags/

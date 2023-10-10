@@ -3,7 +3,7 @@ title: v0.4.0 - 2023-03-28
 slug: v040
 publish: published
 date: 2023-03-28 02:00:00
-update: 2023-09-11 23:00:24
+update: 2023-10-09 10:29:06
 tags:
   - v0.x
 description: Publisher for MkDocs v0.4.0
@@ -19,7 +19,7 @@ During a development, many ideas about further development came to my mind. I ha
 
 ## Changelog
 
-### General
+### :material-list-box: General
 
 - :material-sync-circle: project name
 - :material-plus-circle: cross configuration of blog and auto-nav plugins:
@@ -28,7 +28,7 @@ During a development, many ideas about further development came to my mind. I ha
 	  - if one of the plugins is not enabled, other is not using its values
 - :material-plus-circle: documentation
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
 - :material-plus-circle: possibility to choose a blog as a starting page with option to define manually blog in nav configuration
 - :material-plus-circle: `slug` config option for setting an entire blog's main directory URL
@@ -37,7 +37,7 @@ During a development, many ideas about further development came to my mind. I ha
 - :material-check-circle: live reload infinite loop during `serve` caused by temporary files created and removed in blog directory
 - :material-check-circle: navigation is no longer overridden by a blog (if there is no other nav, blog will create on with recent posts as a main page)
 
-### Minifier (new plugin)
+### :material-run-fast: Minifier (new plugin)
 
 - :material-plus-circle: PNG image minifier (using: pngquant and oxipng)
 - :material-plus-circle: JPG image minifier (using: mozjpeg)
@@ -46,7 +46,7 @@ During a development, many ideas about further development came to my mind. I ha
 - :material-plus-circle: CSS file minifier (using: postcss with plugins: cssnano, svgo)
 - :material-plus-circle: JS file minifier (using: uglifyjs)
 
-### Auto-nav (new plugin)
+### :material-navigation: Auto-nav (new plugin)
 
 - :material-plus-circle: build navigation based on file names
 - :material-plus-circle: directory metadata and additional settings can be set in a frontmatter of `*.md` file (default to `README.md`)

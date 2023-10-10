@@ -80,7 +80,7 @@ The same approach can be taken for setting this up in the case of directories. T
 
 In the metadata, there is a possibility to add two values related to dates.
 
-=== ":material-calendar-month: `date`"
+=== ":octicons-markdown-16: date"
 
 	This defines a value for the document's creation date. It's also used by [a blog plugin](02_setting-up-blog.md) for blog posts ordering and a meta plugin for updating a sitemap file.
 
@@ -90,7 +90,7 @@ In the metadata, there is a possibility to add two values related to dates.
 	---
 	```
 
-=== ":material-calendar-month: `update`"
+=== ":octicons-markdown-16: update"
 
 	This defines a value for the document's last update date. It's also used by a meta plugin for updating a sitemap file.
 
@@ -111,7 +111,7 @@ In the metadata, there is a possibility to add two values related to dates.
 
 In short, navigation automatic generation works based on alphabetical order of files and directories. If you are using any IDE (like [PyCharm](https://www.jetbrains.com/pycharm/), [VsCode](https://code.visualstudio.com) or [Obsidian](https://obsidian.md)) for documents creation and editing, the way of file order you see by default in the project or file browser of the tool, is the order of the files in navigation. Probably the easiest way of file ordering is to provide some prefix with the digits (take a look at [this documentation repository](https://github.com/mkusz/mkdocs-publisher/tree/main/mkdocs_publisher_docs) for better understanding). The main problem with this approach would be strange names in file URLs and documentation titles on the web page. To solve that problems, the meta plugin uses two meta-data values that are common for document files and directories:
 
-===+ "`title`"
+===+ ":octicons-markdown-16: title"
 
 	`title` is responsible for document name that is visible in the generated web page.
 
@@ -121,7 +121,7 @@ In short, navigation automatic generation works based on alphabetical order of f
 	---
 	```
 
-=== "`slug`"
+=== ":octicons-markdown-16: slug"
 
 	`slug` is responsible for document URL.
 
@@ -133,77 +133,77 @@ In short, navigation automatic generation works based on alphabetical order of f
 
 ### Document publication status
 
-One of the functions provided by the meta plugin is a possibility to set document status. Each status has some implications for navigation building and links creation.
+One of the functions provided by the meta plugin is a possibility to set document publication status. Each publication status has some implications for navigation building and links creation.
 
 ===+ ":octicons-markdown-16: published.md"
 
 	```yaml hl_lines="2"
 	---
-	status: published
+	publish: true
 	---
 	```
 
-	When the document status is set to `published`, the document will appear in navigation and link to it, will be visible on the generated web page.
+	When the document publication status is set to `true` (or `published`), the document will appear in navigation and link to it, will be visible on the generated web page.
 
 === ":octicons-markdown-16: hidden.md "
 
 	```yaml hl_lines="2"
 	---
-	status: hidden
+	publish: hidden
 	---
 	```
 
-	When the document status is set to `hidden`, the document will not appear in navigation, but will be generated, and it's possible to create a link to this document or enter a direct URL address.
+	When the document publication status is set to `hidden`, the document will not appear in navigation, but will be generated, and it's possible to create a link to this document or enter a direct URL address.
 
 === ":octicons-markdown-16: draft.md"
 
 	```yaml hl_lines="2"
 	---
-	status: draft
+	publish: false
 	---
 	```
 
-	When the document status is set to `draft`, the document will not appear in navigation and will not be generated. However, when using local document hosting by issuing the command `mkdocs serve`, each draft document will be generated to help with document creation and visual inspection.
+	When the document publication status is set to `false` (or `draft`), the document will not appear in navigation and will not be generated. However, when using local document hosting by issuing the command `mkdocs serve`, each draft document will be generated to help with document creation and visual inspection.
 
 > [!NOTE] Default document status
-> If status is not set for document, by default status is set to `draft`, so the document will not be published accidentally.
+> If publication status is not set for document, by default status is set to `false`, so the document will not be published accidentally.
 
 ### Directory publication status
 
-Status can also be set for whole directories. This gives you a control over the whole set of documents that are placed in given directories. Each status has some implications for navigation building and links creation.
+Publication status can also be set for whole directories. This gives you a control over the whole set of documents that are placed in given directories. Each publication status has some implications for navigation building and links creation.
 
 ===+ ":octicons-markdown-16: README.md for published directory"
 
 	```yaml hl_lines="2"
 	---
-	status: published
+	publish: true
 	---
 	```
 
-	When the status is set to `published` in `README.md` file, the directory will appear in navigation and link to it and documents in this directory, will be visible on the generated web page.
+	When the publication status is set to `true` (or `published`) in `README.md` file, the directory will appear in navigation and link to it and documents in this directory, will be visible on the generated web page.
 
 === ":octicons-markdown-16: README.md for hidden directory"
 
 	```yaml hl_lines="2"
 	---
-	status: hidden
+	publish: hidden
 	---
 	```
 
-	When the status is set to `hidden` in `README.md` file, the directory will not appear in navigation, but documents in this directory will be generated and could be accessible by internal linking or by passing direct URL address in the web browser.
+	When the publication status is set to `hidden` in `README.md` file, the directory will not appear in navigation, but documents in this directory will be generated and could be accessible by internal linking or by passing direct URL address in the web browser.
 
 === ":octicons-markdown-16: README.md for draft directory"
 
 	```yaml hl_lines="2"
 	---
-	status: draft
+	publish: false
 	---
 	```
 
-	When the status is set to `draft` in `README.md` file, the directory will not appear in navigation and documents in this directory will not be generated. However, when using local document hosting by issuing the command `mkdocs serve`, each directory and documents will be generated to help with document creation and visual inspection.
+	When the publication status is set to `false` (or `draft`) in `README.md` file, the directory will not appear in navigation and documents in this directory will not be generated. However, when using local document hosting by issuing the command `mkdocs serve`, each directory and documents will be generated to help with document creation and visual inspection.
 
 > [!NOTE] Default directory status
-> If status is not set for directory, by default status is set to `published`, so there is no need to create `README.md` file in each directory.
+> If publication status is not set for directory, by default status is set to `true`, so there is no need to create `README.md` file in each directory.
 
 ## Configuration
 
@@ -255,21 +255,21 @@ Above you can find all possible settings with their default values. You don't ha
 > [!SETTINGS]- [key_name](#+meta.slug.key_name){#+meta.slug.key_name}
 > Metadata key name for slug value.
 
-### Status
+### Publication status
 
 ===+ ":octicons-file-code-16: mkdocs.yml"
 
 	```yaml hl_lines="3-10"
 	plugins:
 	  - pub-meta:
-		  status:
+		  publish:
 			search_in_hidden: false
 			search_in_draft: false
 			file_default: draft
 			file_warn_on_missing: true
 			dir_default: published
 			dir_warn_on_missing: false
-			key_name: status
+			key_name: publish
 	```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.

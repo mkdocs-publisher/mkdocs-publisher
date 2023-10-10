@@ -1,15 +1,15 @@
 ---
 title: v1.1.0 - 2023-09-01
+icon: simple/obsidian
 slug: v110
 publish: published
 date: 2023-09-01 11:50:56
-update: 2023-09-01 14:38:45
+update: 2023-10-09 10:28:36
 tags:
   - v1.x
 description: Publisher for MkDocs v1.1.0
 categories:
   - release
-icon: simple/obsidian
 ---
 
 Here I am with a new version of Publisher for MkDocs plugins. I have promised to make smaller releases, but my brain is refusing me to work on a small scale. It's really hard to achieve that, especially when I started to have some feedback from you, users of this tool. Because of that feedback and some problems you encountered, I decided to focus in this release on 2 main topics: some bug fixing and introducing a new plugin called [pub-debugger](../02_setup/99_development/01_setting-up-debugger.md). This plugin allows for an insight into all messages produced by plugins while building (or serving) a web page. Also, it's able to produce a ZIP file, with some basic information that could help me, whenever you will need to report an [issue](https://github.com/mkusz/mkdocs-publisher/issues).
@@ -43,7 +43,7 @@ I don't promise that all of the above will be ready in the next release, but som
 
 ## Changelog
 
-### General
+### :material-list-box: General
 
 - :material-sync-circle: rename of directory with documentation files
 - :material-sync-circle: Python libraries update
@@ -55,17 +55,17 @@ I don't promise that all of the above will be ready in the next release, but som
 - :material-sync-circle: code refactor and cleanup
 - :material-minus-circle: drop `python-frontmatter` from Python libraries
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
 - :material-check-circle: minor fix for internal linking (still not full solution)
 - :material-sync-circle: fix for deprecated warning regarding `importlib.resources`
 
-### Minifier
+### :material-run-fast: Minifier
 
 - :material-sync-circle: small code reformat related to shared library changes
 - :material-sync-circle: files are not minified when using `mkdocs serve` (this is default behavior, but it can be changed)
 
-### Meta
+### :material-file-tree: Meta
 
 - :material-plus-circle: possibility to declare whole directory as hidden
 - :material-plus-circle: more logging messages
@@ -73,12 +73,12 @@ I don't promise that all of the above will be ready in the next release, but som
 - :material-check-circle: fix for error with reading `README.md` when no empty line at the end of file
 - :material-check-circle: fix for adding again the same directory to draft directories when using `mkdocs serve`
 
-### Obsidian
+### :simple-obsidian: Obsidian
 
 - :material-check-circle: minor fix for internal linking (still not full fix)
 - :material-check-circle: fix for preserving new line in callouts
 
-### Debugger (new plugin)
+### :material-shield-bug: Debugger (new plugin)
 
 - :material-plus-circle: console log reformatting with configuration
 - :material-plus-circle: added logging into `*.log` file with configuration

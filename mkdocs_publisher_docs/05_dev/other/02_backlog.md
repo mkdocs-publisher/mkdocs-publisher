@@ -82,6 +82,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: internal link's tooltip preview (use [tippy.js](https://atomiks.github.io/tippyjs/))
 - [ ] Fix: not needed new/blank lines inside code blocks
 - [ ] Change: backlink anchor link creation using slug information
+- [ ] Add: Obsidian settings checker/validator
 
 ### Debugger
 
@@ -115,7 +116,6 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: minify single file using minifier
 - [ ] Add: minifier tools installation
 - [ ] Add: document/blog post publication state change
-- [ ] Add: CONTRIBUTING.md file to the repo
 - [ ] Add: issues templates in the project repository issues
 
 ### Documentation
@@ -133,4 +133,5 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
  - [ ] GitHub repo with preconfigured pages, etc. (can be integrated with Docker Image creation)
  - [ ] Unit tests and code coverage with pre-commit
  - [ ] Cleanup list of code TODO's
+ - [ ] Add: CONTRIBUTING.md file to the repo
  - [ ] Move translations to jinja templates like Material for MkDocs is doing it
