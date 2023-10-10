@@ -2,7 +2,7 @@
 title: Setting up a blog
 icon: material/newspaper-variant-multiple
 slug: pub-blog
-publish: published
+publish: true
 date: 2023-02-12 22:00:00
 update: 2023-10-03 12:27:41
 description: Setting up a Publisher for MkDocs blog plugin for blogging functionality

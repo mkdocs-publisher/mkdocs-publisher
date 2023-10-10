@@ -2,7 +2,7 @@
 title: v1.1.0 - 2023-09-01
 icon: simple/obsidian
 slug: v110
-publish: published
+publish: true
 date: 2023-09-01 11:50:56
 update: 2023-10-10 13:20:32
 tags:

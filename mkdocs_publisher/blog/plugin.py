@@ -163,9 +163,15 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:
 
-        file_utils.remove_dir(directory=self.blog_config.temp_dir)
+        try:
+            file_utils.remove_dir(directory=self.blog_config.temp_dir)
+        except AttributeError:
+            pass  # TODO: remove this when rebuilding blog plugin
 
     @event_priority(-100)  # Run after all other plugins
     def on_shutdown(self) -> None:
 
-        file_utils.remove_dir(directory=self.blog_config.temp_dir)
+        try:
+            file_utils.remove_dir(directory=self.blog_config.temp_dir)
+        except AttributeError:
+            pass  # TODO: remove this when rebuilding blog plugin

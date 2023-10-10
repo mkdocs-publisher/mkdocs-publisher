@@ -2,7 +2,7 @@
 title: Changelog
 icon: material/file-replace-outline
 slug: changelog
-publish: published
+publish: true
 date: 2023-02-12 22:00:00
 update: 2023-10-10 13:21:14
 description: Publisher for MkDocs version history

@@ -251,12 +251,16 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             f"Hidden directories: "
             f"{[str(d.relative_to(config.docs_dir)) for d in self._hidden_dirs]}"
         )
-        log.info(
-            f"Draft files: {[str(f.relative_to(config.docs_dir)) for f in self._draft_files]}"
-        )
-        log.info(
-            f"Hidden files: {[str(f.relative_to(config.docs_dir)) for f in self._hidden_files]}"
-        )
+        draft_files_list = [
+            str(f.relative_to(config.docs_dir)) if isinstance(f, Path) else f
+            for f in self._draft_files
+        ]
+        log.info(f"Draft files: {draft_files_list}")
+        hidden_files_list = [
+            str(f.relative_to(config.docs_dir)) if isinstance(f, Path) else f
+            for f in self._hidden_files
+        ]
+        log.info(f"Hidden files: {hidden_files_list}")
 
         return config
 

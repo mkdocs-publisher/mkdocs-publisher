@@ -1,9 +1,9 @@
 ---
 title: v0.1.0 - Initial release
 slug: v010
-publish: published
+publish: true
 date: 2023-02-02 22:00:00
-update: 2023-10-10 13:21:05
+update: 2023-10-10 13:51:02
 tags:
   - v0.x
 description: Initial version of Publisher for MkDocs
