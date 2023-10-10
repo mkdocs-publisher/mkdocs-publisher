@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "05_dev/01_changelog.md",
+                "file": "04_blog/v111-wikilinks.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
@@ -96,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "05_dev/01_changelog.md",
+                "file": "04_blog/v111-wikilinks.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "05_dev/01_changelog.md",
+                "file": "04_blog/v111-wikilinks.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "05_dev/01_changelog.md"
+                "file": "04_blog/v111-wikilinks.md"
               }
             }
           },
@@ -188,18 +188,18 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "0584193f4f1c577e",
+  "active": "c6174c4fcf2d07d9",
   "lastOpenFiles": [
-    "04_blog/v030.md",
+    "04_blog/v110-debugger.md",
+    "04_blog/v111-wikilinks.md",
     "05_dev/01_changelog.md",
+    "04_blog/v030.md",
     "04_blog/v010-initial-release.md",
     "04_blog/v020.md",
     "04_blog/v040-minifier-and-autonav.md",
     "04_blog/v041.md",
     "04_blog/v050-social.md",
     "04_blog/v100-obsidian.md",
-    "04_blog/v110-debugger.md",
-    "04_blog/v111-wikilinks.md",
     "README.md",
     "_templates/_README.md",
     "_templates/_post.md",

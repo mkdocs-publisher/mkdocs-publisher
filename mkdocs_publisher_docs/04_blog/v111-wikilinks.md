@@ -35,6 +35,8 @@ Also, there was a lot of happening in the project backstage like new linter, add
 
 <!-- more -->
 
+## Changelog
+
 ### :material-list-box: General
 
 - ❎ license info added to all project files
