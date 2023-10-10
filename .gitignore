@@ -1,7 +1,7 @@
 # Cache & temp
 __pycache__
 .pub_blog_temp
-.pub_cache
+.pub_min_cache
 .ruff_cache
 .pytest_cache
 .DS_Store
