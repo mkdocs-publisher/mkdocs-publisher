@@ -4,37 +4,23 @@
     "type": "split",
     "children": [
       {
-        "id": "433ee94613de70e4",
+        "id": "f693741b6cd0cb0c",
         "type": "tabs",
         "children": [
           {
-            "id": "740d356f15967972",
+            "id": "0584193f4f1c577e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "05_dev/other/01_credits.md",
-                "mode": "source",
-                "backlinks": true,
-                "source": true
-              }
-            }
-          },
-          {
-            "id": "48744fbeab7a33f4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "02_setup/02_general/02_setting-up-blog.md",
+                "file": "05_dev/01_changelog.md",
                 "mode": "source",
                 "backlinks": true,
                 "source": true
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -110,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "02_setup/02_general/02_setting-up-blog.md",
+                "file": "05_dev/01_changelog.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "02_setup/02_general/02_setting-up-blog.md",
+                "file": "05_dev/01_changelog.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -153,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "02_setup/02_general/02_setting-up-blog.md"
+                "file": "05_dev/01_changelog.md"
               }
             }
           },
@@ -202,34 +188,34 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "48744fbeab7a33f4",
+  "active": "0584193f4f1c577e",
   "lastOpenFiles": [
-    "05_dev/other/01_credits.md",
-    "04_blog/v111-wikilinks.md",
+    "04_blog/v030.md",
     "05_dev/01_changelog.md",
-    "04_blog/README.md",
+    "04_blog/v010-initial-release.md",
+    "04_blog/v020.md",
+    "04_blog/v040-minifier-and-autonav.md",
+    "04_blog/v041.md",
+    "04_blog/v050-social.md",
+    "04_blog/v100-obsidian.md",
+    "04_blog/v110-debugger.md",
+    "04_blog/v111-wikilinks.md",
+    "README.md",
+    "_templates/_README.md",
+    "_templates/_post.md",
+    "_templates/_page.md",
+    "_templates/_changelog.md",
     "05_dev/README.md",
+    "02_setup/02_general/02_setting-up-blog.md",
+    "05_dev/other/01_credits.md",
+    "04_blog/README.md",
     "02_setup/02_general/01_setting-up-meta.md",
     "01_home.md",
-    "04_blog/v110-debugger.md",
-    "02_setup/02_general/02_setting-up-blog.md",
     "02_setup/03_seo_and_sharing/02_setting-up-minifier.md",
-    "_templates/_changelog.md",
-    "04_blog/v100-obsidian.md",
-    "04_blog/v050-social.md",
-    "04_blog/v041.md",
-    "04_blog/v040-minifier-and-autonav.md",
-    "04_blog/v030.md",
-    "04_blog/v020.md",
-    "04_blog/v010-initial-release.md",
-    "_templates/_post.md",
     "05_dev/other/02_backlog.md",
-    "README.md",
     "05_dev/02_development.md",
     "05_dev/03_versioning.md",
     "02_setup/99_development/01_setting-up-debugger.md",
-    "_templates/_page.md",
-    "02_setup/03_seo_and_sharing/01_setting-up-social-cards.md",
     "publisher_logo.png",
     "publisher_icon.png",
     "_templates",

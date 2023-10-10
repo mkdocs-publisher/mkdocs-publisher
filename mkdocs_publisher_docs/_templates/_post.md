@@ -29,11 +29,5 @@ categories: release
 
 ---
 
-> [!info] Legend
-> :material-plus-circle: - added
->
-> :material-minus-circle: - removed
->
-> :material-check-circle: - fixed
->
-> :material-sync-circle: - changed
+> [!faq] Legend
+> ❎ - added ✅ - fixed ♻️ - changed 🚫 - removed

@@ -11,3 +11,8 @@
 ### :material-run-fast: Minifier
 
 ### :material-shield-bug: Debugger
+
+---
+
+> [!faq] Legend
+> ❎ - added ✅ - fixed ♻️ - changed 🚫 - removed

@@ -3,7 +3,7 @@ title: v1.1.1 - 2023.10.09
 slug: v111
 publish: draft
 date: 2023-10-09 09:28:53
-update: 2023-10-10 11:29:21
+update: 2023-10-10 12:15:33
 tags:
   - v1.x
 description:
@@ -37,45 +37,39 @@ Also, there was a lot of happening in the project backstage like new linter, add
 
 ### :material-list-box: General
 
-- :material-plus-circle: license info added to all project files
-- :material-plus-circle: code coverage
-- :material-plus-circle: unit test to part of the code (journey begins)
-- :material-sync-circle: flake8 linter has been replaced with [ruff](https://github.com/astral-sh/ruff)
-- :material-sync-circle: internal code refactoring and simplifications
-- :material-sync-circle: project dependencies has been separated into 3 groups: **general**, **test** and **dev**
-- :material-sync-circle: main project dependencies has been updated:
+- ❎ license info added to all project files
+- ❎ code coverage
+- ❎ unit test to part of the code (journey begins)
+- ♻️️ flake8 linter has been replaced with [ruff](https://github.com/astral-sh/ruff)
+- ♻️️ internal code refactoring and simplifications
+- ♻️️ project dependencies has been separated into 3 groups: **general**, **test** and **dev**
+- ♻️️ main project dependencies has been updated:
 	- `mkdocs >= 1.5.3`
 	- `mkdocs-material >= 9.4.3`
 
 ### :material-newspaper-variant-multiple: Blog
 
-- :material-check-circle: relative links are fixed
-- :material-check-circle: metadata key `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming to `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
-- :material-check-circle: `temp_dir` default value changed to `.pub_blog_temp`
+- ✅ relative links are fixed
+- ✅ metadata key `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming to `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
+- ✅ `temp_dir` default value changed to `.pub_blog_temp`
 
 ### :material-file-tree: Meta
 
-- :material-check-circle: metadata key `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming to `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
+- ✅ metadata key `status` collision with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/#setting-the-page-status) (`>= 9.20`) solved by renaming to `publish` (the same value as in [Obsidian.md](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish))
 
 ### :material-run-fast: Minifier
 
-- :material-check-circle: `cache_dir` default value changed to `.pub_min_cache`
+- ✅ `cache_dir` default value changed to `.pub_min_cache`
 
 ### :simple-obsidian: Obsidian
 
-- :material-check-circle: links and wiki links are fixed
+- ✅ links and wiki links are fixed
 
 ### :material-shield-bug: Debugger
 
-- :material-check-circle: configuration warnings are now captured and can be part of the log file and new console log look & feel
+- ✅ configuration warnings are now captured and can be part of the log file and new console log look & feel
 
 ---
 
-> [!info] Legend
-> :material-plus-circle: - added
->
-> :material-minus-circle: - removed
->
-> :material-check-circle: - fixed
->
-> :material-sync-circle: - changed
+> [!note]
+> ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed
