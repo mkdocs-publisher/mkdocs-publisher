@@ -1,7 +1,7 @@
 ---
 title: First steps
 slug: first-steps
-status: published
+publish: published
 date: 2023-02-02 22:00:00
 update: 2023-04-24 21:50:22
 description: First steps after installation

@@ -1,6 +1,30 @@
+# MIT License
+#
+# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import logging
 import re
 from dataclasses import dataclass
+
+# from hashlib import md5
 from typing import Dict
 from typing import List
 from typing import Optional
@@ -9,13 +33,14 @@ from typing import cast
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.pages import Page
 
+from mkdocs_publisher._shared import links
+
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared.urls import slugify
 from mkdocs_publisher.blog.plugin import BlogPlugin
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.backlinks")
 
-MARKDOWN_LINK_RE = re.compile(r"\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]+.md)(#[\w\S]+)?\)")
 HTTP_LINK_RE = re.compile(r"\[([^][\r\n]+)]\((https?://[^][)(\s]+)(#[\w\-.]+)?\)")
 
 
@@ -27,7 +52,7 @@ class Link:
     source: str
 
 
-class Backlink:
+class BacklinkLinks:
     def __init__(
         self,
         mkdocs_config: MkDocsConfig,
@@ -41,9 +66,12 @@ class Backlink:
         """Create backlink anchor link"""
 
         anchor_link = f"{backlink}{anchor_link}"
+        # log.warning(anchor_link)
         for r in (("../", ""), (".md", ""), ("#", ""), ("/", ""), ("_", "-")):
             anchor_link = anchor_link.replace(*r)
-        return slugify(text=anchor_link)
+        anchor_link = slugify(text=anchor_link)
+        # log.error(anchor_link)
+        return anchor_link
 
     @staticmethod
     def _other_link_to_text(match: re.Match) -> str:
@@ -56,7 +84,10 @@ class Backlink:
         backlink = match.group(2)
         backlink_anchor_link = self._build_anchor_link(backlink=backlink, anchor_link=anchor_link)
         # TODO: create anchor link using slug from meta
-        return f"[{match.group(1)}]({backlink}{anchor_link}){{ #{backlink_anchor_link} }}"
+        link = f"[{match.group(1)}]({backlink}{anchor_link}){{#{backlink_anchor_link}}}"
+        # link_md5 = md5(f"[{match.group(1)}]({backlink}{anchor_link})".encode()).hexdigest()
+        # log.error(f"{link_md5} = {link}")
+        return link
 
     def _parse_markdown_link(self, match: re.Match, page: Page, line: str):
         """Parse markdown link"""
@@ -73,7 +104,7 @@ class Backlink:
         backlink_text = line.replace(original_link_text, link_replacement)
 
         # Convert other links into text
-        backlink_text = re.sub(MARKDOWN_LINK_RE, self._other_link_to_text, backlink_text)
+        backlink_text = re.sub(links.MD_LINK_RE, self._other_link_to_text, backlink_text)
         backlink_text = re.sub(HTTP_LINK_RE, self._other_link_to_text, backlink_text)
 
         # Create a backlink with context
@@ -122,11 +153,11 @@ class Backlink:
                     self._backlinks[original_link_destination].append(link)
 
     def find_markdown_links(self, markdown: str, page: Page):
-        """Find all markdown backlinks"""
+        # """Find all markdown backlinks"""
         for line in markdown.split("\n"):
-            for match in re.finditer(MARKDOWN_LINK_RE, line):
+            for match in re.finditer(links.MD_LINK_RE, line):
                 self._parse_markdown_link(match=match, page=page, line=line)
 
     def convert_to_anchor_link(self, markdown: str) -> str:
         """Convert backlink to link with an anchor for direct navigation after clicking on it"""
-        return re.sub(MARKDOWN_LINK_RE, self._create_anchor_link, markdown)
+        return re.sub(links.MD_LINK_RE, self._create_anchor_link, markdown)

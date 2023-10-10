@@ -1,9 +1,9 @@
 ---
 title: v0.1.0 - Initial release
 slug: v010
-status: published
+publish: published
 date: 2023-02-02 22:00:00
-update: 2023-08-01 11:50:56
+update: 2023-10-10 13:21:05
 tags:
   - v0.x
 description: Initial version of Publisher for MkDocs
@@ -39,19 +39,13 @@ As you can see, there are just 2 still maintained plugins for blogging in MkDocs
 
 This project is now at an early stage of development. Current functionalities are:
 
-- :material-plus-circle: blog post update date based on metadata (post YAML frontmatter)
-- :material-plus-circle: blog post URL link based on metadata (post YAML frontmatter)
-- :material-plus-circle: blog post tags and categories based on metadata (post YAML frontmatter)
-- :material-plus-circle: support for blog post teaser
-- :material-plus-circle: auto generation of blog posts navigation
+- ❎ blog post update date based on metadata (post YAML frontmatter)
+- ❎ blog post URL link based on metadata (post YAML frontmatter)
+- ❎ blog post tags and categories based on metadata (post YAML frontmatter)
+- ❎ support for blog post teaser
+- ❎ auto generation of blog posts navigation
 
 ---
 
-> [!info] Legend
-> :material-plus-circle: - added
->
-> :material-minus-circle: - removed
->
-> :material-check-circle: - fixed
->
-> :material-sync-circle: - changed
+> [!note]
+> ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed

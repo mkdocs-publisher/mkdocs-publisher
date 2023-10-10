@@ -1,4 +1,7 @@
 {
   "rowCount": 8,
-  "columnCount": 8
+  "columnCount": 8,
+  "defaultAlignment": "left",
+  "defaultCardWidth": 160,
+  "defaultCardHeight": 160
 }

@@ -1,9 +1,9 @@
 ---
 title: v0.5.0 - 2023-04-04
 slug: v050
-status: published
+publish: published
 date: 2023-04-04 21:26:12
-update: 2023-08-01 11:51:12
+update: 2023-10-10 13:20:43
 tags:
   - v0.x
 description: Publisher for MkDocs v0.5.0
@@ -26,22 +26,16 @@ For more details about this release, read more below or jump directly to [pub-so
 
 ## Changelog
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
-- :material-plus-circle: index blog post title is now a link to a post
+- ❎ index blog post title is now a link to a post
 
-### Social (new plugin)
+### :material-share: Social (new plugin)
 
-- :material-plus-circle: automatic addition of Open Graph tags directly into HTML code (no template modification is needed) based on document meta
-- :material-plus-circle: automatic addition of Twitter tags directly into HTML code (no template modification is needed) based on document meta
+- ❎ automatic addition of Open Graph tags directly into HTML code (no template modification is needed) based on document meta
+- ❎ automatic addition of Twitter tags directly into HTML code (no template modification is needed) based on document meta
 
 ---
 
-> [!info] Legend
-> :material-plus-circle: - added
->
-> :material-minus-circle: - removed
->
-> :material-check-circle: - fixed
->
-> :material-sync-circle: - changed
+> [!note]
+> ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed

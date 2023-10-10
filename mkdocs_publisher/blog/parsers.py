@@ -1,3 +1,25 @@
+# MIT License
+#
+# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import logging
 import re
 from collections import OrderedDict
@@ -12,7 +34,7 @@ from mkdocs_publisher.blog.structures import BlogPost
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog.parsers")
 
-REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description"]
+REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description", "publish"]
 # TODO: read it from pub-meta if configured
 
 
@@ -69,16 +91,16 @@ def parse_markdown_files(
                             config_nav[line[2:]] = str(path)
                 elif str(parents[0]) == str(blog_config.blog_dir):
 
-                    if "status" not in post_meta:
+                    if "publish" not in post_meta:
                         # TODO: read default value from meta config
                         log.info(
                             f"File: {file_path} - missing 1 required positional argument: "
-                            f"'status' (setting to default: draft)"
+                            f"'publish' (setting to default: draft)"
                         )
-                        post_meta["status"] = "draft"
+                        post_meta["publish"] = "draft"
 
                     # Skip non-published
-                    if not on_serve and post_meta["status"] != "published":
+                    if not on_serve and post_meta["publish"] not in ["published", "true", True]:
                         # TODO: make it configurable
                         continue
 
@@ -118,15 +140,15 @@ def parse_markdown_files(
                         and post_meta["slug"].strip() != ""
                     ):
                         post_data["slug"] = post_meta["slug"]
-                    try:
-                        blog_post: BlogPost = BlogPost(**post_data)
+                    # try:
+                    blog_post: BlogPost = BlogPost(**post_data)
 
-                        # Add new post to blog posts collection
-                        blog_config.blog_posts[blog_post.date] = blog_post
-                        log.debug(f"New blog posts: {blog_post.title}")
-                    except TypeError as e:
-                        msg = str(e).replace("__init__()", f"File: {file_path} -")
-                        log.warning(msg)
+                    # Add new post to blog posts collection
+                    blog_config.blog_posts[blog_post.date] = blog_post
+                    log.debug(f"New blog posts: {blog_post.title}")
+                    # except TypeError as e:
+                    #     msg = str(e).replace("__init__()", f"File: {file_path} -")
+                    #     log.warning(msg)
 
                     # TODO: add reading time
                     # print(f"{file_path} - {count_words(post.content) / 265 * 60}")

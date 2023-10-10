@@ -1,9 +1,10 @@
 ---
 title: Setting up a blog
+icon: material/newspaper-variant-multiple
 slug: pub-blog
-status: published
+publish: published
 date: 2023-02-12 22:00:00
-update: 2023-08-14 11:16:21
+update: 2023-10-03 12:27:41
 description: Setting up a Publisher for MkDocs blog plugin for blogging functionality
 categories:
   - setup
@@ -89,7 +90,7 @@ The last thing is to add a blog to a site navigation. There are 2 ways to do it:
 	```yaml hl_lines="3-6"
 	plugins:
 	  - pub-blog:
-		  teaser_marker: `<!-- more -->`
+		  teaser_marker: "<!-- more -->"
 		  searchable_non_posts: false
 		  posts_per_page: 5
 		  slug: blog
@@ -118,7 +119,7 @@ This plugin to work correctly, needs to create and/or use some directories. Thos
 	``` yaml hl_lines="3-6"
 	plugins:
 	  - pub-blog:
-		  temp_dir: .temp
+		  temp_dir: .pub_blog_temp
 		  archive_subdir: archive
 		  categories_subdir: categories
 		  tags_subdir: tags
@@ -130,7 +131,7 @@ This plugin to work correctly, needs to create and/or use some directories. Thos
 
 	```console hl_lines="2-5"
 	.
-	├─ .temp/
+	├─ .pub_blog_temp/
 	│  ├─ archive/
 	│  ├─ categories/
 	│  └─ tags/
@@ -165,7 +166,7 @@ To set up one of the above languages, the following line has to be added to the 
 ```yaml hl_lines="3"
 plugin:
   - pub-blog:
-      lang: 'pl'
+      lang: "pl"
 ```
 
 #### Translation

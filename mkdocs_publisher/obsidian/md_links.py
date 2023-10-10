@@ -1,139 +1,102 @@
+# MIT License
+#
+# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import logging
 import re
 from pathlib import Path
 from typing import Optional
+from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
 # noinspection PyProtectedMember
+from mkdocs_publisher._shared import links
 from mkdocs_publisher._shared import mkdocs_utils
 
 # noinspection PyProtectedMember
-from mkdocs_publisher._shared.urls import slugify
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.obsidian.config import _ObsidianLinksConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.md_links")
 
 
-WIKI_LINK_RE = re.compile(r"(?<!!)\[\[(\S+[|[ \S]+]*)]]")
-WIKI_LINK_EMBED_RE = re.compile(r"!\[\[(\S+[|[ \S]+]*)]]")
-MARKDOWN_LINK_RE = re.compile(r"(?<!!)\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]?)(#[\w\S]+)?\)")
-MARKDOWN_LINK_EMBED_RE = re.compile(r"!\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]+)\)")
-MARKDOWN_FILE_RE = re.compile(r"\[([^][\r\n]+)]\(((?!https?://)[^][)(\s]+.md)(#[\w\S]+)?\)")
-
-
 class MarkdownLinks:
-    def __init__(self, mkdocs_config: MkDocsConfig, disable_lazy_loading_override: bool = False):
+    def __init__(self, mkdocs_config: MkDocsConfig):
+        self._current_file_path: Optional[str] = None
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._links_config: _ObsidianLinksConfig = mkdocs_config.plugins[
             "pub-obsidian"
         ].config.links
-        self._current_file_path: Optional[str] = None
-        self._disable_lazy_loading_override: bool = disable_lazy_loading_override
-        self._blog_config: Optional[BlogPluginConfig] = mkdocs_utils.get_plugin_config(
-            mkdocs_config=mkdocs_config, plugin_name="pub-blog"
-        )  # type: ignore
-
-    def _parse_wiki_link(self, link: str) -> tuple[str, str]:
-        if "|" in link:
-            try:
-                link, name = link.split("|")
-            except ValueError:
-                log.warning(f'Error in link: {link} (from: "{self._current_file_path}")')
-                return "", ""
-        else:
-            name = link.split("/")[-1]
-        return link, name
-
-    def _get_file_path(self, file_path: str) -> str:
-
-        file_path = file_path.replace("../", "")
-        full_file_path = Path(self._mkdocs_config.docs_dir) / file_path
-        if not full_file_path.exists():
-            found_files_list: list[Path] = [
-                f for f in Path(self._mkdocs_config.docs_dir).glob(f"**/{file_path}")
-            ]
-            for found_file in found_files_list:
-                if found_file.resolve().exists():
-                    full_file_path = found_file
-                    break
-            else:
-                log.warning(
-                    f'File: "{full_file_path}" doesn\'t exists (from: "{self._current_file_path}")'
-                )
-                return ""
-
-        return f"/{full_file_path.relative_to(self._mkdocs_config.docs_dir)}"
-
-    def _normalize_wiki_link_embed(self, match: re.Match) -> str:
-        link, name = self._parse_wiki_link(link=match.group(1))
-
-        # TODO: parse from 'name' variable image size, etc.
-        # (https://help.obsidian.md/Linking+notes+and+files/Embedding+files)
-
-        link = self._get_file_path(link)
-        link = f"![{name}]({link})"
-        return link
-
-    def _normalize_wiki_link(self, match: re.Match) -> str:
-        link, name = self._parse_wiki_link(link=match.group(1))
-        link = self._get_file_path(f"{link}.md")
-        link = f"[{name}]({link})"
-        return link
-
-    def _normalize_markdown_link_embed(self, match: re.Match) -> str:
-        name = match.group(1)
-        link = f"![{name}]({self._get_file_path(match.group(2))})"
-        if self._links_config.img_lazy_loading and not self._disable_lazy_loading_override:
-            link = f"{link}{{ loading=lazy }}"
-        return link
-
-    def _fix_relative_path(self, match: re.Match) -> str:
-        """Fix relative links in dynamically created documents
-        like categories, tags and post previews"""
-        anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
-        link = self._get_file_path(file_path=match.group(2))
-        link = f"[{match.group(1)}]({link}{anchor_link})"
-        return link
+        self._blog_config: Optional[BlogPluginConfig] = cast(
+            BlogPluginConfig,
+            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-blog"),
+        )
 
     @staticmethod
-    def _fix_anchor_links(match: re.Match) -> str:
-        anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
-        link = f"[{match.group(1)}]({match.group(2)}{anchor_link})"
-        return link
+    def _normalize_wiki_embed_link(match: re.Match) -> str:
+        wiki_embed_link = str(links.WikiEmbedLinkMatch(**match.groupdict()))
+        log.debug(f"Normalizing wiki embed link: {match.group(0)} > {wiki_embed_link}")
+        return wiki_embed_link
 
-    def normalize(self, markdown: str, file_path: str) -> str:
-        self._current_file_path = file_path
+    @staticmethod
+    def _normalize_wiki_link(match: re.Match) -> str:
+        wiki_link_obj = links.LinkMatch(**match.groupdict())
+        wiki_link_obj.is_wiki = True
+        wiki_link = str(wiki_link_obj)
+        log.debug(f"Normalizing wiki link: {match.group(0)} > {wiki_link}")
+        return wiki_link
+
+    def _normalize_md_embed_link(self, match: re.Match) -> str:
+        md_embed_link_obj = links.MdEmbedLinkMatch(**match.groupdict())
+        md_embed_link_obj.is_loading_lazy = self._links_config.img_lazy_loading
+        md_embed_link = str(md_embed_link_obj)
+        log.debug(f"Normalizing md embed link: {match.group(0)} > {md_embed_link}")
+        return md_embed_link
+
+    @staticmethod
+    def _normalize_md_links(match: re.Match) -> str:
+        md_link = str(links.LinkMatch(**match.groupdict()))
+        log.debug(f"Normalizing md link: {match.group(0)} > {md_link}")
+        return md_link
+
+    def normalize_links(self, markdown: str, current_file_path: str) -> str:
+        self._current_file_path = current_file_path
         if self._links_config.wikilinks_enabled:
-            markdown = re.sub(WIKI_LINK_RE, self._normalize_wiki_link, markdown)
-            markdown = re.sub(WIKI_LINK_EMBED_RE, self._normalize_wiki_link_embed, markdown)
-        markdown = re.sub(MARKDOWN_LINK_EMBED_RE, self._normalize_markdown_link_embed, markdown)
-        markdown = re.sub(MARKDOWN_LINK_RE, self._fix_anchor_links, markdown)
+            markdown = re.sub(links.WIKI_LINK_RE, self._normalize_wiki_link, markdown)
+            markdown = re.sub(links.WIKI_EMBED_LINK_RE, self._normalize_wiki_embed_link, markdown)
+        markdown = re.sub(links.MD_EMBED_LINK_RE, self._normalize_md_embed_link, markdown)
+        markdown = re.sub(links.MD_LINK_RE, self._normalize_md_links, markdown)
         return markdown
 
-    def fix_relative_paths(self, markdown: str) -> str:
-        markdown = re.sub(MARKDOWN_FILE_RE, self._fix_relative_path, markdown)
-        return markdown
+    def _normalize_relative_link(self, match: re.Match) -> str:
+        md_link_obj = links.RelativeLinkMatch(**match.groupdict())
+        md_link_obj.relative_path_finder = links.RelativePathFinder(
+            current_file_path=Path(cast(str, self._current_file_path)),
+            docs_dir=Path(self._mkdocs_config.docs_dir),
+            relative_path=Path(cast(str, self._blog_config.blog_dir)),
+        )
+        return str(md_link_obj)
 
-    def _fix_blog_sub_paths(self, match: re.Match) -> str:
-        # TODO: remove this method when rewriting blog engine
-        link = self._get_file_path(file_path=match.group(2))
-        anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
-        link = f"[{match.group(1)}](../..{link}{anchor_link})"
-        return link
-
-    def _fix_blog_main_paths(self, match: re.Match) -> str:
-        # TODO: remove this method when rewriting blog engine
-        link = self._get_file_path(file_path=match.group(2))
-        anchor_link = f"#{slugify(text=match.group(3))}" if match.group(3) is not None else ""
-        link = f"[{match.group(1)}]({link[1:]}{anchor_link})"
-        return link
-
-    def fix_blog_paths(self, markdown: str, source_file: Path) -> str:
-        # TODO: remove this method when rewriting blog engine
-        if str(source_file).startswith(f"{self._blog_config.temp_dir}/{self._blog_config.slug}"):
-            markdown = re.sub(MARKDOWN_FILE_RE, self._fix_blog_sub_paths, markdown)
-        elif str(source_file).startswith(self._blog_config.temp_dir):
-            markdown = re.sub(MARKDOWN_FILE_RE, self._fix_blog_main_paths, markdown)
+    def normalize_relative_links(self, markdown: str, current_file_path: str) -> str:
+        self._current_file_path = current_file_path
+        markdown = re.sub(links.RELATIVE_LINK_RE, self._normalize_relative_link, markdown)
         return markdown

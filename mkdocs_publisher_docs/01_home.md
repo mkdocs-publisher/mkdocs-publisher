@@ -1,9 +1,9 @@
 ---
 title: <i class='fa-solid fa-house'></i>
 slug: .
-status: published
+publish: published
 date: 2023-03-12 12:27:00
-update: 2023-08-10 19:56:27
+update: 2023-10-03 12:35:23
 description: Installation
 categories:
   - start

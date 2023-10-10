@@ -1,9 +1,10 @@
 ---
 title: Development
+icon: material/keyboard
 slug: development
-status: published
+publish: published
 date: 2023-03-21 11:27:00
-update: 2023-08-01 12:00:42
+update: 2023-10-03 15:11:14
 description: Development of this plugin how to
 categories:
   - general

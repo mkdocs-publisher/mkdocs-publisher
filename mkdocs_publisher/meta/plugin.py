@@ -1,3 +1,25 @@
+# MIT License
+#
+# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -21,7 +43,7 @@ from mkdocs.utils import meta as meta_parser
 from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
-from mkdocs_publisher.meta.config import _MetaStatusConfig
+from mkdocs_publisher.meta.config import _MetaPublishConfig
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.meta.plugin")
@@ -67,32 +89,32 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                         markdown, meta = meta_parser.get_data(md_file.read())
                         title = meta.get(self.config.title.key_name, file.stem)
 
-                        # Read document status
-                        status = meta.get(self.config.status.key_name)
-                        if status is None:
+                        # Read document publication status
+                        publish = meta.get(self.config.publish.key_name)
+                        if publish is None:
                             log_message = (
-                                f'Missing "{self.config.status.key_name}" value in '
+                                f'Missing "{self.config.publish.key_name}" value in '
                                 f'file "{file.relative_to(relative_to)}". Setting to '
-                                f'default value: "{self.config.status.file_default}".'
+                                f'default value: "{self.config.publish.file_default}".'
                             )
-                            if self.config.status.file_warn_on_missing:
+                            if self.config.publish.file_warn_on_missing:
                                 log.warning(log_message)
                             else:
                                 log.debug(log_message)
-                            status = self.config.status.file_default
+                            publish = self.config.publish.file_default
 
                         # TODO: make it configurable
-                        if status == "draft" and self._on_serve:
-                            status = "published"
+                        if publish in ["draft", "false", False] and self._on_serve:
+                            publish = "published"
 
-                        # Add file to variables used in nav cleanup based on status
-                        if status == "draft":
+                        # Add file to variables used in nav cleanup based on publication status
+                        if publish in ["draft", "false", False]:
                             self._draft_files.append(str(file.relative_to(relative_to)))
-                        elif status == "hidden":
+                        elif publish == "hidden":
                             self._hidden_files.append(str(file.relative_to(relative_to)))
 
                         # Add not draft file to navigation (hidden will be removed in nav cleanup)
-                        if status != "draft":
+                        if publish not in ["draft", "false", False]:
                             nav.append({title: str(file.relative_to(relative_to))})
             elif (
                 file.is_dir()
@@ -146,35 +168,36 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                 if title is not None:
                     self._dirs_titles[meta_file.parent] = title
 
-                # Read directories status
-                status = meta.get(str(self.config.status.key_name))
-                if status is None:
-                    if self.config.status.dir_warn_on_missing:
+                # Read directories publication status
+                publish = meta.get(str(self.config.publish.key_name))
+                if publish is None:
+                    if self.config.publish.dir_warn_on_missing:
                         log.warning(
-                            f'Missing "{self.config.status.key_name}" value in '
+                            f'Missing "{self.config.publish.key_name}" value in '
                             f'file "{meta_file.relative_to(config.docs_dir)}". Setting to '
-                            f'default value: "{self.config.status.dir_default}".'
+                            f'default value: "{self.config.publish.dir_default}".'
                         )
-                    status = self.config.status.dir_default
+                    publish = self.config.publish.dir_default
                 dir_path = str(meta_file.parent.relative_to(config.docs_dir))
 
-                # TODO: make it configurable
-                if status == "draft" and self._on_serve:
-                    status = "published"
+                if publish in ["draft", "false", False] and self._on_serve:
+                    publish = "published"
 
-                if status == "draft":
+                if publish in ["draft", "false", False]:
                     self._draft_dirs.append(dir_path)
-                elif status == "hidden":
+                elif publish == "hidden":
                     self._hidden_dirs.append(dir_path)
-                elif status not in _MetaStatusConfig.dir_default.choices:  # type: ignore
+                elif publish not in _MetaPublishConfig.dir_default.choices:  # type: ignore
                     log.warning(
-                        f'Wrong key "{self.config.status.key_name}" value '
+                        f'Wrong key "{self.config.publish.key_name}" value '
                         f'in file "{meta_file.relative_to(config.docs_dir)}" (only '
-                        f"{_MetaStatusConfig.dir_default.choices} are possible)"  # type: ignore
+                        f"{_MetaPublishConfig.dir_default.choices} are possible)"  # type: ignore
                     )
 
                 log.debug(
-                    f"Title: {title}, status: {status}, slug: {slug} " f'(directory: "{dir_path}")'
+                    f"Title: {title}, publish: {publish}, "
+                    f"slug: {slug} "
+                    f'(directory: "{dir_path}")'
                 )
 
         # Add blog dir to one that will be skipped (blog has its own file resolution order)
@@ -210,7 +233,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                 and Path(config.docs_dir) / obsidian_config.templates_dir not in self._draft_dirs
             ):
                 self._draft_dirs.append(obsidian_config.templates_dir)
-        self._draft_dirs = [Path(config.docs_dir) / f for f in self._draft_dirs]
+        self._draft_dirs = [Path(config.docs_dir) / d for d in self._draft_dirs]
         self._hidden_dirs = [Path(config.docs_dir) / f for f in self._hidden_dirs]
         for draft_dir in self._draft_dirs:
             if not draft_dir.exists():
@@ -228,8 +251,12 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             f"Hidden directories: "
             f"{[str(d.relative_to(config.docs_dir)) for d in self._hidden_dirs]}"
         )
-        log.info(f"Draft files: {self._draft_files}")
-        log.info(f"Hidden files: {self._hidden_files}")
+        log.info(
+            f"Draft files: {[str(f.relative_to(config.docs_dir)) for f in self._draft_files]}"
+        )
+        log.info(
+            f"Hidden files: {[str(f.relative_to(config.docs_dir)) for f in self._hidden_files]}"
+        )
 
         return config
 
@@ -337,6 +364,6 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             pass
 
         if (
-            page.file.src_uri in self._hidden_files and not self.config.status.search_in_hidden
-        ) or (page.file.src_uri in self._draft_files and not self.config.status.search_in_draft):
+            page.file.src_uri in self._hidden_files and not self.config.publish.search_in_hidden
+        ) or (page.file.src_uri in self._draft_files and not self.config.publish.search_in_draft):
             page.meta["search"] = {"exclude": True}

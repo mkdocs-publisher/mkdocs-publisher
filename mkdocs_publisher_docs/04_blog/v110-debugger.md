@@ -1,15 +1,15 @@
 ---
 title: v1.1.0 - 2023-09-01
+icon: simple/obsidian
 slug: v110
-status: published
+publish: published
 date: 2023-09-01 11:50:56
-update: 2023-09-01 14:38:45
+update: 2023-10-10 13:20:32
 tags:
   - v1.x
 description: Publisher for MkDocs v1.1.0
 categories:
   - release
-icon: simple/obsidian
 ---
 
 Here I am with a new version of Publisher for MkDocs plugins. I have promised to make smaller releases, but my brain is refusing me to work on a small scale. It's really hard to achieve that, especially when I started to have some feedback from you, users of this tool. Because of that feedback and some problems you encountered, I decided to focus in this release on 2 main topics: some bug fixing and introducing a new plugin called [pub-debugger](../02_setup/99_development/01_setting-up-debugger.md). This plugin allows for an insight into all messages produced by plugins while building (or serving) a web page. Also, it's able to produce a ZIP file, with some basic information that could help me, whenever you will need to report an [issue](https://github.com/mkusz/mkdocs-publisher/issues).
@@ -43,55 +43,49 @@ I don't promise that all of the above will be ready in the next release, but som
 
 ## Changelog
 
-### General
+### :material-list-box: General
 
-- :material-sync-circle: rename of directory with documentation files
-- :material-sync-circle: Python libraries update
-- :material-sync-circle: project naming unification
-- :material-sync-circle: pre-commit JSON check and obsidian file exclusion
-- :material-sync-circle: some links updates in documentation
-- :material-sync-circle: code type hinting updates
-- :material-sync-circle: logger names unification - [it's related to pub-debugger plugin](../02_setup/99_development/01_setting-up-debugger.md#python-logging-for-mkdocs)
-- :material-sync-circle: code refactor and cleanup
-- :material-minus-circle: drop `python-frontmatter` from Python libraries
+- ♻️ rename of directory with documentation files
+- ♻️ Python libraries update
+- ♻️ project naming unification
+- ♻️ pre-commit JSON check and obsidian file exclusion
+- ♻️ some links updates in documentation
+- ♻️ code type hinting updates
+- ♻️ logger names unification - [it's related to pub-debugger plugin](../02_setup/99_development/01_setting-up-debugger.md#python-logging-for-mkdocs)
+- ♻️ code refactor and cleanup
+- 🚫 drop `python-frontmatter` from Python libraries
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
-- :material-check-circle: minor fix for internal linking (still not full solution)
-- :material-sync-circle: fix for deprecated warning regarding `importlib.resources`
+- ✅ minor fix for internal linking (still not full solution)
+- ♻️ fix for deprecated warning regarding `importlib.resources`
 
-### Minifier
+### :material-run-fast: Minifier
 
-- :material-sync-circle: small code reformat related to shared library changes
-- :material-sync-circle: files are not minified when using `mkdocs serve` (this is default behavior, but it can be changed)
+- ♻️ small code reformat related to shared library changes
+- ♻️ files are not minified when using `mkdocs serve` (this is default behavior, but it can be changed)
 
-### Meta
+### :material-file-tree: Meta
 
-- :material-plus-circle: possibility to declare whole directory as hidden
-- :material-plus-circle: more logging messages
-- :material-plus-circle: better support for `pub-obsidian` plugin (template and obsidian directory are now always drafts)
-- :material-check-circle: fix for error with reading `README.md` when no empty line at the end of file
-- :material-check-circle: fix for adding again the same directory to draft directories when using `mkdocs serve`
+- ❎ possibility to declare whole directory as hidden
+- ❎ more logging messages
+- ❎ better support for `pub-obsidian` plugin (template and obsidian directory are now always drafts)
+- ✅ fix for error with reading `README.md` when no empty line at the end of file
+- ✅ fix for adding again the same directory to draft directories when using `mkdocs serve`
 
-### Obsidian
+### :simple-obsidian: Obsidian
 
-- :material-check-circle: minor fix for internal linking (still not full fix)
-- :material-check-circle: fix for preserving new line in callouts
+- ✅ minor fix for internal linking (still not full fix)
+- ✅ fix for preserving new line in callouts
 
-### Debugger (new plugin)
+### :material-shield-bug: Debugger (new plugin)
 
-- :material-plus-circle: console log reformatting with configuration
-- :material-plus-circle: added logging into `*.log` file with configuration
-- :material-plus-circle: added old log file replacement
-- :material-plus-circle: ZIP file creation with log output and some additional files
+- ❎ console log reformatting with configuration
+- ❎ added logging into `*.log` file with configuration
+- ❎ added old log file replacement
+- ❎ ZIP file creation with log output and some additional files
 
 ---
 
-> [!info] Legend
-> :material-plus-circle: - added
->
-> :material-minus-circle: - removed
->
-> :material-check-circle: - fixed
->
-> :material-sync-circle: - changed
+> [!note]
+> ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed

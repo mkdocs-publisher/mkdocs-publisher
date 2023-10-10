@@ -1,3 +1,25 @@
+# MIT License
+#
+# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import logging
 from pathlib import Path
 from typing import Callable
@@ -22,7 +44,7 @@ from mkdocs_publisher._shared import resources
 
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
-from mkdocs_publisher.obsidian.backlinks import Backlink
+from mkdocs_publisher.obsidian.backlinks import BacklinkLinks
 from mkdocs_publisher.obsidian.backlinks import Link
 from mkdocs_publisher.obsidian.callouts import CalloutToAdmonition
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
@@ -34,13 +56,13 @@ log = logging.getLogger("mkdocs.plugins.publisher.obsidian.plugin")
 
 class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def __init__(self):
-        self._backlink: Optional[Backlink] = None
-        self._backlink_links: Dict[str, List[Link]] = {}
+        self._backlink_links: Optional[BacklinkLinks] = None
+        self._backlinks: Dict[str, List[Link]] = {}
         self._md_links: Optional[MarkdownLinks] = None
         self._vega_pages: List[Page] = list()
 
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
-        self._backlink = Backlink(mkdocs_config=config, backlinks=self._backlink_links)
+        self._backlink_links = BacklinkLinks(mkdocs_config=config, backlinks=self._backlinks)
         self._md_links = MarkdownLinks(mkdocs_config=config)
         return config
 
@@ -55,12 +77,11 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                     log.debug(f"Parsing backlinks in file '{file.src_path}'")
                     with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
                         markdown, meta = meta_parser.get_data(md_file.read())
-
-                        markdown = self._md_links.normalize(
-                            markdown=markdown, file_path=str(file.src_uri)
+                        markdown = self._md_links.normalize_links(
+                            markdown=markdown, current_file_path=str(file.src_uri)
                         )
 
-                        self._backlink.find_markdown_links(markdown=markdown, page=file.page)
+                        self._backlink_links.find_markdown_links(markdown=markdown, page=file.page)
         return nav
 
     @event_priority(100)  # Run before all other plugins
@@ -68,7 +89,9 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
     ) -> Optional[str]:
         # TODO: add verification if relative backlinks are enabled in .obsidian config
-        markdown = self._md_links.normalize(markdown=markdown, file_path=str(page.file.src_uri))
+        markdown = self._md_links.normalize_links(
+            markdown=markdown, current_file_path=str(page.file.src_uri)
+        )
 
         if self.config.callouts.enabled:
             # TODO: add verification if all things are enabled in mkdocs.yaml config file
@@ -85,8 +108,8 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 self._vega_pages.append(page)
 
         if self.config.backlinks.enabled:
-            markdown = self._backlink.convert_to_anchor_link(markdown=markdown)
-            page_backlinks = self._backlink_links.get(f"{page.file.src_uri}", None)
+            markdown = self._backlink_links.convert_to_anchor_link(markdown=markdown)
+            page_backlinks = self._backlinks.get(f"{page.file.src_uri}", None)
             if page_backlinks is not None:
                 log.debug(f"Adding backlinks to '{page.file.src_uri}'")
                 backlink_template = resources.read_template_file(

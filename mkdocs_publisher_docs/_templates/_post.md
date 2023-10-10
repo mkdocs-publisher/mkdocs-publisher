@@ -1,7 +1,7 @@
 ---
 title:
 slug:
-status: draft
+publish: draft
 date: <% tp.date.now("YYYY-MM-DD HH:mm:ss") %>
 update: <% tp.date.now("YYYY-MM-DD HH:mm:ss") %>
 tags:
@@ -13,25 +13,21 @@ categories: release
 
 ## Changelog
 
-### General
+### :material-list-box: General
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
-### Social
+### :material-file-tree: Meta
 
-### Meta
+### :simple-obsidian: Obsidian
 
-### Obsidian
+### :material-share: Social
 
-### Debugger
+### :material-run-fast: Minifier
+
+### :material-shield-bug: Debugger
 
 ---
 
-> [!info] Legend
-> :material-plus-circle: - added
->
-> :material-minus-circle: - removed
->
-> :material-check-circle: - fixed
->
-> :material-sync-circle: - changed
+> [!faq] Legend
+> ❎ - added ✅ - fixed ♻️ - changed 🚫 - removed

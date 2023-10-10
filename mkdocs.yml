@@ -13,7 +13,7 @@ docs_dir: mkdocs_publisher_docs
 site_dir: docs
 
 use_directory_urls: true
-#strict: true
+strict: true
 
 dev_addr: 127.0.0.1:8666
 
@@ -24,6 +24,11 @@ extra_css:
   - assets/stylesheets/publisher.css
 
 extra_javascript:
+  # MathJax
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  # Icons hack
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js
 
 watch:
@@ -32,7 +37,8 @@ watch:
 theme:
   name: material
   language: en
-  font: Lato
+  font:
+    code: Lato
   custom_dir: overrides
   logo: publisher_logo.png
   favicon: publisher_icon.png
@@ -57,12 +63,13 @@ theme:
 
   features:
     - navigation.tabs
-#    - navigation.tabs.sticky
+    # - navigation.tabs.sticky
     - navigation.footer  # Prev/Next page
     - navigation.tracking  # Anchor tracking
     - navigation.top  # Back to top
     - navigation.sections
     - navigation.instant
+    - navigation.instant.progress
     - search.suggest
     - search.highlight
     - search.share
@@ -74,51 +81,71 @@ theme:
     - toc.follow
 
 markdown_extensions:
+  - admonition
   - attr_list
   - def_list
+  - footnotes
   - md_in_html
-  - admonition
+  - tables
+  - toc:
+      permalink: true
+      permalink_title: Anchor link to this section for reference
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
   - pymdownx.critic
   - pymdownx.caret
-  - pymdownx.keys
-  - pymdownx.mark
-  - pymdownx.tilde
   - pymdownx.details
-  - pymdownx.tasklist
-  - pymdownx.highlight
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - pymdownx.tasklist:
-      custom_checkbox: true
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.highlight:
+      auto_title: false
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
   - pymdownx.tabbed:
       alternate_style: true
       slugify: !!python/object/apply:pymdownx.slugs.slugify
         kwds:
           case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.saneheaders
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 plugins:
   - pub-debugger:
       console_log:
         enabled: true
-        filter_logger_names:
-          - mkdocs.plugins
-          - mkdocs.structure.files
-      file_log:
-        filter_logger_names:
-          - mkdocs.plugins
-          - mkdocs.structure.files
+#        filter_logger_names:
+#          - mkdocs.plugins
+#          - mkdocs.structure.files
+#          - mkdocs.structure.pages
+#          - mkdocs.plugins.publisher.meta.plugin
+#          - mkdocs.plugins.publisher.blog.creators
+#          - mkdocs.plugins.publisher.blog.modifiers
+#          - mkdocs.plugins.publisher.blog.parsers
+#          - mkdocs.plugins.publisher.debug.plugin
+#          - mkdocs.plugins.publisher.minifier.base
+#          - mkdocs.plugins.publisher.minifier.plugin
+#          - mkdocs.commands.build
   - search
   - pub-blog:
       blog_dir: 04_blog
+  - pub-obsidian
   - pub-social
   - pub-meta
-  - pub-obsidian
   - pub-minifier

@@ -1,9 +1,10 @@
 ---
 title: Setting up minifier
+icon: material/run-fast
 slug: pub-minifier
-status: published
+publish: published
 date: 2023-02-02 22:00:00
-update: 2023-08-18 12:05:23
+update: 2023-10-03 12:15:11
 description: Setting up Publisher for MkDocs minifier plugin for page size optimization
 categories:
   - setup
@@ -210,7 +211,7 @@ Just like that, all optimization tools are enabled with optimal settings (accord
 	plugins:
 	  - pub-minifier:
 		  threads: 0
-		  cache_dir: .cache
+		  cache_dir: .pub_min_cache
 		  cache_file: .cache_files_list.yml
 	```
 
@@ -220,7 +221,7 @@ Just like that, all optimization tools are enabled with optimal settings (accord
 
 	```commandline hl_lines="2-3"
 		.
-		├─ .cache/
+		├─ .pub_min_cache/
 		│  └─ .cache_files_list.yml
 		├─ docs/
 		└─ mkdocs.yml

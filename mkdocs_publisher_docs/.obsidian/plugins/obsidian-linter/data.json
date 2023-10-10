@@ -35,9 +35,9 @@
     },
     "yaml-key-sort": {
       "enabled": true,
-      "yaml-key-priority-sort-order": "title\nslug\nstatus\ndate\nupdate\ntags\ncategory\ndescription\npreviewimage\ntemplate",
+      "yaml-key-priority-sort-order": "title\nicon\nslug\npublish\ndate\nupdate\ntags\ncategory\ndescription\ntemplate\nimage",
       "priority-keys-at-start-of-yaml": true,
-      "yaml-sort-order-for-other-keys": "None"
+      "yaml-sort-order-for-other-keys": "Ascending Alphabetical"
     },
     "yaml-timestamp": {
       "enabled": true,
@@ -244,7 +244,7 @@
     "_templates"
   ],
   "linterLocale": "system-default",
-  "logLevel": 4,
+  "logLevel": "ERROR",
   "lintCommands": [],
   "customRegexes": [],
   "commonStyles": {

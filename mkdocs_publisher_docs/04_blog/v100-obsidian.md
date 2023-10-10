@@ -1,9 +1,9 @@
 ---
 title: v1.0.0 - 2023-06-13
 slug: v100
-status: published
+publish: published
 date: 2023-05-19 15:40:36
-update: 2023-08-01 11:51:14
+update: 2023-10-10 13:20:38
 tags:
   - v1.x
 description: Publisher for MkDocs v0.6.0
@@ -47,82 +47,76 @@ Last thing is a new project logo:
 
 ## Changelog
 
-### General
+### :material-list-box: General
 
-- :material-plus-circle: internal class for HTML modifications
-- :material-sync-circle: project license to MIT
-- :material-sync-circle: project `README.md` cleanup
-- :material-sync-circle: internal method for importing other plugin config (needed for cross functionalities)
+- ❎ internal class for HTML modifications
+- ♻️ project license to MIT
+- ♻️ project `README.md` cleanup
+- ♻️ internal method for importing other plugin config (needed for cross functionalities)
 
-### Auto-nav (plugin removed)
+### :material-navigation: Auto-nav (plugin removed)
 
 The whole functionality of this plugin has been moved to a new [Meta plugin](#meta-new-plugin).
 
-### Blog
+### :material-newspaper-variant-multiple: Blog
 
-- :material-plus-circle: exclude from search blog posts teaser/index, category, tag or archive pages
-- :material-plus-circle: exclude comments in blog posts teaser/index, category, tag or archive pages
-- :material-check-circle: internal links for blog posts teaser/index, category, tag or archive pages
-- :material-minus-circle: removed `edit_url` for blog teaser/index, category, tag or archive pages
-- :material-sync-circle: automatic detection of the blog as starting page (config value for this setting was removed)
-- :material-plus-circle: post publication state (provided by [Meta plugin](#meta-new-plugin))
+- ❎ exclude from search blog posts teaser/index, category, tag or archive pages
+- ❎ exclude comments in blog posts teaser/index, category, tag or archive pages
+- ✅ internal links for blog posts teaser/index, category, tag or archive pages
+- 🚫 removed `edit_url` for blog teaser/index, category, tag or archive pages
+- ♻️ automatic detection of the blog as starting page (config value for this setting was removed)
+- ❎ post publication state (provided by [Meta plugin](#meta-new-plugin))
 
-### Social
+### :material-share: Social
 
-- :material-sync-circle: code refactor of HTML modification elements and logging added
+- ♻️ code refactor of HTML modification elements and logging added
 
-### Meta (new plugin)
+### :material-file-tree: Meta (new plugin)
 
 This plugin is a Swiss army knife that helps a lot with various tasks related to publication, SEO, etc. Take a look at the below changelog to see what is offered by this plugin.
 
-- :material-plus-circle: build navigation based on file names order
-- :material-plus-circle: set multiple document parameters by using its metadata:
+- ❎ build navigation based on file names order
+- ❎ set multiple document parameters by using its metadata:
 	- `title` - document title
 	- `slug`- URL of the document
 	- `status` - document publication status (published, hidden, draft)
 	- `date` - document creation date
 	- `update` - document last update date (used for sitemap and SEO optimizations)
-- :material-plus-circle: directory metadata and additional settings can be set in a frontmatter of `*.md` file (default to `README.md`):
+- ❎ directory metadata and additional settings can be set in a frontmatter of `*.md` file (default to `README.md`):
 	 	- possibility to define `slug`(this affects only the directory where `README.md` is placed)
 	- possibility to define `skip_dir`(this affects only the directory and all subdirectories where the file is located)
 	- possibility to define `hidden_dir`(this affects only the directory and all subdirectories where the file is located)
-- :material-plus-circle: while serve page locally, all hidden and draft pages becomes published (this setting, helps with document preview while writing)
+- ❎ while serve page locally, all hidden and draft pages becomes published (this setting, helps with document preview while writing)
 
-### Obsidian (new plugin)
+### :simple-obsidian: Obsidian (new plugin)
 
 This plugin is a set of functionalities and should be split into various smaller plugins, but due to some cross functionalities, it has been integrated into the bigger one. Each sub plugin can be controlled separately, so if you don't need all the functionalities, you can just disable them or simply do not enable one that are disabled by default.
 
 #### General
 
-- :material-plus-circle: server watch can omit `.obsidian` directory that needs to be a part of the documentation directory that is automatically added into watch and causes server reload on (almost) any interaction with obsidian (changing settings etc.)
+- ❎ server watch can omit `.obsidian` directory that needs to be a part of the documentation directory that is automatically added into watch and causes server reload on (almost) any interaction with obsidian (changing settings etc.)
 
 #### Links
 
-- :material-plus-circle: support for wiki links format for images and internal links
-- :material-plus-circle: configurable image lazy loading option (SEO optimization)
-- :material-plus-circle: documents and images file path solver (it doesn't affect documentation, but it's required by MkDocs for proper links generation)
+- ❎ support for wiki links format for images and internal links
+- ❎ configurable image lazy loading option (SEO optimization)
+- ❎ documents and images file path solver (it doesn't affect documentation, but it's required by MkDocs for proper links generation)
 
 #### Callouts
 
-- :material-plus-circle: mapping of all Obsidian callouts into Markdown admonitions
+- ❎ mapping of all Obsidian callouts into Markdown admonitions
 
 #### Backlinks
 
-- :material-plus-circle: auto-generation of backlinks for all internal documents (visible as an custom admonition at the bottom of the page)
-- :material-plus-circle: backlinks are not generated for blog temporary files like post indexes, archive, tags and categories
-- :material-plus-circle: backlinks are grouped per page like in Obsidian (if more than one link is pointing from one page to another, all context links will be visible)
+- ❎ auto-generation of backlinks for all internal documents (visible as an custom admonition at the bottom of the page)
+- ❎ backlinks are not generated for blog temporary files like post indexes, archive, tags and categories
+- ❎ backlinks are grouped per page like in Obsidian (if more than one link is pointing from one page to another, all context links will be visible)
 
 #### Charts
 
-- :material-plus-circle: support for *vega* and *vega-lite* charts when added by [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)
+- ❎ support for *vega* and *vega-lite* charts when added by [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)
 
 ---
 
-> [!info] Legend
-> :material-plus-circle: - added
->
-> :material-minus-circle: - removed
->
-> :material-check-circle: - fixed
->
-> :material-sync-circle: - changed
+> [!note]
+> ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed

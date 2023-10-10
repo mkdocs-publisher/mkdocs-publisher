@@ -1,14 +1,51 @@
 repos:
-#  - repo: local
-#    hooks:
-#      - id: process-css
-#        name: .min.css and .min.css.map files generation
-#        description: Generate CSS min and map files.
-#        entry: postcss
-#        args: ['-m', '-u', 'cssnano', 'postcss-svgo',
-#               '--ext', '.min.css', '--dir', '.', '--base', '.']
-#        language: system
-#        files: (?<!\.min)\.css$
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+      - id: insert-license
+        name: insert project license into Python files
+        files: ^(mkdocs_publisher|tests)/
+        types: [file, text, python]
+        args:
+          - --license-filepath
+          - LICENSE
+          - --use-current-year
+          - --allow-past-years
+      - id: insert-license
+        name: insert project license into HTML files
+        files: ^mkdocs_publisher/
+        types: [file, text, html]
+        args:
+          - --license-filepath
+          - LICENSE
+          - --comment-style
+          - <!--|  ~|  -->
+          - --use-current-year
+          - --allow-past-years
+      - id: insert-license
+        name: insert project license into CSS files
+        files: ^mkdocs_publisher/
+        exclude: \.min.css$
+        types: [file, text, css]
+        args:
+          - --license-filepath
+          - LICENSE
+          - --comment-style
+          - /*| *| */
+          - --use-current-year
+          - --allow-past-years
+      - id: insert-license
+        name: insert project license into JS files
+        files: ^mkdocs_publisher/
+        exclude: \.min.js$
+        types: [file, text, javascript]
+        args:
+          - --license-filepath
+          - LICENSE
+          - --comment-style
+          - //
+          - --use-current-year
+          - --allow-past-years
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
@@ -23,9 +60,19 @@ repos:
       - id: check-toml
       - id: detect-private-key
       - id: no-commit-to-branch
+      - id: name-tests-test
+        files: ^tests/
+        exclude: \.md$
 
   - repo: local
     hooks:
+      - id: check-readme-md
+        name: check if README.md is updated
+        description: Copy README.md file from documentation
+        entry: bash -c "cmp --silent mkdocs_publisher_docs/README.md README.md || cp mkdocs_publisher_docs/README.md README.md"
+        language: system
+        pass_filenames: false
+
       - id: lint-yaml
         name: lint YAML files
         description: Format and check YAML files.
@@ -36,15 +83,7 @@ repos:
       - id: format
         name: format Python code
         description: Pre-format python code.
-        entry: poetry run black
-        language: system
-        types:
-          - python
-
-      - id: lint-python
-        name: lint Python
-        description: Lint python code.
-        entry: poetry run flake8
+        entry: poetry run black --quiet
         language: system
         types:
           - python
@@ -52,7 +91,15 @@ repos:
       - id: sort-imports
         name: sort Python imports
         description: Sort python imports.
-        entry: poetry run isort
+        entry: poetry run isort --quiet
+        language: system
+        types:
+          - python
+
+      - id: lint-python
+        name: lint Python
+        description: Lint python code.
+        entry: poetry run ruff check
         language: system
         types:
           - python
@@ -64,3 +111,10 @@ repos:
         language: system
         types:
           - python
+
+      - id: pytest-check
+        name: run unittests
+        entry: poetry run pytest
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -1,9 +1,10 @@
 ---
 title: Setting up Obsidian
+icon: simple/obsidian
 slug: pub-obsidian
-status: published
+publish: published
 date: 2023-04-20 12:07:21
-update: 2023-08-12 21:13:31
+update: 2023-10-03 12:19:03
 description: Setting up a Publisher for MkDocs obsidian plugin for integration with an Obsidian note taking tool
 categories:
   - setup

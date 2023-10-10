@@ -1,3 +1,25 @@
+# MIT License
+#
+# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import logging
 from collections import OrderedDict
 from pathlib import Path
@@ -17,12 +39,15 @@ from mkdocs.structure.pages import Page
 
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher._shared import resources
 from mkdocs_publisher.blog import creators
 from mkdocs_publisher.blog import modifiers
 from mkdocs_publisher.blog import parsers
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.blog.structures import BlogConfig
+from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
+from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog.plugin")
 
@@ -119,6 +144,21 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
             start_page=self._start_page, blog_config=self.blog_config, page=page
         )
         return context
+
+    @event_priority(-100)  # Run after all other plugins
+    def on_page_markdown(
+        self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
+    ) -> Optional[str]:
+
+        obsidian_plugin: Optional[ObsidianPluginConfig] = mkdocs_utils.get_plugin_config(
+            mkdocs_config=config, plugin_name="pub-obsidian"
+        )  # type: ignore
+        if obsidian_plugin is not None:
+            md_links = MarkdownLinks(mkdocs_config=config)
+            markdown = md_links.normalize_relative_links(
+                markdown=markdown, current_file_path=page.file.src_path
+            )
+        return markdown
 
     @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:

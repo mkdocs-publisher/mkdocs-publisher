@@ -1,6 +1,6 @@
 {
   "name": "mkdocs-publisher",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Publisher for MkDocs - set of plugins for content creators",
   "directories": {
     "doc": "docs"

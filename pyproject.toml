@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-publisher"
-version = "1.1.0"
+version = "1.1.1"
 description = "Publisher for MkDocs - set of plugins for content creators"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "BSD"
@@ -28,7 +28,10 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Environment :: Web Environment",
+    "Intended Audience :: Education",
     "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Other Audience",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
@@ -36,9 +39,15 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Documentation",
+    "Topic :: Text Editors :: Documentation",
     "Topic :: Text Processing",
+    "Topic :: Text Processing :: Markup",
+    "Topic :: Text Processing :: Markup :: Markdown",
+    "Topic :: Utilities",
 ]
 homepage = "https://github.com/mkusz/mkdocs-publisher"
 repository = "https://github.com/mkusz/mkdocs-publisher"
@@ -49,17 +58,22 @@ documentation = "https://mkusz.github.io/mkdocs-publisher"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-mkdocs = "^1.4.2"
-mkdocs-material = "9.1.21"
-pymdown-extensions = "^10"
-beautifulsoup4 = "^4.12.0"
+mkdocs = "^1.5.3"
+pymdown-extensions = "^10.3"
+beautifulsoup4 = "^4.12.2"
+mkdocs-material = "^9.4.4"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
 black = "^22.12.0"
-flake8 = "^6.0.0"
 yamllint = "^1.29.0"
 pyright = "1.1.323"
+ruff = "^0.0.292"
+
+[tool.poetry.group.test.dependencies]
+coverage = "^7.3.2"
+pytest = "^7.4.2"
+pytest-cov = "^4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -73,7 +87,6 @@ py_version=39
 profile = "black"
 line_length = 99
 force_single_line = true
-verbose = true
 src_paths = [
     "mkdocs_publisher",
     "tests",
@@ -95,6 +108,31 @@ reportMissingImports = false
 reportMissingTypeStubs = false
 reportOptionalMemberAccess = false
 typeCheckingMode = "basic"
+
+[tool.pytest.ini_options]
+addopts = "--tb=short --log-level=DEBUG --cov-report=html --cov=mkdocs_publisher"
+markers = [
+    "deprecated: Tests no longer used",
+    ]
+testpaths = [
+    "tests",
+]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 99
+
+[tool.ruff.mccabe]
+max-complexity = 10
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+include_namespace_packages = true
+skip_empty = true
+skip_covered = false
+
 
 [tool.poetry.plugins."mkdocs.plugins"]
 pub-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"

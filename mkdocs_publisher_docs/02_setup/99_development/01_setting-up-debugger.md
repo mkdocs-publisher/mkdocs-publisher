@@ -1,9 +1,10 @@
 ---
 title: Setting up debugger
+icon: material/shield-bug
 slug: pub-debugger
-status: published
+publish: published
 date: 2023-08-01 11:49:05
-update: 2023-09-01 12:42:25
+update: 2023-10-03 12:18:33
 description: Setting up a Publisher for MkDocs debugger plugin for development purposes
 categories:
   - plugin
@@ -99,14 +100,14 @@ By default, MkDocs produces a console log, that contains only basic information 
 ``` yaml hl_lines="3-10"
 plugins:
   - pub-debugger:
-	console_log:
-	  enabled: true
-	  log_level: INFO
-	  show_code_link: false
-	  show_logger_name: true
-	  show_entry_time: true
-	  entry_time_format: "%H:%M:%S.%f"
-	  filter_logger_names: []
+	  console_log:
+	    enabled: true
+	    log_level: INFO
+	    show_code_link: false
+	    show_logger_name: true
+	    show_entry_time: true
+	    entry_time_format: "%H:%M:%S.%f"
+	    filter_logger_names: []
 ```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
@@ -139,12 +140,12 @@ Above you can find all possible settings with their default values. You don't ha
 ``` yaml hl_lines="3-8"
 plugins:
   - pub-debugger:
-	file_log:
-	  enabled: true
-	  log_level: DEBUG
-	  log_format: "[%(created).14s][%(levelname)-5.5s][%(project_path)s:%(lineno)d] %(message)s"
-	  remove_old_files: true
-	  filter_logger_names: []
+	  file_log:
+	    enabled: true
+	    log_level: DEBUG
+	    log_format: "[%(created).14s][%(levelname)-5.5s][%(project_path)s:%(lineno)d] %(message)s"
+	    remove_old_files: true
+	    filter_logger_names: []
 ```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
@@ -171,10 +172,10 @@ Above you can find all possible settings with their default values. You don't ha
 ``` yaml hl_lines="3-6"
 plugins:
   - pub-debugger:
-	zip_log:
-	  enabled: true
-	  remove_old_files: true
-	  add_pip_freeze: true
+	  zip_log:
+	    enabled: true
+	    remove_old_files: true
+	    add_pip_freeze: true
 ```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.

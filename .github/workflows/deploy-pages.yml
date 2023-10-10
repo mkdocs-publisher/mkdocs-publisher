@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Pages
 on:
   workflow_dispatch:
   push:
@@ -7,15 +7,18 @@ on:
   schedule:
     - cron: '0 6 */2 * *'
 jobs:
-  Deploy:
+  deploy-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Install poetry
         run: pipx install --python python poetry==1.5.1
       - name: Checkout git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          sparse-checkout: |
+            mkdocs_publisher_docs
+            overrides
       - name: Install Python 3.10
         uses: actions/setup-python@v4
         with:
@@ -45,9 +48,9 @@ jobs:
       - name: Restore MkDocs cached files
         uses: actions/cache@v3
         with:
-          path: .cache
-          key: mkdocs-cache-${{ github.run_id }}
-          restore-keys: mkdocs-cache-
+          path: .pub_min_cache
+          key: mkdocs-publisher-cache-${{ github.run_id }}
+          restore-keys: mkdocs-publisher-cache-
       - name: Build mkdocs-publisher documentation
         run: poetry run mkdocs build -c
       - name: Commit static site to repository with GitHub Pages enabled
@@ -55,14 +58,14 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.DEPLOY_PAGES_TOKEN }}
         with:
-          user-name: mkusz
-          user-email: 9740637+mkusz@users.noreply.github.com
+          user-name: ${{ secrets.USER_NAME }}
+          user-email: ${{ secrets.USER_EMAIL }}
           source-directory: docs
-          destination-github-username: mkusz
+          destination-github-username: ${{ secrets.USER_NAME }}
           destination-repository-name: mkdocs-publisher
           target-branch: docs
       - name: Save MkDocs files cache
         uses: actions/cache/save@v3
         with:
-          path: .cache
-          key: mkdocs-cache-${{ github.run_id }}
+          path: .pub_min_cache
+          key: mkdocs-publisher-cache-${{ github.run_id }}
