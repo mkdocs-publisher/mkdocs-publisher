@@ -32,15 +32,16 @@ body:
       description: What plugin feature request is related to?
       multiple: true
       options:
-        - don't know
-        - pub-blog
-        - pub-debugger
-        - pub-meta
-        - pub-minifier
-        - pub-obsidian
-        - pub-social
-        - a new plugin
-        - external plugin integration
+        - Don't know
+        - Pub-blog
+        - Pub-debugger
+        - Pub-meta
+        - Pub-minifier
+        - Pub-obsidian
+        - Pub-social
+        - A new plugin
+        - External plugin integration
+      default: 0
   - type: markdown
     attributes:
       value: |
