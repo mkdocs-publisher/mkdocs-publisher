@@ -1,7 +1,7 @@
 name: Future request
-description: File a bug report.
-title: "[Future]: "
-labels: ["new", "future"]
+description: File a future request.
+title: "[Feature] "
+labels: ["new", "feature"]
 assignees:
   - mkusz
 body:
@@ -23,23 +23,27 @@ body:
       value: |
         **Future description**
 
-      render: markdown
     validations:
       required: true
-  - type: checkboxes
+  - type: dropdown
     id: plugin
     attributes:
       label: Project plugin
       description: What plugin future request is related to?
+      multiple: true
       options:
-        - label: pub-blog
-        - label: pub-debugger
-        - label: pub-meta
-        - label: pub-minifier
-        - label: pub-obsidian
-        - label: pub-social
-        - label: a new plugin
-        - label: external plugin integration
+        - don't know
+        - pub-blog
+        - pub-debugger
+        - pub-meta
+        - pub-minifier
+        - pub-obsidian
+        - pub-social
+        - a new plugin
+        - external plugin integration
+      default: 0
+      validations:
+        required: true
   - type: markdown
     attributes:
       value: |

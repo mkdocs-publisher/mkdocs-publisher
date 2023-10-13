@@ -1,6 +1,6 @@
 name: Bug report
 description: File a bug report.
-title: "[Bug]: "
+title: "[Bug] "
 labels: ["new", "bug"]
 assignees:
   - mkusz
@@ -29,7 +29,6 @@ body:
         ---
         **Reproduction steps**
 
-      render: markdown
     validations:
       required: true
   - type: markdown
@@ -37,27 +36,36 @@ body:
       value: |
         ---
         Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
-  - type: checkboxes
+  - type: dropdown
     id: system
     attributes:
       label: Operating system
       description: What operating system do you use?
+      multiple: true
       options:
-        - label: All
-        - label: Windows
-        - label: Linux
-        - label: macOS
-  - type: checkboxes
+        - All
+        - Windows
+        - Linux
+        - macOS
+      default: 0
+      validations:
+        required: false
+  - type: dropdown
     id: python-version
     attributes:
       label: Python version
       description: What Python version do you use?
+      multiple: true
       options:
-        - label: Other
-        - label: "3.9"
-        - label: "3.10"
-        - label: "3.11"
-        - label: "3.12"
+        - All
+        - "3.9"
+        - "3.10"
+        - "3.11"
+        - "3.12"
+        - Other
+      default: 0
+      validations:
+        required: false
   - type: input
     id: repo-url
     attributes:

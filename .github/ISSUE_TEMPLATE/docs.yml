@@ -1,6 +1,6 @@
 name: Documentation report
-description: File a bug report.
-title: "[Docs]: "
+description: File a documentation related problems report
+title: "[Docs] "
 labels: ["new", "docs"]
 assignees:
   - mkusz
@@ -32,7 +32,6 @@ body:
         ---
         **Expected documentation description**
 
-      render: markdown
     validations:
       required: true
   - type: input
