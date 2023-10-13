@@ -34,8 +34,17 @@ log = logging.getLogger("mkdocs.plugins.publisher.minifier.minifiers")
 class PngMinifier(BaseMinifier):
     extensions = [".png"]
 
+    def __call__(self):
+        self._disable_cache = (
+            True if self._disable_cache else self._plugin_config.png.disable_cache
+        )
+        self._excluded_pattern_list.extend(self._plugin_config.png.exclude_pattern_list)
+        super().__call__()
+
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         minify_options = self._plugin_config.png
+        log.warning(minify_options.exclude_pattern_list)
+        self._excluded_pattern_list.extend(minify_options.exclude_pattern_list)
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -85,6 +94,13 @@ class PngMinifier(BaseMinifier):
 
 class JpegMinifier(BaseMinifier):
     extensions = [".jpg", ".jpeg"]
+
+    def __call__(self):
+        self._disable_cache = (
+            True if self._disable_cache else self._plugin_config.jpeg.disable_cache
+        )
+        self._excluded_pattern_list.extend(self._plugin_config.jpeg.exclude_pattern_list)
+        super().__call__()
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         minify_options = self._plugin_config.jpeg
@@ -145,6 +161,13 @@ class JpegMinifier(BaseMinifier):
 class SvgMinifier(BaseMinifier):
     extensions = [".svg"]
 
+    def __call__(self):
+        self._disable_cache = (
+            True if self._disable_cache else self._plugin_config.svg.disable_cache
+        )
+        self._excluded_pattern_list.extend(self._plugin_config.svg.exclude_pattern_list)
+        super().__call__()
+
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         minify_options = self._plugin_config.svg
         try:
@@ -174,6 +197,13 @@ class SvgMinifier(BaseMinifier):
 
 class HtmlMinifier(BaseMinifier):
     extensions = [".htm", ".html"]
+
+    def __call__(self):
+        self._disable_cache = (
+            True if self._disable_cache else self._plugin_config.html.disable_cache
+        )
+        self._excluded_pattern_list.extend(self._plugin_config.html.exclude_pattern_list)
+        super().__call__()
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         minify_options = self._plugin_config.html
@@ -219,6 +249,13 @@ class HtmlMinifier(BaseMinifier):
 class CssMinifier(BaseMinifier):
     extensions = [".css"]
 
+    def __call__(self):
+        self._disable_cache = (
+            True if self._disable_cache else self._plugin_config.css.disable_cache
+        )
+        self._excluded_pattern_list.extend(self._plugin_config.css.exclude_pattern_list)
+        super().__call__()
+
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         minify_options = self._plugin_config.css
         try:
@@ -251,6 +288,11 @@ class CssMinifier(BaseMinifier):
 
 class JsMinifier(BaseMinifier):
     extensions = [".js"]
+
+    def __call__(self):
+        self._disable_cache = True if self._disable_cache else self._plugin_config.js.disable_cache
+        self._excluded_pattern_list.extend(self._plugin_config.js.exclude_pattern_list)
+        super().__call__()
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         minify_options = self._plugin_config.js

@@ -33,6 +33,11 @@ class _ObsidianCalloutsConfig(Config):
     indentation = option.Choice(["tabs", "spaces"], default="spaces")
 
 
+class _ObsidianCommentsConfig(Config):
+    enabled = option.Type(bool, default=True)
+    delimiter = option.Type(str, default="%%")
+
+
 class _ObsidianVegaConfig(Config):
     enabled = option.Type(bool, default=True)
     vega_schema = option.Type(str, default="https://vega.github.io/schema/vega/v5.json")
@@ -50,5 +55,6 @@ class ObsidianPluginConfig(Config):
 
     backlinks: _ObsidianBacklinksConfig = option.SubConfig(_ObsidianBacklinksConfig)  # type: ignore
     callouts: _ObsidianCalloutsConfig = option.SubConfig(_ObsidianCalloutsConfig)  # type: ignore
+    comments: _ObsidianCommentsConfig = option.SubConfig(_ObsidianCommentsConfig)  # type: ignore
     vega: _ObsidianVegaConfig = option.SubConfig(_ObsidianVegaConfig)  # type: ignore
     links: _ObsidianLinksConfig = option.SubConfig(_ObsidianLinksConfig)  # type: ignore

@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 import logging
+import platform
 from dataclasses import asdict
 from dataclasses import dataclass
 from dataclasses import field
@@ -78,27 +79,36 @@ class BaseMinifier:
         self._plugin_config: MinifierConfig = plugin_config
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._cached_files: Dict[str, CachedFile] = cached_files
+        self._disable_cache: bool = self._plugin_config.disable_cache
+        self._excluded_pattern_list: List = self._plugin_config.exclude_pattern_list[:]
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         raise NotImplementedError
 
     def __call__(self):
-        log.info(f"Minifying {self.extensions} files")
+        log.info(
+            f"{self.extensions} Minifying files ({'no' if self._disable_cache else 'with'} cache)"
+        )
+        log.info(f"{self.extensions} Excluded files patterns: {self._excluded_pattern_list}")
+
+        if platform.system() != "Windows":
+            upper_extensions = [ext.upper() for ext in self.extensions]
+            self.extensions.extend(upper_extensions)
 
         semaphore = Semaphore(self._plugin_config.threads)
         threads = []
 
-        # TODO: add possibility to exclude some files
         for file in file_utils.list_files(
             directory=Path(self._mkdocs_config.site_dir),
             extensions=self.extensions,
-            relative_to=Path(self._mkdocs_config.site_dir),
+            excluded_pattern_list=self._excluded_pattern_list,
         ):
             semaphore.acquire()
             thread = Thread(
                 target=self._minify_with_cache,
                 kwargs={
                     "file": file,
+                    "disable_cache": self._disable_cache,
                     "semaphore": semaphore,
                 },
             )
@@ -140,9 +150,9 @@ class BaseMinifier:
         except FileNotFoundError as e:
             log.warning(e)
 
-    def _minify_with_cache(self, file: Path, semaphore: Semaphore):
+    def _minify_with_cache(self, file: Path, disable_cache: bool, semaphore: Semaphore):
         recreate_file = False
-        if str(file) in self._cached_files:
+        if not disable_cache and str(file) in self._cached_files:
             log.debug(f"{file} is in cache")
             file_hash = file_utils.calculate_file_hash(file=(self._mkdocs_config.site_dir / file))
             cached_file = self._cached_files[str(file)]
@@ -160,7 +170,10 @@ class BaseMinifier:
                 )
                 recreate_file = True
         else:
-            log.debug(f"{file} is not in cache")
+            if disable_cache:
+                log.debug(f"Cache is disabled for: {file}")
+            else:
+                log.debug(f"No cache for: {file}")
             cached_file = CachedFile()
             cached_file.based_on(file=file, directory=Path(self._mkdocs_config.site_dir))
             recreate_file = True

@@ -2,9 +2,9 @@
 title: Versioning
 icon: octicons/number-24
 slug: versioning
-publish: true
+publish: published
 date: 2023-03-30 13:12:26
-update: 2023-10-03 15:09:11
+update: 2023-10-12 23:53:46
 description: Approach to versioning
 categories:
   - general
@@ -15,12 +15,6 @@ categories:
 
 The current approach to versioning of _“Publisher for MkDocs”_ is based on [semantic versioning](https://semver.org) and looks like this `v1.2.3`, or in general, it's: `vMAJOR,MINOR,PATCH` where:
 
-- `MAJOR` number is increased when a new braking API change is introduced,
-- `MINOR` number is increased when new functionality is introduced without API changes,
-- `PATCH` number is increased when there is no new functionality and usually is used for bug fixes.
-
-Because this package is based on MkDocs API, the only reason to change `MAJOR` number would be to break compatibility with an older version of MkDocs or when this package will go out of beta stage.
-
-Since this package contains various sets of plugins, `MINOR` number will be changed when a new plugin is introduced or an existing one changes significantly (new config options, new functionality added, etc.).
-
-`PATCH` number will be used mostly for bug fixes and smaller internal changes like documentation modifications, code refactor or unit testing changes.
+- `MAJOR` number is increased when a new braking changes are introduced, for example some settings are removed or MkDocs is updated, and this project has to adjust to those changes.
+- `MINOR` number is increased when new functionality is introduced without breaking changes or a new plugin is added.
+- `PATCH` number is increased when there is no new functionality and usually is used for bug fixes. It can also be used for

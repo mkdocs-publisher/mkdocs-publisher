@@ -4,7 +4,7 @@ icon: material/run-fast
 slug: pub-minifier
 publish: true
 date: 2023-02-02 22:00:00
-update: 2023-10-03 12:15:11
+update: 2023-10-13 11:25:31
 description: Setting up Publisher for MkDocs minifier plugin for page size optimization
 categories:
   - setup

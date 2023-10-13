@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 6 */2 * *'
+    - cron: '0 */8 * * *'
 jobs:
   deploy-pages:
     runs-on: ubuntu-latest
@@ -50,6 +50,15 @@ jobs:
           restore-keys: mkdocs-publisher-cache-
       - name: Build mkdocs-publisher documentation
         run: poetry run mkdocs build -c
+      - name: Store documentation build and debug logs as artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs-build-logs
+          if-no-files-found: ignore
+          retention-days: 1
+          path: |
+            *_mkdocs_build.log
+            *_mkdocs_debug.zip
       - name: Commit static site to repository with GitHub Pages enabled
         uses: cpina/github-action-push-to-another-repository@main
         env:

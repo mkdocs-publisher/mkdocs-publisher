@@ -46,6 +46,21 @@ More information about installation methods and plugin setup can be found on thi
 > [!note]
 > As a base for any development, [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) theme was used. If you are willing to use any other theme, you may (or may not) face some issues. If this happens, please submit an [issue](https://github.com/mkusz/mkdocs-publisher/issues).
 
+After installation, you have to enable plugins and Material for MkDocs theme in `mkdocs.yml` file:
+
+```yaml
+theme: material
+
+plugins:
+  - search  # Material for MkDocs search plugin
+  - pub-debugger
+  - pub-obsidian  # blog is a directory with all blog posts
+  - pub-obsidian
+  - pub-social
+  - pub-meta
+  - pub-minifier
+```
+
 ## Planned features
 
 A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/development/other/backlog/). I'm planning to move it to the project [GitHub issues](https://github.com/mkusz/mkdocs-publisher/issues) with proper badges and longer descriptions, but it's time-consuming and at this stage I'd rather spend it to develop a project.

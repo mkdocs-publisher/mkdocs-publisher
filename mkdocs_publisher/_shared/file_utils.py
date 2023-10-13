@@ -25,7 +25,6 @@ import subprocess
 from hashlib import md5
 from pathlib import Path
 from typing import List
-from typing import Optional
 from uuid import uuid4
 
 log = logging.getLogger("mkdocs.plugins.publisher._shared.file_utils")
@@ -55,16 +54,19 @@ def calculate_file_hash(file: Path, block_size: int = 8192) -> str:
 
 
 def list_files(
-    directory: Path, extensions: Optional[List[str]] = None, relative_to: Optional[Path] = None
+    directory: Path, extensions: List[str] = [], excluded_pattern_list: List[str] = []
 ) -> List[Path]:
-    files_list: List[Path] = []
-    for file in directory.iterdir():
-        if file.is_dir():
-            files_list.extend(
-                list_files(directory=file, extensions=extensions, relative_to=relative_to)
-            )
-        elif str(file.suffix).lower() in extensions or extensions is None:  # type: ignore
-            files_list.append(file if relative_to is None else file.relative_to(relative_to))
+    temp_files_list: List[Path] = []
+    for ext in extensions:
+        for file in directory.glob(f"**/*{ext}"):
+            temp_files_list.append(file.relative_to(directory))
+
+    excluded_files_list: List[Path] = []
+    for excluded_pattern in excluded_pattern_list:
+        for file in directory.rglob(excluded_pattern):
+            excluded_files_list.append(file.relative_to(directory))
+
+    files_list: List[Path] = [file for file in temp_files_list if file not in excluded_files_list]
     return files_list
 
 

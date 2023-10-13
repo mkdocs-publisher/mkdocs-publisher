@@ -3,7 +3,7 @@ title: v1.1.1 - 2023.10.10
 slug: v111
 publish: true
 date: 2023-10-09 09:28:53
-update: 2023-10-10 12:15:33
+update: 2023-10-11 15:40:55
 tags:
   - v1.x
 description:
@@ -19,7 +19,7 @@ The biggest problem that I had, was about numbering this release. Because I want
 > [Pub-meta](../02_setup/02_general/01_setting-up-meta.md#Document%20publication%20status) document or directory status metadata key has been renamed from `status` to `publish`. This change solves 2 problems:
 > 1. Conflict of the key name with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/reference/?h=status#setting-the-page-status).
 > 2. Default name of the key is now the same as for [Obsidian publish](https://help.obsidian.md/Obsidian+Publish/Publish+and+unpublish+notes#Automatically+select+notes+to+publish).
-> If you want to use old key name, you are able to do it by [changing key name](../02_setup/02_general/01_setting-up-meta.md#+meta.status.key_name) in `mkdocs.yml` file.
+> If you want to use old key name, you can do it by [changing key name](../02_setup/02_general/01_setting-up-meta.md#+meta.status.key_name) in `mkdocs.yml` file.
 
 Thanks to [@AgedLace](https://github.com/AgedLace) who is right now the most active user and tester of this project, I managed to fix all the problems with `links` (both wiki and Markdown syntax). There is much more to come in the area of Obsidian syntax support in the near future, like:
 
@@ -29,9 +29,9 @@ Thanks to [@AgedLace](https://github.com/AgedLace) who is right now the most act
 
 I will also create an entire section of the documentation related to Obsidian support (right now there is only a section on [how to set it up](../02_setup/02_general/03_setting-up-obsidian.md)), so stay turned.
 
-Some of you are still waiting for documentation about auto publication using GitHub Actions and some template repository, but it's under development and not yet (fully) ready. If you know how GitHub Actions works, you can take a look at this repository file [depluy pages workflow](https://github.com/mkusz/mkdocs-publisher/blob/main/.github/workflows/deploy-pages.yml). It's used for building this documentation that is pushed into [docs branch](https://github.com/mkusz/mkdocs-publisher/tree/docs) after build. In the future, I'm planning to create a GitHub Action that will do all of it as a single step.
+Some of you are still waiting for documentation about auto publication using GitHub Actions and some template repository, but it's under development and not yet (fully) ready. If you know how GitHub Actions works, you can take a look at this repository file [deploy pages workflow](https://github.com/mkusz/mkdocs-publisher/blob/main/.github/workflows/deploy-pages.yml). It's used for building this documentation that is pushed into [docs branch](https://github.com/mkusz/mkdocs-publisher/tree/docs) after build. In the future, I'm planning to create a GitHub Action that will do all of it as a single step.
 
-Also, there was a lot of happening in the project backstage like new linter, added unit tests (partly code coverage) and some other small tweaks etc. A lot more things will come in upcoming releases.
+Also, there was a lot of happening in the project backstage, like new linter, added unit tests (partly code coverage) and some other small tweaks etc. A lot more things will come in upcoming releases.
 
 <!-- more -->
 
