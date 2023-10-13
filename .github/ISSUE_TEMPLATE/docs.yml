@@ -13,16 +13,18 @@ body:
         Thanks for taking the time and effort to fill out this form.
   - type: textarea
     id: docs-description
-    render: markdown
     attributes:
       label: Documentation issue description
       description: |
+        <sub>Markdown syntax is supported.</sub>
+
         Describe the issue with documentation like something is:
         - missing,
         - unclear,
-        - wrong with example code or default values,
+        - messed up example code or default values,
+        - messed up with text/code formatting,
+        <br/>
         or you just heave an idea for an improvements.
-        Markdown syntax is supported.
       placeholder: Describe the problem
       value: |
         **Current documentation description**
@@ -30,6 +32,7 @@ body:
         ---
         **Expected documentation description**
 
+      render: markdown
     validations:
       required: true
   - type: input
@@ -43,6 +46,7 @@ body:
   - type: markdown
     attributes:
       value: |
+        ---
         Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
   - type: input
     id: contact
