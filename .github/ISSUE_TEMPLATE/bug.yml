@@ -1,0 +1,84 @@
+name: Bug report
+description: File a bug report.
+title: "[Bug]: "
+labels: ["new", "bug"]
+assignees:
+  - mkusz
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the form for reporting a bug.
+        All bug reports helps me with making this project better for all the users.
+        Thanks for taking the time and effort to fill out this form.
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug description
+      description: |
+        <sub>Markdown syntax is supported.</sub>
+
+        Describe the problem, expected behaviour and (if possible) reproduction steps.
+      placeholder: Describe the problem
+      value: |
+        **Problem description**
+
+        ---
+        **Expected behaviour**
+
+        ---
+        **Reproduction steps**
+
+      render: markdown
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
+  - type: checkboxes
+    id: system
+    attributes:
+      label: Operating system
+      description: What operating system do you use?
+      options:
+        - label: All
+        - label: Windows
+        - label: Linux
+        - label: macOS
+  - type: checkboxes
+    id: python-version
+    attributes:
+      label: Python version
+      description: What Python version do you use?
+      options:
+        - label: Other
+        - label: "3.9"
+        - label: "3.10"
+        - label: "3.11"
+        - label: "3.12"
+  - type: input
+    id: repo-url
+    attributes:
+      label: Link to git repository
+      description: Link to a repository where the bug is visible
+      placeholder: ex. https://github.com/mkusz/mkdocs-publisher
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log output
+      description: Build log output (console or from `*_mkdocs_build.log`)
+      render: shell
+    validations:
+      required: false
+  - type: input
+    id: contact
+    attributes:
+      label: Contact details
+      description: How can I get in touch with you?
+      placeholder: ex. email@example.com
+    validations:
+      required: false

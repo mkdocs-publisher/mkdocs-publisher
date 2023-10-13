@@ -1,0 +1,63 @@
+name: Future request
+description: File a bug report.
+title: "[Future]: "
+labels: ["new", "future"]
+assignees:
+  - mkusz
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the form for reporting a future request.
+        All future requests helps me with making this project better for all the users.
+        Thanks for taking the time and effort to fill out this form.
+  - type: textarea
+    id: future-description
+    attributes:
+      label: Future description
+      description: |
+        <sub>Markdown syntax is supported.</sub>
+
+        Describe the future expected behaviour.
+      placeholder: Describe the future request
+      value: |
+        **Future description**
+
+      render: markdown
+    validations:
+      required: true
+  - type: checkboxes
+    id: plugin
+    attributes:
+      label: Project plugin
+      description: What plugin future request is related to?
+      options:
+        - label: pub-blog
+        - label: pub-debugger
+        - label: pub-meta
+        - label: pub-minifier
+        - label: pub-obsidian
+        - label: pub-social
+        - label: a new plugin
+        - label: external plugin integration
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
+  - type: input
+    id: additional-url
+    attributes:
+      label: Link
+      description: External link where similar future is described
+      placeholder: ex. https://quora.com/some-article/
+    validations:
+      required: false
+  - type: input
+    id: contact
+    attributes:
+      label: Contact details
+      description: How can I get in touch with you?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
