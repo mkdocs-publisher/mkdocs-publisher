@@ -20,28 +20,8 @@ body:
 
         Describe the feature expected behaviour.
       placeholder: Describe the future request
-      value: |
-        **Future description**
-
     validations:
       required: true
-  - type: dropdown
-    id: plugin
-    attributes:
-      label: Project plugin
-      description: What plugin feature request is related to?
-      multiple: true
-      options:
-        - Don't know
-        - Pub-blog
-        - Pub-debugger
-        - Pub-meta
-        - Pub-minifier
-        - Pub-obsidian
-        - Pub-social
-        - A new plugin
-        - External plugin integration
-      default: 0
   - type: markdown
     attributes:
       value: |

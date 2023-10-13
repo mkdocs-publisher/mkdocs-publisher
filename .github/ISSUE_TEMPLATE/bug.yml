@@ -18,17 +18,19 @@ body:
       description: |
         <sub>Markdown syntax is supported.</sub>
 
-        Describe the problem, expected behaviour and (if possible) reproduction steps.
+        Describe the problem
       placeholder: Describe the problem
-      value: |
-        **Problem description**
+    validations:
+      required: true
+  - type: textarea
+    id: bug-expected
+    attributes:
+      label: Expected behaviour
+      description: |
+        <sub>Markdown syntax is supported.</sub>
 
-        ---
-        **Expected behaviour**
-
-        ---
-        **Reproduction steps**
-
+        Describe the expected behavior.
+      placeholder: Describe the expected bahavior
     validations:
       required: true
   - type: markdown
@@ -36,6 +38,17 @@ body:
       value: |
         ---
         Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
+  - type: textarea
+    id: bug-reproduction
+    attributes:
+      label: Bug description
+      description: |
+        <sub>Markdown syntax is supported.</sub>
+
+        Describe the reproduction steps.
+      placeholder: Describe the reproduction steps
+    validations:
+      required: false
   - type: dropdown
     id: system
     attributes:
