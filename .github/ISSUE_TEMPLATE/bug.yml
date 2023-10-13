@@ -48,8 +48,6 @@ body:
         - Linux
         - macOS
       default: 0
-      validations:
-        required: false
   - type: dropdown
     id: python-version
     attributes:
@@ -64,8 +62,6 @@ body:
         - "3.12"
         - Other
       default: 0
-      validations:
-        required: false
   - type: input
     id: repo-url
     attributes:

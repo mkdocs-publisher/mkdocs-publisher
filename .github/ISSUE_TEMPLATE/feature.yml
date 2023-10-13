@@ -42,8 +42,6 @@ body:
         - a new plugin
         - external plugin integration
       default: 0
-      validations:
-        required: true
   - type: markdown
     attributes:
       value: |
