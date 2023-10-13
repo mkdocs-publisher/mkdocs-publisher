@@ -17,11 +17,11 @@ body:
       label: Documentation issue description
       description: |
         Describe the issue with documentation like something is:
-
         - missing,
         - unclear,
-        - wrong with example code or default values,
-
+        - messed up example code or default values,
+        - messed up with text/code formatting,
+        <br/>
         or you just heave an idea for an improvements.
         <sub>Markdown syntax is supported.</sub>
       placeholder: Describe the problem
