@@ -13,7 +13,6 @@ body:
         Thanks for taking the time and effort to fill out this form.
   - type: textarea
     id: bug-description
-    render: markdown
     attributes:
       label: Bug description
       description: |
@@ -29,6 +28,7 @@ body:
         ---
         **Reproduction steps**
 
+      render: markdown
     validations:
       required: true
   - type: markdown
@@ -41,20 +41,21 @@ body:
       label: Operating system
       description: What operating system do you use?
       options:
-        - Windows
-        - Linux
-        - MacOS
+        - label: All
+        - label: Windows
+        - label: Linux
+        - label: MacOS
   - type: checkboxes
     id: python-version
     attributes:
       label: Python version
       description: What Python version do you use?
       options:
-        - Other
-        - 3.9
-        - 3.10
-        - 3.11
-        - 3.12
+        - label: Other
+        - label: 3.9
+        - label: 3.10
+        - label: 3.11
+        - label: 3.12
   - type: input
     id: repo-url
     attributes:

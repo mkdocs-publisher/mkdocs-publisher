@@ -13,7 +13,6 @@ body:
         Thanks for taking the time and effort to fill out this form.
   - type: textarea
     id: future-description
-    render: markdown
     attributes:
       label: Future description
       description: |
@@ -23,8 +22,23 @@ body:
       value: |
         **Future description**
 
+      render: markdown
     validations:
       required: true
+  - type: checkboxes
+    id: plugin
+    attributes:
+      label: Project plugin
+      description: What plugin future request is related to?
+      options:
+        - label: pub-blog
+        - label: pub-debugger
+        - label: pub-meta
+        - label: pub-minifier
+        - label: pub-obsidian
+        - label: pub-social
+        - label: a new plugin
+        - label: external plugin integration
   - type: markdown
     attributes:
       value: |

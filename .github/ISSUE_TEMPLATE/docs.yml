@@ -13,7 +13,6 @@ body:
         Thanks for taking the time and effort to fill out this form.
   - type: textarea
     id: docs-description
-    render: markdown
     attributes:
       label: Documentation issue description
       description: |
@@ -30,6 +29,7 @@ body:
         ---
         **Expected documentation description**
 
+      render: markdown
     validations:
       required: true
   - type: input
