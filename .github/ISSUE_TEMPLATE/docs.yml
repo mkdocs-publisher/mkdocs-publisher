@@ -17,11 +17,13 @@ body:
       label: Documentation issue description
       description: |
         Describe the issue with documentation like something is:
+
         - missing,
         - unclear,
         - wrong with example code or default values,
+
         or you just heave an idea for an improvements.
-        Markdown syntax is supported.
+        <sub>Markdown syntax is supported.</sub>
       placeholder: Describe the problem
       value: |
         **Current documentation description**
@@ -43,6 +45,7 @@ body:
   - type: markdown
     attributes:
       value: |
+        ---
         Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
   - type: input
     id: contact

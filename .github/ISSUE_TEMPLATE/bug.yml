@@ -17,7 +17,7 @@ body:
       label: Bug description
       description: |
         Describe the problem, expected behaviour and (if possible) reproduction steps.
-        Markdown syntax is supported.
+        <sub>Markdown syntax is supported.</sub>
       placeholder: Describe the problem
       value: |
         **Problem description**
@@ -34,6 +34,7 @@ body:
   - type: markdown
     attributes:
       value: |
+        ---
         Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
   - type: checkboxes
     id: system
@@ -44,7 +45,7 @@ body:
         - label: All
         - label: Windows
         - label: Linux
-        - label: MacOS
+        - label: macOS
   - type: checkboxes
     id: python-version
     attributes:
@@ -52,10 +53,10 @@ body:
       description: What Python version do you use?
       options:
         - label: Other
-        - label: 3.9
-        - label: 3.10
-        - label: 3.11
-        - label: 3.12
+        - label: "3.9"
+        - label: "3.10"
+        - label: "3.11"
+        - label: "3.12"
   - type: input
     id: repo-url
     attributes:
