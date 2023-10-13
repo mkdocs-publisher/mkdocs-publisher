@@ -47,7 +47,6 @@ body:
         - Windows
         - Linux
         - macOS
-      default: 0
   - type: dropdown
     id: python-version
     attributes:
@@ -61,7 +60,6 @@ body:
         - "3.11"
         - "3.12"
         - Other
-      default: 0
   - type: input
     id: repo-url
     attributes:

@@ -41,7 +41,6 @@ body:
         - pub-social
         - a new plugin
         - external plugin integration
-      default: 0
   - type: markdown
     attributes:
       value: |
