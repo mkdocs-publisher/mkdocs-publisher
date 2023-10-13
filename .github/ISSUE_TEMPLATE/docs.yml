@@ -16,6 +16,8 @@ body:
     attributes:
       label: Documentation issue description
       description: |
+        <sub>Markdown syntax is supported.</sub>
+
         Describe the issue with documentation like something is:
         - missing,
         - unclear,
@@ -23,7 +25,6 @@ body:
         - messed up with text/code formatting,
         <br/>
         or you just heave an idea for an improvements.
-        <sub>Markdown syntax is supported.</sub>
       placeholder: Describe the problem
       value: |
         **Current documentation description**

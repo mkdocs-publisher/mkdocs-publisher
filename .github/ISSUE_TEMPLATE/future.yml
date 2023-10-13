@@ -16,8 +16,9 @@ body:
     attributes:
       label: Future description
       description: |
-        Describe the future expected behaviour.
         <sub>Markdown syntax is supported.</sub>
+
+        Describe the future expected behaviour.
       placeholder: Describe the future request
       value: |
         **Future description**
