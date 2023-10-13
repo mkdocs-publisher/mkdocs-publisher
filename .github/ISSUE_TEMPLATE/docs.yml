@@ -1,0 +1,54 @@
+name: Documentation report
+description: File a bug report.
+title: "[Docs]: "
+labels: ["new", "docs"]
+assignees:
+  - mkusz
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the form for reporting a problems with documentation.
+        Good documentation helps me with making this project better for all the users.
+        Thanks for taking the time and effort to fill out this form.
+  - type: textarea
+    id: docs-description
+    render: markdown
+    attributes:
+      label: Documentation issue description
+      description: |
+        Describe the issue with documentation like something is:
+        - missing,
+        - unclear,
+        - wrong with example code or default values,
+        or you just heave an idea for an improvements.
+        Markdown syntax is supported.
+      placeholder: Describe the problem
+      value: |
+        **Current documentation description**
+
+        ---
+        **Expected documentation description**
+
+    validations:
+      required: true
+  - type: input
+    id: docs-url
+    attributes:
+      label: Link to a documentation
+      description: Link to a documentation (this project or similar)
+      placeholder: ex. https://mkusz.github.io/mkdocs-publisher/
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
+  - type: input
+    id: contact
+    attributes:
+      label: Contact details
+      description: How can I get in touch with you?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
