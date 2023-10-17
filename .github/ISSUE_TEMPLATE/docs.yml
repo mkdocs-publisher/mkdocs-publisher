@@ -1,6 +1,5 @@
 name: Documentation report
 description: Submit a documentation related problems report.
-title: ""
 labels: ["new", "docs"]
 assignees:
   - mkusz

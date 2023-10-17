@@ -1,6 +1,5 @@
 name: Bug report
 description: Submit a bug report.
-title: ""
 labels: ["new", "bug"]
 assignees:
   - mkusz
