@@ -28,7 +28,6 @@ from typing import Callable
 from typing import Dict
 from typing import List
 from typing import Optional
-from typing import cast
 
 import jinja2
 import watchdog.events
@@ -54,20 +53,18 @@ from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 from mkdocs_publisher.obsidian.vega import VegaCharts
 
+COMMENTS_RE = re.compile(r"%%(?P<comment>[^%%]+)%%")
+
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.plugin")
 
 
 @dataclass
 class Comment:
     comment: str
+    is_html_comment: Optional[bool] = False
 
     def __repr__(self):
-        return f"<!--{self.comment}-->"
-
-
-def normalize_comments(match: re.Match) -> str:
-    comment = Comment(**match.groupdict())
-    return str(comment)
+        return f"<!--{self.comment}-->" if self.is_html_comment else ""
 
 
 class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
@@ -76,15 +73,15 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         self._backlinks: Dict[str, List[Link]] = {}
         self._md_links: Optional[MarkdownLinks] = None
         self._vega_pages: List[Page] = list()
-        self._comment_re: Optional[re.Pattern] = cast(re.Pattern, None)
+
+    def _normalize_comments(self, match: re.Match) -> str:
+        comment = Comment(**match.groupdict())
+        comment.is_html_comment = self.config.comments.inject_as_html
+        return str(comment)
 
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
         self._backlink_links = BacklinkLinks(mkdocs_config=config, backlinks=self._backlinks)
         self._md_links = MarkdownLinks(mkdocs_config=config)
-        comment_delimiter = self.config.comments.delimiter
-        self._comment_re = re.compile(
-            rf"{comment_delimiter}(?P<comment>[^{comment_delimiter}]+){comment_delimiter}"
-        )
         return config
 
     def on_nav(
@@ -113,9 +110,8 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         markdown = self._md_links.normalize_links(
             markdown=markdown, current_file_path=str(page.file.src_uri)
         )
-
         if self.config.comments.enabled:
-            markdown = re.sub(cast(str, self._comment_re), normalize_comments, markdown)
+            markdown = re.sub(COMMENTS_RE, self._normalize_comments, markdown)
 
         if self.config.callouts.enabled:
             # TODO: add verification if all things are enabled in mkdocs.yaml config file

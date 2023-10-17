@@ -35,11 +35,11 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Minifier
 
-- [ ] Add: ignored files list/pattern (globally and per file type)
+- [x] Add: ignored files list/pattern (globally and per file type)
 - [ ] Add: stats for number of minified/taken from cache files
-- [ ] Add: cache disable (globally and per file type)
+- [x] Add: cache disable (globally and per file type)
 - [ ] Add: configurable file extensions per minifier
-- [ ] Add: documentation for specific settings per file type
+- [x] Add: documentation for specific settings per file type
 - [ ] Add: support for WebP files
 
 ### Meta

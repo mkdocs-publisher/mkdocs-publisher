@@ -35,7 +35,7 @@ class _ObsidianCalloutsConfig(Config):
 
 class _ObsidianCommentsConfig(Config):
     enabled = option.Type(bool, default=True)
-    delimiter = option.Type(str, default="%%")
+    inject_as_html = option.Type(bool, default=False)
 
 
 class _ObsidianVegaConfig(Config):

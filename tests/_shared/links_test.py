@@ -33,6 +33,14 @@ from mkdocs_publisher._shared import links
     "link,text,anchor,title,is_wiki,expected",
     {
         ("../file.md", "Link text", "", "", False, "[Link text](../file.md)"),
+        (
+            "../file with space.md",
+            "Link text",
+            "",
+            "",
+            False,
+            "[Link text](../file with space.md)",
+        ),
         ("../file", "Link text", "", "", True, "[Link text](../file.md)"),
         (
             "../file.md",
@@ -88,6 +96,13 @@ def test_link_match_dataclass(
     "link,image,anchor,extra,expected",
     {
         ("../image.jpg", "", "", "", "![image.jpg](../image.jpg)"),
+        (
+            "../image with space.jpg",
+            "",
+            "",
+            "",
+            "![image with space.jpg](../image with space.jpg)",
+        ),
         ("../image.jpg", "300", "", "", "![image.jpg](../image.jpg){width=300}"),
         ("../image.jpg", "300x300", "", "", "![image.jpg](../image.jpg){width=300 height=300}"),
         ("../image.jpg", "", "", "align=right", "![image.jpg](../image.jpg){align=right}"),
@@ -120,6 +135,14 @@ def test_wiki_embed_link_match_dataclass(
     "link,text,title,extra,is_loading_lazy,expected",
     {
         ("../image.jpg", "Description", "", "", False, "![Description](../image.jpg)"),
+        (
+            "../image with space.jpg",
+            "Description",
+            "",
+            "",
+            False,
+            "![Description](../image with space.jpg)",
+        ),
         (
             "../image.jpg",
             "Description",
