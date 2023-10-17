@@ -53,7 +53,11 @@ def calculate_file_hash(file: Path, block_size: int = 8192) -> str:
         return file_hash.hexdigest()
 
 
-def list_files(directory: Path, extensions: List[str] = [], exclude: List[str] = []) -> List[Path]:
+def list_files(
+    directory: Path,
+    extensions: List[str] = [],
+    exclude: List[str] = [],
+) -> List[Path]:
     temp_files_list: List[Path] = []
     for ext in extensions:
         for file in directory.glob(f"**/*{ext}"):

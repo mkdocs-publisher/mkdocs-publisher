@@ -14,5 +14,5 @@
 
 ---
 
-> [!faq] Legend
+> [!note] Legend
 > ❎ - added ✅ - fixed ♻️ - changed 🚫 - removed

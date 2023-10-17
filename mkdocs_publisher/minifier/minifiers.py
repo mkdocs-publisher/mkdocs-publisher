@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 import logging
+from pathlib import Path
 from typing import Optional
 
 # noinspection PyProtectedMember
@@ -233,7 +234,10 @@ class CssMinifier(BaseMinifier):
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
 
-            if ".min" in input_file.suffixes and self._minify_options.skip_minified:
+            if (
+                ".min" in Path(str(input_file).lower()).suffixes
+                and self._minify_options.skip_minified
+            ):
                 return None
             css_minifier_cmd = [
                 self._minify_options.postcss_path,
@@ -267,7 +271,10 @@ class JsMinifier(BaseMinifier):
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
 
-            if ".min" in input_file.suffixes and self._minify_options.skip_minified:
+            if (
+                ".min" in Path(str(input_file).lower()).suffixes
+                and self._minify_options.skip_minified
+            ):
                 return None
             js_minifier_cmd = [
                 self._minify_options.uglifyjs_path,
