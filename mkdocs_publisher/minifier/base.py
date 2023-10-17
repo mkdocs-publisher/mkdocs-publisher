@@ -102,7 +102,7 @@ class BaseMinifier:
             extensions=self._minify_options.extensions,
             exclude=self._exclude,
         ):
-            log.critical(f"Minifying: {file}")
+            log.debug(f"Minifying: {file}")
             semaphore.acquire()
             thread = Thread(
                 target=self._minify_with_cache,
