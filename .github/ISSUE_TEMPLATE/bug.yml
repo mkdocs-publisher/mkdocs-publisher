@@ -55,7 +55,6 @@ body:
       description: What operating system do you use?
       multiple: true
       options:
-        - All
         - Windows
         - Linux
         - macOS
@@ -67,7 +66,6 @@ body:
       description: What Python version do you use?
       multiple: true
       options:
-        - All
         - "3.9"
         - "3.10"
         - "3.11"
