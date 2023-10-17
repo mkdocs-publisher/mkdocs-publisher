@@ -4,7 +4,7 @@ icon: material/file-replace-outline
 slug: changelog
 publish: true
 date: 2023-02-12 22:00:00
-update: 2023-10-10 13:21:14
+update: 2023-10-17 18:04:40
 description: Publisher for MkDocs version history
 categories:
   - general
@@ -12,6 +12,21 @@ categories:
 ---
 
 # Version history
+
+## 1.2.0
+
+### :simple-obsidian: Obsidian
+
+- ❎ support for comments syntax
+- ✅ links for file names with space
+
+### :material-run-fast: Minifier
+
+- ❎ setting for file extensions
+- ❎ setting for file exclusion
+- ❎ setting for enabling cache
+- ✅ extensions are no longer case-sensitive
+- ✅ minified file detection is no longer case-sensitive
 
 ## 1.1.1
 

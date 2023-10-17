@@ -36,6 +36,7 @@ from mkdocs.config.defaults import MkDocsConfig
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher.minifier.config import MinifierConfig
+from mkdocs_publisher.minifier.config import _MinifierCommonConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.minifier.base")
 
@@ -67,8 +68,6 @@ class CachedFile:
 
 
 class BaseMinifier:
-    extensions: List[str]
-
     def __init__(
         self,
         plugin_config: MinifierConfig,
@@ -77,28 +76,39 @@ class BaseMinifier:
     ):
         self._plugin_config: MinifierConfig = plugin_config
         self._mkdocs_config: MkDocsConfig = mkdocs_config
+        self._minify_options: Optional[_MinifierCommonConfig] = None
         self._cached_files: Dict[str, CachedFile] = cached_files
+        self._cache_enabled: bool = self._plugin_config.cache_enabled
+        self._exclude: List = self._plugin_config.exclude[:]
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         raise NotImplementedError
 
     def __call__(self):
-        log.info(f"Minifying {self.extensions} files")
+        minifier_name = self.__class__.__name__.replace("Minifier", "").upper()
+        self._cache_enabled = self._minify_options.cache_enabled if self._cache_enabled else False
+        self._exclude.extend(self._minify_options.exclude)
+
+        log.info(
+            f"Minifying {minifier_name} files ({'with' if self._cache_enabled else 'no'} cache)"
+        )
+        log.info(f"Excluded {minifier_name} files patterns: {self._exclude}")
 
         semaphore = Semaphore(self._plugin_config.threads)
         threads = []
 
-        # TODO: add possibility to exclude some files
         for file in file_utils.list_files(
             directory=Path(self._mkdocs_config.site_dir),
-            extensions=self.extensions,
-            relative_to=Path(self._mkdocs_config.site_dir),
+            extensions=self._minify_options.extensions,
+            exclude=self._exclude,
         ):
+            log.critical(f"Minifying: {file}")
             semaphore.acquire()
             thread = Thread(
                 target=self._minify_with_cache,
                 kwargs={
                     "file": file,
+                    "cache_enabled": self._cache_enabled,
                     "semaphore": semaphore,
                 },
             )
@@ -140,9 +150,9 @@ class BaseMinifier:
         except FileNotFoundError as e:
             log.warning(e)
 
-    def _minify_with_cache(self, file: Path, semaphore: Semaphore):
+    def _minify_with_cache(self, file: Path, cache_enabled: bool, semaphore: Semaphore):
         recreate_file = False
-        if str(file) in self._cached_files:
+        if cache_enabled and str(file) in self._cached_files:
             log.debug(f"{file} is in cache")
             file_hash = file_utils.calculate_file_hash(file=(self._mkdocs_config.site_dir / file))
             cached_file = self._cached_files[str(file)]
@@ -160,7 +170,8 @@ class BaseMinifier:
                 )
                 recreate_file = True
         else:
-            log.debug(f"{file} is not in cache")
+            log.debug(f"{file} is not in cache (rebuilding")
+
             cached_file = CachedFile()
             cached_file.based_on(file=file, directory=Path(self._mkdocs_config.site_dir))
             recreate_file = True
@@ -174,5 +185,5 @@ class BaseMinifier:
                 self._cached_files[str(cached_file.original_file_path)] = cached_file
                 self._copy_cached_file(cached_file=cached_file)
         else:
-            log.debug(f"File already minified: {file} (retrieving from cache)")
+            log.debug(f"{file} is already minified (retrieving from cache)")
         semaphore.release()

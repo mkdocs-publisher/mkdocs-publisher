@@ -1,6 +1,6 @@
 name: Documentation report
-description: File a bug report.
-title: "[Docs]: "
+description: File a documentation related problems report
+title: "[Docs] "
 labels: ["new", "docs"]
 assignees:
   - mkusz
@@ -12,7 +12,7 @@ body:
         Good documentation helps me with making this project better for all the users.
         Thanks for taking the time and effort to fill out this form.
   - type: textarea
-    id: docs-description
+    id: docs-current
     attributes:
       label: Documentation issue description
       description: |
@@ -26,13 +26,17 @@ body:
         <br/>
         or you just heave an idea for an improvements.
       placeholder: Describe the problem
-      value: |
-        **Current documentation description**
+    validations:
+      required: true
+  - type: textarea
+    id: docs-expected
+    attributes:
+      label: Documentation issue description
+      description: |
+        <sub>Markdown syntax is supported.</sub>
 
-        ---
-        **Expected documentation description**
-
-      render: markdown
+        Describe the expected changes
+      placeholder: Describe the expected changes
     validations:
       required: true
   - type: input

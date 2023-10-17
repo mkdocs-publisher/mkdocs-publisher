@@ -4,7 +4,7 @@ icon: simple/obsidian
 slug: pub-obsidian
 publish: true
 date: 2023-04-20 12:07:21
-update: 2023-10-03 12:19:03
+update: 2023-10-17 18:04:41
 description: Setting up a Publisher for MkDocs obsidian plugin for integration with an Obsidian note taking tool
 categories:
   - setup
@@ -120,6 +120,26 @@ Above you can find all possible settings with their default values. You don't ha
 
 > [!SETTINGS]- [indentation](#+obsidian.callouts.indentation){#+obsidian.callouts.indentation}
 > Defines if callout indentation whitespace type. Possible values: `spaces` (default) or `tabs`.
+
+### Comments
+
+``` yaml hl_lines="3-5"
+plugins:
+  - pub-obsidian:
+	comments:
+	  enabled: true
+	  inject_as_html: false
+```
+
+Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [enabled](#+obsidian.comments.enabled){#+obsidian.callouts.enabled}
+> Control if comments are recognized on the document web page. If disabled, comments will be visible as a normal text.
+
+> [!SETTINGS]- [indentation](#+obsidian.comments.inject_as_html){#+obsidian.callouts.indentation}
+> Defines behavior of the comments:
+> - `true` - comments will become an [HTML comment](https://www.w3schools.com/tags/tag_comment.asp), so it will not be visible on the generated document, but will be visible in document HTML code.
+> - `false` (default) - comments will be completely removed and not visible either in generated document and document HTML code.
 
 ### Links
 

@@ -4,7 +4,7 @@ icon: material/list-status
 slug: backlog
 publish: true
 date: 2023-02-12 22:00:00
-update: 2023-10-03 15:07:24
+update: 2023-10-17 18:04:43
 description: Plans for future development of Publisher for MkDocs
 categories:
   - general
@@ -35,11 +35,8 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 
 ### Minifier
 
-- [ ] Add: ignored files list/pattern (globally and per file type)
 - [ ] Add: stats for number of minified/taken from cache files
-- [ ] Add: cache disable (globally and per file type)
-- [ ] Add: configurable file extensions per minifier
-- [ ] Add: documentation for specific settings per file type
+- [ ] Add: show overall minification ratio in %
 - [ ] Add: support for WebP files
 
 ### Meta
@@ -77,7 +74,6 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: templates (blog post, page, etc.)
 - [ ] Add: graph view (long-term goal)
 - [ ] Add: backlinks with unlinked mentions based on page title and aliases (maybe some headings titles?)
-- [ ] Add: disable backlinks on given page (meta-data: `backlinks: false`)
 - [ ] Add: configurable aliases in callouts with auto-add to Obsidian CSS files
 - [ ] Add: internal link's tooltip preview (use [tippy.js](https://atomiks.github.io/tippyjs/))
 - [ ] Fix: not needed new/blank lines inside code blocks
@@ -98,6 +94,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 ### RSS (plugin idea)
 
 - [ ] Add: possibility to create multiple rss feeds (blog, other pages/directories, etc.)
+- [ ] Add: xml schema for better look and feel (like getnikola.com)
 
 ### Common (plugin idea)
 
@@ -116,7 +113,6 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: minify single file using minifier
 - [ ] Add: minifier tools installation
 - [ ] Add: document/blog post publication state change
-- [ ] Add: issues templates in the project repository issues
 
 ### Documentation
 

@@ -24,23 +24,28 @@ from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
 
 
-class _MinifierCssConfig(Config):
+class _MinifierCommonConfig(Config):
+    cache_enabled = option.Type(bool, default=True)
     enabled = option.Type(bool, default=True)
     enabled_on_serve = option.Type(bool, default=False)
+    exclude = option.Type(list, default=[])
+    extensions = option.Type(list, default=[])
+
+
+class _MinifierCssConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".[cC][sS][sS]"])
     postcss_path = option.Type(str, default="postcss")
     skip_minified = option.Type(bool, default=True)
 
 
-class _MinifierJsConfig(Config):
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
+class _MinifierJsConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".[jJ][sS]"])
     uglifyjs_path = option.Type(str, default="uglifyjs")
     skip_minified = option.Type(bool, default=True)
 
 
-class _MinifierHtmlConfig(Config):
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
+class _MinifierHtmlConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".[hH][tT][mM]", ".[hH][tT][mM][lL]"])
     html_minifier_path = option.Type(str, default="html-minifier")
     case_sensitive = option.Type(bool, default=True)
     minify_css = option.Type(bool, default=True)
@@ -58,16 +63,14 @@ class _MinifierHtmlConfig(Config):
     )  # 0 - disabled
 
 
-class _MinifierSvgConfig(Config):
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
+class _MinifierSvgConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".[sS][vV][gG]"])
     svgo_path = option.Type(str, default="svgo")
     multipass = option.Type(bool, default=True)
 
 
-class _MinifierJpegConfig(Config):
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
+class _MinifierJpegConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".[jJ][pP][gG]", ".[jJ][pP][eE][gG]"])
     djpeg_path = option.Type(str, default="djpeg")
     cjpeg_path = option.Type(str, default="cjpeg")
     jpegtran_path = option.Type(str, default="jpegtran")
@@ -78,9 +81,8 @@ class _MinifierJpegConfig(Config):
     quality = option.Choice([str(i) for i in range(0, 101)], default="85")  # 0 - disabled
 
 
-class _MinifierPngConfig(Config):
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
+class _MinifierPngConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".[pP][nN][gG]"])
     pngquant_enabled = option.Type(bool, default=True)
     pngquant_path = option.Type(str, default="pngquant")
     pngquant_speed = option.Choice([str(i) for i in range(1, 12)], default="1")
@@ -92,8 +94,10 @@ class _MinifierPngConfig(Config):
 
 
 class MinifierConfig(Config):
+    cache_enabled = option.Type(bool, default=True)
     cache_dir = option.Type(str, default=".pub_min_cache")
     cache_file = option.Type(str, default=".cached_files_list.yml")
+    exclude = option.Type(list, default=[])
     threads = option.Type(int, default=0)  # 0 - default (read from system)
 
     js: _MinifierJsConfig = option.SubConfig(_MinifierJsConfig)  # type: ignore

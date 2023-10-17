@@ -1,8 +1,11 @@
 {
   "cssTheme": "Obsidian Nord",
-  "accentColor": "",
+  "accentColor": "#ff9924",
   "enabledCssSnippets": [
     "pub-additions"
   ],
-  "translucency": false
+  "translucency": false,
+  "baseFontSize": 16,
+  "showViewHeader": true,
+  "nativeMenus": true
 }

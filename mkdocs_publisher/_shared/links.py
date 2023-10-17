@@ -34,7 +34,7 @@ log = logging.getLogger("mkdocs.plugins.publisher._shared.links")
 ANCHOR_RE_PART = r"((#(?P<anchor>([^|\][()'\"]+)))?)"
 EXTRA_RE_PART = r"( *({(?P<extra>[\w+=. ]+)})?)"
 IMAGE_RE_PART = r"((\|(?P<image>([0-9x]+)))?)"
-LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^|#()\s]+)"
+LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^|#()\r\n\t\f\v]+)"
 URL_RE_PART = r"(?P<link>((https?|ftp)://)?[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
 TEXT_RE_PART = r"(?P<text>[^\][)(|]+)"
 LINK_TITLE_RE_PART = r"( \"(?P<title>[ \S]+)\")?"

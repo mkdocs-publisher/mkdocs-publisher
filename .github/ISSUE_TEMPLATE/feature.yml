@@ -1,45 +1,27 @@
-name: Future request
-description: File a bug report.
-title: "[Future]: "
-labels: ["new", "future"]
+name: Feature request
+description: File a feature request.
+title: "[Feature] "
+labels: ["new", "feature"]
 assignees:
   - mkusz
 body:
   - type: markdown
     attributes:
       value: |
-        This is the form for reporting a future request.
+        This is the form for reporting a feature request.
         All future requests helps me with making this project better for all the users.
         Thanks for taking the time and effort to fill out this form.
   - type: textarea
-    id: future-description
+    id: feature-description
     attributes:
-      label: Future description
+      label: Feature description
       description: |
         <sub>Markdown syntax is supported.</sub>
 
-        Describe the future expected behaviour.
+        Describe the feature expected behaviour.
       placeholder: Describe the future request
-      value: |
-        **Future description**
-
-      render: markdown
     validations:
       required: true
-  - type: checkboxes
-    id: plugin
-    attributes:
-      label: Project plugin
-      description: What plugin future request is related to?
-      options:
-        - label: pub-blog
-        - label: pub-debugger
-        - label: pub-meta
-        - label: pub-minifier
-        - label: pub-obsidian
-        - label: pub-social
-        - label: a new plugin
-        - label: external plugin integration
   - type: markdown
     attributes:
       value: |

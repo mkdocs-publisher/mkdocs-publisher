@@ -4,7 +4,7 @@ icon: material/hand-okay
 slug: credits
 publish: draft
 date: 2023-05-17 21:32:00
-update: 2023-10-10 11:35:29
+update: 2023-10-16 13:31:01
 description: Credits to other plugins and creators
 categories:
   - general

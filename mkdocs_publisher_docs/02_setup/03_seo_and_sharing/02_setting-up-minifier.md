@@ -4,7 +4,7 @@ icon: material/run-fast
 slug: pub-minifier
 publish: true
 date: 2023-02-02 22:00:00
-update: 2023-10-03 12:15:11
+update: 2023-10-17 16:15:52
 description: Setting up Publisher for MkDocs minifier plugin for page size optimization
 categories:
   - setup
@@ -24,7 +24,7 @@ To simplify the entire process, below is presented a single way of installation 
 
 ===+ ":simple-apple: MacOS"
 
-    In MacOS, the easiest way to install any software, is to use a [Homebrew](https://brew.sh). You have to install it before. All the instructions can be found on project web page.
+    In macOS, the easiest way to install any software, is to use a [Homebrew](https://brew.sh). You have to install it before. All the instructions can be found on project web page.
 
 	===+ ":material-file: All"
 
@@ -207,12 +207,14 @@ Just like that, all optimization tools are enabled with optimal settings (accord
 
 ===+ ":octicons-file-code-16: mkdocs.yml"
 
-	```yaml hl_lines="3-5"
+	```yaml hl_lines="3-7"
 	plugins:
 	  - pub-minifier:
-		  threads: 0
+	      cache_enabled: true
 		  cache_dir: .pub_min_cache
 		  cache_file: .cache_files_list.yml
+		  exclude: []
+		  threads: 0
 	```
 
 === ":fontawesome-solid-folder-tree:"
@@ -227,14 +229,20 @@ Just like that, all optimization tools are enabled with optimal settings (accord
 		└─ mkdocs.yml
 	```
 
-> [!SETTINGS]- [threads](#+minifier.threads){#+minifier.threads}
-> File optimization process is a CPU intensive. Most modern computers have processors with multiple CPU cores. Each core can be used to optimize a single file. When your machine has more than one CPU core, it's good to have an ability to utilize all of them during the optimization process because it will reduce overall time needed for optimization of all files. This setting defines how many CPUs the plugin will use for file optimization process. If set to 0 (default value) the plugin will read the number of available CPUs from system settings.
+> [!SETTINGS]- [cache_enabled](#+minifier.cache_enabled){#+minifier.cache_enabled}
+> Control if caching mechanism is enabled. When it's enabled, you can still disable cache per each file type.
 
 > [!SETTINGS]- [cache_dir](#+minifier.cache_dir){#+minifier.cache_dir}
-> When `pub-minifier` plugin is enabled, caching is enabled by default and cannot be turned off. Caching is quite crucial since image optimization is quite a time-consuming process (especially for PNG files). This setting defines the directory location, where the cached files are stored.
+> Defines the directory location, where the cached files are stored.
 
 > [!SETTINGS]- [cache_file](#+minifier.cache_file){#+minifier.cache_file}
 > Defines the name of the file, where all the data needed for proper cache working is stored. When this file is missing or corrupt, it and all cached files will be recreated. This file is stored inside the cache directory, and by default, the directory structure looks like this:
+
+> [!SETTINGS]- [exclude](#+minifier.exclude){#+minifier.exclude}
+> Defines a list of exclusion patterns for files or directories that will not be minified. Each file type has its own exclusion list that inherits values from this one, so you don't have to add the same values.
+
+> [!SETTINGS]- [threads](#+minifier.threads){#+minifier.threads}
+> File optimization process is a CPU intensive. Most modern computers have processors with multiple CPU cores. Each core can be used to optimize a single file. When your machine has more than one CPU core, it's good to have an ability to utilize all of them during the optimization process because it will reduce overall time needed for optimization of all files. This setting defines how many CPUs the plugin will use for file optimization process. If set to 0 (default value) the plugin will read the number of available CPUs from system settings.
 
 ### JPEG optimization
 
@@ -245,29 +253,41 @@ JPEG image file size optimizations are done using [MozJPEG](https://github.com/m
 
 Using this tool reduces JPEG image file size up to 30% with almost no visible quality degradation. You can always try to change it by modification of default settings. Please have in mind that default values were set after my personal experiments and not always can be the most optimal one.
 
-``` yaml hl_lines="3-13"
+``` yaml hl_lines="3-16"
 plugins:
   - pub-minifier:
 	jpeg:
-		enabled = true
-		enabled_on_serve = false
-		djpeg_path = djpeg
-		cjpeg_path = cjpeg
-		jpegtran_path = jpegtran
-		optimise = true
-		progressive = true
-		copy_meta = none
-		smooth = 10
-		quality = 85
+	    cache_enabled: true
+		enabled: true
+		enabled_on_serve: false
+		exclude: []
+		extensions: [".[jJ][pP][gG]", ".[jJ][pP][eE][gG]"]
+		djpeg_path: djpeg
+		cjpeg_path: cjpeg
+		jpegtran_path: jpegtran
+		optimise: true
+		progressive: true
+		copy_meta: none
+		smooth: 10
+		quality: 85
 ```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [cache_enabled](#+minifier.jpeg.cache_enabled){#+minifier.jpeg.cache_enabled}
+> Control if caching mechanism is enabled.
 
 > [!SETTINGS]- [enabled](#+minifier.jpeg.enabled){#+minifier.jpeg.enabled}
 > Control if JPEG minifier is enabled.
 
 > [!SETTINGS]- [enabled_on_serve](#+minifier.jpeg.enabled_on_serve){#+minifier.jpeg.enabled_on_serve}
 > Control if JPEG minifier is enabled while page is being served locally (mostly used for content creation).
+
+> [!SETTINGS]- [exclude](#+minifier.jpeg.exclude){#+minifier.jpeg.exclude}
+> Defines a list of exclusion patterns for files or directories that will not be minified.
+
+> [!SETTINGS]- [exclude](#+minifier.jpeg.extensions){#+minifier.jpeg.extensions}
+> Defines a list of file extensions that will be minified.
 
 > [!SETTINGS]- [djpeg_path](#+minifier.jpeg.djpeg_path){#+minifier.jpeg.djpeg_path}
 > Path to `djpeg` tool (part of MozJPEG package).
@@ -302,29 +322,41 @@ PNG image file size optimizations are done using a combination of 2 tools:
 
 Using those tools together, can reduce PNG image file size by up to 70% with almost no visible quality degradation. You can always try to change it by modifying of default settings. Please have in mind that default values were set after my personal experiments and not always can be the most optimal one.
 
-``` yaml hl_lines="3-13"
+``` yaml hl_lines="3-16"
 plugins:
   - pub-minifier:
 	png:
-		enabled = true
-		enabled_on_serve = false
-		pngquant_enabled = true
-		pngquant_path = ongquant
-		pngquant_speed = 1
-		pngquant_quality = 95
-		oxipng_enabled = true
-		oxipng_path = oxipng
-		oxipng_max_compression = true
-		strip = true
+		cache_enabled: true
+		enabled: true
+		enabled_on_serve: false
+		exclude: []
+		extensions: [".[pP][nN][gG]"]
+		pngquant_enabled: true
+		pngquant_path: ongquant
+		pngquant_speed: 1
+		pngquant_quality: 95
+		oxipng_enabled: true
+		oxipng_path: oxipng
+		oxipng_max_compression: true
+		strip: true
 ```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [cache_enabled](#+minifier.png.cache_enabled){#+minifier.png.cache_enabled}
+> Control if caching mechanism is enabled.
 
 > [!SETTINGS]- [enabled](#+minifier.png.enabled){#+minifier.png.enabled}
 > Control if PNG minifier is enabled.
 
 > [!SETTINGS]- [enabled_on_serve](#+minifier.png.enabled_on_serve){#+minifier.png.enabled_on_serve}
 > Control if PNG minifier is enabled while page is being served locally (mostly used for content creation).
+
+> [!SETTINGS]- [exclude](#+minifier.png.exclude){#+minifier.png.exclude}
+> Defines a list of exclusion patterns for files or directories that will not be minified.
+
+> [!SETTINGS]- [exclude](#+minifier.png.extensions){#+minifier.png.extensions}
+> Defines a list of file extensions that will be minified.
 
 > [!SETTINGS]- [pngquant_enabled](#+minifier.png.pngquant_enabled){#+minifier.png.pngquant_enabled}
 > Control if **pngquant** tool is enabled.
@@ -359,23 +391,35 @@ SVG vector image file size optimizations are done using [SVGO](https://github.co
 
 Using this tool reduces SVG vector image file size by up to 70% with no visible quality degradation. This tool has multiple plugins that impact the effectiveness of an optimization. At this time, the `pub-minifier` plugin doesn't allow changing the [default settings of used SVGO plugins](https://github.com/svg/svgo#built-in-plugins).
 
-``` yaml hl_lines="3-7"
+``` yaml hl_lines="3-10"
 plugins:
   - pub-minifier:
 	svg:
-		enabled = true
-		enabled_on_serve = false
-		svgo_path = svgo
-		multipass = true
+		cache_enabled: true
+		enabled: true
+		enabled_on_serve: false
+		exclude: []
+		extensions: [".[sS][vV][gG]"]
+		svgo_path: svgo
+		multipass: true
 ```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [cache_enabled](#+minifier.svg.cache_enabled){#+minifier.svg.cache_enabled}
+> Control if caching mechanism is enabled.
 
 > [!SETTINGS]- [enabled](#+minifier.svg.enabled){#+minifier.svg.enabled}
 > Control if SVG minifier is enabled.
 
 > [!SETTINGS]- [enabled_on_serve](#+minifier.svg.enabled_on_serve){#+minifier.svg.enabled_on_serve}
 > Control if SVG minifier is enabled while page is being served locally (mostly used for content creation).
+
+> [!SETTINGS]- [exclude](#+minifier.svg.exclude){#+minifier.svg.exclude}
+> Defines a list of exclusion patterns for files or directories that will not be minified.
+
+> [!SETTINGS]- [exclude](#+minifier.svg.extensions){#+minifier.svg.extensions}
+> Defines a list of file extensions that will be minified.
 
 > [!SETTINGS]- [svgo_path](#+minifier.svg.svgo_path){#+minifier.svg.svgo_path}
 > Path to `svgo` tool.
@@ -392,34 +436,46 @@ HTML file size optimizations are done using [html-minifier](https://github.com/k
 
 Using this tool reduces HTML file size by up to 30%. You can always try to change it by modification of default settings. Please have in mind that default values were set after my personal experiments and not always can be the most optimal one.
 
-``` yaml hl_lines="3-18"
+``` yaml hl_lines="3-21"
 plugins:
   - pub-minifier:
 	html:
-		enabled = true
-		enabled_on_serve = false
-		postcss_path = postcss
-		case_sensitive = true
-		minify_css = true
-		minify_js = true
-		remove_comments = true
-		remove_tag_whitespace = false
-		collapse_whitespace = true
-		conservative_collapse = true
-		collapse_boolean_attributes = true
-		preserve_line_breaks = true
-		sort_attributes = true
-		sort_class_name = true
-		max_line_length = 1024
+		cache_enabled: true
+		enabled: true
+		enabled_on_serve: false
+		exclude: []
+		extensions: [".[hH][tT][mM]", ".[hH][tT][mM][lL]"]
+		postcss_path: postcss
+		case_sensitive: true
+		minify_css: true
+		minify_js: true
+		remove_comments: true
+		remove_tag_whitespace: false
+		collapse_whitespace: true
+		conservative_collapse: true
+		collapse_boolean_attributes: true
+		preserve_line_breaks: true
+		sort_attributes: true
+		sort_class_name: true
+		max_line_length: 1024
 ```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [cache_enabled](#+minifier.html.cache_enabled){#+minifier.html.cache_enabled}
+> Control if caching mechanism is enabled.
 
 > [!SETTINGS]- [enabled](#+minifier.html.enabled){#+minifier.html.enabled}
 > Control if HTML minifier is enabled.
 
 > [!SETTINGS]- [enabled_on_serve](#+minifier.html.enabled_on_serve){#+minifier.html.enabled_on_serve}
 > Control if HTML minifier is enabled while page is being served locally (mostly used for content creation).
+
+> [!SETTINGS]- [exclude](#+minifier.html.exclude){#+minifier.html.exclude}
+> Defines a list of exclusion patterns for files or directories that will not be minified.
+
+> [!SETTINGS]- [exclude](#+minifier.html.extensions){#+minifier.html.extensions}
+> Defines a list of file extensions that will be minified.
 
 > [!SETTINGS]- [html_minifier_path](#+minifier.html.html_minifier_path){#+minifier.html.html_minifier_path}
 > Path to `html-minifier` tool.
@@ -478,23 +534,35 @@ This is a [Node.js](https://nodejs.org/) based tool. As we can read on the proje
 
 Using this tool reduces CSS file size by up to 30%. At this time, the `pub-minifier` plugin doesn't allow changing the [default settings of cssnano](https://cssnano.co/docs/what-are-optimisations/#what-optimisations-do-you-support%3F).
 
-``` yaml hl_lines="3-7"
+``` yaml hl_lines="3-10"
 plugins:
   - pub-minifier:
 	css:
-		enabled = true
-		enabled_on_serve = false
-		postcss_path = postcss
-		skip_minified = true
+		cache_enabled: true
+		enabled: true
+		enabled_on_serve: false
+		exclude: []
+		extensions: [".[cC][sS][sS]"]
+		postcss_path: postcss
+		skip_minified: true
 ```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [cache_enabled](#+minifier.css.cache_enabled){#+minifier.css.cache_enabled}
+> Control if caching mechanism is enabled.
 
 > [!SETTINGS]- [enabled](#+minifier.css.enabled){#+minifier.css.enabled}
 > Control if CSS minifier is enabled.
 
 > [!SETTINGS]- [enabled_on_serve](#+minifier.css.enabled_on_serve){#+minifier.css.enabled_on_serve}
 > Control if CSS minifier is enabled while page is being served locally (mostly used for content creation).
+
+> [!SETTINGS]- [exclude](#+minifier.css.exclude){#+minifier.css.exclude}
+> Defines a list of exclusion patterns for files or directories that will not be minified.
+
+> [!SETTINGS]- [exclude](#+minifier.css.extensions){#+minifier.css.extensions}
+> Defines a list of file extensions that will be minified.
 
 > [!SETTINGS]- [postcss_path](#+minifier.css.postcss_path){#+minifier.css.postcss_path}
 > Path to `postcss` tool.
@@ -512,23 +580,35 @@ JS file size optimizations are done using [UglifyJS](https://github.com/mishoo/U
 
 Using this tool reduces JS file size by up to 20%. At this time, the `pub-minifier` plugin doesn't allow changing the default settings.
 
-``` yaml hl_lines="3-7"
+``` yaml hl_lines="3-10"
 plugins:
   - pub-minifier:
 	js:
-		enabled = true
-		enabled_on_serve = false
-		uglifyjs_path = uglifyjs
-		skip_minified = true
+		cache_enabled: true
+		enabled: true
+		enabled_on_serve: false
+		exclude: []
+		extensions: [".[jJ][sS]"]
+		uglifyjs_path: uglifyjs
+		skip_minified: true
 ```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [cache_enabled](#+minifier.js.cache_enabled){#+minifier.js.cache_enabled}
+> Control if caching mechanism is enabled.
 
 > [!SETTINGS]- [enabled](#+minifier.js.enabled){#+minifier.js.enabled}
 > Control if JS minifier is enabled.
 
 > [!SETTINGS]- [enabled_on_serve](#+minifier.js.enabled_on_serve){#+minifier.js.enabled_on_serve}
 > Control if JS minifier is enabled while page is being served locally (mostly used for content creation).
+
+> [!SETTINGS]- [exclude](#+minifier.js.exclude){#+minifier.js.exclude}
+> Defines a list of exclusion patterns for files or directories that will not be minified.
+
+> [!SETTINGS]- [exclude](#+minifier.js.extensions){#+minifier.js.extensions}
+> Defines a list of file extensions that will be minified.
 
 > [!SETTINGS]- [uglifyjs_path](#+minifier.js.uglifyjs_path){#+minifier.js.uglifyjs_path}
 > Path to `uglifyjs` tool.

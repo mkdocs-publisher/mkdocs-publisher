@@ -24,4 +24,4 @@ docs
 .idea
 .venv
 dist
-sandbox*.py
+sandbox*

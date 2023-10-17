@@ -21,6 +21,8 @@
 # SOFTWARE.
 
 import logging
+import re
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 from typing import Dict
@@ -51,7 +53,18 @@ from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 from mkdocs_publisher.obsidian.vega import VegaCharts
 
+COMMENTS_RE = re.compile(r"%%(?P<comment>[^%%]+)%%")
+
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.plugin")
+
+
+@dataclass
+class Comment:
+    comment: str
+    is_html_comment: Optional[bool] = False
+
+    def __repr__(self):
+        return f"<!--{self.comment}-->" if self.is_html_comment else ""
 
 
 class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
@@ -60,6 +73,11 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         self._backlinks: Dict[str, List[Link]] = {}
         self._md_links: Optional[MarkdownLinks] = None
         self._vega_pages: List[Page] = list()
+
+    def _normalize_comments(self, match: re.Match) -> str:
+        comment = Comment(**match.groupdict())
+        comment.is_html_comment = self.config.comments.inject_as_html
+        return str(comment)
 
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
         self._backlink_links = BacklinkLinks(mkdocs_config=config, backlinks=self._backlinks)
@@ -92,6 +110,8 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         markdown = self._md_links.normalize_links(
             markdown=markdown, current_file_path=str(page.file.src_uri)
         )
+        if self.config.comments.enabled:
+            markdown = re.sub(COMMENTS_RE, self._normalize_comments, markdown)
 
         if self.config.callouts.enabled:
             # TODO: add verification if all things are enabled in mkdocs.yaml config file

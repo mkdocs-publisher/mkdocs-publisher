@@ -1,6 +1,6 @@
 name: Bug report
 description: File a bug report.
-title: "[Bug]: "
+title: "[Bug] "
 labels: ["new", "bug"]
 assignees:
   - mkusz
@@ -18,18 +18,19 @@ body:
       description: |
         <sub>Markdown syntax is supported.</sub>
 
-        Describe the problem, expected behaviour and (if possible) reproduction steps.
+        Describe the problem
       placeholder: Describe the problem
-      value: |
-        **Problem description**
+    validations:
+      required: true
+  - type: textarea
+    id: bug-expected
+    attributes:
+      label: Expected behaviour
+      description: |
+        <sub>Markdown syntax is supported.</sub>
 
-        ---
-        **Expected behaviour**
-
-        ---
-        **Reproduction steps**
-
-      render: markdown
+        Describe the expected behavior.
+      placeholder: Describe the expected bahavior
     validations:
       required: true
   - type: markdown
@@ -37,27 +38,43 @@ body:
       value: |
         ---
         Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
-  - type: checkboxes
+  - type: textarea
+    id: bug-reproduction
+    attributes:
+      label: Bug description
+      description: |
+        <sub>Markdown syntax is supported.</sub>
+
+        Describe the reproduction steps.
+      placeholder: Describe the reproduction steps
+    validations:
+      required: false
+  - type: dropdown
     id: system
     attributes:
       label: Operating system
       description: What operating system do you use?
+      multiple: true
       options:
-        - label: All
-        - label: Windows
-        - label: Linux
-        - label: macOS
-  - type: checkboxes
+        - All
+        - Windows
+        - Linux
+        - macOS
+      default: 0
+  - type: dropdown
     id: python-version
     attributes:
       label: Python version
       description: What Python version do you use?
+      multiple: true
       options:
-        - label: Other
-        - label: "3.9"
-        - label: "3.10"
-        - label: "3.11"
-        - label: "3.12"
+        - All
+        - "3.9"
+        - "3.10"
+        - "3.11"
+        - "3.12"
+        - Other
+      default: 0
   - type: input
     id: repo-url
     attributes:
