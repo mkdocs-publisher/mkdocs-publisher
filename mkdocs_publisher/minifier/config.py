@@ -24,29 +24,28 @@ from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
 
 
-class _MinifierCssConfig(Config):
-    disable_cache = option.Type(bool, default=False)
+class _MinifierCommonConfig(Config):
     enabled = option.Type(bool, default=True)
     enabled_on_serve = option.Type(bool, default=False)
-    exclude_pattern_list = option.Type(list, default=[])
+    exclude = option.Type(list, default=[])
+    use_cache = option.Type(bool, default=True)
+    extensions = option.Type(list, default=[])
+
+
+class _MinifierCssConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".css"])
     postcss_path = option.Type(str, default="postcss")
     skip_minified = option.Type(bool, default=True)
 
 
-class _MinifierJsConfig(Config):
-    disable_cache = option.Type(bool, default=False)
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
-    exclude_pattern_list = option.Type(list, default=[])
+class _MinifierJsConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".js"])
     uglifyjs_path = option.Type(str, default="uglifyjs")
     skip_minified = option.Type(bool, default=True)
 
 
-class _MinifierHtmlConfig(Config):
-    disable_cache = option.Type(bool, default=False)
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
-    exclude_pattern_list = option.Type(list, default=[])
+class _MinifierHtmlConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".htm", ".html"])
     html_minifier_path = option.Type(str, default="html-minifier")
     case_sensitive = option.Type(bool, default=True)
     minify_css = option.Type(bool, default=True)
@@ -64,20 +63,14 @@ class _MinifierHtmlConfig(Config):
     )  # 0 - disabled
 
 
-class _MinifierSvgConfig(Config):
-    disable_cache = option.Type(bool, default=False)
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
-    exclude_pattern_list = option.Type(list, default=[])
+class _MinifierSvgConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".svg"])
     svgo_path = option.Type(str, default="svgo")
     multipass = option.Type(bool, default=True)
 
 
-class _MinifierJpegConfig(Config):
-    disable_cache = option.Type(bool, default=False)
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
-    exclude_pattern_list = option.Type(list, default=[])
+class _MinifierJpegConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".jpg", ".jpeg"])
     djpeg_path = option.Type(str, default="djpeg")
     cjpeg_path = option.Type(str, default="cjpeg")
     jpegtran_path = option.Type(str, default="jpegtran")
@@ -88,11 +81,8 @@ class _MinifierJpegConfig(Config):
     quality = option.Choice([str(i) for i in range(0, 101)], default="85")  # 0 - disabled
 
 
-class _MinifierPngConfig(Config):
-    disable_cache = option.Type(bool, default=False)
-    enabled = option.Type(bool, default=True)
-    enabled_on_serve = option.Type(bool, default=False)
-    exclude_pattern_list = option.Type(list, default=[])
+class _MinifierPngConfig(_MinifierCommonConfig):
+    extensions = option.Type(list, default=[".png"])
     pngquant_enabled = option.Type(bool, default=True)
     pngquant_path = option.Type(str, default="pngquant")
     pngquant_speed = option.Choice([str(i) for i in range(1, 12)], default="1")
@@ -106,9 +96,9 @@ class _MinifierPngConfig(Config):
 class MinifierConfig(Config):
     cache_dir = option.Type(str, default=".pub_min_cache")
     cache_file = option.Type(str, default=".cached_files_list.yml")
-    disable_cache = option.Type(bool, default=False)
-    exclude_pattern_list = option.Type(list, default=[])
+    exclude = option.Type(list, default=[])
     threads = option.Type(int, default=0)  # 0 - default (read from system)
+    use_cache = option.Type(bool, default=True)
 
     js: _MinifierJsConfig = option.SubConfig(_MinifierJsConfig)  # type: ignore
     css: _MinifierCssConfig = option.SubConfig(_MinifierCssConfig)  # type: ignore

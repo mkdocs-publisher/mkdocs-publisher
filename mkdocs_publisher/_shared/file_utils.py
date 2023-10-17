@@ -53,17 +53,15 @@ def calculate_file_hash(file: Path, block_size: int = 8192) -> str:
         return file_hash.hexdigest()
 
 
-def list_files(
-    directory: Path, extensions: List[str] = [], excluded_pattern_list: List[str] = []
-) -> List[Path]:
+def list_files(directory: Path, extensions: List[str] = [], exclude: List[str] = []) -> List[Path]:
     temp_files_list: List[Path] = []
     for ext in extensions:
         for file in directory.glob(f"**/*{ext}"):
             temp_files_list.append(file.relative_to(directory))
 
     excluded_files_list: List[Path] = []
-    for excluded_pattern in excluded_pattern_list:
-        for file in directory.rglob(excluded_pattern):
+    for exc in exclude:
+        for file in directory.rglob(exc):
             excluded_files_list.append(file.relative_to(directory))
 
     files_list: List[Path] = [file for file in temp_files_list if file not in excluded_files_list]

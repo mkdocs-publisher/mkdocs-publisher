@@ -134,7 +134,7 @@ plugins:
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
 
 > [!SETTINGS]- [enabled](#+obsidian.comments.enabled){#+obsidian.callouts.enabled}
-> Control if comments are recognised on the document web page. If disabled, comments will be visible as a normal text.
+> Control if comments are recognized on the document web page. If disabled, comments will be visible as a normal text.
 
 > [!SETTINGS]- [indentation](#+obsidian.comments.inject_as_html){#+obsidian.callouts.indentation}
 > Defines behavior of the comments:
