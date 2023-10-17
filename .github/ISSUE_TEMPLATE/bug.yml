@@ -1,6 +1,6 @@
 name: Bug report
-description: File a bug report.
-title: "[Bug] "
+description: Submit a bug report.
+title: ""
 labels: ["new", "bug"]
 assignees:
   - mkusz
@@ -30,7 +30,7 @@ body:
         <sub>Markdown syntax is supported.</sub>
 
         Describe the expected behavior.
-      placeholder: Describe the expected bahavior
+      placeholder: Describe the expected behavior
     validations:
       required: true
   - type: markdown
@@ -39,9 +39,9 @@ body:
         ---
         Below fields are optional, but can be very helpful, so please, spend a minute to fill them.
   - type: textarea
-    id: bug-reproduction
+    id: reproduction-steps
     attributes:
-      label: Bug description
+      label: Reproduction steps
       description: |
         <sub>Markdown syntax is supported.</sub>
 

@@ -1,6 +1,6 @@
 name: Documentation report
-description: File a documentation related problems report
-title: "[Docs] "
+description: Submit a documentation related problems report.
+title: ""
 labels: ["new", "docs"]
 assignees:
   - mkusz
