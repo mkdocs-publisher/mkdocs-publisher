@@ -1,24 +1,14 @@
 site_name: Publisher for MkDocs
-site_url: https://mkusz.github.io/mkdocs-publisher
+site_url: https://yourdomain.com/
 site_author: Maciej 'maQ' Kusz
 site_description: Publishing plugin for MkDocs
 copyright: >
   &copy; 2023 Maciej 'maQ' Kusz
 
-repo_name: mkusz/mkdocs-publisher
-repo_url: https://github.com/mkusz/mkdocs-publisher/
-edit_uri: edit/main/mkdocs_publisher_docs/
-
-docs_dir: mkdocs_publisher_docs
-site_dir: docs
-
 use_directory_urls: true
-strict: true
+strict: false
 
-dev_addr: 127.0.0.1:8666
-
-extra:
-  homepage: https://mkusz.github.io/mkdocs-publisher
+dev_addr: 0.0.0.0:8000
 
 extra_css:
   - assets/stylesheets/publisher.css
@@ -40,8 +30,6 @@ theme:
   font:
     code: Lato
   custom_dir: overrides
-  logo: publisher_logo.png
-  favicon: publisher_icon.png
 
   palette:
 
@@ -131,21 +119,9 @@ plugins:
   - pub-debugger:
       console_log:
         enabled: true
-#        filter_logger_names:
-#          - mkdocs.plugins
-#          - mkdocs.structure.files
-#          - mkdocs.structure.pages
-#          - mkdocs.plugins.publisher.meta.plugin
-#          - mkdocs.plugins.publisher.blog.creators
-#          - mkdocs.plugins.publisher.blog.modifiers
-#          - mkdocs.plugins.publisher.blog.parsers
-#          - mkdocs.plugins.publisher.debug.plugin
-#          - mkdocs.plugins.publisher.minifier.base
-#          - mkdocs.plugins.publisher.minifier.plugin
-#          - mkdocs.commands.build
   - search
   - pub-blog:
-      blog_dir: 04_blog
+      blog_dir: blog
   - pub-obsidian
   - pub-social
   - pub-meta

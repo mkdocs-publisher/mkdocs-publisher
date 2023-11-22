@@ -4,7 +4,7 @@ icon: material/file-replace-outline
 slug: changelog
 publish: true
 date: 2023-02-12 22:00:00
-update: 2023-10-17 18:04:40
+update: 2023-10-17 19:47:44
 description: Publisher for MkDocs version history
 categories:
   - general
@@ -13,7 +13,17 @@ categories:
 
 # Version history
 
-## 1.2.0
+## 1.3.0
+
+### :material-list-box: General
+
+- ❎ slug auto generation if missing in file meta-data ([#63](https://github.com/mkusz/mkdocs-publisher/issues/63))
+- ❎ added internal ConfigChoicesEnum class for defining config choices
+- ✅ ruff linter settings
+- ✅ fix for markdown anchor only links that uses characters like `/` or space
+- ♻️ isort has been replaced with [ruff](https://github.com/astral-sh/ruff)
+
+## 1.2.0 - 2023-10-17
 
 ### :simple-obsidian: Obsidian
 
@@ -28,7 +38,7 @@ categories:
 - ✅ extensions are no longer case-sensitive
 - ✅ minified file detection is no longer case-sensitive
 
-## 1.1.1
+## 1.1.1 - 2023-10-10
 
 ### :material-list-box: General
 
@@ -37,7 +47,7 @@ categories:
 - ❎ unit test to part of the code (journey begins)
 - ♻️ flake8 linter has been replaced with [ruff](https://github.com/astral-sh/ruff)
 - ♻️ internal code refactoring and simplifications
-- ♻️ project dependencies has been separated into 3 groups: **general**, **test** and **dev**
+- ♻️ project dependencies have been separated into 3 groups: **general**, **test** and **dev**
 - ♻️ main project dependencies has been updated:
 	- `mkdocs >= 1.5.3`
 	- `mkdocs-material >= 9.4.3`

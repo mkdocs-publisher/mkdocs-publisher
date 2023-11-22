@@ -8,22 +8,7 @@
   "scripts": {
     "test": "echo \"No tests required\" && exit 0"
   },
-  "keywords": [
-    "mkdocs",
-    "mkdocs-plugin",
-    "blog",
-    "categories",
-    "debugger",
-    "docs",
-    "documentation",
-    "frontmatter",
-    "markdown",
-    "minifier",
-    "navigation",
-    "obsidian",
-    "publisher",
-    "tags"
-  ],
+  "keywords": [],
   "author": "Maciej \"maQ\" Kusz",
   "license": "MIT License"
 }

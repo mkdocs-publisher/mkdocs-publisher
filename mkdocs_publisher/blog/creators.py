@@ -24,7 +24,6 @@ import logging
 from collections import OrderedDict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict
 from typing import cast
 
 import jinja2
@@ -67,10 +66,10 @@ def create_blog_post_pages(
     """Create blog posts index files."""
 
     log.info("Creating blog posts index files")
-    posts_chunks: Dict[str, list] = {}
-    archive_chunks: Dict[str, list] = {}
-    categories_chunks: Dict[str, list] = {}
-    tags_chunks: Dict[str, list] = {}
+    posts_chunks: dict[str, list] = {}
+    archive_chunks: dict[str, list] = {}
+    categories_chunks: dict[str, list] = {}
+    tags_chunks: dict[str, list] = {}
 
     # Build post index pages
     for index, date in enumerate(sorted(blog_config.blog_posts, reverse=True)):
@@ -163,7 +162,7 @@ def create_blog_post_pages(
 
 def _create_pages(
     blog_config: BlogConfig,
-    posts_chunks: Dict[str, list],
+    posts_chunks: dict[str, list],
     sub_dir: Path,
     page_title: str,
 ) -> list[dict[str, str]]:

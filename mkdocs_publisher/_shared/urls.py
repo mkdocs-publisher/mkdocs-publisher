@@ -20,9 +20,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import logging
 import urllib.parse
+from typing import Optional
+from typing import Union
 
 import pymdownx.slugs
+
+from mkdocs_publisher.meta.config import SlugModeEnum
+
+log = logging.getLogger("mkdocs.plugins.publisher._shared.links")
 
 
 def slugify(text: str) -> str:
@@ -31,3 +38,34 @@ def slugify(text: str) -> str:
     text = urllib.parse.unquote(text)
     text = pymdownx.slugs.slugify(case="lower", normalize="NFD")(text=text, sep="-")
     return str(text).encode("ASCII", "ignore").decode("utf-8")
+
+
+def create_slug(
+    meta: dict,
+    file_name: str,
+    slug_mode: Union[SlugModeEnum, str],
+    slug_key_name: str,
+    title_key_name: str,
+    warn_on_missing: bool = True,
+) -> Optional[str]:
+    """Generate slug for various modes"""
+    slug = meta.get(slug_key_name)  # Slug meta key is always the most important
+
+    # When slug meta key is not present, try to get slug value the other way
+    if slug is None or slug == "none":
+        if slug_mode == SlugModeEnum.TITLE:
+            slug = slugify(text=str(meta.get(title_key_name)))
+        elif slug_mode == SlugModeEnum.FILENAME:
+            slug = slugify(text=file_name)
+
+    # Log slug value
+    if slug is None or slug == "none":
+        slug = slugify(text=file_name)
+
+        if warn_on_missing:
+            log.warning(
+                f'No slug for file "{file_name}" ' f"(mode: {slug_mode}). Fallback to file name."
+            )
+
+    log.debug(f'Slug for file "{file_name}" is: "{slug}"')
+    return slug

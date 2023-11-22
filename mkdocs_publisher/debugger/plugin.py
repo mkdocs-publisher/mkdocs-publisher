@@ -123,7 +123,6 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
 
             archive = BytesIO()
             with ZipFile(archive, "a", ZIP_DEFLATED, False) as archive_file:
-
                 # Zip files from list
                 for file_to_zip in FILES_TO_ZIP_LIST:
                     if Path(file_to_zip).exists():

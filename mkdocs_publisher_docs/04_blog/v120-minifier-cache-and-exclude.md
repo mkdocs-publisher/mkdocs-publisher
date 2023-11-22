@@ -3,10 +3,10 @@ title: v1.2.0 - 2023-10-17
 slug: v120
 publish: published
 date: 2023-10-17 16:16:39
-update: 2023-10-17 19:28:04
+update: 2023-10-17 19:36:11
 tags:
   - v1.x
-description:
+description: Publisher for MkDocs v1.2.0
 categories:
   - release
 ---

@@ -22,7 +22,7 @@
     },
     "insert-yaml-attributes": {
       "enabled": true,
-      "text-to-insert": ""
+      "text-to-insert": "title\nslug\npublish\ndate\nupdate\ndescription\n"
     },
     "move-tags-to-yaml": {
       "enabled": false,

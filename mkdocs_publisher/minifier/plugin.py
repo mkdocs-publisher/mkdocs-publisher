@@ -23,7 +23,6 @@
 import logging
 from multiprocessing import cpu_count
 from pathlib import Path
-from typing import Dict
 from typing import Literal
 from typing import cast
 
@@ -49,11 +48,10 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
 
     @event_priority(-100)  # Run after all other plugins
     def on_post_build(self, *, config: MkDocsConfig) -> None:
-
         Path(self.config.cache_dir).mkdir(exist_ok=True)
 
         # TODO: Add path to tools checker
-        cached_files: Dict[str, CachedFile] = {}
+        cached_files: dict[str, CachedFile] = {}
 
         if self.config.threads == 0:
             self.config.threads = int(cpu_count())
@@ -65,7 +63,7 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
         cached_files_list: Path = Path(self.config.cache_dir) / self.config.cache_file
         if cached_files_list.exists():
             try:
-                with open(cached_files_list, "r") as yaml_file:
+                with open(cached_files_list) as yaml_file:
                     cached_files = yaml.safe_load(yaml_file)
                     for file_path, cached_file in cached_files.items():
                         cached_files[file_path] = CachedFile(**cast(dict, cached_file))

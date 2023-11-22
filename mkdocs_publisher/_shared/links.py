@@ -53,6 +53,7 @@ MD_EMBED_LINK_RE = re.compile(
 RELATIVE_LINK_RE = re.compile(
     rf"\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)"
 )
+ANCHOR_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_RE_PART}]\({ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
 
 
 class RelativePathFinder:
@@ -120,30 +121,24 @@ class RelativePathFinder:
 
 @dataclass
 class LinkMatch:
-    link: str
     text: Optional[str]
     anchor: Optional[str]
+    link: Optional[str] = None
     title: Optional[str] = None
     is_wiki: bool = False
 
     def __repr__(self):
-        if self.anchor:
-            anchor = f"#{slugify(text=self.anchor)}"
-        else:
-            anchor = ""
-        if self.title:
-            title = f' "{self.title}"'
-        else:
-            title = ""
+        anchor = f"#{slugify(text=self.anchor)}" if self.anchor else ""
+        title = f' "{self.title}"' if self.title else ""
         if self.is_wiki:
             # Make it configurable and add tests
             if self.text is None and self.anchor:
                 self.text = f"{self.link} > {self.anchor}"
             elif self.text is None:
                 self.text = self.link
-            link = f"{self.link}.md"
+            link = f"{self.link}.md" if self.link else ""
         else:
-            link = self.link
+            link = self.link if self.link else ""
 
         return f"[{self.text}]({link}{anchor}{title})"
 
@@ -187,20 +182,11 @@ class MdEmbedLinkMatch:
     is_loading_lazy: bool = True
 
     def __repr__(self):
-        if self.extra:
-            extra: list = self.extra.strip().split(" ")
-        else:
-            extra = []
-        if self.title:
-            title = f' "{self.title}"'
-        else:
-            title = ""
+        extra: list = self.extra.strip().split(" ") if self.extra else []
+        title = f' "{self.title}"' if self.title else ""
         if self.is_loading_lazy and "loading=lazy" not in extra:
             extra.append("loading=lazy")
-        if extra:
-            link_extra = f'{{{" ".join(extra)}}}'
-        else:
-            link_extra = ""
+        link_extra = f'{{{" ".join(extra)}}}' if extra else ""
         return f"![{self.text}]({self.link}{title}){link_extra}"
 
 
@@ -213,14 +199,8 @@ class RelativeLinkMatch:
     relative_path_finder: Optional[RelativePathFinder] = None
 
     def __repr__(self):
-        if self.anchor:
-            anchor = f"#{slugify(text=self.anchor)}"
-        else:
-            anchor = ""
-        if self.title:
-            title = f' "{self.title}"'
-        else:
-            title = ""
+        anchor = f"#{slugify(text=self.anchor)}" if self.anchor else ""
+        title = f' "{self.title}"' if self.title else ""
         # The same page anchor link doesn't have file part
         if self.link.startswith("#"):
             return f"[{self.text}]({self.link})"

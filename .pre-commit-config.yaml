@@ -83,15 +83,7 @@ repos:
       - id: format
         name: format Python code
         description: Pre-format python code.
-        entry: poetry run black --quiet
-        language: system
-        types:
-          - python
-
-      - id: sort-imports
-        name: sort Python imports
-        description: Sort python imports.
-        entry: poetry run isort --quiet
+        entry: poetry run ruff format --quiet
         language: system
         types:
           - python
@@ -100,6 +92,8 @@ repos:
         name: lint Python
         description: Lint python code.
         entry: poetry run ruff check
+        args:
+          - --fix
         language: system
         types:
           - python

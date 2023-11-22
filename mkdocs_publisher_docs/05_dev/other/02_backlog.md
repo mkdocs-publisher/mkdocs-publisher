@@ -38,6 +38,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: stats for number of minified/taken from cache files
 - [ ] Add: show overall minification ratio in %
 - [ ] Add: support for WebP files
+- [ ] Add: image lazy loading
 
 ### Meta
 
@@ -55,10 +56,12 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: file/directory redirections
 - [ ] Add: publication date in the future
 - [ ] Add: creating subpages for tags and categories (need to be separated from the blog posts)
+- [ ] Add: support for [section index page](https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages)
+- [ ] Add: sort order and order by (file name, title, slug)
 
 ### Social
 
-- [ ] Add: image generator if one is not provided
+- [ ] Add: image generator if one is not provided (similar to Material for MkDocs)
 - [ ] Add: ignored file list/pattern
 - [ ] Add: warning on missing meta key
 - [ ] Add: ignore single file based on metadata
@@ -99,6 +102,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 ### Common (plugin idea)
 
 - [ ] Add: date format
+- [ ] Add: language and translations
 - [ ] Add: auto-add this plugin into `mkdocs.yml` by other plugins
 
 ## General

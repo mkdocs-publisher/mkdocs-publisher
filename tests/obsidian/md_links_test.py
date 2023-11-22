@@ -58,6 +58,10 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
             "consectetur adipiscing elit.",
         ),
         (
+            "Lorem ipsum dolor sit [amet](#just/an anchor), consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [amet](#justan-anchor), consectetur adipiscing elit.",
+        ),
+        (
             "Lorem ipsum dolor sit [[file]], consectetur adipiscing elit.",
             "Lorem ipsum dolor sit [file](file.md), consectetur adipiscing elit.",
         ),
@@ -109,7 +113,7 @@ def test_normalize_wiki_links(
     )
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown = markdown_links.normalize_links(markdown=markdown, current_file_path="main.md")
-    assert markdown == expected
+    assert expected == markdown
 
 
 @pytest.mark.parametrize(
@@ -147,7 +151,7 @@ def test_normalize_links(
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown = markdown_links.normalize_links(markdown=markdown, current_file_path="main.md")
     logging.info(markdown)
-    assert markdown == expected
+    assert expected == markdown
 
 
 @pytest.mark.parametrize(
@@ -177,4 +181,4 @@ def test_normalize_relative_links(
     markdown = markdown_links.normalize_relative_links(
         markdown=markdown, current_file_path="main.md"
     )
-    assert markdown == expected
+    assert expected == markdown

@@ -23,10 +23,6 @@
 import logging
 import re
 from dataclasses import dataclass
-
-# from hashlib import md5
-from typing import Dict
-from typing import List
 from typing import Optional
 from typing import cast
 
@@ -41,8 +37,6 @@ from mkdocs_publisher.blog.plugin import BlogPlugin
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.backlinks")
 
-HTTP_LINK_RE = re.compile(r"\[([^][\r\n]+)]\((https?://[^][)(\s]+)(#[\w\-.]+)?\)")
-
 
 @dataclass()
 class Link:
@@ -56,10 +50,10 @@ class BacklinkLinks:
     def __init__(
         self,
         mkdocs_config: MkDocsConfig,
-        backlinks: Dict[str, List[Link]],
+        backlinks: dict[str, list[Link]],
     ):
         self._mkdocs_config: MkDocsConfig = mkdocs_config
-        self._backlinks: Dict[str, List[Link]] = backlinks
+        self._backlinks: dict[str, list[Link]] = backlinks
 
     @staticmethod
     def _build_anchor_link(backlink: str, anchor_link: Optional[str]) -> str:
@@ -105,7 +99,7 @@ class BacklinkLinks:
 
         # Convert other links into text
         backlink_text = re.sub(links.MD_LINK_RE, self._other_link_to_text, backlink_text)
-        backlink_text = re.sub(HTTP_LINK_RE, self._other_link_to_text, backlink_text)
+        backlink_text = re.sub(links.HTTP_LINK_RE, self._other_link_to_text, backlink_text)
 
         # Create a backlink with context
         backlink_text = f'<p class="obsidian_backlink">{backlink_text}</p>'

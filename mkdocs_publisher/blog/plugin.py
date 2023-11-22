@@ -20,11 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import contextlib
 import logging
 from collections import OrderedDict
 from pathlib import Path
 from typing import Any
-from typing import Dict
 from typing import Literal
 from typing import Optional
 from typing import cast
@@ -63,7 +63,6 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
             self._on_serve = True
 
     def on_config(self, config: MkDocsConfig) -> Config:
-
         # Initialization of all the values
         self.blog_config.parse_configs(mkdocs_config=config, plugin_config=self.config)
 
@@ -113,7 +112,6 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         return config
 
     def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation:
-
         modifiers.blog_post_nav_remove(
             start_page=self._start_page, blog_config=self.blog_config, nav=nav
         )
@@ -121,7 +119,6 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         return nav
 
     def on_files(self, files: Files, config: MkDocsConfig) -> Files:
-
         creators.create_blog_files(blog_config=self.blog_config, files=files)
 
         resources.add_extra_css(stylesheet_file_name="blog.min.css", config=config, files=files)
@@ -130,9 +127,8 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
     @event_priority(-100)  # Run after all other plugins
     def on_page_context(
-        self, context: Dict[str, Any], *, page: Page, config: MkDocsConfig, nav: Navigation
-    ) -> Optional[Dict[str, Any]]:
-
+        self, context: dict[str, Any], *, page: Page, config: MkDocsConfig, nav: Navigation
+    ) -> Optional[dict[str, Any]]:
         if Path(page.file.src_path).parts[0] == self.config.blog_dir:
             page.meta[self.config.comments.key_name] = self.config.comments.enabled
 
@@ -149,7 +145,6 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     def on_page_markdown(
         self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
     ) -> Optional[str]:
-
         obsidian_plugin: Optional[ObsidianPluginConfig] = mkdocs_utils.get_plugin_config(
             mkdocs_config=config, plugin_name="pub-obsidian"
         )  # type: ignore
@@ -162,16 +157,10 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
     @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:
-
-        try:
+        with contextlib.suppress(AttributeError):
             file_utils.remove_dir(directory=self.blog_config.temp_dir)
-        except AttributeError:
-            pass  # TODO: remove this when rebuilding blog plugin
 
     @event_priority(-100)  # Run after all other plugins
     def on_shutdown(self) -> None:
-
-        try:
+        with contextlib.suppress(AttributeError):
             file_utils.remove_dir(directory=self.blog_config.temp_dir)
-        except AttributeError:
-            pass  # TODO: remove this when rebuilding blog plugin

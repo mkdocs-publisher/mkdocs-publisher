@@ -27,8 +27,6 @@ from dataclasses import field
 from pathlib import Path
 from threading import Semaphore
 from threading import Thread
-from typing import Dict
-from typing import List
 from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
@@ -72,14 +70,14 @@ class BaseMinifier:
         self,
         plugin_config: MinifierConfig,
         mkdocs_config: MkDocsConfig,
-        cached_files: Dict[str, CachedFile],
+        cached_files: dict[str, CachedFile],
     ):
         self._plugin_config: MinifierConfig = plugin_config
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._minify_options: Optional[_MinifierCommonConfig] = None
-        self._cached_files: Dict[str, CachedFile] = cached_files
+        self._cached_files: dict[str, CachedFile] = cached_files
         self._cache_enabled: bool = self._plugin_config.cache_enabled
-        self._exclude: List = self._plugin_config.exclude[:]
+        self._exclude: list = self._plugin_config.exclude[:]
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         raise NotImplementedError

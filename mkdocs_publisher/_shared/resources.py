@@ -92,6 +92,7 @@ def add_extra_css(
 
 def read_template_file(template_file_name: str) -> str:
     """Read and return content of template file"""
+
     resource_file_path = importlib.resources.files(templates).joinpath(template_file_name)
     with importlib.resources.as_file(resource_file_path) as template_file:
         return template_file.read_text(encoding="utf-8")

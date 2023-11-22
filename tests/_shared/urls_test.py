@@ -20,9 +20,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import logging
+
 import pytest
+from pytest import LogCaptureFixture
 
 from mkdocs_publisher._shared import urls
+from mkdocs_publisher.meta.config import SlugModeEnum
+
+log = logging.getLogger("tests")
 
 
 @pytest.mark.parametrize(
@@ -35,4 +41,43 @@ from mkdocs_publisher._shared import urls
     },
 )
 def test_slugify(text, expected):
-    assert urls.slugify(text) == expected
+    assert expected == urls.slugify(text)
+
+
+@pytest.mark.parametrize(
+    "slug,title,slug_mode,warn_on_missing,expected,exp_log_level",
+    {
+        ("meta_slug", "title_slug", SlugModeEnum.TITLE.name, False, "meta_slug", logging.DEBUG),
+        (None, "title_slug", SlugModeEnum.TITLE.name, False, "title_slug", logging.DEBUG),
+        ("meta_slug", "title_slug", SlugModeEnum.FILENAME.name, False, "meta_slug", logging.DEBUG),
+        (None, None, SlugModeEnum.FILENAME.name, False, "file_name_slug", logging.DEBUG),
+        (None, None, SlugModeEnum.TITLE.name, True, "file_name_slug", logging.WARNING),
+        (None, None, SlugModeEnum.TITLE.name, False, "file_name_slug", logging.DEBUG),
+        (None, None, None, False, "file_name_slug", logging.DEBUG),
+    },
+)
+def test_slug_create(
+    caplog: LogCaptureFixture,
+    slug: str,
+    title: str,
+    slug_mode: str,
+    warn_on_missing: bool,
+    expected: str,
+    exp_log_level: int,
+):
+    meta = {}
+    if slug is not None:
+        meta["slug"] = slug
+    if title is not None:
+        meta["title"] = title
+
+    assert expected == urls.create_slug(
+        meta=meta,
+        file_name="file_name_slug",
+        slug_mode=slug_mode,
+        slug_key_name="slug",
+        title_key_name="title",
+        warn_on_missing=warn_on_missing,
+    )
+
+    assert exp_log_level == caplog.records[0].levelno

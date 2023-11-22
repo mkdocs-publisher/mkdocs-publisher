@@ -13,3 +13,5 @@ categories:
 
 For graph view: https://github.com/TuanManhCao/digital-garden/blob/main/components/Graph.js
 For page preview: https://atomiks.github.io/tippyjs/v6/customization/
+
+- https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin

@@ -76,7 +76,7 @@ def key_rename():
                     )
                     output = f"{output}{yaml_text_dump}"
                     post_meta.pop(old_key_name, None)
-            for key in post_meta.keys():
+            for key in post_meta:
                 output = f"{output}{yaml.safe_dump({key: post_meta[key]}, indent=2)}"
             output = f"{output}---\n\n{content}"
             md_file.seek(0)

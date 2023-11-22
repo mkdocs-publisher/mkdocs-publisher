@@ -55,8 +55,8 @@ def test_add_extra_existing_file(caplog: LogCaptureFixture):
             files=mkdocs_files,
         )
 
-    assert mkdocs_files.css_files()[-1].src_uri == expected_path
-    assert mkdocs_config.extra_css[-1] == expected_path
+    assert expected_path == mkdocs_files.css_files()[-1].src_uri
+    assert expected_path == mkdocs_config.extra_css[-1]
     assert expected_path in caplog.records[-1].message
     assert caplog.records[-1].levelno == logging.DEBUG
 
@@ -78,8 +78,8 @@ def test_add_extra_non_existing_file(caplog: LogCaptureFixture):
             files=mkdocs_files,
         )
 
-    assert mkdocs_files.css_files() == []
-    assert mkdocs_config.extra_css == []
+    assert [] == mkdocs_files.css_files()
+    assert [] == mkdocs_config.extra_css
     assert expected_path in caplog.records[-1].message
     assert caplog.records[-1].levelno == logging.ERROR
 
@@ -96,13 +96,12 @@ def test_add_stylesheet_file_with_map():
         files=mkdocs_files,
     )
 
-    assert list(mkdocs_files.src_paths.keys()) == [expected_file_path, expected_file_map_path]
-    assert mkdocs_files.css_files()[-1].src_uri == expected_file_path
-    assert mkdocs_config.extra_css == [expected_file_path, expected_file_map_path]
+    assert [expected_file_path, expected_file_map_path] == list(mkdocs_files.src_paths.keys())
+    assert expected_file_path == mkdocs_files.css_files()[-1].src_uri
+    assert [expected_file_path, expected_file_map_path] == mkdocs_config.extra_css
 
 
 def test_add_stylesheet_file_without_map():
-
     mkdocs_files = Files(files=[])
     mkdocs_config = cast(MkDocsConfig, MkDocsConfig())
     expected_file_path = str(Path(STYLESHEET_DIR) / STYLESHEET_FILE)
@@ -114,14 +113,14 @@ def test_add_stylesheet_file_without_map():
         add_map=False,
     )
 
-    assert list(mkdocs_files.src_paths.keys()) == [expected_file_path]
-    assert mkdocs_files.css_files()[-1].src_uri == expected_file_path
-    assert mkdocs_config.extra_css == [expected_file_path]
+    assert [expected_file_path] == list(mkdocs_files.src_paths.keys())
+    assert expected_file_path == mkdocs_files.css_files()[-1].src_uri
+    assert [expected_file_path] == mkdocs_config.extra_css
 
 
 def test_read_template_file():
     """Test if content of the template file is read correctly"""
     template_path = Path().cwd() / EXTRA_DIR / TEMPLATES_DIR / TEMPLATE_FILE
-    with open(template_path, "r") as template_file:
+    with open(template_path) as template_file:
         backlink_template_text = str(template_file.read())
-    assert resources.read_template_file(TEMPLATE_FILE) == backlink_template_text
+    assert backlink_template_text == resources.read_template_file(TEMPLATE_FILE)

@@ -21,11 +21,56 @@
 # SOFTWARE.
 
 import logging
+from enum import Enum
 from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher._shared.mkdosc_utils")
+
+
+class ConfigChoiceEnum(Enum):
+    def __eq__(self, other) -> bool:
+        return self.name == other
+
+    @staticmethod
+    def _str_to_bool(text) -> bool:
+        if text.lower() == "true":
+            return True
+        elif text.lower() == "false":
+            return False
+        raise ValueError(f"'{text}' cannot be converted into bool value")
+
+    @classmethod
+    def _get_enums(cls, enums: list) -> list:
+        enums_list = []
+        for enum in enums:
+            if enum.is_bool:
+                enums_list.extend([enum.name, cls._str_to_bool(enum.name)])
+            else:
+                enums_list.append(enum.name)
+        return enums_list
+
+    @property
+    def name(self) -> str:
+        return ".".join(str(self).split(".")[1:]).lower()
+
+    @property
+    def is_bool(self) -> bool:
+        return self.value[2]
+
+    @classmethod
+    def default(cls) -> str:
+        defaults = [f.name for f in cls if f.value[1]]
+        if len(defaults) == 0:
+            raise ValueError("Default value is not specified")
+        elif len(defaults) > 1:
+            raise ValueError(f"Multiple defaults specified: {defaults}")
+        return defaults[0]
+
+    @classmethod
+    def choices(cls) -> list:
+        return cls._get_enums(enums=cast(list, cls))
 
 
 def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> dict:
@@ -43,6 +88,6 @@ def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> dict:
 
 def get_mkdocs_config() -> MkDocsConfig:
     config = MkDocsConfig()
-    with open("mkdocs.yml", mode="r") as mkdocs_yml:
+    with open("mkdocs.yml") as mkdocs_yml:
         config.load_file(mkdocs_yml)
     return cast(MkDocsConfig, config)

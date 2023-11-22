@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import contextlib
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -41,13 +42,14 @@ from mkdocs.utils import meta as meta_parser
 
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared import mkdocs_utils
+from mkdocs_publisher._shared.urls import create_slug
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
+from mkdocs_publisher.meta.config import PublishEnum
 from mkdocs_publisher.meta.config import _MetaPublishConfig
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.meta.plugin")
-INDEX_FILE_NAME = "index.md"
 
 
 class MetaPlugin(BasePlugin[MetaPluginConfig]):
@@ -74,7 +76,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
         # Make index.md a first file in given directory
         other_files = [f for f in sorted_files if f.name not in self._not_other_files]
-        sorted_files = [f for f in sorted_files if f.name == "index.md"]
+        sorted_files = [f for f in sorted_files if f.name in self._not_other_files]
         sorted_files.extend(other_files)
 
         for file in sorted_files:
@@ -91,7 +93,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
                         # Read document publication status
                         publish = meta.get(self.config.publish.key_name)
-                        if publish is None:
+                        if publish is None and file.name != self.config.dir_meta_file:
                             log_message = (
                                 f'Missing "{self.config.publish.key_name}" value in '
                                 f'file "{file.relative_to(relative_to)}". Setting to '
@@ -103,18 +105,22 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                                 log.debug(log_message)
                             publish = self.config.publish.file_default
 
-                        # TODO: make it configurable
-                        if publish in ["draft", "false", False] and self._on_serve:
-                            publish = "published"
+                        if publish in PublishEnum.drafts() and self._on_serve:
+                            publish = PublishEnum.PUBLISHED.name
 
                         # Add file to variables used in nav cleanup based on publication status
-                        if publish in ["draft", "false", False]:
+                        if publish in PublishEnum.drafts():
                             self._draft_files.append(str(file.relative_to(relative_to)))
-                        elif publish == "hidden":
+                        elif publish == PublishEnum.HIDDEN.name:
                             self._hidden_files.append(str(file.relative_to(relative_to)))
 
+                        overview = meta.get(self.config.overview.key_name, False)
+
                         # Add not draft file to navigation (hidden will be removed in nav cleanup)
-                        if publish not in ["draft", "false", False]:
+                        if publish not in PublishEnum.drafts() and (
+                            file.name not in self._not_other_files
+                            or (file.name in self._not_other_files and overview)
+                        ):
                             nav.append({title: str(file.relative_to(relative_to))})
             elif (
                 file.is_dir()
@@ -125,12 +131,11 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         return nav
 
     def _nav_cleanup(self, items: list, elements_to_remove: list) -> list:
-
         nav = []
         for item in items:
-            if isinstance(item, Page) and Path(item.file.abs_src_path) not in elements_to_remove:
-                nav.append(item)
-            elif isinstance(item, Link):
+            if isinstance(item, Link) or (
+                isinstance(item, Page) and Path(item.file.abs_src_path) not in elements_to_remove
+            ):
                 nav.append(item)
             elif isinstance(item, Section):
                 item.children = self._nav_cleanup(
@@ -138,7 +143,6 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                 )
                 if len(item.children) > 0:  # Skip empty Sections
                     nav.append(item)
-
         return nav
 
     def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
@@ -147,19 +151,26 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
     @event_priority(100)  # Run before any other plugins
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
-
         # Setup some default values
-        self._not_other_files = [INDEX_FILE_NAME, self.config.dir_meta_file]
+        self._not_other_files = ["index.md", "README.md"]
+        if self.config.dir_meta_file not in self._not_other_files:
+            self._not_other_files.append(self.config.dir_meta_file)
 
         log.info(f'Reading meta data from "{self.config.dir_meta_file}" files')
         for meta_file in Path(config.docs_dir).glob(f"**/{self.config.dir_meta_file}"):
             with meta_file.open(encoding="utf-8-sig", errors="strict") as md_file:
-
                 # Add empty line at the end of file and read all data
                 markdown, meta = meta_parser.get_data(f"{md_file.read()}\n")
+                # Create slug for directory
+                slug = create_slug(
+                    meta=meta,
+                    file_name=meta_file.parts[-2],
+                    slug_mode=self.config.slug.mode,
+                    slug_key_name=self.config.slug.key_name,
+                    title_key_name=self.config.title.key_name,
+                    warn_on_missing=self.config.slug.warn_on_missing,
+                )
 
-                # Read slug for directories
-                slug = meta.get(self.config.slug.key_name)
                 if slug is not None:
                     self._dirs_slugs[meta_file.parent] = slug
 
@@ -180,12 +191,12 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                     publish = self.config.publish.dir_default
                 dir_path = str(meta_file.parent.relative_to(config.docs_dir))
 
-                if publish in ["draft", "false", False] and self._on_serve:
-                    publish = "published"
+                if publish in PublishEnum.drafts() and self._on_serve:
+                    publish = PublishEnum.PUBLISHED.name
 
-                if publish in ["draft", "false", False]:
+                if publish in PublishEnum.drafts():
                     self._draft_dirs.append(dir_path)
-                elif publish == "hidden":
+                elif publish == PublishEnum.HIDDEN.name:
                     self._hidden_dirs.append(dir_path)
                 elif publish not in _MetaPublishConfig.dir_default.choices:  # type: ignore
                     log.warning(
@@ -266,14 +277,12 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
     @event_priority(-100)
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:
-
         relative_draft_dirs = [str(f.relative_to(config.docs_dir)) for f in self._draft_dirs]
         if self._blog_config is not None:
             relative_draft_dirs.remove(self._blog_config.blog_dir)
 
         new_files = Files(files=[])
         for file in files:
-
             file_path = Path(file.abs_src_path)
             if file_path.suffix == ".md":
                 if (
@@ -295,19 +304,19 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
                 new_files.append(file)
 
                 if file.is_documentation_page():
-
                     meta_file = Path(file.abs_src_path)
                     with meta_file.open(encoding="utf-8-sig", errors="strict") as md_file:
                         markdown, meta = meta_parser.get_data(md_file.read())
 
-                        # Read slug
-                        slug = meta.get(self.config.slug.key_name)
-                        # TODO: add slugify and config
-                        if slug is None and self.config.slug.warn_on_missing:
-                            log.warning(
-                                f'File "{file.src_path}" has no '
-                                f'"{self.config.slug.key_name}" meta data'
-                            )
+                        # Create slug for file
+                        slug = create_slug(
+                            meta=meta,
+                            file_name=file.name,
+                            slug_mode=self.config.slug.mode,
+                            slug_key_name=self.config.slug.key_name,
+                            title_key_name=self.config.title.key_name,
+                            warn_on_missing=self.config.slug.warn_on_missing,
+                        )
 
                         # Get URL parts
                         if file.url.endswith("/"):
@@ -343,7 +352,6 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
     def on_nav(
         self, nav: Navigation, *, config: MkDocsConfig, files: Files
     ) -> Optional[Navigation]:
-
         elements_to_remove = []
         elements_to_remove.extend(self._draft_files)
         elements_to_remove.extend(self._hidden_files)
@@ -354,18 +362,14 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
     @event_priority(-100)  # Run after all other plugins
     def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files):
-
         # Modify page update date
         # TODO: move date format to config
         # TODO: warn on missing in config
         update_date: datetime = page.meta.get(
             "update", page.meta.get("date", datetime.strptime(page.update_date, "%Y-%m-%d"))
         )
-        try:
+        with contextlib.suppress(AttributeError):
             page.update_date = update_date.strftime("%Y-%m-%d")
-        except AttributeError:
-            # TODO: add format fallback
-            pass
 
         if (
             page.file.src_uri in self._hidden_files and not self.config.publish.search_in_hidden

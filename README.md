@@ -1,6 +1,6 @@
 ---
 date: 2023-10-02 23:12:38
-update: 2023-10-10 13:18:32
+update: 2023-10-31 09:55:17
 ---
 # Publisher for MkDocs
 
@@ -54,7 +54,7 @@ theme: material
 plugins:
   - search  # Material for MkDocs search plugin
   - pub-debugger
-  - pub-obsidian  # blog is a directory with all blog posts
+  - pub-blog
   - pub-obsidian
   - pub-social
   - pub-meta
@@ -63,7 +63,7 @@ plugins:
 
 ## Planned features
 
-A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/development/other/backlog/). I'm planning to move it to the project [GitHub issues](https://github.com/mkusz/mkdocs-publisher/issues) with proper badges and longer descriptions, but it's time-consuming and at this stage I'd rather spend it to develop a project.
+A full list of planned developments can be found on [this documentation page](https://mkusz.github.io/mkdocs-publisher/development/other/backlog/). I'm planning to move it to the project [GitHub issues](https://github.com/mkusz/mkdocs-publisher/issues) with proper badges and longer descriptions, but it's time-consuming and at this stage I'd rather spend it developing a project.
 
 ## Version history
 

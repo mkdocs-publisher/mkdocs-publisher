@@ -73,7 +73,6 @@ class VegaCharts:
             elif in_vega_block:
                 vega_stop_match = re.match(VEGA_BLOCK_STOP, line)
                 if vega_stop_match:
-
                     # Create chart data as JSON
                     vega_chart_json = json.loads("\n".join(vega_block_lines))
                     if "$schema" not in vega_chart_json:
