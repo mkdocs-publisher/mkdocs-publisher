@@ -11,6 +11,7 @@ repos:
           - LICENSE
           - --use-current-year
           - --allow-past-years
+
       - id: insert-license
         name: insert project license into HTML files
         files: ^mkdocs_publisher/
@@ -22,6 +23,7 @@ repos:
           - <!--|  ~|  -->
           - --use-current-year
           - --allow-past-years
+
       - id: insert-license
         name: insert project license into CSS files
         files: ^mkdocs_publisher/
@@ -34,6 +36,7 @@ repos:
           - /*| *| */
           - --use-current-year
           - --allow-past-years
+
       - id: insert-license
         name: insert project license into JS files
         files: ^mkdocs_publisher/
@@ -61,7 +64,7 @@ repos:
       - id: detect-private-key
       - id: no-commit-to-branch
       - id: name-tests-test
-        files: ^tests/
+        files: $tests/
         exclude: \.md$
 
   - repo: local
@@ -83,15 +86,7 @@ repos:
       - id: format
         name: format Python code
         description: Pre-format python code.
-        entry: poetry run black --quiet
-        language: system
-        types:
-          - python
-
-      - id: sort-imports
-        name: sort Python imports
-        description: Sort python imports.
-        entry: poetry run isort --quiet
+        entry: poetry run ruff format --quiet
         language: system
         types:
           - python
@@ -100,6 +95,8 @@ repos:
         name: lint Python
         description: Lint python code.
         entry: poetry run ruff check
+        args:
+          - --fix
         language: system
         types:
           - python

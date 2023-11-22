@@ -3,10 +3,10 @@ title: v1.1.1 - 2023.10.10
 slug: v111
 publish: true
 date: 2023-10-09 09:28:53
-update: 2023-10-11 15:40:55
+update: 2023-10-17 19:36:13
 tags:
   - v1.x
-description:
+description: Publisher for MkDocs v1.1.1
 categories:
   - release
 ---

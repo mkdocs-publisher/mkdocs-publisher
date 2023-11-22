@@ -24,7 +24,7 @@ Also, Obsidian has a huge variety of additional plugins, that allow to add some 
 
 - [Vega charts plugin](https://github.com/Justin-J-K/obsidian-vega) - this plugin allows for adding [Vega Charts](https://vega.github.io/vega/).
 
-Support for more plugins is [coming soon](../../05_dev/other/02_backlog.md).
+Support for more plugins is [coming soon](../../06_dev/other/02_backlog.md).
 
 ## Creating Obsidian Vault
 

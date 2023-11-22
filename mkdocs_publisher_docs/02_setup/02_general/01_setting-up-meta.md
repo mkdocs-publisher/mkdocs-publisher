@@ -4,7 +4,7 @@ icon: material/file-tree
 slug: pub-meta
 publish: true
 date: 2023-05-15 16:00:00
-update: 2023-10-03 12:23:15
+update: 2023-11-22 15:31:15
 description: Setting up Publisher for MkDocs meta plugin for metadata retrival and automatic navigation building
 categories:
   - setup
@@ -123,7 +123,7 @@ In short, navigation automatic generation works based on alphabetical order of f
 
 === ":octicons-markdown-16: slug"
 
-	`slug` is responsible for document URL.
+	`slug` is responsible for document URL. For more information, take a look [here](#Slug).
 
 	```yaml hl_lines="2"
 	---
@@ -139,7 +139,7 @@ One of the functions provided by the meta plugin is a possibility to set documen
 
 	```yaml hl_lines="2"
 	---
-	publish: true
+	publish: true3
 	---
 	```
 
@@ -205,6 +205,104 @@ Publication status can also be set for whole directories. This gives you a contr
 > [!NOTE] Default directory status
 > If publication status is not set for directory, by default status is set to `true`, so there is no need to create `README.md` file in each directory.
 
+### Slug
+
+While documentation is generated, each of the file is converted from Markdown into HTML format. MkDocs preserves directories and file names, so the URL structure is the same as the Markdown structure. Quite often, this is not the best option for SEO and you may want to change it. To achieve it, you have to provide a `slug` meta-data value. You can provide it for both: files and directories.
+
+Let's consider the below directory structure:
+
+```console hl_lines="2-4"
+.
+└─ docs/
+       └─ 99_other/
+              └─ 08_faq.md
+```
+
+This will produce this kind of URL:
+
+> https://yourdomain.com/99_other/08_faq/
+
+It doesn't look good and is difficult to remember and not good in SEO perspective. To improve it, the above URL should look like this:
+
+> https://yourdomain.com/other/faq/
+
+To make it happen, you have to use:
+
+- `README.md` inside `99_other` directory to change its URL to `other`,
+- `08_faq.md` to change its URL to `faq`.
+
+=== ":fontawesome-solid-folder-tree:"
+
+    You have to add `README.md` file inside `99_other` directory, so the file structure will looks like this.
+
+    ```console hl_lines="4"
+	.
+	└─ docs/
+	       └─ 99_other/
+			      ├─ README.md
+	              └─ 08_faq.md
+    ```
+
+=== ":octicons-markdown-16: README.md"
+
+	```yaml hl_lines="2"
+	---
+	slug: other
+	---
+	```
+
+=== ":octicons-markdown-16: 08_faq.md"
+
+	```yaml hl_lines="2"
+	---
+	slug: faq
+	---
+	```
+
+#### Generation mode
+
+Slug can be generated based on one of the values:
+
+- `slug` meta-data value,
+- `title` meta-data value,
+- directory or file name.
+
+There are 3 slug generation modes that combine the above methods:
+
+- `title`  (default)
+- `filename`
+
+Below, you can see, a simplified algorithm of how slug is obtained.
+
+```mermaid
+flowchart TD
+	START("start")
+	SLUG("slug meta-data")
+	TITLE("title meta-data")
+	FILENAME("file name")
+	END("end")
+
+	START --> SLUG
+	SLUG --> |set| END
+	SLUG --> |title| TITLE
+	TITLE --> FILENAME
+	SLUG --> |filename| FILENAME
+	TITLE --> |set| END
+	FILENAME --> |set| END
+```
+
+> [!TIP] Using `slug` meta-data
+> Despite the possibility to generate slug by using other methods, `slug` meta-data always overrides any other value.
+
+> [!NOTE] Default slug generation mode
+> Slug generation mode is by default set to `title`.
+
+> [!NOTE] Fallback mechanism
+> In case of any problem with obtaining slug value, there is also a fallback mechanism, that will use directory/file name.
+
+> [!NOTE] MkDocs backward compatibility
+> When slug generation method is set to `filename` or fallback mechanism is triggered, slug is generated the same way as MkDocs default configuration.
+
 ## Configuration
 
 To enable the built-in meta plugin, the following lines have to be added to `mkdocs.yml` file:
@@ -235,19 +333,23 @@ Above you can find all possible settings with their default values. You don't ha
 
 ===+ ":octicons-file-code-16: mkdocs.yml"
 
-	```yaml hl_lines="3-6"
+	```yaml hl_lines="3-7"
 	plugins:
 	  - pub-meta:
 		  slug:
 			enable: true
+			mode: title
 			warn_on_missing: true
-			key_name: status
+			key_name: slug
 	```
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
 
 > [!SETTINGS]- [enabled](#+meta.slug.enabled){#+meta.slug.enabled}
 > Control if slug metadata will be used while document URL is created while generating a web page.
+
+> [!SETTINGS]- [mode](#+meta.slug.mode){#+meta.slug.mode}
+> Defines how document slug will be generated.
 
 > [!SETTINGS]- [warn_on_missing](#+meta.slug.warn_on_missing){#+meta.slug.warn_on_missing}
 > MkDocs contains a switch for [strict mode](https://www.mkdocs.org/user-guide/configuration/#strict). This mode forces break of document generation on any warning and if this option is also enabled, it will force check of all documents, containing a `slug` key defined.

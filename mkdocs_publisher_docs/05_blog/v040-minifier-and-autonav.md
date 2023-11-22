@@ -13,7 +13,7 @@ categories:
 
 In this release, many things have happened, but the most important one is a project rename.
 
-During a development, many ideas about further development came to my mind. I have created a [backlog](../05_dev/other/02_backlog.md).
+During a development, many ideas about further development came to my mind. I have created a [backlog](../06_dev/other/02_backlog.md).
 
 <!-- more -->
 

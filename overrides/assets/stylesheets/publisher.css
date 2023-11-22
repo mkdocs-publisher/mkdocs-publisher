@@ -48,3 +48,7 @@
 .md-typeset details > summary::after {
     top: 0.375em;
 }
+
+.mermaid {
+    text-align: center;
+}

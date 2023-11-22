@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import contextlib
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -32,22 +33,22 @@ from mkdocs.config import Config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
+from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
-from mkdocs.structure.nav import Link
 from mkdocs.structure.nav import Navigation
-from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
-from mkdocs.utils import meta as meta_parser
+
+from mkdocs_publisher._shared import mkdocs_utils
 
 # noinspection PyProtectedMember
-from mkdocs_publisher._shared import mkdocs_utils
+from mkdocs_publisher._shared.meta_files import MetaFile
+from mkdocs_publisher._shared.meta_files import MetaFiles
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
-from mkdocs_publisher.meta.config import _MetaPublishConfig
+from mkdocs_publisher.meta.nav import MetaNav
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.meta.plugin")
-INDEX_FILE_NAME = "index.md"
 
 
 class MetaPlugin(BasePlugin[MetaPluginConfig]):
@@ -58,316 +59,190 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         - https://octamedia.pl/blog/mapa-strony-xml/
         - https://octamedia.pl/blog/linkowanie-wewnetrzne/ (useful for obsidian backlinks)
         """
-        self._blog_config: Optional[BlogPluginConfig] = None
-        self._dirs_slugs: dict = {}
-        self._dirs_titles: dict = {}
-        self._draft_dirs: list = []
-        self._hidden_dirs: list = []
-        self._draft_files: list = []
-        self._hidden_files: list = []
-        self._not_other_files: list = []
-        self._on_serve = False
 
-    def _build_config_nav(self, directory: Path, relative_to: Path) -> list:
-        nav = list()
-        sorted_files = sorted([f for f in directory.glob("*")])
-
-        # Make index.md a first file in given directory
-        other_files = [f for f in sorted_files if f.name not in self._not_other_files]
-        sorted_files = [f for f in sorted_files if f.name == "index.md"]
-        sorted_files.extend(other_files)
-
-        for file in sorted_files:
-            if not any([d for d in self._draft_dirs if file.is_relative_to(d)]):
-                if file.is_dir():
-                    title = self._dirs_titles.get(file, file.stem)
-                    dir_nav = self._build_config_nav(directory=file, relative_to=relative_to)
-                    if isinstance(dir_nav, list) and len(dir_nav) > 0:  # Skip empty directories
-                        nav.append({title: dir_nav})
-                elif file.is_file() and file.suffix == ".md":
-                    with file.open(encoding="utf-8-sig", errors="strict") as md_file:
-                        markdown, meta = meta_parser.get_data(md_file.read())
-                        title = meta.get(self.config.title.key_name, file.stem)
-
-                        # Read document publication status
-                        publish = meta.get(self.config.publish.key_name)
-                        if publish is None:
-                            log_message = (
-                                f'Missing "{self.config.publish.key_name}" value in '
-                                f'file "{file.relative_to(relative_to)}". Setting to '
-                                f'default value: "{self.config.publish.file_default}".'
-                            )
-                            if self.config.publish.file_warn_on_missing:
-                                log.warning(log_message)
-                            else:
-                                log.debug(log_message)
-                            publish = self.config.publish.file_default
-
-                        # TODO: make it configurable
-                        if publish in ["draft", "false", False] and self._on_serve:
-                            publish = "published"
-
-                        # Add file to variables used in nav cleanup based on publication status
-                        if publish in ["draft", "false", False]:
-                            self._draft_files.append(str(file.relative_to(relative_to)))
-                        elif publish == "hidden":
-                            self._hidden_files.append(str(file.relative_to(relative_to)))
-
-                        # Add not draft file to navigation (hidden will be removed in nav cleanup)
-                        if publish not in ["draft", "false", False]:
-                            nav.append({title: str(file.relative_to(relative_to))})
-            elif (
-                file.is_dir()
-                and self._blog_config is not None
-                and str(file.relative_to(relative_to)) == self._blog_config.blog_dir
-            ):
-                nav.append({file.stem: str(file.relative_to(relative_to))})
-        return nav
-
-    def _nav_cleanup(self, items: list, elements_to_remove: list) -> list:
-
-        nav = []
-        for item in items:
-            if isinstance(item, Page) and Path(item.file.abs_src_path) not in elements_to_remove:
-                nav.append(item)
-            elif isinstance(item, Link):
-                nav.append(item)
-            elif isinstance(item, Section):
-                item.children = self._nav_cleanup(
-                    items=item.children, elements_to_remove=elements_to_remove
-                )
-                if len(item.children) > 0:  # Skip empty Sections
-                    nav.append(item)
-
-        return nav
+        self._on_serve = False  # TODO: change draft to published (pass it meta_files)
+        self._blog_dir: Optional[Path] = None
+        self._attachments_dir: Optional[Path] = None
+        self._ignored_dirs: list[Path] = []
+        self._meta_files: MetaFiles = MetaFiles()
+        self._meta_nav: Optional[MetaNav] = None
 
     def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
         if command == "serve":
             self._on_serve = True
+        self._meta_files.on_serve = self._on_serve
+
+    @staticmethod
+    def _get_blog_dir(mkdocs_config: MkDocsConfig) -> Optional[Path]:
+        blog_config: Optional[BlogPluginConfig] = cast(
+            BlogPluginConfig,
+            mkdocs_utils.get_plugin_config(
+                mkdocs_config=mkdocs_config,
+                plugin_name="pub-blog",
+            ),
+        )
+        if blog_config is not None:
+            return Path(mkdocs_config.docs_dir).joinpath(blog_config.blog_dir)
+        return None
+
+    @staticmethod
+    def _get_obsidian_dirs(mkdocs_config: MkDocsConfig) -> tuple[list[Path], Optional[Path]]:
+        ignored_dirs: list[Path] = []
+        attachments_dir: Optional[Path] = None
+        docs_dir = Path(mkdocs_config.docs_dir)
+
+        obsidian_config: Optional[ObsidianPluginConfig] = cast(
+            ObsidianPluginConfig,
+            mkdocs_utils.get_plugin_config(
+                mkdocs_config=mkdocs_config,
+                plugin_name="pub-obsidian",
+            ),
+        )
+        if obsidian_config is not None:
+            ignored_dirs.append(docs_dir.joinpath(obsidian_config.obsidian_dir))
+            ignored_dirs.append(docs_dir.joinpath(obsidian_config.templates_dir))
+            attachments_dir = docs_dir.joinpath(obsidian_config.attachments_dir)
+
+        return ignored_dirs, attachments_dir
 
     @event_priority(100)  # Run before any other plugins
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
+        # Set some default values
+        log.info("Read files and directories metadata")
+        self._blog_dir = self._get_blog_dir(mkdocs_config=config)
+        self._meta_nav = MetaNav(
+            meta_files=self._meta_files, blog_dir=self._blog_dir.relative_to(config.docs_dir)
+        )
+        self._ignored_dirs, self._attachments_dir = self._get_obsidian_dirs(mkdocs_config=config)
+        self._meta_files.set_configs(mkdocs_config=config, meta_plugin_config=self.config)
+        self._meta_files.add_hidden_path(hidden_path=self._attachments_dir)
 
-        # Setup some default values
-        self._not_other_files = [INDEX_FILE_NAME, self.config.dir_meta_file]
+        # Iterate over all files and directories in docs directory
+        for docs_file in sorted(Path(config.docs_dir).rglob("*")):
+            meta_link: Optional[MetaFile] = None
+            is_ignored = any(
+                [docs_file.is_relative_to(ignored_dir) for ignored_dir in self._ignored_dirs]
+            )
 
-        log.info(f'Reading meta data from "{self.config.dir_meta_file}" files')
-        for meta_file in Path(config.docs_dir).glob(f"**/{self.config.dir_meta_file}"):
-            with meta_file.open(encoding="utf-8-sig", errors="strict") as md_file:
-
-                # Add empty line at the end of file and read all data
-                markdown, meta = meta_parser.get_data(f"{md_file.read()}\n")
-
-                # Read slug for directories
-                slug = meta.get(self.config.slug.key_name)
-                if slug is not None:
-                    self._dirs_slugs[meta_file.parent] = slug
-
-                # Read title for directory
-                title = meta.get(self.config.title.key_name)
-                if title is not None:
-                    self._dirs_titles[meta_file.parent] = title
-
-                # Read directories publication status
-                publish = meta.get(str(self.config.publish.key_name))
-                if publish is None:
-                    if self.config.publish.dir_warn_on_missing:
-                        log.warning(
-                            f'Missing "{self.config.publish.key_name}" value in '
-                            f'file "{meta_file.relative_to(config.docs_dir)}". Setting to '
-                            f'default value: "{self.config.publish.dir_default}".'
-                        )
-                    publish = self.config.publish.dir_default
-                dir_path = str(meta_file.parent.relative_to(config.docs_dir))
-
-                if publish in ["draft", "false", False] and self._on_serve:
-                    publish = "published"
-
-                if publish in ["draft", "false", False]:
-                    self._draft_dirs.append(dir_path)
-                elif publish == "hidden":
-                    self._hidden_dirs.append(dir_path)
-                elif publish not in _MetaPublishConfig.dir_default.choices:  # type: ignore
-                    log.warning(
-                        f'Wrong key "{self.config.publish.key_name}" value '
-                        f'in file "{meta_file.relative_to(config.docs_dir)}" (only '
-                        f"{_MetaPublishConfig.dir_default.choices} are possible)"  # type: ignore
-                    )
-
-                log.debug(
-                    f"Title: {title}, publish: {publish}, "
-                    f"slug: {slug} "
-                    f'(directory: "{dir_path}")'
+            if not is_ignored and docs_file.is_dir():
+                meta_link = MetaFile(
+                    path=docs_file.relative_to(config.docs_dir),
+                    abs_path=docs_file,
+                    is_dir=True,
+                )
+            elif (
+                not is_ignored
+                and not docs_file.is_relative_to(cast(Path, self._blog_dir))
+                and docs_file.suffix == ".md"
+                and docs_file.name not in self._meta_files.meta_files
+            ):
+                meta_link = MetaFile(
+                    path=docs_file.relative_to(config.docs_dir),
+                    abs_path=docs_file,
+                    is_dir=False,
                 )
 
-        # Add blog dir to one that will be skipped (blog has its own file resolution order)
-        self._blog_config: Optional[BlogPluginConfig] = mkdocs_utils.get_plugin_config(
-            mkdocs_config=config,
-            plugin_name="pub-blog",
-        )  # type: ignore
-        if self._blog_config is not None:
-            blog_dir = cast(BlogPluginConfig, self._blog_config).blog_dir
-            # TODO: cleanup mess with short directory names in self._draft_dirs
-            if (
-                blog_dir not in self._draft_dirs
-                and Path(config.docs_dir) / blog_dir not in self._draft_dirs
-            ):  # type: ignore
-                self._draft_dirs.append(blog_dir)
+            if meta_link is not None:
+                self._meta_files[str(meta_link.path)] = meta_link
 
-        # Add obsidian dirs to ones that will be skipped
-        obsidian_config: Optional[ObsidianPluginConfig] = mkdocs_utils.get_plugin_config(
-            mkdocs_config=config,
-            plugin_name="pub-obsidian",
-        )  # type: ignore
-        if obsidian_config is not None:
-            # TODO: cleanup mess with short directory names in self._draft_dirs
-            if (
-                obsidian_config.obsidian_dir != ""
-                and obsidian_config.obsidian_dir not in self._draft_dirs
-                and Path(config.docs_dir) / obsidian_config.obsidian_dir not in self._draft_dirs
-            ):
-                self._draft_dirs.append(obsidian_config.obsidian_dir)
-            if (
-                obsidian_config.templates_dir != ""
-                and obsidian_config.templates_dir not in self._draft_dirs
-                and Path(config.docs_dir) / obsidian_config.templates_dir not in self._draft_dirs
-            ):
-                self._draft_dirs.append(obsidian_config.templates_dir)
-        self._draft_dirs = [Path(config.docs_dir) / d for d in self._draft_dirs]
-        self._hidden_dirs = [Path(config.docs_dir) / f for f in self._hidden_dirs]
-        for draft_dir in self._draft_dirs:
-            if not draft_dir.exists():
-                log.warning(
-                    f'Directory "{draft_dir.relative_to(config.docs_dir)}" doesn\'t exists'
-                )
-        config.nav = self._build_config_nav(
-            directory=Path(config.docs_dir), relative_to=Path(config.docs_dir)
-        )
         log.info(
-            f"Draft directories: "
-            f"{[str(d.relative_to(config.docs_dir)) for d in self._draft_dirs]}"
+            f"Ignored directories: "
+            f"{[str(d.relative_to(config.docs_dir)) for d in self._ignored_dirs]}"
         )
-        log.info(
-            f"Hidden directories: "
-            f"{[str(d.relative_to(config.docs_dir)) for d in self._hidden_dirs]}"
-        )
-        draft_files_list = [
-            str(f.relative_to(config.docs_dir)) if isinstance(f, Path) else f
-            for f in self._draft_files
-        ]
-        log.info(f"Draft files: {draft_files_list}")
-        hidden_files_list = [
-            str(f.relative_to(config.docs_dir)) if isinstance(f, Path) else f
-            for f in self._hidden_files
-        ]
-        log.info(f"Hidden files: {hidden_files_list}")
+        log.info(f"Draft files and directories: " f"{list(self._meta_files.drafts().keys())}")
+        log.info(f"Hidden files and directories: " f"{list(self._meta_files.hidden().keys())}")
+
+        config.nav = self._meta_nav.build_nav(mkdocs_config=config)
 
         return config
 
     @event_priority(-100)
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:
+        draft_files = self._meta_files.drafts(files=True).keys()
+        hidden_files = self._meta_files.hidden(files=True)
 
-        relative_draft_dirs = [str(f.relative_to(config.docs_dir)) for f in self._draft_dirs]
-        if self._blog_config is not None:
-            relative_draft_dirs.remove(self._blog_config.blog_dir)
+        ignored_dirs = [d.abs_path for d in self._meta_files.drafts(dirs=True).values()]
+        ignored_dirs.extend(self._ignored_dirs)
 
         new_files = Files(files=[])
         for file in files:
-
-            file_path = Path(file.abs_src_path)
-            if file_path.suffix == ".md":
-                if (
-                    any([d for d in self._draft_dirs if file_path.is_relative_to(d)])
-                    and Path(file_path) not in self._draft_files
-                ):
-                    self._draft_files.append(file_path)
-                elif (
-                    any([d for d in self._hidden_dirs if file_path.is_relative_to(d)])
-                    and Path(file_path) not in self._hidden_files
-                ):
-                    self._hidden_files.append(file_path)
+            file: File
+            file_path: Path = Path(file.src_path)
 
             if (
-                not any([file.src_uri.startswith(draft_dir) for draft_dir in relative_draft_dirs])
-                and str(Path(file.src_uri).name) != self.config.dir_meta_file
-                and str(file.src_uri) not in self._draft_files
+                not any([Path(file.abs_src_path).is_relative_to(d) for d in ignored_dirs])
+                and file.src_path not in draft_files
+                and file.src_path not in hidden_files
+                and str(file_path.name) not in self._meta_files.meta_files
+            ) or (
+                str(file_path.name) in self._meta_files.meta_files
+                and str(file_path.parent) in self._meta_files
+                and self._meta_files[str(file_path.parent)].is_overview
             ):
+                if self.config.slug.enabled:
+                    # Get URL parts
+                    if file.url.endswith("/"):
+                        file.url = file.url[0:-1]
+                    url_parts = file.url.split("/")
+
+                    # Get abs file parts
+                    path_parts: list[Path] = []
+                    for path_part in file_path.parts:
+                        if not path_parts:
+                            path_parts.append(Path(path_part))
+                        else:
+                            path_parts.append(path_parts[-1] / path_part)
+
+                    # Replace URL parts that have slug defined
+                    for position, path_part in enumerate(path_parts):
+                        meta_file: Optional[MetaFile] = self._meta_files.get(str(path_part), None)
+                        if meta_file is not None:
+                            url_parts[position] = meta_file.slug
+
+                    # Recreate file params based on URL with replaced parts
+                    if file.url != ".":  # Do not modify main index page
+                        file.url = quote(f"{'/'.join(url_parts)}/")
+                        url_parts.append(file.dest_uri.split("/")[-1])
+                        if len(url_parts) >= 2 and url_parts[-1] == url_parts[-2]:
+                            url_parts.pop(-1)
+                        file.dest_uri = quote("/".join(url_parts))
+                        file.abs_dest_path = str(Path(config.site_dir) / file.dest_uri)
+
                 new_files.append(file)
-
-                if file.is_documentation_page():
-
-                    meta_file = Path(file.abs_src_path)
-                    with meta_file.open(encoding="utf-8-sig", errors="strict") as md_file:
-                        markdown, meta = meta_parser.get_data(md_file.read())
-
-                        # Read slug
-                        slug = meta.get(self.config.slug.key_name)
-                        # TODO: add slugify and config
-                        if slug is None and self.config.slug.warn_on_missing:
-                            log.warning(
-                                f'File "{file.src_path}" has no '
-                                f'"{self.config.slug.key_name}" meta data'
-                            )
-
-                        # Get URL parts
-                        if file.url.endswith("/"):
-                            file.url = file.url[0:-1]
-                        url_parts = file.url.split("/")
-
-                        # Get abs file parts
-                        path_parts: list[Path] = []
-                        for path_part in file.src_path.split("/"):
-                            if not path_parts:
-                                path_parts.append(Path(config.docs_dir) / path_part)
-                            else:
-                                path_parts.append(path_parts[-1] / path_part)
-
-                        # Replace URL parts that have slug defined
-                        for position, path_part in enumerate(path_parts):
-                            if path_part in self._dirs_slugs:
-                                url_parts[position] = self._dirs_slugs[path_part]
-
-                        # Replace last URL part with current file slug if exists
-                        if slug is not None and self.config.slug.enabled:
-                            url_parts[-1] = slug
-
-                        # Recreate file params based on URL with replaced parts
-                        if file.url != ".":  # Do not modify main index page
-                            file.url = quote(f"{'/'.join(url_parts)}/")
-                            url_parts.append(file.dest_uri.split("/")[-1])
-                            file.dest_uri = quote("/".join(url_parts))
-                            file.abs_dest_path = str(Path(config.site_dir) / file.dest_uri)
 
         return new_files
 
     def on_nav(
         self, nav: Navigation, *, config: MkDocsConfig, files: Files
     ) -> Optional[Navigation]:
+        removal_list = [*self._meta_files.drafts().keys(), *self._meta_files.hidden().keys()]
 
-        elements_to_remove = []
-        elements_to_remove.extend(self._draft_files)
-        elements_to_remove.extend(self._hidden_files)
+        log.info(f"Nav elements to remove: {removal_list}")
 
-        nav.items = self._nav_cleanup(items=nav.items, elements_to_remove=elements_to_remove)
+        nav.items = self._meta_nav.nav_cleanup(
+            items=nav.items,
+            removal_list=removal_list,
+        )
 
         return nav
 
     @event_priority(-100)  # Run after all other plugins
     def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files):
-
         # Modify page update date
         # TODO: move date format to config
         # TODO: warn on missing in config
         update_date: datetime = page.meta.get(
             "update", page.meta.get("date", datetime.strptime(page.update_date, "%Y-%m-%d"))
         )
-        try:
+        with contextlib.suppress(AttributeError):
             page.update_date = update_date.strftime("%Y-%m-%d")
-        except AttributeError:
-            # TODO: add format fallback
-            pass
 
+        # Conditionally exclude file from Material for MkDocs search plugin
         if (
-            page.file.src_uri in self._hidden_files and not self.config.publish.search_in_hidden
-        ) or (page.file.src_uri in self._draft_files and not self.config.publish.search_in_draft):
+            page.file.src_uri in self._meta_files.drafts(files=True)
+            and not self.config.publish.search_in_draft
+        ) or (
+            page.file.src_uri in self._meta_files.hidden(files=True)
+            and not self.config.publish.search_in_hidden
+        ):
             page.meta["search"] = {"exclude": True}

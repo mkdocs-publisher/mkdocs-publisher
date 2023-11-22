@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -50,8 +50,10 @@ class _ObsidianLinksConfig(Config):
 
 
 class ObsidianPluginConfig(Config):
+    # TODO: read those values from Obsidian config files
     obsidian_dir = option.Type(str, default=".obsidian")
     templates_dir = option.Type(str, default="_templates")
+    attachments_dir = option.Type(str, default="_attachments")
 
     backlinks: _ObsidianBacklinksConfig = option.SubConfig(_ObsidianBacklinksConfig)  # type: ignore
     callouts: _ObsidianCalloutsConfig = option.SubConfig(_ObsidianCalloutsConfig)  # type: ignore

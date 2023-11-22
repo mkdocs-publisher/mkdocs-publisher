@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,52 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from typing import cast
+
 from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
+
+from mkdocs_publisher._shared.mkdocs_utils import ConfigChoiceEnum
+
+
+class SlugModeChoiceEnum(ConfigChoiceEnum):
+    TITLE = 0, True, False
+    FILENAME = 1, False, False
+
+
+class PublishChoiceEnum(ConfigChoiceEnum):
+    DRAFT = 0, False, False
+    HIDDEN = 1, False, False
+    PUBLISHED = 2, False, False
+    TRUE = 3, False, True
+    FALSE = 4, False, True
+
+    @classmethod
+    def drafts(cls) -> list:
+        return cls._get_enums([cls.DRAFT, cls.FALSE])  # pragma: no cover
+
+    @classmethod
+    def published(cls) -> list:
+        return cls._get_enums([cls.PUBLISHED, cls.TRUE])  # pragma: no cover
+
+
+class OverviewChoiceEnum(ConfigChoiceEnum):
+    AUTO = 0, True, False
+    TRUE = 1, False, True
+    FALSE = 2, False, True
+
+
+class TitleChoiceEnum(ConfigChoiceEnum):
+    META = 0, True, False
+    HEAD = 1, False, False
+    FILE = 2, False, False
 
 
 class _MetaSlugConfig(Config):
     enabled = option.Type(bool, default=True)
+    mode = option.Choice(
+        choices=SlugModeChoiceEnum.choices(), default=SlugModeChoiceEnum.default()
+    )
     warn_on_missing = option.Type(bool, default=True)
     key_name = option.Type(str, default="slug")
 
@@ -33,24 +73,33 @@ class _MetaSlugConfig(Config):
 class _MetaPublishConfig(Config):
     search_in_hidden = option.Type(bool, default=False)
     search_in_draft = option.Type(bool, default=False)
-    file_default = option.Choice(
-        choices=["draft", "hidden", "published", True, False], default=False
-    )
+    file_default = option.Choice(choices=PublishChoiceEnum.choices(), default=False)
     file_warn_on_missing = option.Type(bool, default=True)
-    dir_default = option.Choice(
-        choices=["draft", "hidden", "published", True, False], default=True
-    )
+    dir_default = option.Choice(choices=PublishChoiceEnum.choices(), default=True)
     dir_warn_on_missing = option.Type(bool, default=False)
     key_name = option.Type(str, default="publish")
 
 
 class _MetaTitleConfig(Config):
     key_name = option.Type(str, default="title")
+    mode = option.Choice(choices=TitleChoiceEnum.choices(), default=TitleChoiceEnum.default())
+    warn_on_missing_meta = option.Type(bool, default=True)
+    warn_on_missing_header = option.Type(bool, default=True)
+
+
+class _MetaOverviewConfig(Config):
+    key_name = option.Type(str, default="overview")
+    default = option.Choice(
+        choices=OverviewChoiceEnum.choices(), default=OverviewChoiceEnum.default()
+    )
 
 
 class MetaPluginConfig(Config):
     dir_meta_file = option.Type(str, default="README.md")
 
-    slug: _MetaSlugConfig = option.SubConfig(_MetaSlugConfig)  # type: ignore
-    publish: _MetaPublishConfig = option.SubConfig(_MetaPublishConfig)  # type: ignore
-    title: _MetaTitleConfig = option.SubConfig(_MetaTitleConfig)  # type: ignore
+    overview: _MetaOverviewConfig = cast(
+        _MetaOverviewConfig, option.SubConfig(_MetaOverviewConfig)
+    )
+    slug: _MetaSlugConfig = cast(_MetaSlugConfig, option.SubConfig(_MetaSlugConfig))
+    publish: _MetaPublishConfig = cast(_MetaPublishConfig, option.SubConfig(_MetaPublishConfig))
+    title: _MetaTitleConfig = cast(_MetaTitleConfig, option.SubConfig(_MetaTitleConfig))

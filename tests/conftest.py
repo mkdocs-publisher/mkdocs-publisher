@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,16 +20,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import tempfile
+import logging
 from pathlib import Path
 
 import pytest
-import yaml
 from _pytest.fixtures import SubRequest
 from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher.blog.plugin import BlogPlugin
+from mkdocs_publisher.meta.plugin import MetaPlugin
 from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
+
+
+@pytest.fixture()
+def log():
+    return logging.getLogger("tests")
 
 
 @pytest.fixture()
@@ -49,6 +54,7 @@ def mkdocs_config(request: SubRequest) -> MkDocsConfig:
         [{"docs_dir": "tests/_tests_data"}],
         indirect=True,
     )
+    def test_function(mkdocs_config):
     ```
     """
     try:
@@ -56,11 +62,8 @@ def mkdocs_config(request: SubRequest) -> MkDocsConfig:
     except AttributeError:
         config_dict = {"docs_dir": "tests/_tests_data"}
     config = MkDocsConfig()
-    with tempfile.NamedTemporaryFile(mode="w+") as config_file:
-        yaml.safe_dump(data=config_dict, stream=config_file)
-        config_file.seek(0)
-        config.load_file(config_file=config_file)
-        yield config  # type: ignore
+    config.load_dict(patch=config_dict)
+    yield config  # type: ignore
 
 
 @pytest.fixture(scope="function")
@@ -74,4 +77,15 @@ def pub_obsidian_plugin() -> ObsidianPlugin:
 def pub_blog_plugin() -> BlogPlugin:
     plugin = BlogPlugin()
     plugin.load_config(options={"plugins": ["pub-blog"]})
+    return plugin
+
+
+@pytest.fixture(scope="function")
+def pub_meta_plugin(request: SubRequest) -> MetaPlugin:
+    try:
+        config_dict = request.param
+    except AttributeError:
+        config_dict = {}
+    plugin = MetaPlugin()
+    plugin.load_config(options=config_dict)
     return plugin

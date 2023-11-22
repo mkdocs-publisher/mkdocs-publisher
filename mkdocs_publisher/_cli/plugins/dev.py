@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import pathlib
+import importlib.resources
+import logging
+import os
+import shutil
+from pathlib import Path
 
 import click
 
+import mkdocs_publisher_docs
 from mkdocs_publisher._shared import file_utils
+from mkdocs_publisher._shared import mkdocs_utils
+
+log = logging.getLogger("mkdocs.plugins.publisher.cli.dev")
 
 
 @click.group
@@ -33,10 +41,35 @@ def app():
     pass
 
 
+def iter_res(src_dir: Path, dst_dir: Path, res_path: Path):
+    for path in res_path.iterdir():
+        if path.is_dir():
+            iter_res(src_dir=src_dir, dst_dir=dst_dir, res_path=path)
+        else:
+            src_file = path
+            dst_file = dst_dir / src_file.relative_to(src_dir)
+            os.makedirs(name=str(dst_file.parents[0]), exist_ok=True)
+            shutil.copy(src=src_file, dst=dst_file)
+
+
+@app.command()
+def docs_copy():
+    mkdocs_config = mkdocs_utils.get_mkdocs_config()
+    docs_path = Path().cwd() / mkdocs_config.docs_dir
+    res_path = Path(str(importlib.resources.files(mkdocs_publisher_docs)))
+
+    if docs_path == res_path:
+        log.debug("Can't copy to the same directory!")
+    else:
+        if click.confirm(f"Remove content of '{docs_path}?'"):
+            shutil.rmtree(docs_path, ignore_errors=True)
+        iter_res(src_dir=res_path, dst_dir=docs_path, res_path=res_path)
+
+
 @app.command()
 def css_min():
     """Minify project CSS files"""
-    project_dir = pathlib.Path.cwd() / "mkdocs_publisher"
+    project_dir = Path.cwd() / "mkdocs_publisher"
     for input_css_file in project_dir.rglob("*.css"):
         if ".min" not in input_css_file.suffixes:
             output_css_file = input_css_file.parent / f"{input_css_file.stem}.min.css"
