@@ -65,7 +65,7 @@ mkdocs-material = "^9.4.4"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
-black = "^22.12.0"
+black = ">=22.12,<25.0"
 yamllint = "^1.29.0"
 pyright = "1.1.323"
 ruff = "^0.0.292"
