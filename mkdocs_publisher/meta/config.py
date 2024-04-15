@@ -70,6 +70,14 @@ class _MetaSlugConfig(Config):
     key_name = option.Type(str, default="slug")
 
 
+class _MetaOverviewConfig(Config):
+    enabled = option.Type(bool, default=True)
+    default = option.Choice(
+        choices=OverviewChoiceEnum.choices(), default=OverviewChoiceEnum.default()
+    )
+    key_name = option.Type(str, default="overview")
+
+
 class _MetaPublishConfig(Config):
     search_in_hidden = option.Type(bool, default=False)
     search_in_draft = option.Type(bool, default=False)
@@ -87,19 +95,12 @@ class _MetaTitleConfig(Config):
     warn_on_missing_header = option.Type(bool, default=True)
 
 
-class _MetaOverviewConfig(Config):
-    key_name = option.Type(str, default="overview")
-    default = option.Choice(
-        choices=OverviewChoiceEnum.choices(), default=OverviewChoiceEnum.default()
-    )
-
-
 class MetaPluginConfig(Config):
-    dir_meta_file = option.Type(str, default="README.md")
+    dir_meta_file = option.Choice(["README.md", "index.md"], default="README.md")
 
     overview: _MetaOverviewConfig = cast(
         _MetaOverviewConfig, option.SubConfig(_MetaOverviewConfig)
     )
-    slug: _MetaSlugConfig = cast(_MetaSlugConfig, option.SubConfig(_MetaSlugConfig))
     publish: _MetaPublishConfig = cast(_MetaPublishConfig, option.SubConfig(_MetaPublishConfig))
+    slug: _MetaSlugConfig = cast(_MetaSlugConfig, option.SubConfig(_MetaSlugConfig))
     title: _MetaTitleConfig = cast(_MetaTitleConfig, option.SubConfig(_MetaTitleConfig))

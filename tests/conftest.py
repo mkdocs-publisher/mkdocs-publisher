@@ -43,7 +43,7 @@ def test_data_dir() -> Path:
 
 
 @pytest.fixture(scope="function")
-def mkdocs_config(request: SubRequest) -> MkDocsConfig:
+def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore
     """Fixture returning MkDocsConfig
 
     How to change configuration:
@@ -67,16 +67,24 @@ def mkdocs_config(request: SubRequest) -> MkDocsConfig:
 
 
 @pytest.fixture(scope="function")
-def pub_obsidian_plugin() -> ObsidianPlugin:
+def pub_obsidian_plugin(request: SubRequest) -> ObsidianPlugin:
+    try:
+        config_dict = request.param
+    except AttributeError:
+        config_dict = {}
     plugin = ObsidianPlugin()
-    plugin.load_config(options={"plugins": ["pub-obsidian"]})
+    plugin.load_config(options=config_dict)
     return plugin
 
 
 @pytest.fixture(scope="function")
-def pub_blog_plugin() -> BlogPlugin:
+def pub_blog_plugin(request: SubRequest) -> BlogPlugin:
+    try:
+        config_dict = request.param
+    except AttributeError:
+        config_dict = {}
     plugin = BlogPlugin()
-    plugin.load_config(options={"plugins": ["pub-blog"]})
+    plugin.load_config(options=config_dict)
     return plugin
 
 

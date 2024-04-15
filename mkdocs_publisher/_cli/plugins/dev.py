@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 import importlib.resources
+import json
 import logging
 import os
 import shutil
@@ -37,7 +38,7 @@ log = logging.getLogger("mkdocs.plugins.publisher.cli.dev")
 
 @click.group
 def app():
-    """Development tools"""
+    """Development tools."""
     pass
 
 
@@ -68,7 +69,7 @@ def docs_copy():
 
 @app.command()
 def css_min():
-    """Minify project CSS files"""
+    """Minify project CSS files."""
     project_dir = Path.cwd() / "mkdocs_publisher"
     for input_css_file in project_dir.rglob("*.css"):
         if ".min" not in input_css_file.suffixes:
@@ -86,3 +87,19 @@ def css_min():
                 str(output_css_file),
             ]
             file_utils.run_subprocess(cmd, capture_output=False)
+
+
+@app.command()
+def update_cov():
+    """Update cov.json file based on full coverage.json file.
+
+    File cov.json is used by shields.io to display % code coverage in a badge."""
+    coverage_file = Path.cwd() / "coverage.json"
+    cov_file = Path.cwd() / "cov.json"
+
+    with coverage_file.open(mode="r") as coverage:
+        coverage_data = json.load(coverage)["totals"]
+
+    with cov_file.open(mode="w") as cov:
+        json.dump(coverage_data, cov, indent=4)
+        cov.write("\n")

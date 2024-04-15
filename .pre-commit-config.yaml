@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.4
+    rev: v1.5.5
     hooks:
       - id: insert-license
         name: insert project license into Python files
@@ -21,8 +21,8 @@ repos:
           - LICENSE
           - --comment-style
           - <!--|  ~|  -->
-          - --use-current-year
           - --allow-past-years
+          - --use-current-year
 
       - id: insert-license
         name: insert project license into CSS files
@@ -51,28 +51,32 @@ repos:
           - --allow-past-years
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
+      - id: no-commit-to-branch
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
+      - id: detect-private-key
+      - id: name-tests-test
+        args:
+          - --pytest
+        files: ^tests/
+        exclude: \.md$
       - id: end-of-file-fixer
         exclude: ^(docs|mkdocs_publisher_docs/.obsidian)/
       - id: trailing-whitespace
         exclude: ^(docs|mkdocs_publisher_docs/.obsidian)/
-      - id: check-shebang-scripts-are-executable
-      - id: check-symlinks
       - id: check-json
       - id: check-toml
-      - id: detect-private-key
-      - id: no-commit-to-branch
-      - id: name-tests-test
-        files: $tests/
-        exclude: \.md$
 
   - repo: local
     hooks:
       - id: check-readme-md
         name: check if README.md is updated
         description: Copy README.md file from documentation
-        entry: bash -c "cmp --silent mkdocs_publisher_docs/README.md README.md || cp mkdocs_publisher_docs/README.md README.md"
+        entry:
+          bash -c "cmp --silent mkdocs_publisher_docs/README.md README.md ||
+          cp mkdocs_publisher_docs/README.md README.md"
         language: system
         pass_filenames: false
 
@@ -114,4 +118,9 @@ repos:
         entry: poetry run pytest
         language: system
         pass_filenames: false
-        always_run: true
+
+      - id: update-coverage
+        name: update cov.json
+        entry: poetry run mkdocs-pub dev update-cov
+        language: system
+        pass_filenames: false

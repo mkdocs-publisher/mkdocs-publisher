@@ -36,7 +36,7 @@ log = logging.getLogger("mkdocs.plugins.publisher.cli.md_tools")
 
 @click.group
 def app():
-    """Markdown tools"""
+    """Markdown tools."""
     pass
 
 

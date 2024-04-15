@@ -23,10 +23,9 @@
 import logging
 import re
 from dataclasses import dataclass
+from hashlib import md5
 from pathlib import Path
 from typing import Optional
-
-from mkdocs_publisher._shared.urls import slugify
 
 log = logging.getLogger("mkdocs.plugins.publisher._shared.links")
 
@@ -37,7 +36,7 @@ IMAGE_RE_PART = r"((\|(?P<image>([0-9x]+)))?)"
 LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^|#()\r\n\t\f\v]+)"
 URL_RE_PART = r"(?P<link>((https?|ftp)://)?[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
 TEXT_RE_PART = r"(?P<text>[^\][)(|]+)"
-LINK_TITLE_RE_PART = r"( \"(?P<title>[ \S]+)\")?"
+LINK_TITLE_RE_PART = r"(( \"(?P<title>[ \S]+)\")?)"
 
 HTTP_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}]\({URL_RE_PART}\)")
 WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[{LINK_RE_PART}{ANCHOR_RE_PART}(\|{TEXT_RE_PART})?]]")
@@ -45,7 +44,8 @@ WIKI_EMBED_LINK_RE = re.compile(
     rf"!\[\[{LINK_RE_PART}{ANCHOR_RE_PART}{IMAGE_RE_PART}]]{EXTRA_RE_PART}"
 )
 MD_LINK_RE = re.compile(
-    rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)"
+    rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}"
+    rf"{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
 )
 MD_EMBED_LINK_RE = re.compile(
     rf"!\[{TEXT_RE_PART}]\({LINK_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
@@ -104,6 +104,7 @@ class RelativePathFinder:
         found_file_parts = list(file_path.relative_to(self._docs_dir).parts)
         relative_file_parts = []
         relative_file_missing_pieces = found_file_parts[:]
+
         index = 0
         for index, part in enumerate(current_file_parts[:-1]):
             try:
@@ -123,15 +124,17 @@ class RelativePathFinder:
 class LinkMatch:
     text: Optional[str]
     anchor: Optional[str]
+    extra: Optional[str] = None
     link: Optional[str] = None
     title: Optional[str] = None
     is_wiki: bool = False
 
     def __repr__(self):
-        anchor = f"#{slugify(text=self.anchor)}" if self.anchor else ""
+        anchor = f"#{self.anchor}" if self.anchor else ""
+        extra: list = self.extra.strip().split(" ") if self.extra else []
         title = f' "{self.title}"' if self.title else ""
+
         if self.is_wiki:
-            # Make it configurable and add tests
             if self.text is None and self.anchor:
                 self.text = f"{self.link} > {self.anchor}"
             elif self.text is None:
@@ -140,7 +143,27 @@ class LinkMatch:
         else:
             link = self.link if self.link else ""
 
-        return f"[{self.text}]({link}{anchor}{title})"
+        link_extra = f'{{{" ".join(extra)}}}' if extra else ""
+        final_link = f"[{self.text}]({link}{anchor}{title}){link_extra}"
+        log.debug(final_link)
+        return final_link
+
+    @property
+    def backlink_anchor(self):
+        return f"#{md5(self.link.encode()).hexdigest()}"
+
+    @property
+    def as_backlink(self):
+        anchor = f"#{self.anchor}" if self.anchor else ""
+        extra: list = self.extra.strip().split(" ") if self.extra else []
+        extra.append(self.backlink_anchor)
+        title = f' "{self.title}"' if self.title else ""
+        link = self.link if self.link else ""
+
+        link_extra = f'{{{" ".join(extra)}}}' if extra else ""
+        final_link = f"[{self.text}]({link}{anchor}{title}){link_extra}"
+        log.debug(final_link)
+        return final_link
 
 
 @dataclass
@@ -151,10 +174,8 @@ class WikiEmbedLinkMatch:
     extra: Optional[str]
 
     def __repr__(self):
-        if self.extra:
-            extra: list = self.extra.strip().split(" ")
-        else:
-            extra = []
+        extra: list = self.extra.strip().split(" ") if self.extra else []
+
         if self.image:
             try:
                 width, height = self.image.split("x")
@@ -164,13 +185,17 @@ class WikiEmbedLinkMatch:
             extra.append(f"width={width}")
             if height:
                 extra.append(f"height={height}")
+
         if str(self.link).lower().endswith(".pdf"):
             extra.append("pdfjs")
             if self.anchor:
                 extra.append(self.anchor)
             self.anchor = None
+
         link_extra = f'{{{" ".join(extra)}}}' if extra else ""
-        return f"![{self.link.split('/')[-1]}]({self.link}){link_extra}"
+        final_link = f"![{self.link.split('/')[-1]}]({self.link}){link_extra}"
+        log.debug(final_link)
+        return final_link
 
 
 @dataclass
@@ -184,10 +209,13 @@ class MdEmbedLinkMatch:
     def __repr__(self):
         extra: list = self.extra.strip().split(" ") if self.extra else []
         title = f' "{self.title}"' if self.title else ""
+
         if self.is_loading_lazy and "loading=lazy" not in extra:
             extra.append("loading=lazy")
         link_extra = f'{{{" ".join(extra)}}}' if extra else ""
-        return f"![{self.text}]({self.link}{title}){link_extra}"
+        final_link = f"![{self.text}]({self.link}{title}){link_extra}"
+        log.debug(final_link)
+        return final_link
 
 
 @dataclass
@@ -199,11 +227,15 @@ class RelativeLinkMatch:
     relative_path_finder: Optional[RelativePathFinder] = None
 
     def __repr__(self):
-        anchor = f"#{slugify(text=self.anchor)}" if self.anchor else ""
+        anchor = f"#{self.anchor}" if self.anchor else ""
         title = f' "{self.title}"' if self.title else ""
+
         # The same page anchor link doesn't have file part
         if self.link.startswith("#"):
-            return f"[{self.text}]({self.link})"
+            final_link = f"[{self.text}]({self.link})"
+            log.debug(final_link)
+            return final_link
+
         # Link from blog sub pages have to be recalculated for a new relative value
         if (
             str(self.relative_path_finder.current_file_path).startswith(
@@ -221,4 +253,6 @@ class RelativeLinkMatch:
                 link = ""
         else:
             link = self.link
-        return f"[{self.text}]({link}{anchor}{title})"
+        final_link = f"[{self.text}]({link}{anchor}{title})"
+        log.debug(final_link)
+        return final_link

@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,17 @@
 import logging
 import re
 from collections import UserDict
+from collections.abc import Generator
 from dataclasses import dataclass
 from dataclasses import field
 from pathlib import Path
 from typing import Any
 from typing import Optional
+from urllib.parse import quote
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File
+from mkdocs.structure.files import Files
 from mkdocs.utils import meta as meta_parser
 
 # noinspection PyProtectedMember
@@ -130,7 +133,7 @@ class MetaFiles(UserDict):
         meta_file.title = title
 
     def _get_slug(self, meta_file: MetaFile, meta: dict[str, Any]):
-        meta_file.slug = create_slug(  # pragma: no cover (covered separately)
+        meta_file.slug = create_slug(  # pragma: no cover
             file_name=meta_file.path.stem,
             slug_mode=self._meta_plugin_config.slug.mode,
             slug=meta.get(self._meta_plugin_config.slug.key_name),
@@ -187,6 +190,14 @@ class MetaFiles(UserDict):
         if self._on_serve:
             publish = True
 
+        if publish not in PublishChoiceEnum.choices():
+            publish = self._meta_plugin_config.publish.file_default
+            log.warning(
+                f'Wrong key "{self._meta_plugin_config.publish.key_name}" value '
+                f'({publish}) in file "{meta_file.path}" (only '
+                f"{PublishChoiceEnum.choices()} are possible)"
+            )
+
         # Set values depends on publish status
         if meta_file.path in self._hidden_paths or publish == PublishChoiceEnum.HIDDEN:
             meta_file.is_hidden = True
@@ -197,15 +208,9 @@ class MetaFiles(UserDict):
         elif publish in PublishChoiceEnum.published():
             meta_file.is_hidden = False
             meta_file.is_draft = False
-        else:
-            log.warning(
-                f'Wrong key "{self._meta_plugin_config.publish.key_name}" value '
-                f'({publish}) in file "{meta_file.path}" (only '
-                f"{PublishChoiceEnum.choices()} are possible)"
-            )
 
-    # Coverage skipped because each method is covered separately.
     def _get_metadata(self, meta_file: MetaFile, meta_file_path: Path):  # pragma: no cover
+        """Read all metadata values for given file"""
         # Order of method execution is crucial for reading all values.
         markdown, meta = self._read_md_file(meta_file_path=meta_file_path)
 
@@ -263,3 +268,92 @@ class MetaFiles(UserDict):
             ):
                 hidden_files[path] = meta_file
         return hidden_files
+
+    def add_meta_files(self, ignored_dirs: list[Path]):
+        """Iterate over all files and directories in docs directory"""
+        for docs_file in sorted(Path(self._mkdocs_config.docs_dir).rglob("*")):
+            meta_link: Optional[MetaFile] = None
+            is_ignored = any(
+                [docs_file.is_relative_to(ignored_dir) for ignored_dir in ignored_dirs]
+            )
+
+            if not is_ignored and docs_file.is_dir():
+                meta_link = MetaFile(
+                    path=docs_file.relative_to(self._mkdocs_config.docs_dir),
+                    abs_path=docs_file,
+                    is_dir=True,
+                )
+            elif (
+                not is_ignored
+                and docs_file.suffix == ".md"
+                and docs_file.name != self._meta_plugin_config.dir_meta_file
+            ):
+                meta_link = MetaFile(
+                    path=docs_file.relative_to(self._mkdocs_config.docs_dir),
+                    abs_path=docs_file,
+                    is_dir=False,
+                )
+
+            if meta_link is not None:
+                self[str(meta_link.path)] = meta_link
+
+    def change_files_slug(self, files: Files, ignored_dirs: list[Path]) -> Files:
+        draft_files = self.drafts(files=True).keys()
+        hidden_files = self.hidden(files=True)
+
+        ignored_dirs.extend([d.abs_path for d in self.drafts(dirs=True).values()])
+
+        new_files = Files(files=[])
+        for file in files:
+            file: File
+            file_path: Path = Path(file.src_path)
+
+            if (
+                not any([Path(file.abs_src_path).is_relative_to(d) for d in ignored_dirs])
+                and file.src_path not in draft_files
+                and file.src_path not in hidden_files
+                and str(file_path.name) != self._meta_plugin_config.dir_meta_file
+            ) or (
+                str(file_path.name) == self._meta_plugin_config.dir_meta_file
+                and str(file_path.parent) in self
+                and self[str(file_path.parent)].is_overview
+            ):
+                if self._meta_plugin_config.slug.enabled:
+                    # Get URL parts
+                    if file.url.endswith("/"):
+                        file.url = file.url[0:-1]
+                    url_parts = file.url.split("/")
+
+                    # Get abs file parts
+                    path_parts: list[Path] = []
+                    for path_part in file_path.parts:
+                        if not path_parts:
+                            path_parts.append(Path(path_part))
+                        else:
+                            path_parts.append(path_parts[-1] / path_part)
+
+                    # Replace URL parts that have slug defined
+                    for position, path_part in enumerate(path_parts):
+                        meta_file: Optional[MetaFile] = self.get(str(path_part), None)
+                        if meta_file is not None:
+                            url_parts[position] = meta_file.slug
+
+                    # Recreate file params based on URL with replaced parts
+                    if file.url != ".":  # Do not modify main index page
+                        file.url = quote(f"{'/'.join(url_parts)}/")
+                        url_parts.append(file.dest_uri.split("/")[-1])
+                        if len(url_parts) >= 2 and url_parts[-1] == url_parts[-2]:
+                            url_parts.pop(-1)
+                        file.dest_uri = quote("/".join(url_parts))
+                        file.abs_dest_path = str(
+                            Path(self._mkdocs_config.site_dir) / file.dest_uri
+                        )
+
+                new_files.append(file)
+        return new_files
+
+    def files_gen(self) -> Generator[MetaFile, Any, None]:
+        for meta_file in self.values():
+            meta_file: MetaFile
+            if not meta_file.is_draft and not meta_file.is_hidden:
+                yield meta_file

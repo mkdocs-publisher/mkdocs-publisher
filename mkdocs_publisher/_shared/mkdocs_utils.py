@@ -84,7 +84,7 @@ class ConfigChoiceEnum(Enum):
 
 def get_plugin_config(
     mkdocs_config: MkDocsConfig, plugin_name: str
-) -> Union[dict[str, Any], Config]:
+) -> Union[None, dict[str, Any], Config]:
     plugins = mkdocs_config.plugins
     if isinstance(plugins, list):
         for plugin in plugins:
@@ -94,7 +94,10 @@ def get_plugin_config(
                 return {}
         raise SystemError("Break")
     else:
-        return mkdocs_config.plugins[plugin_name].config
+        if plugin_name in mkdocs_config.plugins:
+            return mkdocs_config.plugins[plugin_name].config
+        else:
+            return None
 
 
 def get_mkdocs_config() -> MkDocsConfig:

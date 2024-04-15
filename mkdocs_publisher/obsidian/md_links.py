@@ -103,6 +103,7 @@ class MarkdownLinks:
             docs_dir=Path(self._mkdocs_config.docs_dir),
             relative_path=Path(cast(str, self._blog_config.blog_dir)),
         )
+        # log.warning(str(md_link_obj))
         return str(md_link_obj)
 
     def normalize_relative_links(self, markdown: str, current_file_path: str) -> str:

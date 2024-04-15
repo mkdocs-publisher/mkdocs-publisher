@@ -133,7 +133,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 self._vega_pages.append(page)
 
         if self.config.backlinks.enabled:
-            markdown = self._backlink_links.convert_to_anchor_link(markdown=markdown)
+            markdown = self._backlink_links.convert_to_backlink(markdown=markdown)
             page_backlinks = self._backlinks.get(f"{page.file.src_uri}", None)
             if page_backlinks is not None:
                 log.debug(f"Adding backlinks to '{page.file.src_uri}'")
@@ -178,7 +178,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 or event.is_directory
             ):
                 return
-            log.debug(str(event))
+
             with server._rebuild_cond:
                 # noinspection PyProtectedMember
                 server._to_rebuild[server.builder] = True

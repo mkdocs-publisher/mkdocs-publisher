@@ -12,14 +12,15 @@
   "enable_system_commands": false,
   "shell_path": "",
   "user_scripts_folder": "",
-  "enable_folder_templates": false,
+  "enable_folder_templates": true,
   "folder_templates": [
     {
-      "folder": "",
-      "template": ""
+      "folder": "06_blog",
+      "template": "_templates/_post.md"
     }
   ],
   "syntax_highlighting": true,
+  "syntax_highlighting_mobile": false,
   "enabled_templates_hotkeys": [],
   "startup_templates": [],
   "enable_ribbon_icon": true

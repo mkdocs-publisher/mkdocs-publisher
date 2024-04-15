@@ -65,13 +65,14 @@ mkdocs-material = "^9.5.10"
 
 [tool.poetry.group.dev.dependencies]
 yamllint = "^1.35.1"
-pyright = "1.1.350"
-ruff = "^0.3.0"
+pyright = "1.1.358"
+ruff = "^0.3.7"
 
 [tool.poetry.group.test.dependencies]
-coverage = "^7.4.3"
+coverage = "^7.4.4"
 pytest = "^7.4.4"
 pytest-cov = "^4.1.0"
+pytest-check = "^2.3.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -95,7 +96,7 @@ reportOptionalMemberAccess = false
 typeCheckingMode = "basic"
 
 [tool.pytest.ini_options]
-addopts = "--tb=short --log-level=DEBUG --cov-report=html --cov=mkdocs_publisher"
+addopts = "--tb=short --log-level=DEBUG --cov-report=html --cov-report=json --cov=mkdocs_publisher"
 markers = [
     "deprecated: Tests no longer used",
     ]
@@ -122,7 +123,10 @@ branch = true
 [tool.coverage.report]
 include_namespace_packages = true
 skip_empty = true
-skip_covered = true
+skip_covered = false
+
+[tool.coverage.json]
+pretty_print = true
 
 [tool.poetry.plugins."mkdocs.plugins"]
 pub-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"

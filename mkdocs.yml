@@ -144,10 +144,11 @@ plugins:
 #          - mkdocs.plugins.publisher.debug.plugin
 #          - mkdocs.plugins.publisher.minifier.base
 #          - mkdocs.plugins.publisher.minifier.plugin
+#          - mkdocs.plugins.publisher.social.plugin
 #          - mkdocs.commands.build
   - search
   - pub-blog:
-      blog_dir: 05_blog
+      blog_dir: 06_blog
   - pub-obsidian
   - pub-social
   - pub-meta

@@ -10,6 +10,7 @@ update: 2023-12-04 21:21:14
 [![PyPI Downloads last month](https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&style=plastic)](https://pypistats.org/search/mkdocs-publisher)
 [![Python versions](https://img.shields.io/pypi/pyversions/mkdocs-publisher?logo=python&style=plastic)](https://www.python.org)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&style=plastic)](https://github.com/mkusz/mkdocs-publisher/commits/main)
+![Code Coverage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmkusz%2Fmkdocs-publisher%2Fmain%2Fcov.json&query=%24.percent_covered_display&suffix=%25&color=green&label=code%20coverage&style=plastic)
 
 Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that helps with content creation and publication.
 

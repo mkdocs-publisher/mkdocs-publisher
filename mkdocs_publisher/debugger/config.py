@@ -33,6 +33,7 @@ class _DebuggerConsoleConfig(Config):
     show_code_link = option.Type(bool, default=False)
     show_logger_name = option.Type(bool, default=True)
     show_entry_time = option.Type(bool, default=True)
+    show_deprecation_warnings = option.Type(bool, default=False)
     entry_time_format = option.Type(str, default="%H:%M:%S.%f")
     filter_logger_names = option.Type(list, default=[])
 

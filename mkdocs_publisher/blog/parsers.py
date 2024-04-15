@@ -141,15 +141,12 @@ def parse_markdown_files(
                         and post_meta["slug"].strip() != ""
                     ):
                         post_data["slug"] = post_meta["slug"]
-                    # try:
+
                     blog_post: BlogPost = BlogPost(**post_data)
 
                     # Add new post to blog posts collection
                     blog_config.blog_posts[blog_post.date] = blog_post
                     log.debug(f"New blog posts: {blog_post.title}")
-                    # except TypeError as e:
-                    #     msg = str(e).replace("__init__()", f"File: {file_path} -")
-                    #     log.warning(msg)
 
                     # TODO: add reading time
                     # print(f"{file_path} - {count_words(post.content) / 265 * 60}")

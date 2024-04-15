@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 import logging
+import re
 import site
 from datetime import datetime
 from pathlib import Path
@@ -32,6 +33,8 @@ from mkdocs_publisher.debugger.config import _DebuggerFileConfig
 
 colorama.init()
 
+LIVERELOAD_MSG_RE = re.compile(r"(?P<time>\[\d{,2}:\d{1,2}:\d{,2}] )?(?P<text>.*)")
+DEPRECATION_MSG_RE = re.compile(r"^(?P<deprecation>DeprecationWarning:)")
 SITE_PACKAGES_DIR = Path(site.getsitepackages()[0])
 LOG_LEVEL_COLOR_MAPPING = {
     logging.DEBUG: colorama.Fore.BLUE,
@@ -54,6 +57,10 @@ class ProjectPathStreamFormatter(logging.Formatter):
         self._console_config: _DebuggerConsoleConfig = console_config
 
         super().__init__()
+
+    @staticmethod
+    def _livereload_msg_strip_time(match: re.Match) -> str:
+        return match.groupdict()["text"]
 
     def format(self, record: logging.LogRecord) -> str:
         path = Path(record.pathname)
@@ -80,6 +87,9 @@ class ProjectPathStreamFormatter(logging.Formatter):
             "%f", str(record.msecs)[0:3]
         )
 
+        if self._console_config.show_entry_time:
+            record.msg = re.sub(LIVERELOAD_MSG_RE, self._livereload_msg_strip_time, record.msg)
+
         return super().format(record=record)
 
 
@@ -96,6 +106,7 @@ class ProjectPathFileFormatter(logging.Formatter):
             )
         except ValueError:
             record.project_path = str(project_file_path)
+
         return super().format(record=record)
 
 
@@ -105,6 +116,10 @@ class ProjectPathConsoleFilter(logging.Filter):
         super().__init__()
 
     def filter(self, record):
+        if not self._console_config.show_deprecation_warnings and re.findall(
+            DEPRECATION_MSG_RE, record.msg
+        ):
+            return None
         return record if record.name not in self._console_config.filter_logger_names else None
 
 
