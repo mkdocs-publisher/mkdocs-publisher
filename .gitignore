@@ -26,5 +26,6 @@ docs
 .venv
 dist
 
-#node_modules
+node_modules
 sandbox*
+docs_template
