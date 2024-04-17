@@ -27,6 +27,7 @@ jobs:
     strategy:
       matrix:
         version: [3.9, 3.10, 3.11', 3.12, 3.13]
+      fail-fast: false
     name: Unittest check (using Python v${{ matrix.version }})
     steps:
       - name: Install poetry
