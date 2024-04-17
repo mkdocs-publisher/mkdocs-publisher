@@ -19,17 +19,17 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
-          architecture: x64
-          cache: poetry
+          python-version: '3.9'
+          architecture: 'x64'
+          cache: 'poetry'
       - name: Install Python dependencies
         run: poetry install -n
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          architecture: x64
-          cache: npm
+          node-version: '18'
+          architecture: 'x64'
+          cache: 'npm'
       - name: Install npm packages
         # yamllint disable-line rule:line-length
         run: npm install --no-fund -f -g svgo html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
@@ -37,7 +37,7 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: rustc pngquant libjpeg-turbo-progs
-          version: ubuntu
+          version: 'ubuntu'
       - name: Install oxipng
         uses: baptiste0928/cargo-install@v2
         with:

@@ -19,8 +19,8 @@ jobs:
         env:
           SKIP: pytest-check
         with:
-          python-version: 3.9
-          architecture: x64
+          python-version: '3.9'
+          architecture: 'x64'
       - uses: pre-commit/action@v3.0.1
   unittests:
     runs-on: ubuntu-latest
@@ -38,9 +38,9 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.version }}
-          architecture: x64
-          cache: poetry
+          python-version: '${{ matrix.version }}'
+          architecture: 'x64'
+          cache: 'poetry'
       - name: Install Python dependencies
         run: poetry install -n
       - name: Run unittests
