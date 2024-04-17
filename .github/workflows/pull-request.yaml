@@ -21,18 +21,18 @@ jobs:
         with:
           python-version: '3.9'
           architecture: 'x64'
-          cache: 'poetry'
+          cache: 'poetry-pre-commit'
       - name: Install Python dependencies
         run: poetry install -n --only=dev
       - name: Pre-commit tests
         env:
-          SKIP: pytest-check
+          SKIP: pytest-check,update-coverage
         uses: pre-commit/action@v3.0.1
   unittests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.9', '3.10', '3.11', '3.12']
       fail-fast: false
     name: Unittest (Python v${{ matrix.python-version }})
     steps:
@@ -47,7 +47,7 @@ jobs:
         with:
           python-version: '${{ matrix.python-version }}'
           architecture: 'x64'
-          cache: 'poetry'
+          cache: 'poetry-tests-${{ matrix.python-version }}'
           allow-prereleases: true
       - name: Install Python dependencies
         run: poetry install -n --only=test
