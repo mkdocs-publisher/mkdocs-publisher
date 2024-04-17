@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: '3.9'
           architecture: 'x64'
-          cache: 'poetry-pre-commit'
+          cache: 'poetry'
       - name: Install Python dependencies
         run: poetry install -n --only=dev
       - name: Pre-commit tests
@@ -47,7 +47,7 @@ jobs:
         with:
           python-version: '${{ matrix.python-version }}'
           architecture: 'x64'
-          cache: 'poetry-tests-${{ matrix.python-version }}'
+          cache: 'poetry'
           allow-prereleases: true
       - name: Install Python dependencies
         run: poetry install -n --only=test
