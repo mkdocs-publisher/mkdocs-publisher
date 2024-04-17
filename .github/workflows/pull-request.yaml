@@ -8,7 +8,7 @@ on:
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
-    name: Pre-commit check
+    name: Pre-commit
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v4
@@ -26,9 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9, 3.10, 3.11, 3.12, 3.13]
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
       fail-fast: false
-    name: Unittest check (using Python v${{ matrix.python-version }})
+    name: Unittest (Python v${{ matrix.python-version }})
     steps:
       - name: Install poetry
         run: pipx install poetry
