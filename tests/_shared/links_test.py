@@ -25,6 +25,7 @@ from pathlib import Path
 
 import pytest
 from pytest import LogCaptureFixture
+from pytest_check import check_functions as check
 
 from mkdocs_publisher._shared import links
 
@@ -97,7 +98,92 @@ def test_link_match_dataclass(
     link: str, text: str, anchor: str, title: str, is_wiki: bool, expected: str
 ):
     link_obj = links.LinkMatch(link=link, text=text, title=title, is_wiki=is_wiki, anchor=anchor)
-    assert expected == str(link_obj)
+    check.equal(expected, str(link_obj))
+
+
+@pytest.mark.parametrize(
+    "link,text,anchor,title,extra,expected_anchor,expected_link",
+    {
+        (
+            "../file.md",
+            "Link text",
+            "",
+            "",
+            "",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            "[Link text](../file.md){#84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "anchor-value",
+            "",
+            "",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            "[Link text](../file.md#anchor-value){#84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "anchor-value",
+            "title value",
+            "",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            '[Link text](../file.md#anchor-value "title value")'
+            "{#84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "",
+            "title value",
+            "",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            '[Link text](../file.md "title value"){#84d6d9cdfc51cbf2e88592d12c53d5a4}',
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "",
+            "title value",
+            "extra",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            '[Link text](../file.md "title value"){extra #84d6d9cdfc51cbf2e88592d12c53d5a4}',
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "anchor-value",
+            "",
+            "extra",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            "[Link text](../file.md#anchor-value){extra #84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "anchor-value",
+            "title value",
+            "extra",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            '[Link text](../file.md#anchor-value "title value")'
+            "{extra #84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+    },
+)
+def test_link_match_backlinks(
+    link: str,
+    text: str,
+    anchor: str,
+    title: str,
+    extra: str,
+    expected_anchor: str,
+    expected_link: str,
+):
+    link_obj = links.LinkMatch(link=link, text=text, title=title, extra=extra, anchor=anchor)
+
+    check.equal(expected_anchor, link_obj.backlink_anchor, "Wrong backlink anchor")
+    check.equal(expected_link, link_obj.as_backlink, "Wrong backlink")
 
 
 @pytest.mark.parametrize(

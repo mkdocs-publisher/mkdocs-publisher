@@ -4,7 +4,7 @@ icon: material/file-replace-outline
 slug: changelog
 publish: true
 date: 2023-02-12 22:00:00
-update: 2024-04-15 21:00:52
+update: 2024-04-17 16:12:59
 description: Publisher for MkDocs version history
 categories:
   - general
@@ -13,11 +13,12 @@ categories:
 
 # Version history
 
-## 1.3.0 -2024-04-15
+## 1.3.0 -2024-04-17
 
 ### :material-list-box: General
 
 - ❎ added internal ConfigChoicesEnum class for defining config choices
+- ❎ added code coverage badge with current coverage % value
 - ✅ documentation fixes [#61](https://github.com/mkusz/mkdocs-publisher/issues/61)
 - ✅ ruff linter settings
 - ♻️ isort has been replaced with [ruff](https://github.com/astral-sh/ruff)
@@ -32,6 +33,7 @@ categories:
 ### :simple-obsidian: Obsidian
 
 - ✅ fix for backlinks destroying links additional attributes like title and anchor
+- ♻️ some code simplifications and cleanup because of meta plugin rewrite
 
 ### :material-shield-bug: Debugger
 

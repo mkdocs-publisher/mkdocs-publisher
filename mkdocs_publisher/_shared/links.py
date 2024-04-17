@@ -122,8 +122,8 @@ class RelativePathFinder:
 
 @dataclass
 class LinkMatch:
-    text: Optional[str]
     anchor: Optional[str]
+    text: Optional[str]
     extra: Optional[str] = None
     link: Optional[str] = None
     title: Optional[str] = None
@@ -168,10 +168,10 @@ class LinkMatch:
 
 @dataclass
 class WikiEmbedLinkMatch:
-    link: str
-    image: Optional[str]
     anchor: Optional[str]
     extra: Optional[str]
+    image: Optional[str]
+    link: str
 
     def __repr__(self):
         extra: list = self.extra.strip().split(" ") if self.extra else []
@@ -200,9 +200,9 @@ class WikiEmbedLinkMatch:
 
 @dataclass
 class MdEmbedLinkMatch:
+    extra: Optional[str]
     link: str
     text: str
-    extra: Optional[str]
     title: Optional[str]
     is_loading_lazy: bool = True
 
@@ -220,9 +220,9 @@ class MdEmbedLinkMatch:
 
 @dataclass
 class RelativeLinkMatch:
+    anchor: Optional[str]
     link: str
     text: str
-    anchor: Optional[str]
     title: Optional[str]
     relative_path_finder: Optional[RelativePathFinder] = None
 

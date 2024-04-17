@@ -1,16 +1,12 @@
----
-title: README.md
-date: 2023-10-02 23:12:38
-update: 2023-12-04 21:21:14
----
 # Publisher for MkDocs
 
-[![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic)](https://pypi.org/project/mkdocs-publisher/)
-[![License type](https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic)](https://opensource.org/license/mit/)
-[![PyPI Downloads last month](https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic)](https://pypistats.org/search/mkdocs-publisher)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mkdocs-publisher?logo=python&logoColor=white&style=plastic)](https://www.python.org)
-[![GitHub last commit](https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&logoColor=white&style=plastic)](https://github.com/mkusz/mkdocs-publisher/commits/main)
-![Code Coverage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmkusz%2Fmkdocs-publisher%2Fmain%2Fcov.json&query=%24.percent_covered_display&suffix=%25&color=green&label=code%20coverage&style=plastic)
+[![License type](https://img.shields.io/pypi/l/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=License)](https://opensource.org/license/mit/)
+[![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=PyPi)](https://pypi.org/project/mkdocs-publisher/)
+[![PyPI - Python Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmkusz%2Fmkdocs-publisher%2Fmain%2Fpyproject.toml&query=%24.tool.poetry.dependencies.python&logo=python&logoColor=white&style=plastic&label=Python)](https://www.python.org)
+[![PyPI Downloads last month](https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=Downloads)](https://pypistats.org/search/mkdocs-publisher)
+[![GitHub last commit](https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&logoColor=white&style=plastic&label=Last%20commit)](https://github.com/mkusz/mkdocs-publisher/commits/main)
+![Code Coverage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmkusz%2Fmkdocs-publisher%2Fmain%2Fcov.json&query=%24.percent_covered_display&suffix=%25&color=green&style=plastic&label=Code%20coverage)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=plastic&label=Pre-commit)](https://github.com/pre-commit/pre-commit)
 
 Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that helps with content creation and publication.
 

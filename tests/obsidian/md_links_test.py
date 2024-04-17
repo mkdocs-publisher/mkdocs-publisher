@@ -101,7 +101,7 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
     },
 )
-def test_md_links_normalize_wiki_links(
+def test_normalize_wiki_links(
     markdown: str,
     expected: str,
     mkdocs_config: MkDocsConfig,
@@ -138,7 +138,7 @@ def test_md_links_normalize_wiki_links(
         ),
     },
 )
-def test_md_links_normalize_links(
+def test_normalize_links(
     markdown: str,
     expected: str,
     mkdocs_config: MkDocsConfig,
@@ -168,7 +168,7 @@ def test_md_links_normalize_links(
         ),
     },
 )
-def test_md_links_normalize_relative_links(
+def test_normalize_relative_links(
     markdown: str,
     expected: str,
     mkdocs_config: MkDocsConfig,

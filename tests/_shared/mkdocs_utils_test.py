@@ -43,7 +43,7 @@ class ConfigChoiceEnumTest(ConfigChoiceEnum):
         return cls._get_enums([cls.FIRST, cls.SECOND])
 
 
-def test_mkdocs_utils_config_choices():
+def test_config_choices():
     assert ConfigChoiceEnumTest.choices() == [
         "default",
         "first",

@@ -1,0 +1,45 @@
+name: pre-commit
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install Python 3.9
+        uses: actions/setup-python@v5
+        env:
+          SKIP: pytest-check
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
+      - uses: pre-commit/action@v3.0.1
+  unittests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+    steps:
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Checkout git repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.version }}
+          architecture: 'x64'
+          cache: 'poetry'
+      - name: Install Python dependencies
+        run: poetry install -n
+      - name: Run unittests
+        run: poetry run pytest

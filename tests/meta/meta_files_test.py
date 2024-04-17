@@ -53,9 +53,7 @@ from mkdocs_publisher.meta.plugin import MetaPlugin
         ),
     ],
 )
-def test_meta_files_properties(
-    path: Path, abs_path: Path, expected_name: str, expected_parent: str
-):
+def test_properties(path: Path, abs_path: Path, expected_name: str, expected_parent: str):
     meta_file = MetaFile(path=path, abs_path=abs_path, is_dir=False)
 
     check.equal(meta_file.name, expected_name, "Wrong name")
@@ -86,7 +84,7 @@ def test_meta_files_properties(
     ],
     indirect=["pub_meta_plugin"],
 )
-def test_meta_files_overview(
+def test_overview(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     meta: dict,
@@ -153,7 +151,7 @@ def test_meta_files_overview(
     ],
     indirect=["pub_meta_plugin"],
 )
-def test_meta_files_title(
+def test_title(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     meta: dict,
@@ -177,7 +175,7 @@ def test_meta_files_title(
         check.equal(warn, caplog.records[-1].message, "Wrong log message")
 
 
-def test_meta_files_on_serve(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPlugin):
+def test_on_serve(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPlugin):
     meta_files: MetaFiles = MetaFiles()
     meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
     meta_files.on_serve = True
@@ -193,7 +191,7 @@ def test_meta_files_on_serve(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaP
     ],
     indirect=["mkdocs_config"],
 )
-def test_meta_files_add_hidden(
+def test_add_hidden(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     hidden_path: Optional[Path],
@@ -206,7 +204,7 @@ def test_meta_files_add_hidden(
     check.equal(meta_files._hidden_paths, expected, "Wrong hidden paths")
 
 
-def test_meta_files_meta_file(
+def test_meta_file(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
 ):
@@ -232,7 +230,7 @@ def test_meta_files_meta_file(
     ],
     indirect=["pub_meta_plugin"],
 )
-def test_meta_files_get_publish_status_for_files(
+def test_get_publish_status_for_files(
     caplog: LogCaptureFixture,
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
@@ -274,7 +272,7 @@ def test_meta_files_get_publish_status_for_files(
     ],
     indirect=["pub_meta_plugin"],
 )
-def test_meta_files_get_publish_status_for_dirs(
+def test_get_publish_status_for_dirs(
     caplog: LogCaptureFixture,
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
@@ -312,7 +310,7 @@ def test_meta_files_get_publish_status_for_dirs(
         ({"publish": "hidden"}, {"publish": "hidden"}, None, False),
     ],
 )
-def test_meta_files_get_publish_status_with_parent(
+def test_get_publish_status_with_parent(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     parent_meta: dict,
@@ -370,7 +368,7 @@ def test_meta_files_get_publish_status_with_parent(
         ("hidden", "hidden", set(), set(), set(), {"me"}, set(), {"me"}),
     ],
 )
-def test_meta_files_drafts_and_hidden(
+def test_drafts_and_hidden(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     publish_dir: Union[str, bool],
@@ -409,7 +407,7 @@ def test_meta_files_drafts_and_hidden(
 
 
 @pytest.mark.parametrize("exists", [True, False])
-def test_meta_files_add_dir(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPlugin, exists):
+def test_add_dir(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPlugin, exists):
     def patch_read_md_file(meta_file_path: Path):
         _ = meta_file_path
         return "", {}
@@ -435,7 +433,7 @@ def test_meta_files_add_dir(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPl
         ("tests/_tests_data/no_md.pic", False, ["fake_dir"], []),
     ],
 )
-def test_meta_files_add_meta_files(
+def test_add_meta_files(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     path: str,

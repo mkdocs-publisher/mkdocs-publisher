@@ -41,7 +41,7 @@ STYLESHEET_FILE = "blog.min.css"
 STYLESHEET_FILE_MAP = "blog.min.css.map"
 
 
-def test_resources_add_extra_existing_file(caplog: LogCaptureFixture):
+def test_add_extra_existing_file(caplog: LogCaptureFixture):
     existing_file = Path(str(importlib.resources.files(stylesheets).joinpath(STYLESHEET_FILE)))
     expected_path = str(existing_file.relative_to(Path().cwd() / EXTRA_DIR))
     mkdocs_files = Files(files=[])
@@ -62,7 +62,7 @@ def test_resources_add_extra_existing_file(caplog: LogCaptureFixture):
     check.is_in(expected_path, caplog.records[-1].message)
 
 
-def test_resources_add_extra_non_existing_file(caplog: LogCaptureFixture):
+def test_add_extra_non_existing_file(caplog: LogCaptureFixture):
     existing_file = Path(
         str(importlib.resources.files(stylesheets).joinpath(f"{STYLESHEET_FILE}.non"))
     )
@@ -85,7 +85,7 @@ def test_resources_add_extra_non_existing_file(caplog: LogCaptureFixture):
     check.is_in(expected_path, caplog.records[-1].message)
 
 
-def test_resources_add_stylesheet_file_with_map():
+def test_add_stylesheet_file_with_map():
     mkdocs_files = Files(files=[])
     mkdocs_config = cast(MkDocsConfig, MkDocsConfig())
     expected_file_path = str(Path(STYLESHEET_DIR) / STYLESHEET_FILE)
@@ -102,7 +102,7 @@ def test_resources_add_stylesheet_file_with_map():
     check.equal([expected_file_path, expected_file_map_path], mkdocs_config.extra_css)
 
 
-def test_resources_add_stylesheet_file_without_map():
+def test_add_stylesheet_file_without_map():
     mkdocs_files = Files(files=[])
     mkdocs_config = cast(MkDocsConfig, MkDocsConfig())
     expected_file_path = str(Path(STYLESHEET_DIR) / STYLESHEET_FILE)
@@ -119,7 +119,7 @@ def test_resources_add_stylesheet_file_without_map():
     check.equal([expected_file_path], mkdocs_config.extra_css)
 
 
-def test_resources_read_template_file():
+def test_read_template_file():
     """Test if content of the template file is read correctly"""
     template_path = Path().cwd() / EXTRA_DIR / TEMPLATES_DIR / TEMPLATE_FILE
     with open(template_path) as template_file:

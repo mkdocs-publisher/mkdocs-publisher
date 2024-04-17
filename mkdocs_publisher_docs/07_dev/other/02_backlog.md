@@ -56,8 +56,6 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: file/directory redirections
 - [ ] Add: publication date in the future
 - [ ] Add: creating subpages for tags and categories (need to be separated from the blog posts)
-- [ ] Add: support for [section index page](https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages)
-- [ ] Add: sort order and order by (file name, title, slug)
 
 ### Social
 
@@ -80,7 +78,6 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: configurable aliases in callouts with auto-add to Obsidian CSS files
 - [ ] Add: internal link's tooltip preview (use [tippy.js](https://atomiks.github.io/tippyjs/))
 - [ ] Fix: not needed new/blank lines inside code blocks
-- [ ] Change: backlink anchor link creation using slug information
 - [ ] Add: Obsidian settings checker/validator
 
 ### Debugger
@@ -131,7 +128,6 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
  - [ ] Create a Docker image with everything preinstalled and preconfigured
  - [ ] Add to docker image online Vega charts editor
  - [ ] GitHub repo with preconfigured pages, etc. (can be integrated with Docker Image creation)
- - [ ] Unit tests and code coverage with pre-commit
  - [ ] Cleanup list of code TODO's
  - [ ] Add: CONTRIBUTING.md file to the repo
  - [ ] Move translations to jinja templates like Material for MkDocs is doing it

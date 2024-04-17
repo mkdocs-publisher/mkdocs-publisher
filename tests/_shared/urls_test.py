@@ -39,7 +39,7 @@ from mkdocs_publisher.meta.config import SlugModeChoiceEnum
         ("Lorem ipsum, dolor", "lorem-ipsum-dolor"),
     },
 )
-def test_urls_slugify(text, expected):
+def test_slugify(text, expected):
     check.equal(expected, urls.slugify(text))
 
 
@@ -69,7 +69,7 @@ def test_urls_slugify(text, expected):
         (None, None, None, False, "file_name_slug", logging.DEBUG),
     },
 )
-def test_urls_slug_create(
+def test_slug_create(
     caplog: LogCaptureFixture,
     slug: str,
     title: str,

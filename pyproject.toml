@@ -123,7 +123,7 @@ branch = true
 [tool.coverage.report]
 include_namespace_packages = true
 skip_empty = true
-skip_covered = false
+skip_covered = true
 
 [tool.coverage.json]
 pretty_print = true
