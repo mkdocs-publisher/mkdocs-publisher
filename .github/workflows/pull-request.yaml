@@ -26,9 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [3.9, 3.10, 3.11', 3.12, 3.13]
+        python-version: [3.9, 3.10, 3.11, 3.12, 3.13]
       fail-fast: false
-    name: Unittest check (using Python v${{ matrix.version }})
+    name: Unittest check (using Python v${{ matrix.python-version }})
     steps:
       - name: Install poetry
         run: pipx install poetry
@@ -39,9 +39,10 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: '${{ matrix.version }}'
+          python-version: '${{ matrix.python-version }}'
           architecture: 'x64'
           cache: 'poetry'
+          allow-prereleases: true
       - name: Install Python dependencies
         run: poetry install -n
       - name: Run unittests
