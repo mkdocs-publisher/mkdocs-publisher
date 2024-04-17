@@ -19,14 +19,14 @@ jobs:
         env:
           SKIP: pytest-check
         with:
-          python-version: '3.9'
-          architecture: 'x64'
+          python-version: 3.9
+          architecture: x64
       - uses: pre-commit/action@v3.0.1
   unittests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        version: [3.9, 3.10, 3.11', 3.12, 3.13]
     name: Unittest check (using Python v${{ matrix.version }})
     steps:
       - name: Install poetry
@@ -39,8 +39,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.version }}
-          architecture: 'x64'
-          cache: 'poetry'
+          architecture: x64
+          cache: poetry
       - name: Install Python dependencies
         run: poetry install -n
       - name: Run unittests
