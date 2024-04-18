@@ -23,7 +23,7 @@ jobs:
           architecture: 'x64'
           cache: 'poetry'
       - name: Install Python dependencies
-        run: poetry install -n --only=dev
+        run: poetry install -n --without=test
       - name: Pre-commit tests
         env:
           SKIP: pytest-check,update-coverage
@@ -50,6 +50,6 @@ jobs:
           cache: 'poetry'
           allow-prereleases: true
       - name: Install Python dependencies
-        run: poetry install -n --only=test
+        run: poetry install -n --without=dev
       - name: Run unittests
         run: poetry run pytest --no-header --no-cov

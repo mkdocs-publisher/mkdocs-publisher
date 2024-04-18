@@ -60,11 +60,11 @@ python = "^3.9"
 mkdocs = "^1.5.3"
 pymdown-extensions = "^10.7"
 beautifulsoup4 = "^4.12.3"
-mkdocs-material = "^9.5.10"
+mkdocs-material = "^9.5.18"
 
 [tool.poetry.group.dev.dependencies]
 yamllint = "^1.35.1"
-pyright = "1.1.358"
+pyright = "1.1.359"
 ruff = "^0.3.7"
 
 [tool.poetry.group.test.dependencies]
