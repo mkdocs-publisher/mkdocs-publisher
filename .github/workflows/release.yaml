@@ -25,10 +25,8 @@ jobs:
           cache: 'poetry'
       - name: Config poetry
         run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-      - name: Build project
-        run: poetry build
-      - name: Publish to PyPi
-        run: poetry publish
+      - name: Build and publish to PyPi
+        run: poetry publish --build
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:

@@ -4,7 +4,7 @@ icon: material/keyboard
 slug: development
 publish: true
 date: 2023-03-21 11:27:00
-update: 2023-10-03 15:11:14
+update: 2024-04-18 14:05:40
 description: Development of this plugin how to
 categories:
   - general

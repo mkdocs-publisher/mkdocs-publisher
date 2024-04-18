@@ -4,7 +4,7 @@ icon: octicons/number-24
 slug: versioning
 publish: true
 date: 2023-03-30 13:12:26
-update: 2023-10-12 23:53:46
+update: 2024-04-18 14:06:32
 description: Approach to versioning
 categories:
   - general
