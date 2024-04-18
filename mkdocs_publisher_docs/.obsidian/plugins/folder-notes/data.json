@@ -3,7 +3,7 @@
   "ctrlKey": true,
   "altKey": false,
   "hideFolderNote": false,
-  "templatePath": "",
+  "templatePath": "_templates/_README.md",
   "autoCreate": false,
   "enableCollapsing": false,
   "excludeFolders": [],
