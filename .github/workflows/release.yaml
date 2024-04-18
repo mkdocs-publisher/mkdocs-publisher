@@ -1,0 +1,37 @@
+name: Checks
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Pre-commit
+    steps:
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Checkout git repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
+          cache: 'poetry'
+#      - name: Install Python dependencies
+#        run: poetry install -n
+      - name: Build project
+        run: poetry build
+      - name: Store build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs-build-logs
+          if-no-files-found: ignore
+          retention-days: 1
+          path: |
+            dist/mkdocs_publisher*

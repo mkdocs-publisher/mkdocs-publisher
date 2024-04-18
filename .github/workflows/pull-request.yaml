@@ -34,7 +34,7 @@ jobs:
       matrix:
         python-version: ['3.9', '3.10', '3.11', '3.12']
       fail-fast: false
-    name: Unittest (Python v${{ matrix.python-version }})
+    name: Unittests (Python v${{ matrix.python-version }})
     steps:
       - name: Install poetry
         run: pipx install poetry
@@ -52,4 +52,4 @@ jobs:
       - name: Install Python dependencies
         run: poetry install -n --only=test
       - name: Run unittests
-        run: poetry run pytest
+        run: poetry run pytest --no-header --no-cov
