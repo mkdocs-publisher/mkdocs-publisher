@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,19 @@
 import logging
 import re
 from dataclasses import dataclass
-
-# from hashlib import md5
-from typing import Dict
-from typing import List
-from typing import Optional
 from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.pages import Page
 
-from mkdocs_publisher._shared import links
-
 # noinspection PyProtectedMember
-from mkdocs_publisher._shared.urls import slugify
+from mkdocs_publisher._shared import links
 from mkdocs_publisher.blog.plugin import BlogPlugin
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.backlinks")
 
-HTTP_LINK_RE = re.compile(r"\[([^][\r\n]+)]\((https?://[^][)(\s]+)(#[\w\-.]+)?\)")
 
-
-@dataclass()
+@dataclass
 class Link:
     text: str
     destination: str
@@ -56,72 +47,49 @@ class BacklinkLinks:
     def __init__(
         self,
         mkdocs_config: MkDocsConfig,
-        backlinks: Dict[str, List[Link]],
+        backlinks: dict[str, list[Link]],
     ):
         self._mkdocs_config: MkDocsConfig = mkdocs_config
-        self._backlinks: Dict[str, List[Link]] = backlinks
-
-    @staticmethod
-    def _build_anchor_link(backlink: str, anchor_link: Optional[str]) -> str:
-        """Create backlink anchor link"""
-
-        anchor_link = f"{backlink}{anchor_link}"
-        # log.warning(anchor_link)
-        for r in (("../", ""), (".md", ""), ("#", ""), ("/", ""), ("_", "-")):
-            anchor_link = anchor_link.replace(*r)
-        anchor_link = slugify(text=anchor_link)
-        # log.error(anchor_link)
-        return anchor_link
+        self._backlinks: dict[str, list[Link]] = backlinks
 
     @staticmethod
     def _other_link_to_text(match: re.Match) -> str:
         """Return only a text from a link (http or markdown)"""
-        return match.group(1)
+        return match.groupdict()["link"]
 
-    def _create_anchor_link(self, match: re.Match):
-        """Create a backlink with an additional anchor link"""
-        anchor_link = match.group(3) if match.group(3) is not None else ""
-        backlink = match.group(2)
-        backlink_anchor_link = self._build_anchor_link(backlink=backlink, anchor_link=anchor_link)
-        # TODO: create anchor link using slug from meta
-        link = f"[{match.group(1)}]({backlink}{anchor_link}){{#{backlink_anchor_link}}}"
-        # link_md5 = md5(f"[{match.group(1)}]({backlink}{anchor_link})".encode()).hexdigest()
-        # log.error(f"{link_md5} = {link}")
-        return link
+    @staticmethod
+    def _create_backlink(match: re.Match):
+        link = links.LinkMatch(**match.groupdict())
+        return link.as_backlink
 
     def _parse_markdown_link(self, match: re.Match, page: Page, line: str):
         """Parse markdown link"""
-        anchor_link = match.group(3) if match.group(3) is not None else ""
-        original_link_destination = match.group(2)
-        original_link_text = f"[{match.group(1)}]({original_link_destination}{anchor_link})"
-        anchor_link = self._build_anchor_link(
-            backlink=original_link_destination, anchor_link=anchor_link
-        )
-        backlink_link = f"{self._mkdocs_config.site_url}{page.url}#{anchor_link}"
+        original_link = links.LinkMatch(**match.groupdict())
+        backlink_link = f"{self._mkdocs_config.site_url}{page.url}{original_link.backlink_anchor}"
 
         # Convert document link into backlink
-        link_replacement = f'<a href="{backlink_link}">{match.group(1)}</a>'
-        backlink_text = line.replace(original_link_text, link_replacement)
+        link_replacement = f'<a href="{backlink_link}">{original_link.text}</a>'
+        backlink_text = line.replace(str(original_link), link_replacement)
 
         # Convert other links into text
         backlink_text = re.sub(links.MD_LINK_RE, self._other_link_to_text, backlink_text)
-        backlink_text = re.sub(HTTP_LINK_RE, self._other_link_to_text, backlink_text)
+        backlink_text = re.sub(links.HTTP_LINK_RE, self._other_link_to_text, backlink_text)
 
         # Create a backlink with context
         backlink_text = f'<p class="obsidian_backlink">{backlink_text}</p>'
 
         # Convert relative backlinks into absolute backlinks inside document directory
         original_link_source = page.file.src_uri
-        if len(original_link_destination.split("/")) == 1:
+        if len(original_link.link.split("/")) == 1:
             destination_pre = original_link_source.split("/")[:-1]
-            destination_pre.append(original_link_destination)
-            original_link_destination = "/".join(destination_pre)
-        original_link_destination = original_link_destination.replace("../", "")
+            destination_pre.append(str(original_link.link))
+            original_link.link = "/".join(destination_pre)
+        original_link.link = original_link.link.replace("../", "")
 
-        link = Link(
+        new_link = Link(
             text=backlink_text,
             destination=backlink_link,
-            source=original_link_destination,
+            source=original_link.link,
             title=str(page.title),
         )
 
@@ -133,24 +101,24 @@ class BacklinkLinks:
 
         # Do not add backlink if backlinks points to the same document
         if (
-            original_link_source != original_link_destination
+            original_link_source != original_link.link
             and original_link_source not in temp_blog_files
         ):
             log.debug(
-                f"Found backlink to: {match.group(2)}"
-                f"{match.group(3) if match.group(3) is not None else ''}"
+                f"Found backlink to: {original_link.link}"
+                f"{original_link.anchor if original_link.anchor is not None else ''}"
             )
-            if original_link_destination not in self._backlinks:
-                self._backlinks[original_link_destination] = [link]
+            if original_link.link not in self._backlinks:
+                self._backlinks[original_link.link] = [new_link]
             else:
                 link_found = False
-                for existing_link in self._backlinks[original_link_destination]:
+                for existing_link in self._backlinks[original_link.link]:
                     # Add backlink to an existing one
-                    if existing_link.title == link.title:
+                    if existing_link.title == new_link.title:
                         link_found = True
-                        existing_link.text = f"{existing_link.text}<hr>{link.text}"
+                        existing_link.text = f"{existing_link.text}<hr>{new_link.text}"
                 if not link_found:
-                    self._backlinks[original_link_destination].append(link)
+                    self._backlinks[original_link.link].append(new_link)
 
     def find_markdown_links(self, markdown: str, page: Page):
         # """Find all markdown backlinks"""
@@ -158,6 +126,6 @@ class BacklinkLinks:
             for match in re.finditer(links.MD_LINK_RE, line):
                 self._parse_markdown_link(match=match, page=page, line=line)
 
-    def convert_to_anchor_link(self, markdown: str) -> str:
+    def convert_to_backlink(self, markdown: str) -> str:
         """Convert backlink to link with an anchor for direct navigation after clicking on it"""
-        return re.sub(links.MD_LINK_RE, self._create_anchor_link, markdown)
+        return re.sub(links.MD_LINK_RE, self._create_backlink, markdown)

@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ from pathlib import Path
 
 import pytest
 from pytest import LogCaptureFixture
+from pytest_check import check_functions as check
 
 from mkdocs_publisher._shared import links
 
@@ -83,13 +84,106 @@ from mkdocs_publisher._shared import links
             True,
             '[Link text](../file.md "title value")',
         ),
+        (
+            None,
+            "Anchor link",
+            "just/an anchor",
+            "",
+            False,
+            "[Anchor link](#just/an anchor)",
+        ),
     },
 )
 def test_link_match_dataclass(
     link: str, text: str, anchor: str, title: str, is_wiki: bool, expected: str
 ):
     link_obj = links.LinkMatch(link=link, text=text, title=title, is_wiki=is_wiki, anchor=anchor)
-    assert str(link_obj) == expected
+    check.equal(expected, str(link_obj))
+
+
+@pytest.mark.parametrize(
+    "link,text,anchor,title,extra,expected_anchor,expected_link",
+    {
+        (
+            "../file.md",
+            "Link text",
+            "",
+            "",
+            "",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            "[Link text](../file.md){#84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "anchor-value",
+            "",
+            "",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            "[Link text](../file.md#anchor-value){#84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "anchor-value",
+            "title value",
+            "",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            '[Link text](../file.md#anchor-value "title value")'
+            "{#84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "",
+            "title value",
+            "",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            '[Link text](../file.md "title value"){#84d6d9cdfc51cbf2e88592d12c53d5a4}',
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "",
+            "title value",
+            "extra",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            '[Link text](../file.md "title value"){extra #84d6d9cdfc51cbf2e88592d12c53d5a4}',
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "anchor-value",
+            "",
+            "extra",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            "[Link text](../file.md#anchor-value){extra #84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+        (
+            "../file.md",
+            "Link text",
+            "anchor-value",
+            "title value",
+            "extra",
+            "#84d6d9cdfc51cbf2e88592d12c53d5a4",
+            '[Link text](../file.md#anchor-value "title value")'
+            "{extra #84d6d9cdfc51cbf2e88592d12c53d5a4}",
+        ),
+    },
+)
+def test_link_match_backlinks(
+    link: str,
+    text: str,
+    anchor: str,
+    title: str,
+    extra: str,
+    expected_anchor: str,
+    expected_link: str,
+):
+    link_obj = links.LinkMatch(link=link, text=text, title=title, extra=extra, anchor=anchor)
+
+    check.equal(expected_anchor, link_obj.backlink_anchor, "Wrong backlink anchor")
+    check.equal(expected_link, link_obj.as_backlink, "Wrong backlink")
 
 
 @pytest.mark.parametrize(
@@ -128,7 +222,7 @@ def test_wiki_embed_link_match_dataclass(
     link: str, image: str, anchor: str, extra: str, expected: str
 ):
     link_obj = links.WikiEmbedLinkMatch(link=link, image=image, anchor=anchor, extra=extra)
-    assert str(link_obj) == expected
+    assert expected == str(link_obj)
 
 
 @pytest.mark.parametrize(
@@ -199,14 +293,14 @@ def test_md_embed_link_match_dataclass(
     link_obj = links.MdEmbedLinkMatch(
         link=link, text=text, title=title, extra=extra, is_loading_lazy=is_loading_lazy
     )
-    assert str(link_obj) == expected
+    assert expected == str(link_obj)
 
 
 def test_relative_path_finder_properties(
     relative_path_finder: links.RelativePathFinder,
 ):
-    assert relative_path_finder.relative_path == Path("relative")
-    assert relative_path_finder.current_file_path == Path("current/file.md")
+    assert Path("relative") == relative_path_finder.relative_path
+    assert Path("current/file.md") == relative_path_finder.current_file_path
 
 
 def test_relative_path_finder_get_existing_file_path(
@@ -214,7 +308,7 @@ def test_relative_path_finder_get_existing_file_path(
     relative_path_finder: links.RelativePathFinder,
 ):
     file_path = relative_path_finder.get_full_file_path(file_path=Path("rel_file.md"))
-    assert file_path == test_data_dir / "relative/rel_file.md"
+    assert test_data_dir / "relative/rel_file.md" == file_path
 
 
 def test_relative_path_finder_get_existing_full_file_path(
@@ -222,7 +316,7 @@ def test_relative_path_finder_get_existing_full_file_path(
     relative_path_finder: links.RelativePathFinder,
 ):
     file_path = relative_path_finder.get_full_file_path(file_path=Path("relative/rel_file.md"))
-    assert file_path == test_data_dir / "relative/rel_file.md"
+    assert test_data_dir / "relative/rel_file.md" == file_path
 
 
 def test_relative_path_finder_get_non_existing_file_path(
@@ -234,8 +328,8 @@ def test_relative_path_finder_get_non_existing_file_path(
     assert file_path is None
     assert caplog.records[-1].levelno == logging.ERROR
     assert (
-        caplog.records[-1].message == f'File: "non-existing.md" doesn\'t exists '
-        f'(from: "{test_data_dir}")'
+        f'File: "non-existing.md" doesn\'t exists (from: "{test_data_dir}")'
+        == caplog.records[-1].message
     )
 
 
@@ -270,18 +364,18 @@ def test_get_relative_file_path(
     file_path = str(
         relative_sub_path_finder.get_relative_file_path(file_path=test_data_dir / file_path)
     )
-    assert file_path == expected
+    assert expected == file_path
 
 
 @pytest.mark.parametrize(
     "link,text,anchor,title,expected",
     {
         ("main.md", "Main markdown", "", "", "[Main markdown](../main.md)"),
-        ("main.md", "Main with anchor", "#anchor", "", "[Main with anchor](../main.md#anchor)"),
+        ("main.md", "Main with anchor", "anchor", "", "[Main with anchor](../main.md#anchor)"),
         (
             "main.md",
             "Main with anchor",
-            "#anchor",
+            "anchor",
             "title",
             '[Main with anchor](../main.md#anchor "title")',
         ),
@@ -307,7 +401,7 @@ def test_blog_link_match_dataclass(
 ):
     link_obj = links.RelativeLinkMatch(link=link, text=text, anchor=anchor, title=title)
     link_obj.relative_path_finder = relative_blog_path_finder
-    assert str(link_obj) == expected
+    assert expected == str(link_obj)
 
 
 @pytest.mark.parametrize(
@@ -353,4 +447,4 @@ def test_relative_link_match_dataclass(
 ):
     link_obj = links.RelativeLinkMatch(link=link, text=text, anchor=anchor, title=title)
     link_obj.relative_path_finder = relative_path_finder
-    assert str(link_obj) == expected
+    assert expected == str(link_obj)

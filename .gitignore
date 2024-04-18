@@ -8,6 +8,7 @@ __pycache__
 
 # Coverage
 .coverage
+coverage.json
 htmlcov
 
 # Project specific
@@ -24,4 +25,7 @@ docs
 .idea
 .venv
 dist
+
+node_modules
 sandbox*
+docs_template

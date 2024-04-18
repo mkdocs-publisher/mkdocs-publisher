@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ import logging
 import subprocess
 from hashlib import md5
 from pathlib import Path
-from typing import List
+from typing import Optional
 from uuid import uuid4
 
 log = logging.getLogger("mkdocs.plugins.publisher._shared.file_utils")
@@ -55,20 +55,22 @@ def calculate_file_hash(file: Path, block_size: int = 8192) -> str:
 
 def list_files(
     directory: Path,
-    extensions: List[str] = [],
-    exclude: List[str] = [],
-) -> List[Path]:
-    temp_files_list: List[Path] = []
+    extensions: Optional[list[str]] = None,
+    exclude: Optional[list[str]] = None,
+) -> list[Path]:
+    temp_files_list: list[Path] = []
+    extensions = [] if extensions is None else extensions
+    exclude = [] if exclude is None else exclude
     for ext in extensions:
         for file in directory.glob(f"**/*{ext}"):
             temp_files_list.append(file.relative_to(directory))
 
-    excluded_files_list: List[Path] = []
+    excluded_files_list: list[Path] = []
     for exc in exclude:
         for file in directory.rglob(exc):
             excluded_files_list.append(file.relative_to(directory))
 
-    files_list: List[Path] = [file for file in temp_files_list if file not in excluded_files_list]
+    files_list: list[Path] = [file for file in temp_files_list if file not in excluded_files_list]
     return files_list
 
 

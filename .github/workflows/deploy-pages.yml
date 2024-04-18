@@ -11,21 +11,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install poetry
-        run: pipx install --python python poetry==1.5.1
+        run: pipx install poetry
       - name: Checkout git repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Install Python 3.10
-        uses: actions/setup-python@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.9'
           architecture: 'x64'
           cache: 'poetry'
       - name: Install Python dependencies
         run: poetry install -n
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           architecture: 'x64'
@@ -51,7 +51,7 @@ jobs:
       - name: Build mkdocs-publisher documentation
         run: poetry run mkdocs build -c
       - name: Store documentation build and debug logs as artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docs-build-logs
           if-no-files-found: ignore

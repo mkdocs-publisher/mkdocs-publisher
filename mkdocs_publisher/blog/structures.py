@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,6 @@ from dataclasses import dataclass
 from dataclasses import field
 from datetime import datetime
 from pathlib import Path
-from typing import Dict
-from typing import List
 from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
@@ -45,8 +43,8 @@ class BlogPost:
     date: datetime
     path: Optional[str]
     content: Optional[str]
-    tags: Optional[List[str]]
-    categories: Optional[List[str]]
+    tags: Optional[list[str]]
+    categories: Optional[list[str]]
     slug: Optional[str] = None
     teaser: str = ""
     is_teaser: bool = False
@@ -86,11 +84,11 @@ class BlogConfig:
     docs_dir: Path = field(init=False)
     blog_dir: Path = field(init=False)
     site_dir: Path = field(init=False)
-    blog_posts: Dict[datetime, BlogPost] = field(init=False, default_factory=lambda: dict())
-    temp_files: Dict[str, Path] = field(init=False, default_factory=lambda: dict())
+    blog_posts: dict[datetime, BlogPost] = field(init=False, default_factory=lambda: dict())
+    temp_files: dict[str, Path] = field(init=False, default_factory=lambda: dict())
 
     @property
-    def temp_files_list(self) -> List[str]:
+    def temp_files_list(self) -> list[str]:
         temp_files = []
         for path in self.temp_files.values():
             temp_files.append(str(path.relative_to(self.temp_dir)))
@@ -101,8 +99,9 @@ class BlogConfig:
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
-        self.meta_config: Optional[MetaPluginConfig] = mkdocs_utils.get_plugin_config(
-            mkdocs_config=mkdocs_config, plugin_name="pub-meta"
+        self.meta_config: Optional[MetaPluginConfig] = (
+            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta")
+            or None
         )  # type: ignore
         self.temp_dir = Path(plugin_config.temp_dir)
         self.docs_dir = Path(mkdocs_config.docs_dir)

@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.4
+    rev: v1.5.5
     hooks:
       - id: insert-license
         name: insert project license into Python files
@@ -11,6 +11,7 @@ repos:
           - LICENSE
           - --use-current-year
           - --allow-past-years
+
       - id: insert-license
         name: insert project license into HTML files
         files: ^mkdocs_publisher/
@@ -20,8 +21,9 @@ repos:
           - LICENSE
           - --comment-style
           - <!--|  ~|  -->
-          - --use-current-year
           - --allow-past-years
+          - --use-current-year
+
       - id: insert-license
         name: insert project license into CSS files
         files: ^mkdocs_publisher/
@@ -34,6 +36,7 @@ repos:
           - /*| *| */
           - --use-current-year
           - --allow-past-years
+
       - id: insert-license
         name: insert project license into JS files
         files: ^mkdocs_publisher/
@@ -48,28 +51,32 @@ repos:
           - --allow-past-years
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
+      - id: no-commit-to-branch
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
+      - id: detect-private-key
+      - id: name-tests-test
+        args:
+          - --pytest
+        files: ^tests/
+        exclude: \.md$
       - id: end-of-file-fixer
         exclude: ^(docs|mkdocs_publisher_docs/.obsidian)/
       - id: trailing-whitespace
         exclude: ^(docs|mkdocs_publisher_docs/.obsidian)/
-      - id: check-shebang-scripts-are-executable
-      - id: check-symlinks
       - id: check-json
       - id: check-toml
-      - id: detect-private-key
-      - id: no-commit-to-branch
-      - id: name-tests-test
-        files: ^tests/
-        exclude: \.md$
 
   - repo: local
     hooks:
       - id: check-readme-md
         name: check if README.md is updated
         description: Copy README.md file from documentation
-        entry: bash -c "cmp --silent mkdocs_publisher_docs/README.md README.md || cp mkdocs_publisher_docs/README.md README.md"
+        entry:
+          bash -c "cmp --silent mkdocs_publisher_docs/README.md README.md ||
+          cp mkdocs_publisher_docs/README.md README.md"
         language: system
         pass_filenames: false
 
@@ -83,15 +90,7 @@ repos:
       - id: format
         name: format Python code
         description: Pre-format python code.
-        entry: poetry run black --quiet
-        language: system
-        types:
-          - python
-
-      - id: sort-imports
-        name: sort Python imports
-        description: Sort python imports.
-        entry: poetry run isort --quiet
+        entry: poetry run ruff format --quiet
         language: system
         types:
           - python
@@ -100,6 +99,8 @@ repos:
         name: lint Python
         description: Lint python code.
         entry: poetry run ruff check
+        args:
+          - --fix
         language: system
         types:
           - python
@@ -117,4 +118,9 @@ repos:
         entry: poetry run pytest
         language: system
         pass_filenames: false
-        always_run: true
+
+      - id: update-coverage
+        name: update cov.json
+        entry: poetry run mkdocs-pub dev update-cov
+        language: system
+        pass_filenames: false

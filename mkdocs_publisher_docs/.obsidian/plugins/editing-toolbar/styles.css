@@ -4,13 +4,13 @@
   padding: 3px;
   display: grid;
   user-select: none;
-  border-radius: 6px;
+  border-radius: var(--radius-m);
   position: absolute;
   transition: 100ms cubic-bezier(0.92, -0.53, 0.65, 1.21);
   -webkit-transition: 100ms cubic-bezier(0.92, -0.53, 0.65, 1.21);
   min-width: fit-content;
   justify-content: space-around;
-  z-index: var(--layer-status-bar);
+  z-index: var(--layer-modal);
 
 }
 
@@ -26,20 +26,22 @@
   margin: 2px;
   border: none;
   display: flex;
-  cursor: pointer;
+  cursor: default;
   padding: 5px 6px;
   box-shadow: none;
   margin-left: 3px;
   margin-right: 3px;
   position: relative;
-  border-radius: 3px;
+  border-radius: var(--radius-s);
   font-size: initial !important;
   background-color: var(--background-primary-alt);
   height: auto;
 }
 
-#cMenuToolbarModalBar button.cMenuToolbarCommandItem:hover {
-  background-color: var(--background-secondary);
+:is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button[class^=cMenuToolbarCommandsubItem]>.subitem button:hover,
+:is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button[class^=cMenuToolbarCommand]:hover,
+#cMenuToolbarSecond:hover {
+  background-color: var(--background-modifier-hover) !important;
 }
 
 /* #cMenuToolbarModalBar button.cMenuToolbarCommandItem svg {
@@ -68,7 +70,7 @@ button:not(.mod-cta):not(.mod-warning).cMenuToolbarSettingsButton.cMenuToolbarSe
 
 button.cMenuToolbarSettingsButton {
   padding: 4px 14px;
-  border-radius: 6px;
+  border-radius: var(--radius-m);
 }
 
 
@@ -157,7 +159,7 @@ cMenuToolbar CLASS CHANGES
   box-shadow: none;
   border: none;
   display: flex;
-  border-radius: 3px;
+  border-radius: var(--radius-s);
   font-size: 10px;
   margin-right: 0px;
   position: relative;
@@ -203,7 +205,7 @@ cMenuToolbar STATUS BAR MENU
   font-size: 12px;
   text-align: center;
   line-height: 1;
-  border-radius: 5px;
+  border-radius: var(--radius-m);
   height: auto;
   padding: 8px 5px 0px 5px;
   margin: 0 auto;
@@ -269,7 +271,7 @@ cMenuToolbar STATUS BAR BUTTONS
 ----------------------------------------------------------------*/
 
 .cMenuToolbar-statusbar-button {
-  cursor: pointer;
+  cursor: default;
   display: flex;
   align-items: center;
   line-height: 1;
@@ -359,10 +361,9 @@ body.theme-dark .modal-container.cMenuToolbar-Modal .modal input[type='range'] {
 #cMenuToolbarModalBar.cMenuToolbarTinyAesthetic {
   align-items: center;
   justify-items: center;
-  border: none;
+  border: 1px solid var(--background-modifier-border-hover);
   backdrop-filter: none;
-  background-color: var(--color-base-10, --background-primary);
- 
+  background-color: var(--background-secondary);
 }
 
 
@@ -401,7 +402,7 @@ body.theme-dark .modal-container.cMenuToolbar-Modal .modal input[type='range'] {
   box-shadow: none;
   border: none;
   display: flex;
-  border-radius: 3px;
+  border-radius: var(--radius-s);
   font-size: 10px;
   margin-right: 0px;
   position: relative;
@@ -410,7 +411,7 @@ body.theme-dark .modal-container.cMenuToolbar-Modal .modal input[type='range'] {
   place-items: center;
   clear: both;
   max-width: 28px;
-  max-height: 23px;
+  max-height: 18px;
 
 }
 
@@ -426,9 +427,9 @@ button[class^=cMenuToolbarCommandsubItem]::after {
 
 :is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button[class^=cMenuToolbarCommandsubItem]>.subitem {
   background-color: var(--color-base-10, --background-primary);
-  border-radius: 4px;
+  border-radius: var(--radius-s);
   border: 1px solid var(--background-modifier-border);
-  
+
   position: absolute;
   z-index: var(--layer-menu);
   user-select: none;
@@ -444,18 +445,12 @@ button[class^=cMenuToolbarCommandsubItem]::after {
 }
 
 :is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button[class^=cMenuToolbarCommandsubItem]>.subitem button.menu-item {
-  background-color: var(--background-secondary);
+  background-color: transparent;
   line-height: 2em;
   display: inline-flex;
   box-shadow: none;
   align-items: center;
 }
-
-:is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button[class^=cMenuToolbarCommandsubItem]>.subitem button:hover {
-  background-color: var(--interactive-hover);
-  box-shadow: var(--input-shadow-hover);
-}
-
 
 :is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button[class^=cMenuToolbarCommandsubItem]>.subitem .menu-item {
   margin-left: 2px;
@@ -535,9 +530,7 @@ button[class^=cMenuToolbarCommandsubItem]::after {
   background-color: transparent;
 }
 
-.cMenuToolbarCommandsubItem-font-color button:hover {
-  background-color: var(--interactive-normal);
-}
+
 
 .cMenuToolbarSettingsTabsContainer .cMenuToolbarCommandItem .setting-item-info {
 
@@ -651,7 +644,7 @@ button[class^=cMenuToolbarCommandsubItem]::after {
   width: fit-content;
   font-weight: 400;
   font-family: Source Sans Pro, sans-serif;
-  border-radius: 4px;
+  border-radius: var(--radius-s);
   background-color: var(--color-base-10, --background-primary);
 }
 
@@ -680,7 +673,7 @@ button[class^=cMenuToolbarCommandsubItem]::after {
 .x-color-picker-wrapper #x-color-picker-table td {
   font-size: 1px;
   padding: 9px;
-  cursor: pointer;
+  cursor: default;
   border: solid 1px var(--background-modifier-border);
 }
 
@@ -688,17 +681,18 @@ button[class^=cMenuToolbarCommandsubItem]::after {
   font-size: 1px;
   border-radius: 50%;
   padding: 9px;
-  cursor: pointer;
+  cursor: default;
   border: solid 1px var(--background-modifier-border);
 }
 
 .x-color-picker-wrapper .x-color-picker-table tr td:hover {
+  filter: brightness(1.2);
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, .12), 0 6px 16px 0 rgba(0, 0, 0, .08), 0 9px 28px 8px rgba(0, 0, 0, .05);
 }
 
-.x-color-picker-wrapper tbody>tr:hover {
+/* .x-color-picker-wrapper tbody>tr:hover {
   background-color: transparent !important;
-}
+} */
 
 /**top**/
 #cMenuToolbarModalBar.top {
@@ -714,12 +708,15 @@ button[class^=cMenuToolbarCommandsubItem]::after {
 
 #cMenuToolbarModalBar.top.autohide {
   opacity: 0;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
 }
 
 
 #cMenuToolbarModalBar.top.autohide:hover {
   opacity: 1;
-  transition: all 0.5s linear;
+  transition: all 1s linear;
+  -webkit-transition: all 1s linear;
 }
 
 
@@ -733,10 +730,10 @@ button[class^=cMenuToolbarCommandsubItem]::after {
   padding: 0;
   border: none;
   background: transparent;
-  cursor: pointer;
+  cursor: default;
   outline: none;
   box-shadow: none;
-  border-radius: 2px;
+  border-radius: var(--radius-s);
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -748,9 +745,9 @@ button[class^=cMenuToolbarCommandsubItem]::after {
 
 }
 
-#cMenuToolbarModalBar.top button.cMenuToolbarCommandItem:hover {
+/* #cMenuToolbarModalBar.top button.cMenuToolbarCommandItem:hover {
   background-color: var(--interactive-hover);
-}
+} */
 
 
 
@@ -760,10 +757,10 @@ button[class^=cMenuToolbarCommandsubItem]::after {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  z-index: var(--layer-status-bar);
+  z-index: var(--layer-popover);
   background-color: var(--color-base-10, --background-primary);
   background-clip: padding-box;
-  border-radius: 6px;
+  border-radius: var(--radius-m);
 
   margin-left: auto;
   margin-right: 25px;
@@ -787,20 +784,16 @@ button[class^=cMenuToolbarCommandsubItem]::after {
   padding: 0;
   border: none;
   background: transparent;
-  cursor: pointer;
+  cursor: default;
   outline: none;
   box-shadow: none;
-  border-radius: 2px;
+  border-radius: var(--radius-s);
   display: inline-flex;
   justify-content: center;
   align-items: center;
   transition: all 0.2s linear;
   -webkit-transition: all 0.2s linear;
 
-}
-
-#cMenuToolbarPopoverBar :is(.cMenuToolbarCommandItem, button[class^=cMenuToolbarCommandsubItem]):hover {
-  background-color: var(--interactive-hover);
 }
 
 #cMenuToolbarModalBar .more-menu {
@@ -856,7 +849,9 @@ button[class^=cMenuToolbarCommandsubItem]::after {
   content: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M511.674077 66.707284c-246.52265 0-446.347744 199.835328-446.347744 446.347744s199.825095 446.356954 446.347744 446.356954c246.50423 0 446.348768-199.844537 446.348768-446.356954S758.177284 66.707284 511.674077 66.707284zM744.967424 667.159826c21.8701 21.8701 21.8701 57.310264 0 79.199807-21.8701 21.851681-57.30924 21.851681-79.198783-0.019443L511.674077 592.264045 357.56007 746.359632c-21.8701 21.8701-57.30924 21.851681-79.17934-0.019443s-21.8701-57.290821 0-79.160921L432.493713 513.065262 278.379707 358.950232c-21.8701-21.86089-21.8701-57.328683 0-79.18855 21.8701-21.87931 57.30924-21.87931 79.17934 0l154.114007 154.104797 154.095587-154.104797c21.889543-21.87931 57.32766-21.87931 79.198783-0.010233 21.8701 21.8701 21.8701 57.348126 0 79.207993L590.89128 513.065262 744.967424 667.159826z' fill='%23666666'/%3E%3C/svg%3E");
 }
 
-:is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button.cMenuToolbarCommandItem.cMenuToolbar-Divider-Line {
+
+:is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button.cMenuToolbar-Divider-Line
+{
   min-width: unset;
   flex-shrink: 0;
   display: inline-flex;
@@ -866,14 +861,27 @@ button[class^=cMenuToolbarCommandsubItem]::after {
   opacity: 0.8;
   margin: 0;
 }
+:is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button[class^=cMenuToolbarCommandsubItem]>.subitem button.menu-item.cMenuToolbar-Divider-Line
+{  min-width: unset;
+  flex-shrink: 0;
+  display: inline-flex;
+  width: 0.6px;
+  background-color: var(--background-modifier-border);
+  height: 22px;
+  opacity: 0.8;
+  margin: 0;
+  padding: 0;
+  height: auto;
 
-.theme-dark :is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button.cMenuToolbarCommandItem.cMenuToolbar-Divider-Line {
+}
+
+.theme-dark :is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button.cMenuToolbar-Divider-Line {
 
   background-color: #4f4f5188;
 
 }
 
-:is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button.cMenuToolbarCommandItem.cMenuToolbar-Divider-Line svg {
+:is(#cMenuToolbarModalBar, #cMenuToolbarPopoverBar) button.cMenuToolbar-Divider-Line svg {
   display: none;
 }
 
@@ -903,4 +911,61 @@ button[class^=cMenuToolbarCommandsubItem]::after {
 
 .setting-item.toolbar-cta {
   position: relative;
+}
+
+.toolbar-pickr  .pcr-last-color,
+.pickr  .pcr-button{
+  background-color: var(--pcr-color);
+}
+.toolbar-pickr .pcr-interaction :not(:is(input.pcr-save,.pcr-result)){
+  display:none;
+}
+.toolbar-pickr .pcr-swatches {
+  display:none;
+}
+.toolbar-pickr {
+  display:flex;
+}
+
+
+div[data-type="thino_view"] .memo-editor-wrapper:has(#cMenuToolbarModalBar)
+{
+    padding-top:0;
+    padding-left:0;
+    padding-right:0;
+}
+
+div[data-type="thino_view"] .memo-editor-wrapper:has(#cMenuToolbarModalBar) .common-tools-wrapper
+{
+   padding-left:16px;
+    padding-right:16px;
+}
+div[data-type="thino_view"] .memo-editor-wrapper #cMenuToolbarModalBar ~ .cm-editor{
+    padding-top:38px;
+    padding-bottom:0px;
+    padding-left:16px;
+    padding-right:16px;
+}
+div[data-type=thino_view] .common-editor-wrapper .common-editor-inputer:has(#cMenuToolbarModalBar)
+{
+  min-height:118px;
+}
+
+div[data-type=thino_view] #cMenuToolbarModalBar.top
+{
+  position:absolute!important;
+  width: 100%;
+}
+body.auto-hide-header .workspace-tab-header-container:hover + .workspace-tab-container .workspace-leaf .workspace-leaf-content>.view-header {
+  margin-top: 0;
+  transition: all 0.1s linear;
+}
+
+body.auto-hide-header .workspace-tab-header-container + .workspace-tab-container .workspace-leaf .workspace-leaf-content>.view-header:hover {
+  margin-top: 0;
+  transition: all 0.6s linear;
+}
+body.auto-hide-header .workspace-tab-header-container + .workspace-tab-container .workspace-leaf .workspace-leaf-content>.view-header {
+  margin-top: -40px;
+  transition: all 0.6s linear;
 }

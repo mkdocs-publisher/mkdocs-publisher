@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ log = logging.getLogger("mkdocs.plugins.publisher.cli.md_tools")
 
 @click.group
 def app():
-    """Markdown tools"""
+    """Markdown tools."""
     pass
 
 
@@ -76,7 +76,7 @@ def key_rename():
                     )
                     output = f"{output}{yaml_text_dump}"
                     post_meta.pop(old_key_name, None)
-            for key in post_meta.keys():
+            for key in post_meta:
                 output = f"{output}{yaml.safe_dump({key: post_meta[key]}, indent=2)}"
             output = f"{output}---\n\n{content}"
             md_file.seek(0)

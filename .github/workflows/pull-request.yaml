@@ -1,0 +1,55 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    name: Pre-commit
+    steps:
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Checkout git repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
+          cache: 'poetry'
+      - name: Install Python dependencies
+        run: poetry install -n --only=dev
+      - name: Pre-commit tests
+        env:
+          SKIP: pytest-check,update-coverage
+        uses: pre-commit/action@v3.0.1
+  unittests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+      fail-fast: false
+    name: Unittests (Python v${{ matrix.python-version }})
+    steps:
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Checkout git repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '${{ matrix.python-version }}'
+          architecture: 'x64'
+          cache: 'poetry'
+          allow-prereleases: true
+      - name: Install Python dependencies
+        run: poetry install -n --only=test
+      - name: Run unittests
+        run: poetry run pytest --no-header --no-cov

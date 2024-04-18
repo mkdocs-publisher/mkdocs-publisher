@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,6 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
-from typing import Dict
-from typing import List
 from typing import Optional
 
 import jinja2
@@ -70,9 +68,9 @@ class Comment:
 class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def __init__(self):
         self._backlink_links: Optional[BacklinkLinks] = None
-        self._backlinks: Dict[str, List[Link]] = {}
+        self._backlinks: dict[str, list[Link]] = {}
         self._md_links: Optional[MarkdownLinks] = None
-        self._vega_pages: List[Page] = list()
+        self._vega_pages: list[Page] = list()
 
     def _normalize_comments(self, match: re.Match) -> str:
         comment = Comment(**match.groupdict())
@@ -84,21 +82,28 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         self._md_links = MarkdownLinks(mkdocs_config=config)
         return config
 
+    def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:
+        if self.config.vega.enabled:
+            resources.add_extra_css(
+                stylesheet_file_name="obsidian.min.css",
+                config=config,
+                files=files,
+            )
+        return files
+
     def on_nav(
         self, nav: Navigation, *, config: MkDocsConfig, files: Files
     ) -> Optional[Navigation]:
-
         if self.config.backlinks.enabled:
             log.info("Parsing backlinks")
             for file in files:
                 if file.page is not None:
                     log.debug(f"Parsing backlinks in file '{file.src_path}'")
                     with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
-                        markdown, meta = meta_parser.get_data(md_file.read())
+                        markdown, _ = meta_parser.get_data(md_file.read())
                         markdown = self._md_links.normalize_links(
                             markdown=markdown, current_file_path=str(file.src_uri)
                         )
-
                         self._backlink_links.find_markdown_links(markdown=markdown, page=file.page)
         return nav
 
@@ -128,7 +133,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 self._vega_pages.append(page)
 
         if self.config.backlinks.enabled:
-            markdown = self._backlink_links.convert_to_anchor_link(markdown=markdown)
+            markdown = self._backlink_links.convert_to_backlink(markdown=markdown)
             page_backlinks = self._backlinks.get(f"{page.file.src_uri}", None)
             if page_backlinks is not None:
                 log.debug(f"Adding backlinks to '{page.file.src_uri}'")
@@ -145,17 +150,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 markdown = f"{markdown}{template.render(context)}"
         return markdown
 
-    def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:
-        if self.config.vega.enabled:
-            resources.add_extra_css(
-                stylesheet_file_name="obsidian.min.css",
-                config=config,
-                files=files,
-            )
-        return files
-
     def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
-
         if self.config.vega.enabled and page in self._vega_pages:
             # TODO: embed scripts to assets and give possibility to serve from site_dir
             html_modifier = HTMLModifier(markup=output)
@@ -183,7 +178,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 or event.is_directory
             ):
                 return
-            log.debug(str(event))
+
             with server._rebuild_cond:
                 # noinspection PyProtectedMember
                 server._to_rebuild[server.builder] = True

@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -21,18 +21,21 @@
 # SOFTWARE.
 
 import importlib
+import logging
 import pathlib
 
 import click
 
 
 @click.group
-def app():
+@click.option("--debug", is_flag=True, default=False, help="Show debug messages")
+def app(debug):
     """Publisher plugin for MkDocs (by Maciej 'maQ' Kusz).
 
     More information can be fount at: https://github.com/mkusz/mkdocs-publisher
     """
-    pass
+    log_level = logging.DEBUG if debug else logging.INFO
+    logging.basicConfig(level=log_level)
 
 
 def build_app(app: click.group):  # type: ignore

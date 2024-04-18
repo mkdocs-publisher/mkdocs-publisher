@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import logging
 from typing import cast
 
 import pytest
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import PluginCollection
+from pytest_check import check_functions as check
 
 from mkdocs_publisher.blog.plugin import BlogPlugin
 from mkdocs_publisher.obsidian import md_links
@@ -45,7 +45,7 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
         (
             "Lorem ipsum dolor sit [amet](file.md#anchor part), consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [amet](file.md#anchor-part), consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [amet](file.md#anchor part), consectetur adipiscing elit.",
         ),
         (
             'Lorem ipsum dolor sit [amet](file.md "title"), consectetur adipiscing elit.',
@@ -54,8 +54,12 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         (
             'Lorem ipsum dolor sit [amet](file.md#anchor part "title"), '
             "consectetur adipiscing elit.",
-            'Lorem ipsum dolor sit [amet](file.md#anchor-part "title"), '
+            'Lorem ipsum dolor sit [amet](file.md#anchor part "title"), '
             "consectetur adipiscing elit.",
+        ),
+        (
+            "Lorem ipsum dolor sit [amet](#just/an anchor), consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [amet](#just/an anchor), consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file]], consectetur adipiscing elit.",
@@ -68,7 +72,7 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
         (
             "Lorem ipsum dolor sit [[file#anchor part]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [file > anchor part](file.md#anchor-part), "
+            "Lorem ipsum dolor sit [file > anchor part](file.md#anchor part), "
             "consectetur adipiscing elit.",
         ),
         (
@@ -109,7 +113,8 @@ def test_normalize_wiki_links(
     )
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown = markdown_links.normalize_links(markdown=markdown, current_file_path="main.md")
-    assert markdown == expected
+
+    check.equal(expected, markdown, "Wrong wiki link to markdown link")
 
 
 @pytest.mark.parametrize(
@@ -146,8 +151,8 @@ def test_normalize_links(
     )
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown = markdown_links.normalize_links(markdown=markdown, current_file_path="main.md")
-    logging.info(markdown)
-    assert markdown == expected
+
+    check.equal(expected, markdown, "Wrong markdown link to markdown link")
 
 
 @pytest.mark.parametrize(
@@ -177,4 +182,6 @@ def test_normalize_relative_links(
     markdown = markdown_links.normalize_relative_links(
         markdown=markdown, current_file_path="main.md"
     )
-    assert markdown == expected
+
+    # TODO: is this test valid
+    check.equal(expected, markdown, "Wrong relative link to markdown link")

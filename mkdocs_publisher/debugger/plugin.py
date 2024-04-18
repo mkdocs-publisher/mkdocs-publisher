@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ import platform
 import sys
 from io import BytesIO
 from pathlib import Path
+from typing import cast
 from zipfile import ZIP_DEFLATED
 from zipfile import ZipFile
 
@@ -64,8 +65,11 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
         self._mkdocs_log_date: str = self._mkdocs_log_file.replace(LOG_FILENAME_SUFFIX, "")
 
         self.load_config(
-            options=mkdocs_utils.get_plugin_config(
-                mkdocs_config=mkdocs_utils.get_mkdocs_config(), plugin_name="pub-debugger"
+            options=cast(
+                dict,
+                mkdocs_utils.get_plugin_config(
+                    mkdocs_config=mkdocs_utils.get_mkdocs_config(), plugin_name="pub-debugger"
+                ),
             ),
             config_file_path=mkdocs_utils.get_mkdocs_config().config_file_path,
         )
@@ -123,7 +127,6 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
 
             archive = BytesIO()
             with ZipFile(archive, "a", ZIP_DEFLATED, False) as archive_file:
-
                 # Zip files from list
                 for file_to_zip in FILES_TO_ZIP_LIST:
                     if Path(file_to_zip).exists():

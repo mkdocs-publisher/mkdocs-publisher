@@ -6,8 +6,8 @@ copyright: >
   &copy; 2023 Maciej 'maQ' Kusz
 
 repo_name: mkusz/mkdocs-publisher
-repo_url: https://github.com/mkusz/mkdocs-publisher
-edit_uri: edit/main/mkdocs_publisher_docs
+repo_url: https://github.com/mkusz/mkdocs-publisher/
+edit_uri: edit/main/mkdocs_publisher_docs/
 
 docs_dir: mkdocs_publisher_docs
 site_dir: docs
@@ -67,7 +67,8 @@ theme:
     - navigation.footer  # Prev/Next page
     - navigation.tracking  # Anchor tracking
     - navigation.top  # Back to top
-    - navigation.sections
+    - navigation.sections  # Useful for an overview
+    - navigation.indexes  # Needed for an overview
     - navigation.instant
     - navigation.instant.progress
     - search.suggest
@@ -131,6 +132,7 @@ plugins:
   - pub-debugger:
       console_log:
         enabled: true
+#        log_level: DEBUG
 #        filter_logger_names:
 #          - mkdocs.plugins
 #          - mkdocs.structure.files
@@ -142,10 +144,11 @@ plugins:
 #          - mkdocs.plugins.publisher.debug.plugin
 #          - mkdocs.plugins.publisher.minifier.base
 #          - mkdocs.plugins.publisher.minifier.plugin
+#          - mkdocs.plugins.publisher.social.plugin
 #          - mkdocs.commands.build
   - search
   - pub-blog:
-      blog_dir: 04_blog
+      blog_dir: 06_blog
   - pub-obsidian
   - pub-social
   - pub-meta

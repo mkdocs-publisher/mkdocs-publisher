@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -74,15 +74,24 @@ class MarkdownLinks:
 
     @staticmethod
     def _normalize_md_links(match: re.Match) -> str:
-        md_link = str(links.LinkMatch(**match.groupdict()))
+        md_link_obj = links.LinkMatch(**match.groupdict())
+        md_link = str(md_link_obj)
         log.debug(f"Normalizing md link: {match.group(0)} > {md_link}")
         return md_link
+
+    @staticmethod
+    def _normalize_anchor_links(match: re.Match) -> str:
+        anchor_link_obj = links.LinkMatch(**match.groupdict())
+        anchor_link = str(anchor_link_obj)
+        log.debug(f"Normalizing anchor link: {match.group(0)} > {anchor_link}")
+        return anchor_link
 
     def normalize_links(self, markdown: str, current_file_path: str) -> str:
         self._current_file_path = current_file_path
         if self._links_config.wikilinks_enabled:
             markdown = re.sub(links.WIKI_LINK_RE, self._normalize_wiki_link, markdown)
             markdown = re.sub(links.WIKI_EMBED_LINK_RE, self._normalize_wiki_embed_link, markdown)
+            markdown = re.sub(links.ANCHOR_LINK_RE, self._normalize_anchor_links, markdown)
         markdown = re.sub(links.MD_EMBED_LINK_RE, self._normalize_md_embed_link, markdown)
         markdown = re.sub(links.MD_LINK_RE, self._normalize_md_links, markdown)
         return markdown
@@ -94,6 +103,7 @@ class MarkdownLinks:
             docs_dir=Path(self._mkdocs_config.docs_dir),
             relative_path=Path(cast(str, self._blog_config.blog_dir)),
         )
+        # log.warning(str(md_link_obj))
         return str(md_link_obj)
 
     def normalize_relative_links(self, markdown: str, current_file_path: str) -> str:
