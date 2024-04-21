@@ -1,4 +1,4 @@
-name: Release
+name: Build release
 
 on:
   workflow_dispatch:
@@ -9,7 +9,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    name: Pre-commit
     steps:
       - name: Install poetry
         run: pipx install poetry
@@ -26,7 +25,7 @@ jobs:
       - name: Config poetry
         run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
       - name: Build and publish to PyPi
-        run: poetry publish --build
+        run: poetry publish -n --build
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
@@ -40,7 +39,7 @@ jobs:
         with:
           name: mkdocs_publisher
           if-no-files-found: ignore
-          retention-days: 1
+          retention-days: 7
           path: |
             dist/mkdocs_publisher-*.tar.gz
             dist/mkdocs_publisher-*.whl

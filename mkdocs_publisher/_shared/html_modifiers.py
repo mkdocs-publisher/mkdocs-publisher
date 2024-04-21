@@ -19,8 +19,11 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+import logging
 
 from bs4 import BeautifulSoup
+
+log = logging.getLogger("mkdocs.plugins.publisher._shared.html_modifiers")
 
 
 class HTMLModifier:
@@ -34,7 +37,9 @@ class HTMLModifier:
 
     def add_head_script(self, src: str):
         """Add script to the head section"""
-        self._soup.head.append(self._soup.new_tag(name="script", attrs={"src": src}))  # type: ignore
+        self._soup.head.append(  # type: ignore
+            self._soup.new_tag(name="script", attrs={"src": src})
+        )
 
     def add_meta_property(self, name: str, value: str):
         """Add property to the head section"""
@@ -48,3 +53,10 @@ class HTMLModifier:
             head_property = self._soup.head.find(name="meta", attr={"property": prop})  # type: ignore
             if head_property is not None:
                 head_property.extract()
+
+    def fix_img_links(self):
+        images = self._soup.findAll(name="img")
+        for img in images:
+            img_src = str(img.attrs["src"])
+            if img_src.endswith("/"):
+                img["src"] = img_src[:-1]

@@ -35,7 +35,7 @@ Also from now on all new releases will be smaller. I will try to focus on smalle
 
 Last thing is a new project logo:
 
-<figure markdown>
+<figure markdown="1">
 ![MkDocs Publisher logo](../publisher_logo.png)
 </figure>
 

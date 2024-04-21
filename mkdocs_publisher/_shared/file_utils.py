@@ -45,12 +45,15 @@ def remove_dir(directory: Path):
             file.unlink(missing_ok=True)
 
 
-def calculate_file_hash(file: Path, block_size: int = 8192) -> str:
-    with open(file, "rb") as binary_file:
-        file_hash = md5()
-        while chunk := binary_file.read(block_size):
-            file_hash.update(chunk)
-        return file_hash.hexdigest()
+def calculate_file_hash(file: Path, block_size: int = 8192) -> Optional[str]:
+    try:
+        with open(file, "rb") as binary_file:
+            file_hash = md5()
+            while chunk := binary_file.read(block_size):
+                file_hash.update(chunk)
+            return file_hash.hexdigest()
+    except IsADirectoryError:
+        return None
 
 
 def list_files(

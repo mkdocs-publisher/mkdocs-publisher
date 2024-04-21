@@ -35,7 +35,7 @@ EXTRA_RE_PART = r"( *({(?P<extra>[\w+=. ]+)})?)"
 IMAGE_RE_PART = r"((\|(?P<image>([0-9x]+)))?)"
 LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^|#()\r\n\t\f\v]+)"
 URL_RE_PART = r"(?P<link>((https?|ftp)://)?[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
-TEXT_RE_PART = r"(?P<text>[^\][)(|]+)"
+TEXT_RE_PART = r"(?P<text>[^\][|]+)"
 LINK_TITLE_RE_PART = r"(( \"(?P<title>[ \S]+)\")?)"
 
 HTTP_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}]\({URL_RE_PART}\)")
@@ -51,7 +51,7 @@ MD_EMBED_LINK_RE = re.compile(
     rf"!\[{TEXT_RE_PART}]\({LINK_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
 )
 RELATIVE_LINK_RE = re.compile(
-    rf"\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)"
+    rf"\[{TEXT_RE_PART}?]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)"
 )
 ANCHOR_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_RE_PART}]\({ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
 
@@ -92,32 +92,36 @@ class RelativePathFinder:
             else:
                 log.error(
                     f"Too much files found: "
-                    f"{[str(f.relative_to(self._docs_dir)) for f in found_files_list]}"
+                    f"{[str(f.relative_to(self._docs_dir)) for f in found_files_list]} "
+                    f"for link in file: {str(full_file_path)}"
                 )
                 full_file_path = None
         return full_file_path
 
-    def get_relative_file_path(self, file_path: Path) -> Path:
+    def get_relative_file_path(self, file_path: Optional[Path]) -> Optional[str]:
         """Get file path relative to currently opened file."""
-        current_file_parts = list(Path(self._current_file_path).parts)
-        current_file_parts[0] = str(self._relative_path)
-        found_file_parts = list(file_path.relative_to(self._docs_dir).parts)
-        relative_file_parts = []
-        relative_file_missing_pieces = found_file_parts[:]
+        if file_path is not None:
+            current_file_parts = list(Path(self._current_file_path).parts)
+            current_file_parts[0] = str(self._relative_path)
+            found_file_parts = list(file_path.relative_to(self._docs_dir).parts)
+            relative_file_parts = []
+            relative_file_missing_pieces = found_file_parts[:]
 
-        index = 0
-        for index, part in enumerate(current_file_parts[:-1]):
-            try:
-                if part == found_file_parts[index]:
-                    del relative_file_missing_pieces[0]
-                else:
+            index = 0
+            for index, part in enumerate(current_file_parts[:-1]):
+                try:
+                    if part == found_file_parts[index]:
+                        del relative_file_missing_pieces[0]
+                    else:
+                        relative_file_parts.append("..")
+                except IndexError:
                     relative_file_parts.append("..")
-            except IndexError:
-                relative_file_parts.append("..")
+                    relative_file_parts.extend(relative_file_missing_pieces)
+            if index < len(found_file_parts):
                 relative_file_parts.extend(relative_file_missing_pieces)
-        if index < len(found_file_parts):
-            relative_file_parts.extend(relative_file_missing_pieces)
-        return Path(*relative_file_parts)
+            return str(Path(*relative_file_parts))
+        else:
+            return None
 
 
 @dataclass
@@ -236,7 +240,7 @@ class RelativeLinkMatch:
             log.debug(final_link)
             return final_link
 
-        # Link from blog sub pages have to be recalculated for a new relative value
+        # Link from blog sub-pages have to be recalculated for a new relative value
         if (
             str(self.relative_path_finder.current_file_path).startswith(
                 str(self.relative_path_finder.relative_path)
@@ -254,5 +258,5 @@ class RelativeLinkMatch:
         else:
             link = self.link
         final_link = f"[{self.text}]({link}{anchor}{title})"
-        log.debug(final_link)
+
         return final_link
