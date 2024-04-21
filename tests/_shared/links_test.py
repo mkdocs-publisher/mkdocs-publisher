@@ -22,6 +22,7 @@
 
 import logging
 from pathlib import Path
+from typing import Optional
 
 import pytest
 from pytest import LogCaptureFixture
@@ -340,8 +341,8 @@ def test_relative_path_finder_multiple_file_found(
     file_path = relative_path_finder.get_full_file_path(file_path=Path("other_rel_file.md"))
     assert file_path is None
     assert caplog.records[-1].levelno == logging.ERROR
-    assert (
-        caplog.records[-1].message == "Too much files found: ['relative/other_rel_file.md', "
+    assert caplog.records[-1].message.startswith(
+        "Too much files found: ['relative/other_rel_file.md', "
         "'current/cur_sub/other_rel_file.md']"
     )
 
@@ -353,18 +354,18 @@ def test_relative_path_finder_multiple_file_found(
         ("current/file.md", "../../current/file.md"),
         ("relative/rel_sub/rel_sub_file.md", "../rel_sub/rel_sub_file.md"),
         ("current/cur_sub/cur_sub_file.md", "../cur_sub/cur_sub_file.md"),
+        (None, None),
     },
 )
 def test_get_relative_file_path(
-    file_path: str,
-    expected: str,
+    file_path: Optional[str],
+    expected: Optional[str],
     test_data_dir: Path,
     relative_sub_path_finder: links.RelativePathFinder,
 ):
-    file_path = str(
-        relative_sub_path_finder.get_relative_file_path(file_path=test_data_dir / file_path)
-    )
-    assert expected == file_path
+    file_new_path = (test_data_dir / file_path) if file_path is not None else None
+    relative_file_path = relative_sub_path_finder.get_relative_file_path(file_path=file_new_path)
+    assert expected == relative_file_path
 
 
 @pytest.mark.parametrize(

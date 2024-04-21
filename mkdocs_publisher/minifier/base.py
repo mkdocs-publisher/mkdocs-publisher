@@ -41,7 +41,7 @@ log = logging.getLogger("mkdocs.plugins.publisher.minifier.base")
 
 @dataclass
 class CachedFile:
-    original_file_hash: str = field(default="")
+    original_file_hash: Optional[str] = field(default="")
     original_file_path: Path = field(default_factory=lambda: Path(""))
     cached_file_name: Path = field(default_factory=lambda: Path(""))
 
@@ -154,7 +154,7 @@ class BaseMinifier:
             log.debug(f"{file} is in cache")
             file_hash = file_utils.calculate_file_hash(file=(self._mkdocs_config.site_dir / file))
             cached_file = self._cached_files[str(file)]
-            if cached_file.original_file_hash == file_hash:
+            if file_hash is not None and cached_file.original_file_hash == file_hash:
                 log.debug(f"{file} hash is equal to one in cache (file: {file_hash})")
                 cached_file_name = self._plugin_config.cache_dir / cached_file.cached_file_name
                 if cached_file_name.exists():

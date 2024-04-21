@@ -110,10 +110,13 @@ class MetaFiles(UserDict):
     def _get_title(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str):
         title: Optional[str] = None
         mode = self._meta_plugin_config.title.mode
-
         if mode == TitleChoiceEnum.META:
             title = meta.get(self._meta_plugin_config.title.key_name)
-            if title is None and self._meta_plugin_config.title.warn_on_missing_meta:
+            if (
+                title is None
+                and self._meta_plugin_config.title.warn_on_missing_meta
+                and not (meta_file.is_draft or (meta_file.is_dir and not meta_file.is_overview))
+            ):
                 log.warning(
                     f'Title value from "{self._meta_plugin_config.title.key_name}" meta data '
                     f'is missing for file: "{str(meta_file.path)}"'
@@ -122,7 +125,11 @@ class MetaFiles(UserDict):
         if title is None and (mode == TitleChoiceEnum.META or mode == TitleChoiceEnum.HEAD):
             headings = re.findall(HEADINGS_RE, markdown)
             title = str(headings[0]).strip() if len(headings) > 0 else None
-            if title is None and self._meta_plugin_config.title.warn_on_missing_header:
+            if (
+                title is None
+                and self._meta_plugin_config.title.warn_on_missing_header
+                and not (meta_file.is_draft or (meta_file.is_dir and not meta_file.is_overview))
+            ):
                 log.warning(
                     f'Title value from first heading is missing for file: "{str(meta_file.path)}"'
                 )
@@ -157,7 +164,6 @@ class MetaFiles(UserDict):
 
     def _get_publish_status(self, meta_file: MetaFile, meta: dict[str, Any]):
         publish = meta.get(str(self._meta_plugin_config.publish.key_name), None)
-
         # Get default values if publish status is not specified
         if publish is None:
             if meta_file.is_dir:
@@ -180,14 +186,13 @@ class MetaFiles(UserDict):
         # Override some values inherited from parent
         if meta_file.parent is not None:
             meta_file_parent: MetaFile = self[str(meta_file.parent)]
-
             if meta_file_parent.is_draft:
                 publish = False
             if meta_file_parent.is_hidden:
-                publish = PublishChoiceEnum.HIDDEN
+                publish = PublishChoiceEnum.HIDDEN.name.lower()
 
         # When live preview is running, all pages are visible
-        if self._on_serve:
+        if self._on_serve and not meta_file.is_hidden:
             publish = True
 
         if publish not in PublishChoiceEnum.choices():
@@ -214,13 +219,11 @@ class MetaFiles(UserDict):
         # Order of method execution is crucial for reading all values.
         markdown, meta = self._read_md_file(meta_file_path=meta_file_path)
 
-        self._get_title(meta_file=meta_file, meta=meta, markdown=markdown)
-        self._get_slug(meta_file=meta_file, meta=meta)
         if self._meta_plugin_config.overview.enabled:
             self._get_overview(meta_file=meta_file, meta=meta, markdown=markdown)
         self._get_publish_status(meta_file=meta_file, meta=meta)
-
-        log.debug(meta_file)
+        self._get_title(meta_file=meta_file, meta=meta, markdown=markdown)
+        self._get_slug(meta_file=meta_file, meta=meta)
 
     def __setitem__(self, path: str, meta_file: MetaFile):
         if meta_file.is_dir:
@@ -244,7 +247,6 @@ class MetaFiles(UserDict):
                 meta_file.is_draft = not self._meta_plugin_config.publish.dir_default
         else:
             self._get_metadata(meta_file=meta_file, meta_file_path=meta_file.abs_path)
-
         super().__setitem__(path, meta_file)
 
     def drafts(self, files: bool = False, dirs: bool = False) -> dict[str, MetaFile]:
@@ -299,7 +301,6 @@ class MetaFiles(UserDict):
 
     def change_files_slug(self, files: Files, ignored_dirs: list[Path]) -> Files:
         draft_files = self.drafts(files=True).keys()
-        hidden_files = self.hidden(files=True)
 
         ignored_dirs.extend([d.abs_path for d in self.drafts(dirs=True).values()])
 
@@ -307,16 +308,18 @@ class MetaFiles(UserDict):
         for file in files:
             file: File
             file_path: Path = Path(file.src_path)
-
             if (
-                not any([Path(file.abs_src_path).is_relative_to(d) for d in ignored_dirs])
-                and file.src_path not in draft_files
-                and file.src_path not in hidden_files
-                and str(file_path.name) != self._meta_plugin_config.dir_meta_file
-            ) or (
-                str(file_path.name) == self._meta_plugin_config.dir_meta_file
-                and str(file_path.parent) in self
-                and self[str(file_path.parent)].is_overview
+                (
+                    not any([Path(file.abs_src_path).is_relative_to(d) for d in ignored_dirs])
+                    and file.src_path not in draft_files
+                    and str(file_path.name) != self._meta_plugin_config.dir_meta_file
+                )
+                or (
+                    str(file_path.name) == self._meta_plugin_config.dir_meta_file
+                    and str(file_path.parent) in self
+                    and self[str(file_path.parent)].is_overview
+                )
+                or (not file.is_documentation_page())
             ):
                 if self._meta_plugin_config.slug.enabled:
                     # Get URL parts
@@ -348,12 +351,10 @@ class MetaFiles(UserDict):
                         file.abs_dest_path = str(
                             Path(self._mkdocs_config.site_dir) / file.dest_uri
                         )
-
                 new_files.append(file)
         return new_files
 
     def files_gen(self) -> Generator[MetaFile, Any, None]:
         for meta_file in self.values():
             meta_file: MetaFile
-            if not meta_file.is_draft and not meta_file.is_hidden:
-                yield meta_file
+            yield meta_file

@@ -56,63 +56,50 @@ class MetaNav:
 
     def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, Optional[MetaFile]]:
         nav = []
+        meta_file: Optional[MetaFile] = None
         while True:
+            if meta_file is None:
+                try:
+                    meta_file = next(meta_files_gen)
+                except StopIteration:
+                    break
             # Iterate over meta links until last one
-            try:
-                meta_file: MetaFile = next(meta_files_gen)
-            except StopIteration:
-                break
+            if meta_file.is_dir and meta_file.abs_path.is_relative_to(current_dir):
+                overview_path: Path = meta_file.abs_path.joinpath(self._meta_files.meta_file)
+                overview_nav: list[Path] = (
+                    [meta_file.path.joinpath(self._meta_files.meta_file)]
+                    if meta_file.is_overview and overview_path.exists()
+                    else []
+                )
 
-            if meta_file.is_dir:
-                current_meta_file = meta_file
-                while current_meta_file is not None:
-                    if current_meta_file.abs_path.is_relative_to(current_dir):
-                        # Process current meta file that is relative to the current level directory
-                        child_nav, child_meta_file = self._build_nav(
-                            meta_files_gen=meta_files_gen, current_dir=current_meta_file.abs_path
-                        )
-                        if current_meta_file.path == self._blog_dir:
-                            # Blog build its own navigation, so just preserve entry
-                            nav.append({str(current_meta_file.path): str(current_meta_file.path)})
-                        elif child_nav:
-                            # Add an overview file
-                            if current_meta_file.is_overview:
-                                overview_files: list[Path] = []
-                                if current_meta_file.abs_path.joinpath(
-                                    self._meta_files.meta_file
-                                ).exists():
-                                    overview_files.append(
-                                        current_meta_file.path.joinpath(self._meta_files.meta_file)
-                                    )
-                                if len(overview_files) > 1:
-                                    log.warning(
-                                        f"To much overview files in "
-                                        f'"{current_meta_file}" directory'
-                                    )
-                                else:
-                                    child_nav = [str(overview_files[0]), *child_nav]
-
-                            # Add sub navigation to the current level one
-                            nav.append({current_meta_file.title: child_nav})
-
-                        if child_meta_file is None:
-                            # Child meta file is None, so this jump to parent nav
-                            return nav, None
-                        else:
-                            # Child meta file is returned from child level directory
-                            current_meta_file = child_meta_file
+                title = meta_file.title
+                prev_path = meta_file.path
+                sub_nav, meta_file = self._build_nav(
+                    meta_files_gen=meta_files_gen, current_dir=meta_file.abs_path
+                )
+                sub_nav = [*overview_nav, *sub_nav]
+                if sub_nav:
+                    if prev_path == self._blog_dir:
+                        nav.append({str(prev_path): str(prev_path)})
                     else:
-                        # When current meta file is not relative to the current directory
-                        # it means that it belongs to the parent directory, so return in
-                        # to the parent nav processing
-                        return nav, current_meta_file
+                        nav.append({title: sub_nav})
+            elif meta_file.is_dir:
+                return nav, meta_file  # Jump to subdirectory
+            elif (
+                not meta_file.is_dir and not meta_file.is_draft and meta_file.path.suffix == ".md"
+            ):
+                if meta_file.abs_path.is_relative_to(current_dir):
+                    nav.append({meta_file.title: str(meta_file.path)})
+                    meta_file = None  # File added, skip to next
+                else:
+                    return nav, meta_file  # Jump to subdirectory
             else:
-                nav.append({meta_file.title: str(meta_file.path)})
+                meta_file = None  # File not to be processed, skip to next
         return nav, None
 
     def build_nav(self, mkdocs_config: MkDocsConfig) -> list:
         nav, _ = self._build_nav(
-            meta_files_gen=self._meta_files.files_gen(), current_dir=Path(mkdocs_config.docs_dir)
+            meta_files_gen=self._meta_files.files_gen(),
+            current_dir=Path(mkdocs_config.docs_dir),
         )
-
         return nav

@@ -3,7 +3,7 @@ title: v1.3.0 - 2024-04-18
 slug: v130
 publish: true
 date: 2024-04-18 13:43:10
-update: 2024-04-18 14:34:21
+update: 2024-04-20 23:05:34
 tags:
   - v1.x
 description: Publisher for MkDocs v1.3.0
@@ -40,14 +40,14 @@ As I'm writing this words, this project is waiting to be added to the [mkdocs ca
 
 ### :material-file-tree: Meta
 
-- ❎ adding an overview functionality [Overview](../03_setup/02_general/01_setting-up-meta.md#Overview)
+- ❎ adding an overview functionality [overview](../03_setup/02_general/01_setting-up-meta.md#Overview%20file)
 - ❎ slug auto generation if missing in file meta-data ([#63](https://github.com/mkusz/mkdocs-publisher/issues/63))
 - ♻️ plugin rewrite + add unitttest
 
 ### :simple-obsidian: Obsidian
 
 - ✅ fix for backlinks destroying links additional attributes like title and anchor
-- ♻️ some code simplifications and cleanup because of meta plugin rewrite
+- ♻️ some code simplification and cleanup because of meta plugin rewrite
 
 ### :material-shield-bug: Debugger
 

@@ -13,6 +13,15 @@ categories:
 
 # Version history
 
+## 1.3.1 - 2024-04-21
+
+### :material-file-tree: Meta
+
+- fix for hidden pages not being hidden when in a hidden directory
+- fix for missing title warning display when file is an overview
+- fix for links normalization
+- fix cross plugins errors when one of the plugins is disabled
+
 ## 1.3.0 -2024-04-17
 
 ### :material-list-box: General
@@ -26,14 +35,14 @@ categories:
 
 ### :material-file-tree: Meta
 
-- ❎ adding an overview functionality [Overview](../03_setup/02_general/01_setting-up-meta.md#Overview)
+- ❎ adding an overview functionality [overview](../03_setup/02_general/01_setting-up-meta.md#Overview%20file)
 - ❎ slug auto generation if missing in file meta-data ([#63](https://github.com/mkusz/mkdocs-publisher/issues/63))
 - ♻️ plugin rewrite + add unitttest
 
 ### :simple-obsidian: Obsidian
 
 - ✅ fix for backlinks destroying links additional attributes like title and anchor
-- ♻️ some code simplifications and cleanup because of meta plugin rewrite
+- ♻️ some code simplification and cleanup because of meta plugin rewrite
 
 ### :material-shield-bug: Debugger
 

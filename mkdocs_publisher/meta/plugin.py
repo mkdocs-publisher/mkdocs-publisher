@@ -35,10 +35,10 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
-from mkdocs_publisher._shared import publisher_utils
-from mkdocs_publisher.meta.config import MetaPluginConfig
-
 # noinspection PyProtectedMember
+from mkdocs_publisher._shared import publisher_utils
+from mkdocs_publisher._shared.html_modifiers import HTMLModifier
+from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.meta_files import MetaFiles
 from mkdocs_publisher.meta.nav import MetaNav
 
@@ -69,11 +69,10 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
     def on_config(self, config: MkDocsConfig) -> Optional[Config]:
         # Set some default values
         log.info("Read files and directories metadata")
+        blog_dir: Optional[Path] = publisher_utils.get_blog_dir(mkdocs_config=config)
         self._meta_nav = MetaNav(
             meta_files=self._meta_files,
-            blog_dir=publisher_utils.get_blog_dir(mkdocs_config=config).relative_to(
-                config.docs_dir
-            ),
+            blog_dir=blog_dir.relative_to(config.docs_dir) if blog_dir else blog_dir,
         )
         self._ignored_dirs, self._attachments_dir = publisher_utils.get_obsidian_dirs(
             mkdocs_config=config
@@ -111,12 +110,10 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         removal_list = [*self._meta_files.drafts().keys(), *self._meta_files.hidden().keys()]
 
         log.debug(f"Nav elements to remove: {removal_list}")
-
         nav.items = self._meta_nav.nav_cleanup(
             items=nav.items,
             removal_list=removal_list,
         )
-
         return nav
 
     @event_priority(-100)  # Run after all other plugins
@@ -139,3 +136,10 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             and not self.config.publish.search_in_hidden
         ):
             page.meta["search"] = {"exclude": True}
+
+    @event_priority(-100)  # Run after all other plugins
+    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
+        html_modifier = HTMLModifier(markup=output)
+        html_modifier.fix_img_links()
+
+        return str(html_modifier)

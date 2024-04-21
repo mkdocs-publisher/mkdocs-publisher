@@ -22,6 +22,7 @@
 
 import contextlib
 import logging
+import re
 from collections import OrderedDict
 from pathlib import Path
 from typing import Any
@@ -39,14 +40,13 @@ from mkdocs.structure.pages import Page
 
 # noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
-from mkdocs_publisher._shared import mkdocs_utils
+from mkdocs_publisher._shared import links
 from mkdocs_publisher._shared import resources
 from mkdocs_publisher.blog import creators
 from mkdocs_publisher.blog import modifiers
 from mkdocs_publisher.blog import parsers
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.blog.structures import BlogConfig
-from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 from mkdocs_publisher.obsidian.md_links import MarkdownLinks
 
 log = logging.getLogger("mkdocs.plugins.publisher.blog.plugin")
@@ -145,14 +145,31 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     def on_page_markdown(
         self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
     ) -> Optional[str]:
-        obsidian_plugin: Optional[ObsidianPluginConfig] = mkdocs_utils.get_plugin_config(
-            mkdocs_config=config, plugin_name="pub-obsidian"
-        )  # type: ignore
-        if obsidian_plugin is not None:
-            md_links = MarkdownLinks(mkdocs_config=config)
-            markdown = md_links.normalize_relative_links(
-                markdown=markdown, current_file_path=page.file.src_path
-            )
+        md_links = MarkdownLinks(mkdocs_config=config)
+        markdown = md_links.normalize_relative_links(
+            markdown=markdown, current_file_path=page.file.src_path
+        )
+
+        # Dirty hack for blog standalone mode index file
+        if page.file.src_path == "index.md":
+
+            def _blog_index_re(match: re.Match):
+                blog_link = links.LinkMatch(**match.groupdict())
+
+                relative_path_finder = links.RelativePathFinder(
+                    current_file_path=Path(page.file.src_path),
+                    docs_dir=Path(config.docs_dir),
+                    relative_path=Path(config.docs_dir),
+                )
+                full_blog_link = relative_path_finder.get_full_file_path(
+                    file_path=Path(str(blog_link.link))
+                )
+                blog_link.link = relative_path_finder.get_relative_file_path(
+                    file_path=full_blog_link
+                )
+                return str(blog_link)
+
+            markdown = re.sub(links.RELATIVE_LINK_RE, _blog_index_re, markdown)
         return markdown
 
     @event_priority(-100)  # Run after all other plugins

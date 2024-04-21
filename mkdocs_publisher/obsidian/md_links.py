@@ -34,7 +34,7 @@ from mkdocs_publisher._shared import mkdocs_utils
 
 # noinspection PyProtectedMember
 from mkdocs_publisher.blog.config import BlogPluginConfig
-from mkdocs_publisher.obsidian.config import _ObsidianLinksConfig
+from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
 log = logging.getLogger("mkdocs.plugins.publisher.obsidian.md_links")
 
@@ -43,9 +43,12 @@ class MarkdownLinks:
     def __init__(self, mkdocs_config: MkDocsConfig):
         self._current_file_path: Optional[str] = None
         self._mkdocs_config: MkDocsConfig = mkdocs_config
-        self._links_config: _ObsidianLinksConfig = mkdocs_config.plugins[
-            "pub-obsidian"
-        ].config.links
+        self._links_config: ObsidianPluginConfig = cast(
+            ObsidianPluginConfig,
+            mkdocs_utils.get_plugin_config(
+                mkdocs_config=mkdocs_config, plugin_name="pub-obsidian"
+            ),
+        )
         self._blog_config: Optional[BlogPluginConfig] = cast(
             BlogPluginConfig,
             mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-blog"),
@@ -67,7 +70,7 @@ class MarkdownLinks:
 
     def _normalize_md_embed_link(self, match: re.Match) -> str:
         md_embed_link_obj = links.MdEmbedLinkMatch(**match.groupdict())
-        md_embed_link_obj.is_loading_lazy = self._links_config.img_lazy_loading
+        md_embed_link_obj.is_loading_lazy = self._links_config.links.img_lazy_loading
         md_embed_link = str(md_embed_link_obj)
         log.debug(f"Normalizing md embed link: {match.group(0)} > {md_embed_link}")
         return md_embed_link
@@ -88,7 +91,7 @@ class MarkdownLinks:
 
     def normalize_links(self, markdown: str, current_file_path: str) -> str:
         self._current_file_path = current_file_path
-        if self._links_config.wikilinks_enabled:
+        if self._links_config is not None and self._links_config.links.wikilinks_enabled:
             markdown = re.sub(links.WIKI_LINK_RE, self._normalize_wiki_link, markdown)
             markdown = re.sub(links.WIKI_EMBED_LINK_RE, self._normalize_wiki_embed_link, markdown)
             markdown = re.sub(links.ANCHOR_LINK_RE, self._normalize_anchor_links, markdown)
@@ -103,7 +106,6 @@ class MarkdownLinks:
             docs_dir=Path(self._mkdocs_config.docs_dir),
             relative_path=Path(cast(str, self._blog_config.blog_dir)),
         )
-        # log.warning(str(md_link_obj))
         return str(md_link_obj)
 
     def normalize_relative_links(self, markdown: str, current_file_path: str) -> str:
