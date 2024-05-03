@@ -26,15 +26,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import cast
 
-import jinja2
 import yaml
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
-# noinspection PyProtectedMember
-from mkdocs_publisher._shared import resources
-
-# noinspection PyProtectedMember
+from mkdocs_publisher._shared import templates
 from mkdocs_publisher._shared.urls import slugify
 from mkdocs_publisher.blog.structures import BlogConfig
 
@@ -202,15 +198,13 @@ def _render_and_write_page(
     # print(templates.list_templates())
     # template = templates.get_template("index.html")
 
-    index_template = resources.read_template_file(template_file_name="posts-list.html")
-    context = {
+    post_context = {
         "posts": single_posts_chunk,
         "site_url": str(blog_config.mkdocs_config.site_url),
         "config": blog_config.plugin_config,
         "translation": blog_config.translation,
     }
-    template = jinja2.Environment(loader=jinja2.BaseLoader()).from_string(index_template)
-    markdown = template.render(context)
+    markdown = templates.render(tpl_file="posts-list.html", context=post_context)
 
     # TODO: when using pub-meta key name should be taken from plugin config
     page_meta = {"title": page_title}

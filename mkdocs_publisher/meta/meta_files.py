@@ -36,7 +36,8 @@ from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 from mkdocs.utils import meta as meta_parser
 
-# noinspection PyProtectedMember
+from mkdocs_publisher._shared import links
+from mkdocs_publisher._shared import templates
 from mkdocs_publisher._shared.urls import create_slug
 from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.config import OverviewChoiceEnum
@@ -51,15 +52,17 @@ HEADINGS_RE = re.compile(r"^#+ (?P<title>[^|#\r\n\t\f\v]+)$")
 
 @dataclass
 class MetaFile:
-    path: Path
-    abs_path: Path
     is_dir: bool
-    is_overview: bool = field(default=False)
-    is_hidden: bool = field(default=False)
+    path: Path
+    abs_path: Path = field(repr=False)
+    file: Optional[File] = field(default=None, repr=False)
     is_draft: Optional[bool] = field(default=None)
-    title: Optional[str] = field(default=None)
+    is_hidden: bool = field(default=False)
+    is_overview: bool = field(default=False)
+    redirect: Optional[str] = field(default=None)
     slug: Optional[str] = field(default=None)
-    file: Optional[File] = field(default=None)
+    title: Optional[str] = field(default=None)
+    url: Optional[str] = field(default=None)
 
     @property
     def name(self) -> str:
@@ -148,6 +151,41 @@ class MetaFiles(UserDict):
             warn_on_missing=self._meta_plugin_config.slug.warn_on_missing,
         )
 
+    def _get_redirect(
+        self, meta_file: MetaFile, meta: dict[str, Any], markdown: str
+    ) -> dict[str, Any]:
+        redirect = meta.get(self._meta_plugin_config.redirect.key_name, None)
+        relative_path_finder = links.RelativePathFinder(
+            current_file_path=meta_file.path,
+            docs_dir=Path(self._mkdocs_config.docs_dir),
+            relative_path=meta_file.path,
+        )
+
+        if redirect is False:
+            redirect = None
+        elif redirect is True:
+            if match := re.search(links.RELATIVE_LINK_RE, markdown):
+                link = links.RelativeLinkMatch(
+                    **match.groupdict(), relative_path_finder=relative_path_finder
+                )
+                anchor = f"#{link.anchor}" if link.anchor else ""
+                redirect = f"{link.link}{anchor}"
+
+            elif match := re.search(links.URL_RE_PART, markdown):
+                redirect = match.groupdict()["link"]
+            else:
+                redirect = None
+
+        meta[self._meta_plugin_config.redirect.key_name] = redirect
+
+        if isinstance(redirect, str) and not re.search(links.URL_RE_PART, redirect):
+            # Document with redirection should be hidden
+            meta[self._meta_plugin_config.publish.key_name] = PublishChoiceEnum.HIDDEN.name.lower()
+
+        meta_file.redirect = redirect  # type: ignore
+
+        return meta
+
     def _get_overview(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str):
         """Overview works only for metafiles ("README.md", "index.md") that are detected as dir"""
         if not meta_file.is_dir:
@@ -207,18 +245,19 @@ class MetaFiles(UserDict):
         if meta_file.path in self._hidden_paths or publish == PublishChoiceEnum.HIDDEN:
             meta_file.is_hidden = True
             meta_file.is_draft = False
-        elif publish in PublishChoiceEnum.drafts():
-            meta_file.is_hidden = False
-            meta_file.is_draft = True
         elif publish in PublishChoiceEnum.published():
             meta_file.is_hidden = False
             meta_file.is_draft = False
+        else:
+            meta_file.is_hidden = False
+            meta_file.is_draft = True
 
     def _get_metadata(self, meta_file: MetaFile, meta_file_path: Path):  # pragma: no cover
         """Read all metadata values for given file"""
         # Order of method execution is crucial for reading all values.
         markdown, meta = self._read_md_file(meta_file_path=meta_file_path)
 
+        meta = self._get_redirect(meta_file=meta_file, meta=meta, markdown=markdown)
         if self._meta_plugin_config.overview.enabled:
             self._get_overview(meta_file=meta_file, meta=meta, markdown=markdown)
         self._get_publish_status(meta_file=meta_file, meta=meta)
@@ -352,6 +391,37 @@ class MetaFiles(UserDict):
                             Path(self._mkdocs_config.site_dir) / file.dest_uri
                         )
                 new_files.append(file)
+            if file.src_path in self:
+                self[file.src_path].url = file.url
+        return new_files
+
+    def generate_redirect_page(self, file: File) -> Optional[str]:
+        meta_file: MetaFile = self[file.src_path]
+        if meta_file.redirect and not re.search(links.URL_RE_PART, meta_file.redirect):
+            log.debug(f"Generating redirect template in file: {meta_file.path}")
+            redirect_context = {
+                "title": self[str(meta_file.path)].title,
+                "url": f"{self._mkdocs_config.site_url}{self[meta_file.redirect].url}",
+            }
+            return templates.render(tpl_file="redirect.html", context=redirect_context)
+        else:
+            return None
+
+    def clean_redirect_files(self, files: Files) -> Files:
+        new_files = Files(files=[])
+        for file in files:
+            file: File
+            is_redirect_file = False
+            if (
+                file.src_path in self
+                and self[file.src_path].redirect
+                and re.search(links.URL_RE_PART, self[file.src_path].redirect)
+            ):
+                is_redirect_file = True
+            if not is_redirect_file:
+                new_files.append(file)
+            else:
+                log.debug(f"Redirects as URL links in file: {file.src_path}")
         return new_files
 
     def files_gen(self) -> Generator[MetaFile, Any, None]:

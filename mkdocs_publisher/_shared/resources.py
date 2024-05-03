@@ -29,10 +29,7 @@ from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
 from mkdocs_publisher._extra import assets
-
-# noinspection PyProtectedMember
 from mkdocs_publisher._extra.assets import stylesheets
-from mkdocs_publisher._extra.assets import templates
 
 log = logging.getLogger("mkdocs.plugins.publisher._shared.resources")
 
@@ -88,11 +85,3 @@ def add_extra_css(
             config_extra_files=config.extra_css,
             files=files,
         )
-
-
-def read_template_file(template_file_name: str) -> str:
-    """Read and return content of template file"""
-
-    resource_file_path = importlib.resources.files(templates).joinpath(template_file_name)
-    with importlib.resources.as_file(resource_file_path) as template_file:
-        return template_file.read_text(encoding="utf-8")

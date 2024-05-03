@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 import logging
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -29,6 +30,7 @@ from mkdocs.structure.nav import Link
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 
+from mkdocs_publisher._shared import links
 from mkdocs_publisher.meta.meta_files import MetaFile
 from mkdocs_publisher.meta.meta_files import MetaFiles
 
@@ -88,7 +90,10 @@ class MetaNav:
             elif (
                 not meta_file.is_dir and not meta_file.is_draft and meta_file.path.suffix == ".md"
             ):
-                if meta_file.abs_path.is_relative_to(current_dir):
+                if meta_file.redirect and re.search(links.URL_RE_PART, meta_file.redirect):
+                    nav.append({meta_file.title: meta_file.redirect})
+                    meta_file = None  # File added, skip to next
+                elif meta_file.redirect or meta_file.abs_path.is_relative_to(current_dir):
                     nav.append({meta_file.title: str(meta_file.path)})
                     meta_file = None  # File added, skip to next
                 else:

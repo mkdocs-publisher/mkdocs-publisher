@@ -28,7 +28,6 @@ from typing import cast
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.pages import Page
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import links
 from mkdocs_publisher.blog.plugin import BlogPlugin
 

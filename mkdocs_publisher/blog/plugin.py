@@ -38,7 +38,6 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher._shared import links
 from mkdocs_publisher._shared import resources
@@ -147,7 +146,9 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     ) -> Optional[str]:
         md_links = MarkdownLinks(mkdocs_config=config)
         markdown = md_links.normalize_relative_links(
-            markdown=markdown, current_file_path=page.file.src_path
+            markdown=markdown,
+            current_file_path=Path(page.file.src_path),
+            current_relative_path=self.blog_config.blog_dir,
         )
 
         # Dirty hack for blog standalone mode index file

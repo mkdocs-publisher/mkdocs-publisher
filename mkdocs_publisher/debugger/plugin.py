@@ -32,7 +32,6 @@ from zipfile import ZipFile
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.debugger import loggers
@@ -52,7 +51,6 @@ FILES_TO_ZIP_LIST = [
 PIP_FREEZE_FILENAME = "requirements_freeze.txt"
 
 
-# noinspection PyProtectedMember
 class DebuggerPlugin(BasePlugin[DebuggerConfig]):
     def __init__(self):
         self._mkdocs_log_stream_handler: logging.Handler = logging.getLogger("mkdocs").handlers[0]

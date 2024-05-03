@@ -28,6 +28,8 @@ from unittest.mock import patch
 
 import pytest
 from mkdocs.config.defaults import MkDocsConfig
+from mkdocs.structure.files import File
+from mkdocs.structure.files import Files
 from pytest import LogCaptureFixture
 from pytest_check import check_functions as check
 
@@ -173,6 +175,40 @@ def test_title(
     if warn is not None:
         check.equal(caplog.records[-1].levelno, logging.WARNING, "Wrong log level")
         check.equal(warn, caplog.records[-1].message, "Wrong log message")
+
+
+@pytest.mark.parametrize(
+    "pub_meta_plugin,meta,markdown,expected_publish,expected_redirect",
+    [
+        ({}, {"redirect": False}, "https://fake.com/", None, None),
+        ({}, {"redirect": True}, "https://fake.com/", None, "https://fake.com/"),
+        ({}, {"redirect": "https://fake.com/"}, "", None, "https://fake.com/"),
+        ({}, {"redirect": False}, "fake_file.md", None, None),
+        ({}, {"redirect": True}, "[Redirect](fake_file.md)", "hidden", "fake_file.md"),
+        ({}, {"redirect": "fake_file.md"}, "", "hidden", "fake_file.md"),
+        ({}, {"redirect": True}, "blah blah blah", None, None),
+    ],
+    indirect=["pub_meta_plugin"],
+)
+def test_redirect(
+    mkdocs_config: MkDocsConfig,
+    pub_meta_plugin: MetaPlugin,
+    meta: dict,
+    markdown: str,
+    expected_publish: Optional[str],
+    expected_redirect: Optional[str],
+    caplog: LogCaptureFixture,
+):
+    meta_file: MetaFile = MetaFile(
+        path=Path("fake_file.md"), abs_path=Path("/Users/me/docs/fake_file.md"), is_dir=False
+    )
+    meta_files: MetaFiles = MetaFiles()
+    meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
+    new_meta = meta_files._get_redirect(meta_file=meta_file, meta=meta, markdown=markdown)
+
+    if expected_publish:
+        check.equal(new_meta["publish"], expected_publish, "Wrong publish")
+    check.equal(meta_file.redirect, expected_redirect, "Wrong redirect")
 
 
 def test_on_serve(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPlugin):
@@ -330,8 +366,8 @@ def test_get_publish_status_with_parent(
     )
     meta_files._get_publish_status(meta_file=meta_file, meta=meta)
 
-    check.equal(meta_file.is_draft, is_draft, "Wrong draft status")
-    check.equal(meta_file.is_hidden, is_hidden, "Wrong hidden status")
+    check.equal(meta_file.is_draft, is_draft)
+    check.equal(meta_file.is_hidden, is_hidden)
 
 
 @pytest.mark.parametrize(
@@ -398,6 +434,7 @@ def test_get_publish_status_with_parent(
 def test_drafts_and_hidden(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
+    patched_meta_files: MetaFiles,
     publish_dir: Union[str, bool],
     publish_file: Union[str, bool],
     draft_all_keys: list[str],
@@ -407,48 +444,42 @@ def test_drafts_and_hidden(
     hidden_file_keys: list[str],
     hidden_dir_keys: list[str],
 ):
-    def patch_read_md_file(meta_file_path: Path):
-        _ = meta_file_path
-        return "", {}
-
-    meta_files: MetaFiles = MetaFiles()
-    meta_files._read_md_file = patch_read_md_file  # monkey patch
-    meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
+    patched_meta_files.set_configs(
+        mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config
+    )
 
     meta_file_dir: MetaFile = MetaFile(path=Path("me"), abs_path=Path("/Users/me"), is_dir=True)
-    meta_files["me"] = meta_file_dir
-    meta_files._get_publish_status(meta_file=meta_file_dir, meta={"publish": publish_dir})
+    patched_meta_files["me"] = meta_file_dir
+    patched_meta_files._get_publish_status(meta_file=meta_file_dir, meta={"publish": publish_dir})
 
     meta_file: MetaFile = MetaFile(
         path=Path("me/fake_file.md"), abs_path=Path("/Users/me/fake_file.md"), is_dir=False
     )
-    meta_files["me/fake_file.md"] = meta_file
-    meta_files._get_publish_status(meta_file=meta_file, meta={"publish": publish_file})
+    patched_meta_files["me/fake_file.md"] = meta_file
+    patched_meta_files._get_publish_status(meta_file=meta_file, meta={"publish": publish_file})
 
-    check.equal(set(meta_files.drafts().keys()), draft_all_keys, "Wrong drafts all")
-    check.equal(set(meta_files.drafts(files=True).keys()), draft_file_keys, "Wrong draft files")
-    check.equal(set(meta_files.drafts(dirs=True).keys()), draft_dir_keys, "Wrong draft dirs")
-    check.equal(set(meta_files.hidden().keys()), hidden_all_keys, "Wrong hidden all")
-    check.equal(set(meta_files.hidden(files=True).keys()), hidden_file_keys, "Wrong hidden files")
-    check.equal(set(meta_files.hidden(dirs=True).keys()), hidden_dir_keys, "Wrong hidden dirs")
+    check.equal(set(patched_meta_files.drafts().keys()), draft_all_keys)
+    check.equal(set(patched_meta_files.drafts(files=True).keys()), draft_file_keys)
+    check.equal(set(patched_meta_files.drafts(dirs=True).keys()), draft_dir_keys)
+    check.equal(set(patched_meta_files.hidden().keys()), hidden_all_keys)
+    check.equal(set(patched_meta_files.hidden(files=True).keys()), hidden_file_keys)
+    check.equal(set(patched_meta_files.hidden(dirs=True).keys()), hidden_dir_keys)
 
 
 @pytest.mark.parametrize("exists", [True, False])
-def test_add_dir(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPlugin, exists):
-    def patch_read_md_file(meta_file_path: Path):
-        _ = meta_file_path
-        return "", {}
-
-    meta_files: MetaFiles = MetaFiles()
-    meta_files._read_md_file = patch_read_md_file  # monkey patch
-    meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
+def test_add_dir(
+    mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPlugin, exists, patched_meta_files: MetaFiles
+):
+    patched_meta_files.set_configs(
+        mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config
+    )
 
     meta_file_dir: MetaFile = MetaFile(path=Path("me"), abs_path=Path("/Users/me"), is_dir=True)
     with patch.object(Path, "exists", return_value=exists):
-        meta_files["me"] = meta_file_dir
-        meta_files._get_publish_status(meta_file=meta_file_dir, meta={})
+        patched_meta_files["me"] = meta_file_dir
+        patched_meta_files._get_publish_status(meta_file=meta_file_dir, meta={})
 
-    check.is_true("me" in meta_files, "Dir was not added")
+    check.is_true("me" in patched_meta_files)
 
 
 @pytest.mark.parametrize(
@@ -463,23 +494,131 @@ def test_add_dir(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPlugin, exist
 def test_add_meta_files(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
+    patched_meta_files: MetaFiles,
     path: str,
     is_dir: bool,
     ignored_dirs: list[str],
     expected: list[str],
 ):
-    def patch_read_md_file(meta_file_path: Path):
-        _ = meta_file_path
-        return "", {}
-
-    meta_files: MetaFiles = MetaFiles()
-    meta_files._read_md_file = patch_read_md_file  # monkey patch
-    meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
+    patched_meta_files.set_configs(
+        mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config
+    )
     with (
         patch.object(Path, "is_dir", return_value=is_dir),
         patch.object(Path, "rglob", return_value=[Path(path)]),
     ):
-        meta_files.add_meta_files(ignored_dirs=[Path(ignored_dir) for ignored_dir in ignored_dirs])
+        patched_meta_files.add_meta_files(
+            ignored_dirs=[Path(ignored_dir) for ignored_dir in ignored_dirs]
+        )
 
     # check.is_true(path in meta_files, "File/dir was not added")
-    check.equal(list(meta_files.keys()), expected, "Wrong meta files added")
+    check.equal(list(patched_meta_files.keys()), expected)
+
+
+def test_files_gen(
+    mkdocs_config: MkDocsConfig,
+    pub_meta_plugin: MetaPlugin,
+    patched_meta_files: MetaFiles,
+):
+    patched_meta_files.set_configs(
+        mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config
+    )
+    files_paths: list[str] = ["tests/_tests_data/fake_data.md", "tests/_tests_data/fake_file.md"]
+    for path in files_paths:
+        with (
+            patch.object(Path, "is_dir", return_value=False),
+            patch.object(Path, "rglob", return_value=[Path(path)]),
+        ):
+            patched_meta_files.add_meta_files(ignored_dirs=[])
+
+    gen_files_paths = []
+    for file in patched_meta_files.files_gen():
+        gen_files_paths.append(str(file.abs_path))
+
+    check.equal(files_paths, gen_files_paths)
+
+
+@pytest.mark.parametrize(
+    "redirect,expected_nr_of_files",
+    [
+        ("https://fake.url/", 0),
+        ("fake.md", 1),
+        (None, 1),
+    ],
+)
+def test_clean_redirect_files(
+    mkdocs_config: MkDocsConfig,
+    pub_meta_plugin: MetaPlugin,
+    patched_meta_files: MetaFiles,
+    redirect: Optional[str],
+    expected_nr_of_files: int,
+):
+    patched_meta_files.set_configs(
+        mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config
+    )
+    meta_file: MetaFile = MetaFile(
+        path=Path("fake_url_redirect.md"),
+        abs_path=Path("/Users/me/fake_url_redirect.md"),
+        is_dir=False,
+    )
+
+    patched_meta_files["fake_url_redirect.md"] = meta_file
+    patched_meta_files["fake_url_redirect.md"].redirect = redirect
+
+    files = Files(
+        files=[
+            File(
+                path="fake_url_redirect.md",
+                src_dir="/Users/me/",
+                dest_dir="/Users/docs",
+                use_directory_urls=True,
+            )
+        ]
+    )
+
+    new_files = patched_meta_files.clean_redirect_files(files=files)
+    check.equal(redirect, patched_meta_files["fake_url_redirect.md"].redirect)
+    check.equal(expected_nr_of_files, len(new_files))
+
+
+@pytest.mark.parametrize(
+    "redirect,expected_result",
+    [
+        ("https://fake.url/", None),
+        ("fake_url_redirect.md", "<!--"),
+        (None, None),
+    ],
+)
+def test_generate_redirect_page(
+    mkdocs_config: MkDocsConfig,
+    pub_meta_plugin: MetaPlugin,
+    patched_meta_files: MetaFiles,
+    redirect: Optional[str],
+    expected_result: Optional[str],
+):
+    patched_meta_files.set_configs(
+        mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config
+    )
+
+    meta_file: MetaFile = MetaFile(
+        path=Path("fake_url_redirect.md"),
+        abs_path=Path("/Users/me/fake_url_redirect.md"),
+        is_dir=False,
+    )
+
+    patched_meta_files["fake_url_redirect.md"] = meta_file
+    patched_meta_files["fake_url_redirect.md"].redirect = redirect
+    patched_meta_files["fake_url_redirect.md"].url = redirect
+
+    file = File(
+        path="fake_url_redirect.md",
+        src_dir="/Users/me/",
+        dest_dir="/Users/docs",
+        use_directory_urls=True,
+    )
+
+    generated_file = patched_meta_files.generate_redirect_page(file=file)
+    if expected_result is None:
+        check.equal(expected_result, generated_file)
+    else:
+        check.is_in(expected_result, generated_file)

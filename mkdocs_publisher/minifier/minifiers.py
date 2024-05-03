@@ -24,7 +24,6 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher.minifier import config as minifier_config
 from mkdocs_publisher.minifier.base import BaseMinifier

@@ -31,7 +31,6 @@ from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher.minifier.config import MinifierConfig
 from mkdocs_publisher.minifier.config import _MinifierCommonConfig

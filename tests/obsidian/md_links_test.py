@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from pathlib import Path
 from typing import cast
 
 import pytest
@@ -112,7 +113,7 @@ def test_normalize_wiki_links(
         PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin}
     )
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
-    markdown = markdown_links.normalize_links(markdown=markdown, current_file_path="main.md")
+    markdown = markdown_links.normalize_links(markdown=markdown, current_file_path=Path("main.md"))
 
     check.equal(expected, markdown, "Wrong wiki link to markdown link")
 
@@ -150,7 +151,7 @@ def test_normalize_links(
         PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin}
     )
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
-    markdown = markdown_links.normalize_links(markdown=markdown, current_file_path="main.md")
+    markdown = markdown_links.normalize_links(markdown=markdown, current_file_path=Path("main.md"))
 
     check.equal(expected, markdown, "Wrong markdown link to markdown link")
 
@@ -180,7 +181,7 @@ def test_normalize_relative_links(
     )
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown = markdown_links.normalize_relative_links(
-        markdown=markdown, current_file_path="main.md"
+        markdown=markdown, current_file_path=Path("main.md"), current_relative_path=Path("main.md")
     )
 
     # TODO: is this test valid

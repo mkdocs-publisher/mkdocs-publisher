@@ -22,33 +22,14 @@
   ~ SOFTWARE.
   -->
 
-{% for post in posts %}
-## [{{ post.title }}]({{ site_url }}{{ config.slug }}/{{ post.slug }}/)
-
-<!--suppress LongLine -->
-<div class="post-extra">
-    <div class="col">
-        <p class="post-date">{{ post.date }}</p>
-    </div>
-    <div class="col">
-    {% for tag in post.tags %}
-        <a href="{{ site_url }}{{ config.slug }}/{{ config.tags_subdir }}/{{ tag }}/">#{{ tag }}</a>
-    {% endfor %}
-    </div>
-</div>
-
-{{ post.teaser }}
-
-{{ post.is_short }}
-
-<div class="post-link">
-{% if post.is_teaser %}
-    <a href="{{ site_url }}{{ config.slug }}/{{ post.slug }}/" title="{{ post.title }}">
-        {{ translation.teaser_link_text }}
-    </a>
-{% else %}
-    &nbsp;
-{% endif %}
-</div>
-
-{% endfor %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{ title }}</title>
+        <meta charset="UTF-8">
+        <link rel="canonical" href="{{ url }}">
+        <meta name="robots" content="noindex">
+        <meta http-equiv="refresh" content="0; url={{ url }}">
+    </head>
+    <body>Redirecting to {{ title }}</body>
+</html>

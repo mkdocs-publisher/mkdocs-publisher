@@ -34,7 +34,7 @@ ANCHOR_RE_PART = r"((#(?P<anchor>([^|\][()'\"]+)))?)"
 EXTRA_RE_PART = r"( *({(?P<extra>[\w+=. ]+)})?)"
 IMAGE_RE_PART = r"((\|(?P<image>([0-9x]+)))?)"
 LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^|#()\r\n\t\f\v]+)"
-URL_RE_PART = r"(?P<link>((https?|ftp)://)?[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
+URL_RE_PART = r"(?P<link>((https?|ftp)://)[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
 TEXT_RE_PART = r"(?P<text>[^\][|]+)"
 LINK_TITLE_RE_PART = r"(( \"(?P<title>[ \S]+)\")?)"
 
@@ -237,26 +237,26 @@ class RelativeLinkMatch:
         # The same page anchor link doesn't have file part
         if self.link.startswith("#"):
             final_link = f"[{self.text}]({self.link})"
-            log.debug(final_link)
-            return final_link
-
-        # Link from blog sub-pages have to be recalculated for a new relative value
-        if (
-            str(self.relative_path_finder.current_file_path).startswith(
-                str(self.relative_path_finder.relative_path)
-            )
-            or str(self.relative_path_finder.current_file_path).startswith("index-")
-        ) and (
-            # TODO: rethink RSS file filtering
-            not self.link.endswith(".xml")  # RSS feed exclusion
-        ):
-            file_path = self.relative_path_finder.get_full_file_path(file_path=Path(self.link))
-            if file_path is not None:
-                link = str(self.relative_path_finder.get_relative_file_path(file_path=file_path))
-            else:
-                link = ""
         else:
-            link = self.link
-        final_link = f"[{self.text}]({link}{anchor}{title})"
-
+            # Link from blog sub-pages have to be recalculated for a new relative value
+            if (
+                str(self.relative_path_finder.current_file_path).startswith(
+                    str(self.relative_path_finder.relative_path)
+                )
+                or str(self.relative_path_finder.current_file_path).startswith("index-")
+            ) and (
+                # TODO: rethink RSS file filtering
+                not self.link.endswith(".xml")  # RSS feed exclusion
+            ):
+                file_path = self.relative_path_finder.get_full_file_path(file_path=Path(self.link))
+                if file_path is not None:
+                    link = str(
+                        self.relative_path_finder.get_relative_file_path(file_path=file_path)
+                    )
+                else:
+                    link = ""
+            else:
+                link = self.link
+            final_link = f"[{self.text}]({link}{anchor}{title})"
+        log.debug(final_link)
         return final_link

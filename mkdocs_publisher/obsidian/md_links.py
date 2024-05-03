@@ -28,11 +28,8 @@ from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import links
 from mkdocs_publisher._shared import mkdocs_utils
-
-# noinspection PyProtectedMember
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
@@ -41,7 +38,8 @@ log = logging.getLogger("mkdocs.plugins.publisher.obsidian.md_links")
 
 class MarkdownLinks:
     def __init__(self, mkdocs_config: MkDocsConfig):
-        self._current_file_path: Optional[str] = None
+        self._current_file_path: Optional[Path] = None
+        self._current_relative_path: Optional[Path] = None
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._links_config: ObsidianPluginConfig = cast(
             ObsidianPluginConfig,
@@ -89,7 +87,7 @@ class MarkdownLinks:
         log.debug(f"Normalizing anchor link: {match.group(0)} > {anchor_link}")
         return anchor_link
 
-    def normalize_links(self, markdown: str, current_file_path: str) -> str:
+    def normalize_links(self, markdown: str, current_file_path: Path) -> str:
         self._current_file_path = current_file_path
         if self._links_config is not None and self._links_config.links.wikilinks_enabled:
             markdown = re.sub(links.WIKI_LINK_RE, self._normalize_wiki_link, markdown)
@@ -99,16 +97,19 @@ class MarkdownLinks:
         markdown = re.sub(links.MD_LINK_RE, self._normalize_md_links, markdown)
         return markdown
 
-    def _normalize_relative_link(self, match: re.Match) -> str:
+    def normalize_relative_link(self, match: re.Match) -> str:
         md_link_obj = links.RelativeLinkMatch(**match.groupdict())
         md_link_obj.relative_path_finder = links.RelativePathFinder(
-            current_file_path=Path(cast(str, self._current_file_path)),
+            current_file_path=cast(Path, self._current_file_path),
             docs_dir=Path(self._mkdocs_config.docs_dir),
             relative_path=Path(cast(str, self._blog_config.blog_dir)),
         )
         return str(md_link_obj)
 
-    def normalize_relative_links(self, markdown: str, current_file_path: str) -> str:
+    def normalize_relative_links(
+        self, markdown: str, current_file_path: Path, current_relative_path: Path
+    ) -> str:
         self._current_file_path = current_file_path
-        markdown = re.sub(links.RELATIVE_LINK_RE, self._normalize_relative_link, markdown)
+        self._current_relative_path = current_relative_path
+        markdown = re.sub(links.RELATIVE_LINK_RE, self.normalize_relative_link, markdown)
         return markdown

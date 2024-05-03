@@ -29,7 +29,6 @@ from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig

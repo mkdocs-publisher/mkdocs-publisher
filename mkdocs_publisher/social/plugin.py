@@ -27,9 +27,9 @@ from typing import Optional
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
+from mkdocs.structure.files import Files
 from mkdocs.structure.pages import Page
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
 from mkdocs_publisher.social.config import SocialConfig
 
@@ -55,6 +55,11 @@ OPEN_GRAPH_PROPERTIES = [
 
 
 class SocialPlugin(BasePlugin[SocialConfig]):
+    def on_page_markdown(
+        self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
+    ) -> Optional[str]:
+        pass
+
     @event_priority(-99)
     def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
         html_modifier = HTMLModifier(markup=output)
