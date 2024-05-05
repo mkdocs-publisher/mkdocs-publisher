@@ -511,7 +511,6 @@ def test_add_meta_files(
             ignored_dirs=[Path(ignored_dir) for ignored_dir in ignored_dirs]
         )
 
-    # check.is_true(path in meta_files, "File/dir was not added")
     check.equal(list(patched_meta_files.keys()), expected)
 
 
@@ -622,3 +621,145 @@ def test_generate_redirect_page(
         check.equal(expected_result, generated_file)
     else:
         check.is_in(expected_result, generated_file)
+
+
+@pytest.mark.parametrize(
+    "mkdocs_config,pub_meta_plugin,path,with_meta_file,file_slug,dir_slug,ignored_dir,expected_url",
+    [
+        ({"docs_dir": "me"}, {}, "fake_file.md", True, None, None, None, "fake-file/"),
+        ({"docs_dir": "me"}, {}, "fake_file.md", True, "file-slug", None, None, "file-slug/"),
+        ({"docs_dir": "me"}, {}, "fake_file.md", False, None, None, None, "fake_file/"),
+        ({"docs_dir": "me"}, {}, "fake_file.jpeg", False, None, None, None, "fake_file.jpeg"),
+        ({"docs_dir": "me"}, {}, "me/fake_file.md", True, None, None, None, "me/fake-file/"),
+        (
+            {"docs_dir": "me"},
+            {},
+            "me/fake_file.md",
+            True,
+            "file-slug",
+            None,
+            None,
+            "me/file-slug/",
+        ),
+        ({"docs_dir": "me"}, {}, "me/fake_file.md", False, None, None, None, "me/fake_file/"),
+        (
+            {"docs_dir": "me"},
+            {},
+            "me/fake_file.jpeg",
+            False,
+            None,
+            None,
+            None,
+            "me/fake_file.jpeg",
+        ),
+        (
+            {"docs_dir": "me"},
+            {},
+            "me/fake_file.md",
+            True,
+            None,
+            "dir-slug",
+            None,
+            "dir-slug/fake-file/",
+        ),
+        (
+            {"docs_dir": "me"},
+            {},
+            "me/fake_file.md",
+            True,
+            "file-slug",
+            "dir-slug",
+            None,
+            "dir-slug/file-slug/",
+        ),
+        (
+            {"docs_dir": "me"},
+            {},
+            "me/fake_file.md",
+            False,
+            None,
+            "dir-slug",
+            None,
+            "dir-slug/fake_file/",
+        ),
+        (
+            {"docs_dir": "me"},
+            {},
+            "me/fake_file.jpeg",
+            False,
+            None,
+            "dir-slug",
+            None,
+            "dir-slug/fake_file.jpeg",
+        ),
+        ({"docs_dir": "me"}, {}, "fake_file.md", True, None, None, "/Users/me", "fake-file/"),
+        ({"docs_dir": "me"}, {}, "me/fake_file.md", True, None, None, "/Users/me", None),
+        (
+            {"docs_dir": "me"},
+            {"slug": {"enabled": False}},
+            "fake_file.md",
+            True,
+            None,
+            None,
+            None,
+            "fake_file/",
+        ),
+        ({"docs_dir": "me"}, {}, ".", False, None, None, None, "."),
+    ],
+    indirect=["mkdocs_config", "pub_meta_plugin"],
+)
+def test_change_files_slug(
+    mkdocs_config: MkDocsConfig,
+    pub_meta_plugin: MetaPlugin,
+    patched_meta_files: MetaFiles,
+    path: str,
+    with_meta_file: bool,
+    file_slug: Optional[str],
+    dir_slug: Optional[str],
+    ignored_dir: Optional[str],
+    expected_url: Optional[str],
+):
+    patched_meta_files.set_configs(
+        mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config
+    )
+
+    meta_dir: MetaFile = MetaFile(
+        path=Path("me"),
+        abs_path=Path("/Users/me/README.md"),
+        is_dir=True,
+    )
+    with patch.object(Path, "exists", return_value=True):
+        patched_meta_files["me"] = meta_dir
+    if dir_slug:
+        meta_dir.slug = dir_slug
+
+    if with_meta_file:
+        meta_file: MetaFile = MetaFile(
+            path=Path(path),
+            abs_path=Path(f"/Users/me/{'index.md' if path == '.' else path}"),
+            is_dir=False,
+        )
+        with patch.object(Path, "exists", return_value=True):
+            patched_meta_files[path] = meta_file
+        meta_file.is_draft = False
+        if file_slug:
+            meta_file.slug = file_slug
+
+    files = Files(
+        [
+            File(
+                path=path,
+                src_dir="/Users",
+                dest_dir="/Users/out",
+                use_directory_urls=True,
+            )
+        ]
+    )
+    new_files = patched_meta_files.change_files_slug(
+        files=files, ignored_dirs=[Path(ignored_dir)] if ignored_dir else []
+    )
+    new_file = new_files.get_file_from_path(path)
+    if expected_url:
+        check.equal(expected_url, new_file.url)
+    else:
+        check.is_none(new_file)

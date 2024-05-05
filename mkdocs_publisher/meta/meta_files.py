@@ -111,6 +111,8 @@ class MetaFiles(UserDict):
             return meta_parser.get_data(f"{md_file.read()}\n")
 
     def _get_title(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str):
+        """Calculate title for given file"""
+
         title: Optional[str] = None
         mode = self._meta_plugin_config.title.mode
         if mode == TitleChoiceEnum.META:
@@ -143,6 +145,8 @@ class MetaFiles(UserDict):
         meta_file.title = title
 
     def _get_slug(self, meta_file: MetaFile, meta: dict[str, Any]):
+        """Calculate slug for given file"""
+
         meta_file.slug = create_slug(  # pragma: no cover
             file_name=meta_file.path.stem,
             slug_mode=self._meta_plugin_config.slug.mode,
@@ -154,6 +158,8 @@ class MetaFiles(UserDict):
     def _get_redirect(
         self, meta_file: MetaFile, meta: dict[str, Any], markdown: str
     ) -> dict[str, Any]:
+        """Determine if given file is a redirection"""
+
         redirect = meta.get(self._meta_plugin_config.redirect.key_name, None)
         relative_path_finder = links.RelativePathFinder(
             current_file_path=meta_file.path,
@@ -188,6 +194,7 @@ class MetaFiles(UserDict):
 
     def _get_overview(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str):
         """Overview works only for metafiles ("README.md", "index.md") that are detected as dir"""
+
         if not meta_file.is_dir:
             meta_file.is_overview = False
         else:
@@ -201,6 +208,8 @@ class MetaFiles(UserDict):
                 meta_file.is_overview = is_overview
 
     def _get_publish_status(self, meta_file: MetaFile, meta: dict[str, Any]):
+        """Calculate publication status for given file"""
+
         publish = meta.get(str(self._meta_plugin_config.publish.key_name), None)
         # Get default values if publish status is not specified
         if publish is None:
@@ -254,9 +263,10 @@ class MetaFiles(UserDict):
 
     def _get_metadata(self, meta_file: MetaFile, meta_file_path: Path):  # pragma: no cover
         """Read all metadata values for given file"""
-        # Order of method execution is crucial for reading all values.
+
         markdown, meta = self._read_md_file(meta_file_path=meta_file_path)
 
+        # Order of method execution is crucial for reading all values.
         meta = self._get_redirect(meta_file=meta_file, meta=meta, markdown=markdown)
         if self._meta_plugin_config.overview.enabled:
             self._get_overview(meta_file=meta_file, meta=meta, markdown=markdown)
@@ -265,6 +275,8 @@ class MetaFiles(UserDict):
         self._get_slug(meta_file=meta_file, meta=meta)
 
     def __setitem__(self, path: str, meta_file: MetaFile):
+        """Add file"""
+
         if meta_file.is_dir:
             meta_file_exists = False
 
@@ -289,6 +301,8 @@ class MetaFiles(UserDict):
         super().__setitem__(path, meta_file)
 
     def drafts(self, files: bool = False, dirs: bool = False) -> dict[str, MetaFile]:
+        """Returns draft files and/or directories"""
+
         draft_files = {}
         for path, meta_file in self.items():
             if meta_file.is_draft and (
@@ -300,6 +314,8 @@ class MetaFiles(UserDict):
         return draft_files
 
     def hidden(self, files: bool = False, dirs: bool = False) -> dict[str, MetaFile]:
+        """Returns hidden files and/or directories"""
+
         hidden_files = {}
         for path, meta_file in self.items():
             if meta_file.is_hidden and (
@@ -312,6 +328,7 @@ class MetaFiles(UserDict):
 
     def add_meta_files(self, ignored_dirs: list[Path]):
         """Iterate over all files and directories in docs directory"""
+
         for docs_file in sorted(Path(self._mkdocs_config.docs_dir).rglob("*")):
             meta_link: Optional[MetaFile] = None
             is_ignored = any(
@@ -339,8 +356,9 @@ class MetaFiles(UserDict):
                 self[str(meta_link.path)] = meta_link
 
     def change_files_slug(self, files: Files, ignored_dirs: list[Path]) -> Files:
-        draft_files = self.drafts(files=True).keys()
+        """Change file slug (part of the URL) based of file and parent directories slugs"""
 
+        draft_files = self.drafts(files=True).keys()
         ignored_dirs.extend([d.abs_path for d in self.drafts(dirs=True).values()])
 
         new_files = Files(files=[])
@@ -382,11 +400,13 @@ class MetaFiles(UserDict):
 
                     # Recreate file params based on URL with replaced parts
                     if file.url != ".":  # Do not modify main index page
-                        file.url = quote(f"{'/'.join(url_parts)}/")
+                        file.url = quote(f"{'/'.join(url_parts)}")
                         url_parts.append(file.dest_uri.split("/")[-1])
                         if len(url_parts) >= 2 and url_parts[-1] == url_parts[-2]:
                             url_parts.pop(-1)
                         file.dest_uri = quote("/".join(url_parts))
+                        if file.dest_uri.endswith("index.html"):
+                            file.url = f"{file.url}/"
                         file.abs_dest_path = str(
                             Path(self._mkdocs_config.site_dir) / file.dest_uri
                         )
@@ -396,6 +416,8 @@ class MetaFiles(UserDict):
         return new_files
 
     def generate_redirect_page(self, file: File) -> Optional[str]:
+        """Generates content of redirect page"""
+
         meta_file: MetaFile = self[file.src_path]
         if meta_file.redirect and not re.search(links.URL_RE_PART, meta_file.redirect):
             log.debug(f"Generating redirect template in file: {meta_file.path}")
@@ -408,6 +430,8 @@ class MetaFiles(UserDict):
             return None
 
     def clean_redirect_files(self, files: Files) -> Files:
+        """Remove documents that are just redirects to an external URL"""
+
         new_files = Files(files=[])
         for file in files:
             file: File
@@ -425,6 +449,7 @@ class MetaFiles(UserDict):
         return new_files
 
     def files_gen(self) -> Generator[MetaFile, Any, None]:
+        """Meta files generator used for building navigation"""
         for meta_file in self.values():
             meta_file: MetaFile
             yield meta_file

@@ -36,7 +36,6 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared import publisher_utils
-from mkdocs_publisher._shared.html_modifiers import HTMLModifier
 from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.meta_files import MetaFiles
 from mkdocs_publisher.meta.nav import MetaNav
@@ -121,7 +120,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             page.update_date = update_date.strftime("%Y-%m-%d")
 
         # Conditionally exclude file from Material for MkDocs search plugin
-        if (
+        if (  # pragma: no cover
             page.file.src_uri in self._meta_files.drafts(files=True)
             and not self.config.publish.search_in_draft
         ) or (
@@ -131,11 +130,11 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             page.meta["search"] = {"exclude": True}
 
     @event_priority(-100)  # Run after all other plugins
-    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
+    def on_post_page(
+        self, output: str, *, page: Page, config: MkDocsConfig
+    ) -> Optional[str]:  # pragma: no cover
         if page.file.src_path in self._meta_files:
             redirect_page: Optional[str] = self._meta_files.generate_redirect_page(file=page.file)
             if redirect_page:
                 output = redirect_page
-        html_modifier = HTMLModifier(markup=output)
-        html_modifier.fix_img_links()
-        return str(html_modifier)
+        return output
