@@ -178,17 +178,16 @@ def test_title(
 
 
 @pytest.mark.parametrize(
-    "pub_meta_plugin,meta,markdown,expected_publish,expected_redirect",
+    "meta,markdown,expected_publish,expected_redirect",
     [
-        ({}, {"redirect": False}, "https://fake.com/", None, None),
-        ({}, {"redirect": True}, "https://fake.com/", None, "https://fake.com/"),
-        ({}, {"redirect": "https://fake.com/"}, "", None, "https://fake.com/"),
-        ({}, {"redirect": False}, "fake_file.md", None, None),
-        ({}, {"redirect": True}, "[Redirect](fake_file.md)", "hidden", "fake_file.md"),
-        ({}, {"redirect": "fake_file.md"}, "", "hidden", "fake_file.md"),
-        ({}, {"redirect": True}, "blah blah blah", None, None),
+        ({"redirect": False}, "https://fake.com/", None, None),
+        ({"redirect": True}, "https://fake.com/", None, "https://fake.com/"),
+        ({"redirect": "https://fake.com/"}, "", None, "https://fake.com/"),
+        ({"redirect": False}, "fake_file.md", None, None),
+        ({"redirect": True}, "[Redirect](fake_file.md)", "hidden", "fake_file.md"),
+        ({"redirect": "fake_file.md"}, "", "hidden", "fake_file.md"),
+        ({"redirect": True}, "blah blah blah", None, None),
     ],
-    indirect=["pub_meta_plugin"],
 )
 def test_redirect(
     mkdocs_config: MkDocsConfig,
@@ -485,10 +484,10 @@ def test_add_dir(
 @pytest.mark.parametrize(
     "path,is_dir,ignored_dirs,expected",
     [
-        ("tests/_tests_data/fake_file.md", False, [], ["fake_file.md"]),
-        ("tests/_tests_data/fake_dir", True, [], ["fake_dir"]),
-        ("tests/_tests_data/fake_dir", True, ["tests/_tests_data/fake_dir"], []),
-        ("tests/_tests_data/no_md.pic", False, ["fake_dir"], []),
+        ("/Users/me/fake_file.md", False, [], ["fake_file.md"]),
+        ("/Users/me/fake_dir", True, [], ["fake_dir"]),
+        ("/Users/me/fake_dir", True, ["/Users/me/fake_dir"], []),
+        ("/Users/me/no_md.pic", False, ["fake_dir"], []),
     ],
 )
 def test_add_meta_files(
@@ -522,7 +521,7 @@ def test_files_gen(
     patched_meta_files.set_configs(
         mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config
     )
-    files_paths: list[str] = ["tests/_tests_data/fake_data.md", "tests/_tests_data/fake_file.md"]
+    files_paths: list[str] = ["/Users/me/fake_data.md", "/Users/me/fake_file.md"]
     for path in files_paths:
         with (
             patch.object(Path, "is_dir", return_value=False),
@@ -624,91 +623,24 @@ def test_generate_redirect_page(
 
 
 @pytest.mark.parametrize(
-    "mkdocs_config,pub_meta_plugin,path,with_meta_file,file_slug,dir_slug,ignored_dir,expected_url",
+    "path,with_meta_file,file_slug,dir_slug,expected_url",
     [
-        ({"docs_dir": "me"}, {}, "fake_file.md", True, None, None, None, "fake-file/"),
-        ({"docs_dir": "me"}, {}, "fake_file.md", True, "file-slug", None, None, "file-slug/"),
-        ({"docs_dir": "me"}, {}, "fake_file.md", False, None, None, None, "fake_file/"),
-        ({"docs_dir": "me"}, {}, "fake_file.jpeg", False, None, None, None, "fake_file.jpeg"),
-        ({"docs_dir": "me"}, {}, "me/fake_file.md", True, None, None, None, "me/fake-file/"),
-        (
-            {"docs_dir": "me"},
-            {},
-            "me/fake_file.md",
-            True,
-            "file-slug",
-            None,
-            None,
-            "me/file-slug/",
-        ),
-        ({"docs_dir": "me"}, {}, "me/fake_file.md", False, None, None, None, "me/fake_file/"),
-        (
-            {"docs_dir": "me"},
-            {},
-            "me/fake_file.jpeg",
-            False,
-            None,
-            None,
-            None,
-            "me/fake_file.jpeg",
-        ),
-        (
-            {"docs_dir": "me"},
-            {},
-            "me/fake_file.md",
-            True,
-            None,
-            "dir-slug",
-            None,
-            "dir-slug/fake-file/",
-        ),
-        (
-            {"docs_dir": "me"},
-            {},
-            "me/fake_file.md",
-            True,
-            "file-slug",
-            "dir-slug",
-            None,
-            "dir-slug/file-slug/",
-        ),
-        (
-            {"docs_dir": "me"},
-            {},
-            "me/fake_file.md",
-            False,
-            None,
-            "dir-slug",
-            None,
-            "dir-slug/fake_file/",
-        ),
-        (
-            {"docs_dir": "me"},
-            {},
-            "me/fake_file.jpeg",
-            False,
-            None,
-            "dir-slug",
-            None,
-            "dir-slug/fake_file.jpeg",
-        ),
-        ({"docs_dir": "me"}, {}, "fake_file.md", True, None, None, "/Users/me", "fake-file/"),
-        ({"docs_dir": "me"}, {}, "me/fake_file.md", True, None, None, "/Users/me", None),
-        (
-            {"docs_dir": "me"},
-            {"slug": {"enabled": False}},
-            "fake_file.md",
-            True,
-            None,
-            None,
-            None,
-            "fake_file/",
-        ),
-        ({"docs_dir": "me"}, {}, ".", False, None, None, None, "."),
+        ("fake_file.md", True, None, None, "fake-file/"),
+        ("fake_file.md", True, "file-slug", None, "file-slug/"),
+        ("fake_file.md", False, None, None, "fake_file/"),
+        ("fake_file.jpeg", False, None, None, "fake_file.jpeg"),
+        ("me/fake_file.md", True, None, None, "me/fake-file/"),
+        ("me/fake_file.md", True, "file-slug", None, "me/file-slug/"),
+        ("me/fake_file.md", False, None, None, "me/fake_file/"),
+        ("me/fake_file.jpeg", False, None, None, "me/fake_file.jpeg"),
+        ("me/fake_file.md", True, None, "dir-slug", "dir-slug/fake-file/"),
+        ("me/fake_file.md", True, "file-slug", "dir-slug", "dir-slug/file-slug/"),
+        ("me/fake_file.md", False, None, "dir-slug", "dir-slug/fake_file/"),
+        ("me/fake_file.jpeg", False, None, "dir-slug", "dir-slug/fake_file.jpeg"),
+        (".", False, None, None, "."),
     ],
-    indirect=["mkdocs_config", "pub_meta_plugin"],
 )
-def test_change_files_slug(
+def test_change_file_slug(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     patched_meta_files: MetaFiles,
@@ -716,7 +648,6 @@ def test_change_files_slug(
     with_meta_file: bool,
     file_slug: Optional[str],
     dir_slug: Optional[str],
-    ignored_dir: Optional[str],
     expected_url: Optional[str],
 ):
     patched_meta_files.set_configs(
@@ -741,9 +672,63 @@ def test_change_files_slug(
         )
         with patch.object(Path, "exists", return_value=True):
             patched_meta_files[path] = meta_file
-        meta_file.is_draft = False
         if file_slug:
             meta_file.slug = file_slug
+
+    file = File(
+        path=path,
+        src_dir="/Users",
+        dest_dir="/Users/out",
+        use_directory_urls=True,
+    )
+
+    patched_meta_files._change_file_slug(file=file, file_path=Path(path))
+
+    check.equal(expected_url, file.url)
+
+
+@pytest.mark.parametrize(
+    "pub_meta_plugin,path,with_meta_file,is_draft,ignored_dir,expected_url",
+    [
+        ({}, "fake_file.md", True, False, "/Users/me", "fake-file/"),
+        ({}, "fake_file.md", False, False, None, "fake_file/"),
+        ({}, "fake_file.md", True, True, None, None),
+        ({}, "me/fake_file.md", True, False, "/Users/me", None),
+        ({"slug": {"enabled": False}}, "fake_file.md", True, False, None, "fake_file/"),
+    ],
+    indirect=["pub_meta_plugin"],
+)
+def test_change_files_slug(
+    mkdocs_config: MkDocsConfig,
+    pub_meta_plugin: MetaPlugin,
+    patched_meta_files: MetaFiles,
+    path: str,
+    with_meta_file: bool,
+    is_draft: bool,
+    ignored_dir: Optional[str],
+    expected_url: Optional[str],
+):
+    patched_meta_files.set_configs(
+        mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config
+    )
+
+    meta_dir: MetaFile = MetaFile(
+        path=Path("me"),
+        abs_path=Path("/Users/me/README.md"),
+        is_dir=True,
+    )
+    with patch.object(Path, "exists", return_value=True):
+        patched_meta_files["me"] = meta_dir
+
+    if with_meta_file:
+        meta_file: MetaFile = MetaFile(
+            path=Path(path),
+            abs_path=Path(f"/Users/me/{'index.md' if path == '.' else path}"),
+            is_dir=False,
+        )
+        with patch.object(Path, "exists", return_value=True):
+            patched_meta_files[path] = meta_file
+        meta_file.is_draft = is_draft
 
     files = Files(
         [
@@ -755,6 +740,7 @@ def test_change_files_slug(
             )
         ]
     )
+
     new_files = patched_meta_files.change_files_slug(
         files=files, ignored_dirs=[Path(ignored_dir)] if ignored_dir else []
     )

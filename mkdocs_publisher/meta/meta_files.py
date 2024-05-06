@@ -355,6 +355,37 @@ class MetaFiles(UserDict):
             if meta_link is not None:
                 self[str(meta_link.path)] = meta_link
 
+    def _change_file_slug(self, file: File, file_path: Path):
+        # Get URL parts
+        if file.url.endswith("/"):
+            file.url = file.url[0:-1]
+        url_parts = file.url.split("/")
+
+        # Get abs file parts
+        path_parts: list[Path] = []
+        for path_part in file_path.parts:
+            if not path_parts:
+                path_parts.append(Path(path_part))
+            else:
+                path_parts.append(path_parts[-1] / path_part)
+
+        # Replace URL parts that have slug defined
+        for position, path_part in enumerate(path_parts):
+            meta_file: Optional[MetaFile] = self.get(str(path_part), None)
+            if meta_file is not None:
+                url_parts[position] = meta_file.slug
+
+        # Recreate file params based on URL with replaced parts
+        if file.url != ".":  # Do not modify main index page
+            file.url = quote(f"{'/'.join(url_parts)}")
+            url_parts.append(file.dest_uri.split("/")[-1])
+            if len(url_parts) >= 2 and url_parts[-1] == url_parts[-2]:
+                url_parts.pop(-1)
+            file.dest_uri = quote("/".join(url_parts))
+            if file.dest_uri.endswith("index.html"):
+                file.url = f"{file.url}/"
+            file.abs_dest_path = str(Path(self._mkdocs_config.site_dir) / file.dest_uri)
+
     def change_files_slug(self, files: Files, ignored_dirs: list[Path]) -> Files:
         """Change file slug (part of the URL) based of file and parent directories slugs"""
 
@@ -379,37 +410,7 @@ class MetaFiles(UserDict):
                 or (not file.is_documentation_page())
             ):
                 if self._meta_plugin_config.slug.enabled:
-                    # Get URL parts
-                    if file.url.endswith("/"):
-                        file.url = file.url[0:-1]
-                    url_parts = file.url.split("/")
-
-                    # Get abs file parts
-                    path_parts: list[Path] = []
-                    for path_part in file_path.parts:
-                        if not path_parts:
-                            path_parts.append(Path(path_part))
-                        else:
-                            path_parts.append(path_parts[-1] / path_part)
-
-                    # Replace URL parts that have slug defined
-                    for position, path_part in enumerate(path_parts):
-                        meta_file: Optional[MetaFile] = self.get(str(path_part), None)
-                        if meta_file is not None:
-                            url_parts[position] = meta_file.slug
-
-                    # Recreate file params based on URL with replaced parts
-                    if file.url != ".":  # Do not modify main index page
-                        file.url = quote(f"{'/'.join(url_parts)}")
-                        url_parts.append(file.dest_uri.split("/")[-1])
-                        if len(url_parts) >= 2 and url_parts[-1] == url_parts[-2]:
-                            url_parts.pop(-1)
-                        file.dest_uri = quote("/".join(url_parts))
-                        if file.dest_uri.endswith("index.html"):
-                            file.url = f"{file.url}/"
-                        file.abs_dest_path = str(
-                            Path(self._mkdocs_config.site_dir) / file.dest_uri
-                        )
+                    self._change_file_slug(file=file, file_path=file_path)
                 new_files.append(file)
             if file.src_path in self:
                 self[file.src_path].url = file.url

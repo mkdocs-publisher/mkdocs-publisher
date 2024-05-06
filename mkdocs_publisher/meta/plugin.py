@@ -38,7 +38,7 @@ from mkdocs.structure.pages import Page
 from mkdocs_publisher._shared import publisher_utils
 from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.meta_files import MetaFiles
-from mkdocs_publisher.meta.nav import MetaNav
+from mkdocs_publisher.meta.meta_nav import MetaNav
 
 log = logging.getLogger("mkdocs.plugins.publisher.meta.plugin")
 

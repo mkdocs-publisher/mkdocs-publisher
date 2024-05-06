@@ -23,8 +23,35 @@
 from pathlib import Path
 
 import pytest
+from _pytest.fixtures import SubRequest
+from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher.meta.meta_files import MetaFiles
+from mkdocs_publisher.meta.meta_nav import MetaNav
+
+
+@pytest.fixture(scope="function")
+def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore
+    """Fixture returning MkDocsConfig
+
+    How to change configuration:
+
+    ```python
+    @pytest.mark.parametrize(
+        "mkdocs_config",
+        [{"docs_dir": "tests/_tests_data"}],
+        indirect=True,
+    )
+    def test_function(mkdocs_config):
+    ```
+    """
+    try:
+        config_dict = request.param
+    except AttributeError:
+        config_dict = {"docs_dir": "/Users/me"}
+    config = MkDocsConfig()
+    config.load_dict(patch=config_dict)
+    yield config  # type: ignore
 
 
 @pytest.fixture()
@@ -36,3 +63,9 @@ def patched_meta_files() -> MetaFiles:
     meta_files: MetaFiles = MetaFiles()
     meta_files._read_md_file = patch_read_md_file  # monkey patch
     return meta_files
+
+
+@pytest.fixture()
+def meta_nav(patched_meta_files: MetaFiles) -> MetaNav:
+    meta_nav: MetaNav = MetaNav(meta_files=patched_meta_files)
+    return meta_nav
