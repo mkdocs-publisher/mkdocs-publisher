@@ -35,7 +35,7 @@ def test_templates_render():
 
     exp_template = (
         '<p class="obsidian_backlink_title">Test:</p>'
-        '<div class="obsidian_backlink" markdown=1></div>'
+        '<div class="obsidian_backlink" markdown=1 data-search-exclude></div>'
     )
     render = templates.render(tpl_file=TEMPLATE_FILE, context={"title": "Test"})
     render = re.sub(HTML_COMMENT_RE, "", render).replace("\n", "")

@@ -4,7 +4,7 @@ icon: material/file-tree
 slug: pub-meta
 publish: true
 date: 2023-05-15 16:00:00
-update: 2024-04-19 13:32:36
+update: 2024-05-06 23:44:14
 description: Setting up Publisher for MkDocs meta plugin for metadata retrival and automatic navigation building
 categories:
   - setup
@@ -205,6 +205,10 @@ Publication status can also be set for whole directories. This gives you a contr
 > [!NOTE] Default directory status
 > If publication status is not set for directory, by default status is set to `true`, so there is no need to create `README.md` file in each directory.
 
+### External links and redirections
+
+From time to time, you have a need to put a link to some external web page or just move one of your documents to other places in directory structure but because of SEO it's good to pub a redirection to that document from an old location. MkDocs offers you a way to put a link to an external web page but to make a redirection, you need to use an external plugin. The biggest problem with both things is that
+
 ### Slug
 
 While documentation is generated, each of the file is converted from Markdown into HTML format. MkDocs preserves directories and file names, so the URL structure is the same as the Markdown structure. Quite often, this is not the best option for SEO and you may want to change it. To achieve it, you have to provide a `slug` meta-data value. You can provide it for both: files and directories.
@@ -357,34 +361,6 @@ Above you can find all possible settings with their default values. You don't ha
 > [!SETTINGS]- [key_name](#+meta.overview.key_name){#+meta.overview.key_name}
 > Metadata key name for overview value.
 
-### Slug
-
-===+ ":octicons-file-code-16: mkdocs.yml"
-
-	```yaml hl_lines="3-7"
-	plugins:
-	  - pub-meta:
-		  slug:
-			enable: true
-			mode: title
-			warn_on_missing: true
-			key_name: slug
-	```
-
-Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
-
-> [!SETTINGS]- [enabled](#+meta.slug.enabled){#+meta.slug.enabled}
-> Control if slug metadata will be used while document URL is created while generating a web page.
-
-> [!SETTINGS]- [mode](#+meta.slug.mode){#+meta.slug.mode}
-> Defines how document slug will be generated. Possible values are described above in [slug generation mode](#Generation%20mode).
-
-> [!SETTINGS]- [warn_on_missing](#+meta.slug.warn_on_missing){#+meta.slug.warn_on_missing}
-> MkDocs contains a switch for [strict mode](https://www.mkdocs.org/user-guide/configuration/#strict). This mode forces break of document generation on any warning and if this option is also enabled, it will force check of all documents, containing a `slug` key defined.
-
-> [!SETTINGS]- [key_name](#+meta.slug.key_name){#+meta.slug.key_name}
-> Metadata key name for slug value.
-
 ### Publication status
 
 ===+ ":octicons-file-code-16: mkdocs.yml"
@@ -424,6 +400,38 @@ Above you can find all possible settings with their default values. You don't ha
 
 > [!SETTINGS]- [key_name](#+meta.status.key_name){#+meta.status.key_name}
 > Metadata key name for status value.
+
+### Redirect
+
+
+
+### Slug
+
+===+ ":octicons-file-code-16: mkdocs.yml"
+
+	```yaml hl_lines="3-7"
+	plugins:
+	  - pub-meta:
+		  slug:
+			enable: true
+			mode: title
+			warn_on_missing: true
+			key_name: slug
+	```
+
+Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [enabled](#+meta.slug.enabled){#+meta.slug.enabled}
+> Control if slug metadata will be used while document URL is created while generating a web page.
+
+> [!SETTINGS]- [mode](#+meta.slug.mode){#+meta.slug.mode}
+> Defines how document slug will be generated. Possible values are described above in [slug generation mode](#Generation%20mode).
+
+> [!SETTINGS]- [warn_on_missing](#+meta.slug.warn_on_missing){#+meta.slug.warn_on_missing}
+> MkDocs contains a switch for [strict mode](https://www.mkdocs.org/user-guide/configuration/#strict). This mode forces break of document generation on any warning and if this option is also enabled, it will force check of all documents, containing a `slug` key defined.
+
+> [!SETTINGS]- [key_name](#+meta.slug.key_name){#+meta.slug.key_name}
+> Metadata key name for slug value.
 
 ### Title
 

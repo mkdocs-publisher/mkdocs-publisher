@@ -13,6 +13,23 @@ categories:
 
 # Version history
 
+## 1.4.0
+
+### :material-list-box: General
+
+- ❎ extend overall code coverage
+- ♻️ code refactor of some shared libraries
+
+### :material-newspaper-variant-multiple: Blog
+
+- ✅ blog post link title attribute
+
+### :material-file-tree: Meta
+
+- ❎ support for links and redirections
+- ✅ images link (remove hack fix)
+- ♻️ code refactor in many places
+
 ## 1.3.1 - 2024-04-21
 
 ### :material-file-tree: Meta
