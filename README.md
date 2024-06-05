@@ -17,6 +17,7 @@ Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that helps w
 	- document publication status,
 	- possibility to define document and directories URL (good for SEO),
 	- document creation and update date (good for SEO),
+	-
 - [pub-blog](https://mkusz.github.io/mkdocs-publisher/setup/general/pub-blog/) – blogging capability:
 	- index creation,
 	- support for blog post teasers,

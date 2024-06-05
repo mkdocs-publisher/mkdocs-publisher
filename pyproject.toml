@@ -54,10 +54,10 @@ documentation = "https://mkusz.github.io/mkdocs-publisher"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-mkdocs = "^1.5.3"
+mkdocs = "^1.6.0"
 pymdown-extensions = "^10.7"
 beautifulsoup4 = "^4.12.3"
-mkdocs-material = "^9.5.18"
+mkdocs-material = "^9.5.25"
 
 [tool.poetry.group.dev.dependencies]
 yamllint = "^1.35.1"
@@ -65,7 +65,7 @@ pyright = "1.1.359"
 ruff = "^0.3.7"
 
 [tool.poetry.group.test.dependencies]
-coverage = "^7.4.4"
+coverage = "^7.5.3"
 pytest = "^7.4.4"
 pytest-cov = "^4.1.0"
 pytest-check = "^2.3.1"
