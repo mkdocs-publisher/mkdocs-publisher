@@ -4,7 +4,7 @@ icon: material/share
 slug: pub-social
 publish: true
 date: 2023-04-04 21:14:00
-update: 2023-10-03 12:12:56
+update: 2024-06-12 17:37:54
 description: Setting up Publisher for MkDocs social cards plugin for social services sharing
 categories:
   - setup
@@ -20,7 +20,8 @@ When you are a blogger or a person who wants to publish some documentation, book
 
 ## Document metadata
 
-More about document metadata you can read in the document related to setting up the [meta plugin](../02_general/01_setting-up-meta.md#document-metadata).
+More about document metadata you can read in the document related to setting up the [meta plugin](../02_general/01_setting-up-meta.md#Document%20meta-data).
+
 
 Some data used by social cards is global (like site name) but some are unique per document. Data needed and optional that is needed by social card is:
 

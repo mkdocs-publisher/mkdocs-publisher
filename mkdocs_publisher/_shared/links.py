@@ -56,6 +56,10 @@ RELATIVE_LINK_RE = re.compile(
 ANCHOR_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_RE_PART}]\({ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
 
 
+def slugify(anchor: str) -> str:
+    return anchor.lower().replace("%20", "-")
+
+
 class RelativePathFinder:
     def __init__(self, current_file_path: Path, docs_dir: Path, relative_path: Path):
         self._current_file_path: Path = current_file_path
@@ -134,7 +138,7 @@ class LinkMatch:
     is_wiki: bool = False
 
     def __repr__(self):
-        anchor = f"#{self.anchor}" if self.anchor else ""
+        anchor = f"#{slugify(self.anchor)}" if self.anchor else ""
         extra: list = self.extra.strip().split(" ") if self.extra else []
         title = f' "{self.title}"' if self.title else ""
 
@@ -158,7 +162,7 @@ class LinkMatch:
 
     @property
     def as_backlink(self):
-        anchor = f"#{self.anchor}" if self.anchor else ""
+        anchor = f"#{slugify(self.anchor)}" if self.anchor else ""
         extra: list = self.extra.strip().split(" ") if self.extra else []
         extra.append(self.backlink_anchor)
         title = f' "{self.title}"' if self.title else ""
@@ -231,7 +235,7 @@ class RelativeLinkMatch:
     relative_path_finder: Optional[RelativePathFinder] = None
 
     def __repr__(self):
-        anchor = f"#{self.anchor}" if self.anchor else ""
+        anchor = f"#{slugify(self.anchor)}" if self.anchor else ""
         title = f' "{self.title}"' if self.title else ""
 
         # The same page anchor link doesn't have file part

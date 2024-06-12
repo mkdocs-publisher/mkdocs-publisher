@@ -54,10 +54,10 @@ documentation = "https://mkusz.github.io/mkdocs-publisher"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-mkdocs = "^1.6.0"
+mkdocs = "~1.5.3"
 pymdown-extensions = "^10.7"
 beautifulsoup4 = "^4.12.3"
-mkdocs-material = "^9.5.25"
+mkdocs-material = "~9.5.18"
 
 [tool.poetry.group.dev.dependencies]
 yamllint = "^1.35.1"

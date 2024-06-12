@@ -4,7 +4,7 @@ icon: material/file-tree
 slug: pub-meta
 publish: true
 date: 2023-05-15 16:00:00
-update: 2024-05-06 23:44:14
+update: 2024-06-12 23:44:14
 description: Setting up Publisher for MkDocs meta plugin for metadata retrival and automatic navigation building
 categories:
   - setup

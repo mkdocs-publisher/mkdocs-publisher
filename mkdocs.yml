@@ -131,6 +131,7 @@ markdown_extensions:
 plugins:
   - pub-debugger:
       console_log:
+#        show_code_link: true
         enabled: true
 #        log_level: DEBUG
 #        filter_logger_names:

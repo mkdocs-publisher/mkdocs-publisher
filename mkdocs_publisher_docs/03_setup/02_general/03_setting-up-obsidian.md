@@ -133,10 +133,10 @@ plugins:
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
 
-> [!SETTINGS]- [enabled](#+obsidian.comments.enabled){#+obsidian.callouts.enabled}
+> [!SETTINGS]- [enabled](#+obsidian.comments.enabled){#+obsidian.comments.enabled}
 > Control if comments are recognized on the document web page. If disabled, comments will be visible as a normal text.
 
-> [!SETTINGS]- [indentation](#+obsidian.comments.inject_as_html){#+obsidian.callouts.indentation}
+> [!SETTINGS]- [indentation](#+obsidian.comments.indentation){#+obsidian.comments.indentation}
 > Defines behavior of the comments:
 > - `true` - comments will become an [HTML comment](https://www.w3schools.com/tags/tag_comment.asp), so it will not be visible on the generated document, but will be visible in document HTML code.
 > - `false` (default) - comments will be completely removed and not visible either in generated document and document HTML code.
