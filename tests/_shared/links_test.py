@@ -340,11 +340,11 @@ def test_relative_path_finder_multiple_file_found(
 ):
     file_path = relative_path_finder.get_full_file_path(file_path=Path("other_rel_file.md"))
     assert file_path is None
-    assert caplog.records[-1].levelno == logging.ERROR
-    assert caplog.records[-1].message.startswith(
-        "Too much files found: ['relative/other_rel_file.md', "
-        "'current/cur_sub/other_rel_file.md']"
-    )
+    last_log_record = caplog.records[-1]
+    assert last_log_record.levelno == logging.ERROR
+    assert last_log_record.message.startswith("Too much files found:")
+    assert "current/cur_sub/other_rel_file.md" in last_log_record.message
+    assert "relative/other_rel_file.md" in last_log_record.message
 
 
 @pytest.mark.parametrize(
