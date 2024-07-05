@@ -34,7 +34,7 @@ from mkdocs_publisher._shared import links
 from mkdocs_publisher.meta.meta_files import MetaFile
 from mkdocs_publisher.meta.meta_files import MetaFiles
 
-log = logging.getLogger("mkdocs.plugins.publisher.meta.nav")
+log = logging.getLogger("mkdocs.publisher.meta.nav")
 
 
 class MetaNav:
@@ -76,9 +76,7 @@ class MetaNav:
 
                 title = meta_file.title
                 prev_path = meta_file.path
-                sub_nav, meta_file = self._build_nav(
-                    meta_files_gen=meta_files_gen, current_dir=meta_file.abs_path
-                )
+                sub_nav, meta_file = self._build_nav(meta_files_gen=meta_files_gen, current_dir=meta_file.abs_path)
                 sub_nav = [*overview_nav, *sub_nav]
                 if sub_nav:
                     if prev_path == self._blog_dir:
@@ -87,9 +85,7 @@ class MetaNav:
                         nav.append({title: sub_nav})
             elif meta_file.is_dir:
                 return nav, meta_file  # Jump to subdirectory
-            elif (
-                not meta_file.is_dir and not meta_file.is_draft and meta_file.path.suffix == ".md"
-            ):
+            elif not meta_file.is_dir and not meta_file.is_draft and meta_file.path.suffix == ".md":
                 if meta_file.redirect and re.search(links.URL_RE_PART, meta_file.redirect):
                     nav.append({meta_file.title: meta_file.redirect})
                     meta_file = None  # File added, skip to next

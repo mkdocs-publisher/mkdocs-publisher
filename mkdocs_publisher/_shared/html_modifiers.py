@@ -23,7 +23,7 @@ import logging
 
 from bs4 import BeautifulSoup
 
-log = logging.getLogger("mkdocs.plugins.publisher._shared.html_modifiers")
+log = logging.getLogger("mkdocs.publisher._shared.html_modifiers")
 
 
 class HTMLModifier:

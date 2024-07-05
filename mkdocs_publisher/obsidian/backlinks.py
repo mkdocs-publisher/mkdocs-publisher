@@ -31,7 +31,7 @@ from mkdocs.structure.pages import Page
 from mkdocs_publisher._shared import links
 from mkdocs_publisher.blog.plugin import BlogPlugin
 
-log = logging.getLogger("mkdocs.plugins.publisher.obsidian.backlinks")
+log = logging.getLogger("mkdocs.publisher.obsidian.backlinks")
 
 
 @dataclass
@@ -99,10 +99,7 @@ class BacklinkLinks:
             temp_blog_files = blog_plugin.blog_config.temp_files_list
 
         # Do not add backlink if backlinks points to the same document
-        if (
-            original_link_source != original_link.link
-            and original_link_source not in temp_blog_files
-        ):
+        if original_link_source != original_link.link and original_link_source not in temp_blog_files:
             log.debug(
                 f"Found backlink to: {original_link.link}"
                 f"{original_link.anchor if original_link.anchor is not None else ''}"

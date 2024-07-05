@@ -46,7 +46,7 @@ class _MinifierJsConfig(_MinifierCommonConfig):
 
 class _MinifierHtmlConfig(_MinifierCommonConfig):
     extensions = option.Type(list, default=[".[hH][tT][mM]", ".[hH][tT][mM][lL]"])
-    html_minifier_path = option.Type(str, default="html-minifier")
+    html_minifier_path = option.Type(str, default="html-minifier-terser")
     case_sensitive = option.Type(bool, default=True)
     minify_css = option.Type(bool, default=True)
     minify_js = option.Type(bool, default=True)
@@ -58,9 +58,7 @@ class _MinifierHtmlConfig(_MinifierCommonConfig):
     preserve_line_breaks = option.Type(bool, default=True)
     sort_attributes = option.Type(bool, default=True)
     sort_class_name = option.Type(bool, default=True)
-    max_line_length = option.Choice(
-        [str(i) for i in range(80, 4097)], default="1024"
-    )  # 0 - disabled
+    max_line_length = option.Choice([str(i) for i in range(80, 4097)], default="1024")  # 0 - disabled
 
 
 class _MinifierSvgConfig(_MinifierCommonConfig):

@@ -31,7 +31,7 @@ from mkdocs.structure.files import Files
 from mkdocs_publisher._extra import assets
 from mkdocs_publisher._extra.assets import stylesheets
 
-log = logging.getLogger("mkdocs.plugins.publisher._shared.resources")
+log = logging.getLogger("mkdocs.publisher._shared.resources")
 
 
 def _add_extra_file(
@@ -58,14 +58,10 @@ def _add_extra_file(
         log.error(f"Extra file doesn't exists: {extra_file_path}")
 
 
-def add_extra_css(
-    stylesheet_file_name: str, config: MkDocsConfig, files: Files, add_map: bool = True
-):
+def add_extra_css(stylesheet_file_name: str, config: MkDocsConfig, files: Files, add_map: bool = True):
     """Add CSS file from mkdocs_publisher._extra to mkdocs.yml config file"""
 
-    css_file_path = Path(
-        str(importlib.resources.files(stylesheets).joinpath(stylesheet_file_name))
-    )
+    css_file_path = Path(str(importlib.resources.files(stylesheets).joinpath(stylesheet_file_name)))
     _add_extra_file(
         resource_file_path=css_file_path,
         site_dir=config.site_dir,
@@ -75,9 +71,7 @@ def add_extra_css(
     )
 
     if add_map:
-        css_map_file_path = Path(
-            str(importlib.resources.files(stylesheets).joinpath(f"{stylesheet_file_name}.map"))
-        )
+        css_map_file_path = Path(str(importlib.resources.files(stylesheets).joinpath(f"{stylesheet_file_name}.map")))
         _add_extra_file(
             resource_file_path=css_map_file_path,
             site_dir=config.site_dir,

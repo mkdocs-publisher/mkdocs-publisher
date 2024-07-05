@@ -44,7 +44,7 @@ from mkdocs_publisher.meta.config import OverviewChoiceEnum
 from mkdocs_publisher.meta.config import PublishChoiceEnum
 from mkdocs_publisher.meta.config import TitleChoiceEnum
 
-log = logging.getLogger("mkdocs.plugins.publisher._shared.meta_files")
+log = logging.getLogger("mkdocs.publisher._shared.meta_files")
 
 
 HEADINGS_RE = re.compile(r"^#+ (?P<title>[^|#\r\n\t\f\v]+)$")
@@ -135,9 +135,7 @@ class MetaFiles(UserDict):
                 and self._meta_plugin_config.title.warn_on_missing_header
                 and not (meta_file.is_draft or (meta_file.is_dir and not meta_file.is_overview))
             ):
-                log.warning(
-                    f'Title value from first heading is missing for file: "{str(meta_file.path)}"'
-                )
+                log.warning(f'Title value from first heading is missing for file: "{str(meta_file.path)}"')
 
         if title is None and (mode == TitleChoiceEnum.META or mode == TitleChoiceEnum.FILE):
             title = str(meta_file.path.stem).replace("_", " ").title()
@@ -155,9 +153,7 @@ class MetaFiles(UserDict):
             warn_on_missing=self._meta_plugin_config.slug.warn_on_missing,
         )
 
-    def _get_redirect(
-        self, meta_file: MetaFile, meta: dict[str, Any], markdown: str
-    ) -> dict[str, Any]:
+    def _get_redirect(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str) -> dict[str, Any]:
         """Determine if given file is a redirection"""
 
         redirect = meta.get(self._meta_plugin_config.redirect.key_name, None)
@@ -171,9 +167,7 @@ class MetaFiles(UserDict):
             redirect = None
         elif redirect is True:
             if match := re.search(links.RELATIVE_LINK_RE, markdown):
-                link = links.RelativeLinkMatch(
-                    **match.groupdict(), relative_path_finder=relative_path_finder
-                )
+                link = links.RelativeLinkMatch(**match.groupdict(), relative_path_finder=relative_path_finder)
                 anchor = f"#{link.anchor}" if link.anchor else ""
                 redirect = f"{link.link}{anchor}"
 
@@ -331,9 +325,7 @@ class MetaFiles(UserDict):
 
         for docs_file in sorted(Path(self._mkdocs_config.docs_dir).rglob("*")):
             meta_link: Optional[MetaFile] = None
-            is_ignored = any(
-                [docs_file.is_relative_to(ignored_dir) for ignored_dir in ignored_dirs]
-            )
+            is_ignored = any([docs_file.is_relative_to(ignored_dir) for ignored_dir in ignored_dirs])
 
             if not is_ignored and docs_file.is_dir():
                 meta_link = MetaFile(

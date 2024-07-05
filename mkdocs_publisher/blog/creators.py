@@ -34,7 +34,7 @@ from mkdocs_publisher._shared import templates
 from mkdocs_publisher._shared.urls import slugify
 from mkdocs_publisher.blog.structures import BlogConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.blog.creators")
+log = logging.getLogger("mkdocs.publisher.blog.creators")
 
 
 def create_blog_files(
@@ -104,6 +104,7 @@ def create_blog_post_pages(
 
     # Reorder tags alphabetically
     tags_chunks = {tag: tags_chunks[tag] for tag in sorted(tags_chunks)}
+
     config_nav[blog_config.translation.blog_navigation_name] = []
 
     for key, single_posts_chunk in posts_chunks.items():

@@ -29,7 +29,7 @@ import jinja2
 
 from mkdocs_publisher.obsidian.config import _ObsidianVegaConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.obsidian.vega")
+log = logging.getLogger("mkdocs.publisher.obsidian.vega")
 
 
 VEGA_BLOCK_START = re.compile(r"^( *)```(vega-lite|vega)")
@@ -84,9 +84,9 @@ class VegaCharts:
                         "vega_chart_id": self._vega_chart_id,
                         "vega_chart": json.dumps(vega_chart_json),
                     }
-                    vega_chart_template = jinja2.Environment(
-                        loader=jinja2.BaseLoader()
-                    ).from_string(VEGA_CHART_TEMPLATE)
+                    vega_chart_template = jinja2.Environment(loader=jinja2.BaseLoader()).from_string(
+                        VEGA_CHART_TEMPLATE
+                    )
 
                     vega_chart = vega_chart_template.render(vega_chart_context)
 

@@ -53,10 +53,8 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
             'Lorem ipsum dolor sit [amet](file.md "title"), consectetur adipiscing elit.',
         ),
         (
-            'Lorem ipsum dolor sit [amet](file.md#anchor part "title"), '
-            "consectetur adipiscing elit.",
-            'Lorem ipsum dolor sit [amet](file.md#anchor part "title"), '
-            "consectetur adipiscing elit.",
+            'Lorem ipsum dolor sit [amet](file.md#anchor part "title"), ' "consectetur adipiscing elit.",
+            'Lorem ipsum dolor sit [amet](file.md#anchor part "title"), ' "consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [amet](#just/an anchor), consectetur adipiscing elit.",
@@ -68,13 +66,11 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
         (
             "Lorem ipsum dolor sit [[file with space]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [file with space](file with space.md), "
-            "consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [file with space](file with space.md), " "consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file#anchor part]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [file > anchor part](file.md#anchor part), "
-            "consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [file > anchor part](file.md#anchor part), " "consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file|amet]], consectetur adipiscing elit.",
@@ -86,17 +82,14 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
         (
             "Lorem ipsum dolor sit ![[amet.pdf]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit ![amet.pdf](amet.pdf){pdfjs loading=lazy}, "
-            "consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit ![amet.pdf](amet.pdf){pdfjs loading=lazy}, " "consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing ![elit](elit.jpg).",
-            "Lorem ipsum dolor sit [amet](file.md), "
-            "consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
+            "Lorem ipsum dolor sit [amet](file.md), " "consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
         ),
         (
-            "Lorem ipsum dolor sit [amet](https://test.it/), "
-            "consectetur adipiscing ![elit](elit.jpg).",
+            "Lorem ipsum dolor sit [amet](https://test.it/), " "consectetur adipiscing ![elit](elit.jpg).",
             "Lorem ipsum dolor sit [amet](https://test.it/), "
             "consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
         ),
@@ -109,9 +102,7 @@ def test_normalize_wiki_links(
     pub_obsidian_plugin: ObsidianPlugin,
     pub_blog_plugin: BlogPlugin,
 ):
-    mkdocs_config.plugins = cast(
-        PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin}
-    )
+    mkdocs_config.plugins = cast(PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin})
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown = markdown_links.normalize_links(markdown=markdown, current_file_path=Path("main.md"))
 
@@ -147,9 +138,7 @@ def test_normalize_links(
     pub_blog_plugin: BlogPlugin,
 ):
     pub_obsidian_plugin.config.links.wikilinks_enabled = False
-    mkdocs_config.plugins = cast(
-        PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin}
-    )
+    mkdocs_config.plugins = cast(PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin})
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown = markdown_links.normalize_links(markdown=markdown, current_file_path=Path("main.md"))
 
@@ -176,9 +165,7 @@ def test_normalize_relative_links(
     pub_obsidian_plugin: ObsidianPlugin,
     pub_blog_plugin: BlogPlugin,
 ):
-    mkdocs_config.plugins = cast(
-        PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin}
-    )
+    mkdocs_config.plugins = cast(PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin})
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown = markdown_links.normalize_relative_links(
         markdown=markdown, current_file_path=Path("main.md"), current_relative_path=Path("main.md")

@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 import logging
+import platform
 from dataclasses import asdict
 from dataclasses import dataclass
 from dataclasses import field
@@ -35,7 +36,7 @@ from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher.minifier.config import MinifierConfig
 from mkdocs_publisher.minifier.config import _MinifierCommonConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.minifier.base")
+log = logging.getLogger("mkdocs.publisher.minifier.base")
 
 
 @dataclass
@@ -77,8 +78,12 @@ class BaseMinifier:
         self._cached_files: dict[str, CachedFile] = cached_files
         self._cache_enabled: bool = self._plugin_config.cache_enabled
         self._exclude: list = self._plugin_config.exclude[:]
+        self._system = platform.system()
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+        raise NotImplementedError
+
+    def are_tools_installed(self) -> bool:
         raise NotImplementedError
 
     def __call__(self):
@@ -86,35 +91,34 @@ class BaseMinifier:
         self._cache_enabled = self._minify_options.cache_enabled if self._cache_enabled else False
         self._exclude.extend(self._minify_options.exclude)
 
-        log.info(
-            f"Minifying {minifier_name} files ({'with' if self._cache_enabled else 'no'} cache)"
-        )
+        log.info(f"Minifying {minifier_name} files ({'with' if self._cache_enabled else 'no'} cache)")
         log.info(f"Excluded {minifier_name} files patterns: {self._exclude}")
 
-        semaphore = Semaphore(self._plugin_config.threads)
-        threads = []
+        if self.are_tools_installed():
+            semaphore = Semaphore(self._plugin_config.threads)
+            threads = []
 
-        for file in file_utils.list_files(
-            directory=Path(self._mkdocs_config.site_dir),
-            extensions=self._minify_options.extensions,
-            exclude=self._exclude,
-        ):
-            log.debug(f"Minifying: {file}")
-            semaphore.acquire()
-            thread = Thread(
-                target=self._minify_with_cache,
-                kwargs={
-                    "file": file,
-                    "cache_enabled": self._cache_enabled,
-                    "semaphore": semaphore,
-                },
-            )
-            thread.start()
-            threads.append(thread)
+            for file in file_utils.list_files(
+                directory=Path(self._mkdocs_config.site_dir),
+                extensions=self._minify_options.extensions,
+                exclude=self._exclude,
+            ):
+                log.debug(f"Minifying: {file}")
+                semaphore.acquire()
+                thread = Thread(
+                    target=self._minify_with_cache,
+                    kwargs={
+                        "file": file,
+                        "cache_enabled": self._cache_enabled,
+                        "semaphore": semaphore,
+                    },
+                )
+                thread.start()
+                threads.append(thread)
 
-        # Wait for all threads to be finished
-        for thread in threads:
-            thread.join()
+            # Wait for all threads to be finished
+            for thread in threads:
+                thread.join()
 
     def _is_new_smaller(self, cached_file: CachedFile) -> Optional[CachedFile]:
         old_file = self._mkdocs_config.site_dir / cached_file.original_file_path
@@ -132,10 +136,7 @@ class BaseMinifier:
         if new_file_size < old_file_size:
             return cached_file
 
-        log.debug(
-            f"Minified file larger than original: "
-            f"{cached_file.original_file_path} (removing cached file)"
-        )
+        log.debug(f"Minified file larger than original: " f"{cached_file.original_file_path} (removing cached file)")
         new_file.unlink()
         return None
 

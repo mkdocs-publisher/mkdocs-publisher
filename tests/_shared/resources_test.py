@@ -61,9 +61,7 @@ def test_add_extra_existing_file(caplog: LogCaptureFixture):
 
 
 def test_add_extra_non_existing_file(caplog: LogCaptureFixture):
-    existing_file = Path(
-        str(importlib.resources.files(stylesheets).joinpath(f"{STYLESHEET_FILE}.non"))
-    )
+    existing_file = Path(str(importlib.resources.files(stylesheets).joinpath(f"{STYLESHEET_FILE}.non")))
     expected_path = str(existing_file.relative_to(Path().cwd() / EXTRA_DIR))
     mkdocs_files = Files(files=[])
     mkdocs_config = cast(MkDocsConfig, MkDocsConfig())

@@ -35,9 +35,7 @@ class SlugModeChoiceEnum(ConfigChoiceEnum):
 
 class _MetaSlugConfig(Config):
     enabled = option.Type(bool, default=True)
-    mode = option.Choice(
-        choices=SlugModeChoiceEnum.choices(), default=SlugModeChoiceEnum.default()
-    )
+    mode = option.Choice(choices=SlugModeChoiceEnum.choices(), default=SlugModeChoiceEnum.default())
     warn_on_missing = option.Type(bool, default=True)
     key_name = option.Type(str, default="slug")
 
@@ -49,9 +47,7 @@ class OverviewChoiceEnum(ConfigChoiceEnum):
 
 
 class _MetaOverviewConfig(Config):
-    default = option.Choice(
-        choices=OverviewChoiceEnum.choices(), default=OverviewChoiceEnum.default()
-    )
+    default = option.Choice(choices=OverviewChoiceEnum.choices(), default=OverviewChoiceEnum.default())
     enabled = option.Type(bool, default=True)
     key_name = option.Type(str, default="overview")
 
@@ -102,12 +98,8 @@ class _MetaRedirectConfig(Config):
 class MetaPluginConfig(Config):
     dir_meta_file = option.Choice(["README.md", "index.md"], default="README.md")
 
-    overview: _MetaOverviewConfig = cast(
-        _MetaOverviewConfig, option.SubConfig(_MetaOverviewConfig)
-    )
+    overview: _MetaOverviewConfig = cast(_MetaOverviewConfig, option.SubConfig(_MetaOverviewConfig))
     publish: _MetaPublishConfig = cast(_MetaPublishConfig, option.SubConfig(_MetaPublishConfig))
-    redirect: _MetaRedirectConfig = cast(
-        _MetaRedirectConfig, option.SubConfig(_MetaRedirectConfig)
-    )
+    redirect: _MetaRedirectConfig = cast(_MetaRedirectConfig, option.SubConfig(_MetaRedirectConfig))
     slug: _MetaSlugConfig = cast(_MetaSlugConfig, option.SubConfig(_MetaSlugConfig))
     title: _MetaTitleConfig = cast(_MetaTitleConfig, option.SubConfig(_MetaTitleConfig))

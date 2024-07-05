@@ -3,7 +3,7 @@ title: Home
 slug: .
 publish: true
 date: 2023-03-12 12:27:00
-update: 2024-04-17 20:34:35
+update: 2024-07-05 01:39:05
 description: Installation
 categories:
   - start
@@ -52,3 +52,19 @@ The list of most important features built into MkDocs Publisher:
 	- [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links),
 	- [vega charts](https://vega.github.io/vega/) (using [Vega Visualization Plugin for Obsidian](https://github.com/Some-Regular-Person/obsidian-vega)) - advanced solution for creating charts,
 - debugger and logging on steroids - useful for issue reporting and for MkDocs plugin development ([pub-debugger](03_setup/99_development/01_setting-up-debugger.md) plugin :material-plus-circle: [v1.1.0](06_blog/v110-debugger.md)).
+
+# More than just a documentation
+
+> [!none] :material-open-source-initiative:
+> **Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+> Test
+
+
+<div style="overflow: auto;" markdown>
+[![Image title](https://dummyimage.com/300x200/eee/aaa){ align=left }](test)
+
+## **dsfsdfsd**
+sdfsdfsdfs f
+</div>
+
+asdasd

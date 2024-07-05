@@ -31,7 +31,7 @@ from mkdocs.structure.pages import Page
 
 from mkdocs_publisher.blog.structures import BlogConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.blog.modifiers")
+log = logging.getLogger("mkdocs.publisher.blog.modifiers")
 
 
 def blog_post_nav_sorter(
@@ -54,26 +54,15 @@ def blog_post_nav_remove(
     """Remove blog posts pages, subindexes and section from direct navigation."""
 
     log.info("Removing blog posts pages and section from direct navigation")
-    nav.items = [
-        i for i in nav.items if not (isinstance(i, Section) and i.title.lower() == "_blog_posts_")
-    ]
+    nav.items = [i for i in nav.items if not (isinstance(i, Section) and i.title.lower() == "_blog_posts_")]
     log.info("Removing blog sub index pages from navigation menu")
     for item in nav.items:
-        if (
-            isinstance(item, Section)
-            and item.title == blog_config.translation.blog_navigation_name
-        ):
+        if isinstance(item, Section) and item.title == blog_config.translation.blog_navigation_name:
             children = []
             for section_item in item.children:
-                if not (
-                    isinstance(section_item, Page) and str(section_item.title).startswith("index-")
-                ):
+                if not (isinstance(section_item, Page) and str(section_item.title).startswith("index-")):
                     children.append(section_item)
-                if (
-                    isinstance(section_item, Page)
-                    and not start_page
-                    and str(section_item.title).startswith("index-0")
-                ):
+                if isinstance(section_item, Page) and not start_page and str(section_item.title).startswith("index-0"):
                     children.append(section_item)
             item.children = children
 

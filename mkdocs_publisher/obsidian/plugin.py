@@ -50,7 +50,7 @@ from mkdocs_publisher.obsidian.vega import VegaCharts
 
 COMMENTS_RE = re.compile(r"%%(?P<comment>[^%%]+)%%")
 
-log = logging.getLogger("mkdocs.plugins.publisher.obsidian.plugin")
+log = logging.getLogger("mkdocs.publisher.obsidian.plugin")
 
 
 @dataclass
@@ -88,9 +88,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             )
         return files
 
-    def on_nav(
-        self, nav: Navigation, *, config: MkDocsConfig, files: Files
-    ) -> Optional[Navigation]:
+    def on_nav(self, nav: Navigation, *, config: MkDocsConfig, files: Files) -> Optional[Navigation]:
         if self.config.backlinks.enabled:
             log.info("Parsing backlinks")
             for file in files:
@@ -105,22 +103,16 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         return nav
 
     @event_priority(100)  # Run before all other plugins
-    def on_page_markdown(
-        self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
-    ) -> Optional[str]:
+    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> Optional[str]:
         # TODO: add verification if relative backlinks are enabled in .obsidian config
-        markdown = self._md_links.normalize_links(
-            markdown=markdown, current_file_path=Path(page.file.src_uri)
-        )
+        markdown = self._md_links.normalize_links(markdown=markdown, current_file_path=Path(page.file.src_uri))
         if self.config.comments.enabled:
             markdown = re.sub(COMMENTS_RE, self._normalize_comments, markdown)
 
         if self.config.callouts.enabled:
             # TODO: add verification if all things are enabled in mkdocs.yaml config file
             callout_to_admonition = CalloutToAdmonition(callouts_config=self.config.callouts)
-            markdown = callout_to_admonition.convert_callouts(
-                markdown=markdown, file_path=str(page.file.src_uri)
-            )
+            markdown = callout_to_admonition.convert_callouts(markdown=markdown, file_path=str(page.file.src_uri))
 
         if self.config.vega.enabled:
             # TODO: add verification if all things are enabled in .obsidian config
@@ -138,9 +130,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                     "backlinks": page_backlinks,
                     "title": "Backlinks",  # TODO: move to translations
                 }
-                backlink_render = templates.render(
-                    tpl_file="backlinks.html", context=backlink_context
-                )
+                backlink_render = templates.render(tpl_file="backlinks.html", context=backlink_context)
                 markdown = f"{markdown}{backlink_render}"
         return markdown
 
@@ -183,8 +173,6 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             return
         server._watched_paths[config.docs_dir] = 1
 
-        server._watch_refs[config.docs_dir] = server.observer.schedule(
-            handler, config.docs_dir, recursive=True
-        )
+        server._watch_refs[config.docs_dir] = server.observer.schedule(handler, config.docs_dir, recursive=True)
         log.debug(f"Watching '{config.docs_dir}'")
         return server

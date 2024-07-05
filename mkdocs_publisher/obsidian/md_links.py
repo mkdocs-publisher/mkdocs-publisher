@@ -33,7 +33,7 @@ from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.obsidian.md_links")
+log = logging.getLogger("mkdocs.publisher.obsidian.md_links")
 
 
 class MarkdownLinks:
@@ -43,9 +43,7 @@ class MarkdownLinks:
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._links_config: ObsidianPluginConfig = cast(
             ObsidianPluginConfig,
-            mkdocs_utils.get_plugin_config(
-                mkdocs_config=mkdocs_config, plugin_name="pub-obsidian"
-            ),
+            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-obsidian"),
         )
         self._blog_config: Optional[BlogPluginConfig] = cast(
             BlogPluginConfig,
@@ -106,9 +104,7 @@ class MarkdownLinks:
         )
         return str(md_link_obj)
 
-    def normalize_relative_links(
-        self, markdown: str, current_file_path: Path, current_relative_path: Path
-    ) -> str:
+    def normalize_relative_links(self, markdown: str, current_file_path: Path, current_relative_path: Path) -> str:
         self._current_file_path = current_file_path
         self._current_relative_path = current_relative_path
         markdown = re.sub(links.RELATIVE_LINK_RE, self.normalize_relative_link, markdown)

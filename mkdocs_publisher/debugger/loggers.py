@@ -20,10 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import datetime
 import logging
 import re
 import site
-from datetime import datetime
 from pathlib import Path
 
 import colorama
@@ -47,7 +47,7 @@ LOG_LEVEL_COLOR_MAPPING = {
 
 class DatedFileHandler(logging.FileHandler):
     def __init__(self, filename):
-        dated_filename = datetime.utcnow().strftime(str(filename))
+        dated_filename = datetime.datetime.now(tz=datetime.timezone.utc).strftime(str(filename))
         Path(dated_filename).parent.mkdir(parents=True, exist_ok=True)
         super().__init__(filename=dated_filename)
 
@@ -83,12 +83,10 @@ class ProjectPathStreamFormatter(logging.Formatter):
             fmt = f"{fmt} {colorama.Fore.CYAN}[%(name)s]{colorama.Fore.RESET}"
 
         self._style._fmt = fmt
-        self.datefmt = str(self._console_config.entry_time_format).replace(
-            "%f", str(record.msecs)[0:3]
-        )
+        self.datefmt = str(self._console_config.entry_time_format).replace("%f", str(record.msecs)[0:3])
 
         if self._console_config.show_entry_time:
-            record.msg = re.sub(LIVERELOAD_MSG_RE, self._livereload_msg_strip_time, record.msg)
+            record.msg = re.sub(LIVERELOAD_MSG_RE, self._livereload_msg_strip_time, str(record.msg))
 
         return super().format(record=record)
 
@@ -99,9 +97,7 @@ class ProjectPathFileFormatter(logging.Formatter):
         try:
             record.project_path = str(
                 project_file_path.relative_to(
-                    SITE_PACKAGES_DIR
-                    if "site-packages" in str(project_file_path)
-                    else project_file_path.cwd()
+                    SITE_PACKAGES_DIR if "site-packages" in str(project_file_path) else project_file_path.cwd()
                 )
             )
         except ValueError:
@@ -116,8 +112,10 @@ class ProjectPathConsoleFilter(logging.Filter):
         super().__init__()
 
     def filter(self, record):
-        if not self._console_config.show_deprecation_warnings and re.findall(
-            DEPRECATION_MSG_RE, record.msg
+        if (
+            not self._console_config.show_deprecation_warnings
+            and isinstance(record.msg, str)
+            and re.findall(DEPRECATION_MSG_RE, record.msg)
         ):
             return None
         return record if record.name not in self._console_config.filter_logger_names else None

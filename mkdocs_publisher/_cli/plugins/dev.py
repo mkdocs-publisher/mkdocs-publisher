@@ -33,7 +33,7 @@ import mkdocs_publisher_docs
 from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher._shared import mkdocs_utils
 
-log = logging.getLogger("mkdocs.plugins.publisher.cli.dev")
+log = logging.getLogger("mkdocs.publisher.cli.dev")
 
 
 @click.group

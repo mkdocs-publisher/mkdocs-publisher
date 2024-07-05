@@ -27,7 +27,7 @@ from pathlib import Path
 from typing import Optional
 from uuid import uuid4
 
-log = logging.getLogger("mkdocs.plugins.publisher._shared.file_utils")
+log = logging.getLogger("mkdocs.publisher._shared.file_utils")
 
 
 def run_subprocess(cmd, capture_output: bool = True) -> subprocess.CompletedProcess:

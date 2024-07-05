@@ -27,7 +27,7 @@ from hashlib import md5
 from pathlib import Path
 from typing import Optional
 
-log = logging.getLogger("mkdocs.plugins.publisher._shared.links")
+log = logging.getLogger("mkdocs.publisher._shared.links")
 
 
 ANCHOR_RE_PART = r"((#(?P<anchor>([^|\][()'\"]+)))?)"
@@ -40,19 +40,12 @@ LINK_TITLE_RE_PART = r"(( \"(?P<title>[ \S]+)\")?)"
 
 HTTP_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}]\({URL_RE_PART}\)")
 WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[{LINK_RE_PART}{ANCHOR_RE_PART}(\|{TEXT_RE_PART})?]]")
-WIKI_EMBED_LINK_RE = re.compile(
-    rf"!\[\[{LINK_RE_PART}{ANCHOR_RE_PART}{IMAGE_RE_PART}]]{EXTRA_RE_PART}"
-)
+WIKI_EMBED_LINK_RE = re.compile(rf"!\[\[{LINK_RE_PART}{ANCHOR_RE_PART}{IMAGE_RE_PART}]]{EXTRA_RE_PART}")
 MD_LINK_RE = re.compile(
-    rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}"
-    rf"{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
+    rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}" rf"{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
 )
-MD_EMBED_LINK_RE = re.compile(
-    rf"!\[{TEXT_RE_PART}]\({LINK_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
-)
-RELATIVE_LINK_RE = re.compile(
-    rf"\[{TEXT_RE_PART}?]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)"
-)
+MD_EMBED_LINK_RE = re.compile(rf"!\[{TEXT_RE_PART}]\({LINK_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}")
+RELATIVE_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}?]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
 ANCHOR_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_RE_PART}]\({ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
 
 
@@ -254,9 +247,7 @@ class RelativeLinkMatch:
             ):
                 file_path = self.relative_path_finder.get_full_file_path(file_path=Path(self.link))
                 if file_path is not None:
-                    link = str(
-                        self.relative_path_finder.get_relative_file_path(file_path=file_path)
-                    )
+                    link = str(self.relative_path_finder.get_relative_file_path(file_path=file_path))
                 else:
                     link = ""
             else:

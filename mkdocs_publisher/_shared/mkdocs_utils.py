@@ -30,7 +30,7 @@ from typing import cast
 from mkdocs.config.base import Config
 from mkdocs.config.defaults import MkDocsConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher._shared.mkdocs_utils")
+log = logging.getLogger("mkdocs.publisher._shared.mkdocs_utils")
 
 
 class ConfigChoiceEnum(Enum):
@@ -82,9 +82,7 @@ class ConfigChoiceEnum(Enum):
         return cls._get_enums(enums=cast(list, cls))
 
 
-def get_plugin_config(
-    mkdocs_config: MkDocsConfig, plugin_name: str
-) -> Union[None, dict[str, Any], Config]:
+def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> Union[None, dict[str, Any], Config]:
     plugins = mkdocs_config.plugins
     if isinstance(plugins, list):
         for plugin in plugins:

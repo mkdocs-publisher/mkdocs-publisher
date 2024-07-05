@@ -33,7 +33,7 @@ from mkdocs.structure.pages import Page
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
 from mkdocs_publisher.social.config import SocialConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.social.plugin")
+log = logging.getLogger("mkdocs.publisher.social.plugin")
 
 TWITTER_PROPERTIES = [
     "twitter:title",
@@ -55,9 +55,7 @@ OPEN_GRAPH_PROPERTIES = [
 
 
 class SocialPlugin(BasePlugin[SocialConfig]):
-    def on_page_markdown(
-        self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files
-    ) -> Optional[str]:
+    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> Optional[str]:
         pass
 
     @event_priority(-99)
@@ -114,13 +112,9 @@ class SocialPlugin(BasePlugin[SocialConfig]):
                 html_modifier.add_meta_property(name="twitter:image", value=image)
 
             if self.config.twitter.website:
-                html_modifier.add_meta_property(
-                    name="twitter:site", value=self.config.twitter.website
-                )
+                html_modifier.add_meta_property(name="twitter:site", value=self.config.twitter.website)
 
             if self.config.twitter.author:
-                html_modifier.add_meta_property(
-                    name="twitter:creator", value=self.config.twitter.author
-                )
+                html_modifier.add_meta_property(name="twitter:creator", value=self.config.twitter.author)
 
         return str(html_modifier)
