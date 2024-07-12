@@ -20,7 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from typing import cast
 
 from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
@@ -98,8 +97,8 @@ class _MetaRedirectConfig(Config):
 class MetaPluginConfig(Config):
     dir_meta_file = option.Choice(["README.md", "index.md"], default="README.md")
 
-    overview: _MetaOverviewConfig = cast(_MetaOverviewConfig, option.SubConfig(_MetaOverviewConfig))
-    publish: _MetaPublishConfig = cast(_MetaPublishConfig, option.SubConfig(_MetaPublishConfig))
-    redirect: _MetaRedirectConfig = cast(_MetaRedirectConfig, option.SubConfig(_MetaRedirectConfig))
-    slug: _MetaSlugConfig = cast(_MetaSlugConfig, option.SubConfig(_MetaSlugConfig))
-    title: _MetaTitleConfig = cast(_MetaTitleConfig, option.SubConfig(_MetaTitleConfig))
+    overview: _MetaOverviewConfig = option.SubConfig(_MetaOverviewConfig)  # type: ignore
+    publish: _MetaPublishConfig = option.SubConfig(_MetaPublishConfig)  # type: ignore
+    redirect: _MetaRedirectConfig = option.SubConfig(_MetaRedirectConfig)  # type: ignore
+    slug: _MetaSlugConfig = option.SubConfig(_MetaSlugConfig)  # type: ignore
+    title: _MetaTitleConfig = option.SubConfig(_MetaTitleConfig)  # type: ignore

@@ -32,6 +32,7 @@ from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
 from mkdocs_publisher.social.config import SocialConfig
+from mkdocs_publisher.social.config import TitleLocationChoiceEnum
 
 log = logging.getLogger("mkdocs.publisher.social.plugin")
 
@@ -69,7 +70,13 @@ class SocialPlugin(BasePlugin[SocialConfig]):
 
         # Get all needed meta values
         title = page.meta.get(self.config.meta_keys.title_key, None)
+        if title is not None and self.config.site_name_in_title.location == TitleLocationChoiceEnum.BEFORE:
+            title = f"{config.site_name}{self.config.site_name_in_title.delimiter}{title}"
+        elif title is not None and self.config.site_name_in_title.location == TitleLocationChoiceEnum.AFTER:
+            title = f"{title}{self.config.site_name_in_title.delimiter}{config.site_name}"
+
         description = page.meta.get(self.config.meta_keys.description_key, None)
+
         image = page.meta.get(self.config.meta_keys.image_key, None)
         if image is not None:
             image = str(image)
@@ -102,7 +109,7 @@ class SocialPlugin(BasePlugin[SocialConfig]):
                 html_modifier.add_meta_property(name="og:image", value=image)
 
         if self.config.twitter.enabled and title and description:
-            log.debug("Adding Twitter properties")
+            log.debug("Adding Twitter/X properties")
             card_type = "summary_large_image" if image else "summary"
             html_modifier.add_meta_property(name="twitter:card", value=card_type)
             html_modifier.add_meta_property(name="twitter:title", value=title)

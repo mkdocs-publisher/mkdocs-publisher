@@ -30,6 +30,10 @@ categories:
 - ✅ images link (remove hack fix)
 - ♻️ code refactor in many places
 
+### :material-share: Social
+
+- ❎ site name is added to page title
+
 ## 1.3.1 - 2024-04-21
 
 ### :material-file-tree: Meta

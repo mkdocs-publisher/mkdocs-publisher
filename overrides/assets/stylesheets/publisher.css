@@ -52,3 +52,36 @@
 .mermaid {
     text-align: center;
 }
+
+.md-typeset .admonition.none,
+.md-typeset details.none {
+    margin-left: 2rem;
+    margin-right: 1rem;
+    font-size: .8rem;
+    text-align: justify;
+    border: none;
+    box-shadow: none;
+}
+
+.md-typeset .none > .admonition-title,
+.md-typeset .none > summary {
+    padding-left: .6rem;
+    padding-right: .6rem;
+    padding-bottom: 0;
+    margin-left: -2.8rem;
+    margin-right: 0;
+    font-size: 1.5625em;
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--md-accent-fg-color);
+    letter-spacing: -.01em;
+    background-color: var(--md-default-bg-color--light);
+}
+.md-typeset .none > .admonition-title > span {
+    margin-right: .4rem;
+}
+
+.md-typeset .none > .admonition-title::before,
+.md-typeset .none > summary::before {
+    all: initial;
+}
