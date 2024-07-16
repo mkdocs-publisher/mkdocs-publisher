@@ -4,7 +4,7 @@ icon: material/share
 slug: pub-social
 publish: true
 date: 2023-04-04 21:14:00
-update: 2024-06-12 17:37:54
+update: 2024-07-15 17:51:53
 description: Setting up Publisher for MkDocs social cards plugin for social services sharing
 categories:
   - setup
@@ -21,7 +21,6 @@ When you are a blogger or a person who wants to publish some documentation, book
 ## Document metadata
 
 More about document metadata you can read in the document related to setting up the [meta plugin](../02_general/01_setting-up-meta.md#Document%20meta-data).
-
 
 Some data used by social cards is global (like site name) but some are unique per document. Data needed and optional that is needed by social card is:
 
@@ -40,7 +39,88 @@ Some data used by social cards is global (like site name) but some are unique pe
 	```
 
 >  [!WARNING]
-> If any of the required key is missing, social card will not be included in a web page.
+> If any of the required keys is missing, social card will not be included in a web page.
+
+### Title
+
+As mentioned above, `title` is required to be set, so it's passed to social card and can be seen. Usually, the title is quite short and usually can also be used to identify from which page it came from. It's useful especially, when your page didn't have a logo, that is added to the image that is used `image`.
+
+There are 3 possibilities to set up title with site name:
+
+=== ":material-arrow-left: Site name before title"
+
+	Let's consider this set up:
+
+	```yaml title="mkdocs.yml"
+	site_name: Site name
+
+	plugins:
+		- pub-social:
+			- site_name_in_title:
+				- location: before
+	```
+
+	```yaml title="document.md" hl_lines="2"
+	---
+	title: Document title
+	---
+	```
+
+	This will produce the following social card title:
+
+	```markdown hl_lines="1"
+	Site name - Document title
+	```
+
+=== "Title only"
+
+	Let's consider this set up:
+
+	```yaml title="mkdocs.yml"
+	site_name: Site name
+
+	plugins:
+		- pub-social:
+			- site_name_in_title:
+				- location: none
+	```
+
+	```yaml title="document.md" hl_lines="2"
+	---
+	title: Document title
+	---
+	```
+
+	```markdown hl_lines="1"
+	Document title
+	```
+
+===+ ":material-arrow-right: Site name after title (default)"
+
+	Let's consider this set up:
+
+	```yaml title="mkdocs.yml"
+	site_name: Site name
+
+	plugins:
+		- pub-social:
+			- site_name_in_title:
+				- location: after
+	```
+
+	```yaml title="document.md" hl_lines="2"
+	---
+	title: Document title
+	---
+	```
+
+	This will produce the following social card title:
+
+	```markdown hl_lines="1"
+	Document title - Site name
+	```
+
+More setting can be found [here](#Site%20name%20in%20title).
 
 ## Configuration
 
@@ -116,3 +196,21 @@ You can change a name of the keys used to store metadata used to create social c
 
 > [!SETTINGS]- [image_key](#+social.meta_keys.image_key){#+social.meta_keys.image_key}
 > This option gives you an ability to change a metadata image key used to create a social card.
+
+### Site name in title
+
+===+ ":octicons-file-code-16: mkdocs.yml"
+
+	```yaml hl_lines="3-5"
+	plugins:
+	  - pub-social:
+		  site_name_in_title:
+			location: after
+			delimiter: " - "
+	```
+
+> [!SETTINGS]- [location](#+social.site_name_in_title.location){#+social.site_name_in_title.location}
+> This option gives you an ability to control where site name should be placed in social card title.
+
+> [!SETTINGS]- [delimiter](#+social.site_name_in_title.delimiter){#+social.site_name_in_title.delimiter}
+> This option gives you an ability to change a delimiter placed between name and title.

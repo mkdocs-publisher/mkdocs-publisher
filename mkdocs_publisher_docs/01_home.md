@@ -3,12 +3,16 @@ title: Home
 slug: .
 publish: true
 date: 2023-03-12 12:27:00
-update: 2024-07-12 21:21:17
+update: 2024-07-15 21:27:54
 description: Publisher for MkDocs - why to use? Simply because its compatible with Obsidian.md Publish and supports WikiLinks, backlinks and some additional plugins. It also simplifies MkDocs navigation building process and helps with SEO optimization.
 categories:
   - start
 hide: [toc, navigation]
 ---
+
+# What is MkDocs Publisher?
+
+It is a set of plugins that extends [MkDocs](https://www.mkdocs.org/) with a set of plugins, that help to create, edit and publish your content.
 
 # Why to use MkDocs Publisher?
 

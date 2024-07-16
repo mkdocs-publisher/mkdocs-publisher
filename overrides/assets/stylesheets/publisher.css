@@ -85,3 +85,17 @@
 .md-typeset .none > summary::before {
     all: initial;
 }
+
+@keyframes heart {
+    0%, 40%, 80%, 100% {
+        transform: scale(1);
+    }
+    20%, 60% {
+        transform: scale(1.15);
+    }
+}
+
+.heart {
+    color: red;
+    animation: heart 1000ms infinite;
+}

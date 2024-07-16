@@ -32,7 +32,7 @@ from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
 from mkdocs_publisher.social.config import SocialConfig
-from mkdocs_publisher.social.config import TitleLocationChoiceEnum
+from mkdocs_publisher.social.config import SocialTitleLocationChoiceEnum
 
 log = logging.getLogger("mkdocs.publisher.social.plugin")
 
@@ -70,9 +70,9 @@ class SocialPlugin(BasePlugin[SocialConfig]):
 
         # Get all needed meta values
         title = page.meta.get(self.config.meta_keys.title_key, None)
-        if title is not None and self.config.site_name_in_title.location == TitleLocationChoiceEnum.BEFORE:
+        if title is not None and self.config.site_name_in_title.location == SocialTitleLocationChoiceEnum.BEFORE:
             title = f"{config.site_name}{self.config.site_name_in_title.delimiter}{title}"
-        elif title is not None and self.config.site_name_in_title.location == TitleLocationChoiceEnum.AFTER:
+        elif title is not None and self.config.site_name_in_title.location == SocialTitleLocationChoiceEnum.AFTER:
             title = f"{title}{self.config.site_name_in_title.delimiter}{config.site_name}"
 
         description = page.meta.get(self.config.meta_keys.description_key, None)

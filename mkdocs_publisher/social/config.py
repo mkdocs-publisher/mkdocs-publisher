@@ -43,14 +43,16 @@ class _SocialMetaKeysConfig(Config):
     image_key = option.Type(str, default="image")
 
 
-class TitleLocationChoiceEnum(ConfigChoiceEnum):
+class SocialTitleLocationChoiceEnum(ConfigChoiceEnum):
     NONE = 0, False, False
     BEFORE = 1, False, False
     AFTER = 2, True, False
 
 
 class _SocialSiteNameInTitleConfig(Config):
-    location = option.Choice(choices=TitleLocationChoiceEnum.choices(), default=TitleLocationChoiceEnum.default())
+    location = option.Choice(
+        choices=SocialTitleLocationChoiceEnum.choices(), default=SocialTitleLocationChoiceEnum.default()
+    )
     delimiter = option.Type(str, default=" - ")
 
 

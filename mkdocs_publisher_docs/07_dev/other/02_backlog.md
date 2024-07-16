@@ -65,6 +65,7 @@ Below lists is a list of tasks that are planned to be done (a backlog) and there
 - [ ] Add: ignore single file based on metadata
 - [ ] Add: check for description and title length (SEO)
 - [ ] Add: set up a default image used for a social card
+- [ ] Add: site name in title control from front matter
 - [ ] Add: metadata key names from meta plugin
 - [ ] Change: detect if meta plugin is enabled and based on its configuration use key names
 

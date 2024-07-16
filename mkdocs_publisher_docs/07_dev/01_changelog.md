@@ -4,7 +4,7 @@ icon: material/file-replace-outline
 slug: changelog
 publish: true
 date: 2023-02-12 22:00:00
-update: 2024-04-17 16:12:59
+update: 2024-07-16 15:42:54
 description: Publisher for MkDocs version history
 categories:
   - general
@@ -27,6 +27,8 @@ categories:
 ### :material-file-tree: Meta
 
 - ❎ support for links and redirections
+- ✅ overview pages doesn't respect publication status
+- ✅ draft file in hidden directory is generated
 - ✅ images link (remove hack fix)
 - ♻️ code refactor in many places
 

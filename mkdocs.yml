@@ -5,7 +5,7 @@ site_description: Publishing plugin for MkDocs
 copyright: >
   &copy; 2023 Maciej 'maQ' Kusz
 
-repo_name: mkusz/mkdocs-publisher
+repo_name: mkdocs-publisher
 repo_url: https://github.com/mkusz/mkdocs-publisher/
 edit_uri: edit/main/mkdocs_publisher_docs/
 

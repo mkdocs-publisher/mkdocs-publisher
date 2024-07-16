@@ -26,6 +26,7 @@ from collections import UserDict
 from collections.abc import Generator
 from dataclasses import dataclass
 from dataclasses import field
+from functools import cached_property
 from pathlib import Path
 from typing import Any
 from typing import Optional
@@ -229,7 +230,7 @@ class MetaFiles(UserDict):
             meta_file_parent: MetaFile = self[str(meta_file.parent)]
             if meta_file_parent.is_draft:
                 publish = False
-            if meta_file_parent.is_hidden:
+            if meta_file_parent.is_hidden and publish not in PublishChoiceEnum.drafts():
                 publish = PublishChoiceEnum.HIDDEN.name.lower()
 
         # When live preview is running, all pages are visible
@@ -294,7 +295,7 @@ class MetaFiles(UserDict):
             self._get_metadata(meta_file=meta_file, meta_file_path=meta_file.abs_path)
         super().__setitem__(path, meta_file)
 
-    def drafts(self, files: bool = False, dirs: bool = False) -> dict[str, MetaFile]:
+    def _drafts(self, files: bool = False, dirs: bool = False) -> dict[str, MetaFile]:
         """Returns draft files and/or directories"""
 
         draft_files = {}
@@ -305,9 +306,11 @@ class MetaFiles(UserDict):
                 or (not files and not dirs)
             ):
                 draft_files[path] = meta_file
+            elif files and meta_file.is_draft and meta_file.is_dir and meta_file.is_overview:
+                draft_files[str(Path(path).joinpath(self._meta_plugin_config.dir_meta_file))] = meta_file
         return draft_files
 
-    def hidden(self, files: bool = False, dirs: bool = False) -> dict[str, MetaFile]:
+    def _hidden(self, files: bool = False, dirs: bool = False) -> dict[str, MetaFile]:
         """Returns hidden files and/or directories"""
 
         hidden_files = {}
@@ -318,7 +321,33 @@ class MetaFiles(UserDict):
                 or (not files and not dirs)
             ):
                 hidden_files[path] = meta_file
+            elif files and meta_file.is_hidden and meta_file.is_dir and meta_file.is_overview:
+                hidden_files[str(Path(path).joinpath(self._meta_plugin_config.dir_meta_file))] = meta_file
         return hidden_files
+
+    @cached_property
+    def draft_files(self) -> dict[str, MetaFile]:
+        return self._drafts(files=True)
+
+    @cached_property
+    def draft_dirs(self) -> dict[str, MetaFile]:
+        return self._drafts(dirs=True)
+
+    @cached_property
+    def drafts(self) -> dict[str, MetaFile]:
+        return self._drafts()
+
+    @cached_property
+    def hidden_files(self) -> dict[str, MetaFile]:
+        return self._hidden(files=True)
+
+    @cached_property
+    def hidden_dirs(self) -> dict[str, MetaFile]:
+        return self._hidden(dirs=True)
+
+    @cached_property
+    def hidden(self) -> dict[str, MetaFile]:
+        return self._hidden()
 
     def add_meta_files(self, ignored_dirs: list[Path]):
         """Iterate over all files and directories in docs directory"""
@@ -381,8 +410,7 @@ class MetaFiles(UserDict):
     def change_files_slug(self, files: Files, ignored_dirs: list[Path]) -> Files:
         """Change file slug (part of the URL) based of file and parent directories slugs"""
 
-        draft_files = self.drafts(files=True).keys()
-        ignored_dirs.extend([d.abs_path for d in self.drafts(dirs=True).values()])
+        ignored_dirs.extend([d.abs_path for d in self.draft_files.values()])
 
         new_files = Files(files=[])
         for file in files:
@@ -391,7 +419,7 @@ class MetaFiles(UserDict):
             if (
                 (
                     not any([Path(file.abs_src_path).is_relative_to(d) for d in ignored_dirs])
-                    and file.src_path not in draft_files
+                    and file.src_path not in self.draft_files
                     and str(file_path.name) != self._meta_plugin_config.dir_meta_file
                 )
                 or (
@@ -439,6 +467,15 @@ class MetaFiles(UserDict):
                 new_files.append(file)
             else:
                 log.debug(f"Redirects as URL links in file: {file.src_path}")
+        return new_files
+
+    def clean_draft_files(self, files: Files) -> Files:
+        new_files = Files(files=[])
+        for file in files:
+            if file.src_path not in self.draft_files:
+                new_files.append(file)
+            else:
+                log.debug(f"Removed draft file: {file.src_path}")
         return new_files
 
     def files_gen(self) -> Generator[MetaFile, Any, None]:

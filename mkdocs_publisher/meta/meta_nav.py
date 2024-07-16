@@ -43,6 +43,7 @@ class MetaNav:
         self._blog_dir: Optional[Path] = blog_dir
 
     def nav_cleanup(self, items, removal_list: list[str]) -> list:
+        # log.info(removal_list)
         nav = []
         for item in items:
             if isinstance(item, Section):
@@ -50,9 +51,11 @@ class MetaNav:
                 # If section is empty, skip it
                 if len(item.children) > 0:
                     nav.append(item)
-            elif (isinstance(item, Page) and str(item.file.src_path) not in removal_list) or (
-                isinstance(item, Link) and item.title not in removal_list
-            ):
+            elif (
+                isinstance(item, Page)
+                and str(item.file.src_path) not in removal_list
+                and str(Path(item.file.src_path).parent) not in removal_list
+            ) or (isinstance(item, Link) and item.title not in removal_list):
                 nav.append(item)
         return nav
 
@@ -70,10 +73,9 @@ class MetaNav:
                 overview_path: Path = meta_file.abs_path.joinpath(self._meta_files.meta_file)
                 overview_nav: list[Path] = (
                     [meta_file.path.joinpath(self._meta_files.meta_file)]
-                    if meta_file.is_overview and overview_path.exists()
+                    if meta_file.is_overview and overview_path.exists() and not meta_file.is_draft
                     else []
                 )
-
                 title = meta_file.title
                 prev_path = meta_file.path
                 sub_nav, meta_file = self._build_nav(meta_files_gen=meta_files_gen, current_dir=meta_file.abs_path)

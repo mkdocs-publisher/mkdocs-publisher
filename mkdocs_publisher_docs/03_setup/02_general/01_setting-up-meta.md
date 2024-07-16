@@ -4,7 +4,7 @@ icon: material/file-tree
 slug: pub-meta
 publish: true
 date: 2023-05-15 16:00:00
-update: 2024-06-12 23:44:14
+update: 2024-07-14 13:45:16
 description: Setting up Publisher for MkDocs meta plugin for metadata retrival and automatic navigation building
 categories:
   - setup
@@ -207,7 +207,82 @@ Publication status can also be set for whole directories. This gives you a contr
 
 ### External links and redirections
 
-From time to time, you have a need to put a link to some external web page or just move one of your documents to other places in directory structure but because of SEO it's good to pub a redirection to that document from an old location. MkDocs offers you a way to put a link to an external web page but to make a redirection, you need to use an external plugin. The biggest problem with both things is that
+Occasionally, you have a need to put a link to some external web page from the menu or just move one of your documents to other places in directory structure, but because of SEO it's good to put a redirection to that document from an old location. MkDocs offers you a way to put a link to an external web page but to make a redirection, you need to use an external plugin. The biggest problem with both things is that you need to edit `mkdocs.yml` file and this plugin is incompatible with WikiLinks etc. This is the reason why the meta plugin supports this functionality. There are 2 different ways to use redirections, and they work the same both for internal documentation files and external links.
+
+#### External links
+
+Sometimes you may want to create a link to the external page right in one of the menus instead of a link to some specific documents you have created.
+
+Let's consider the below directory structure:
+
+```console hl_lines="5"
+.
+└─ docs/
+	  ├─ 01_home.md
+	  ├─ 02_contact.md
+	  └─ 03_my_company_link.md
+```
+
+`03_my_company_link.md` is the file you want to be the link to your company web page. You have 2 options doing it:
+
+=== ":octicons-markdown-16: *03_my_company_link.md* - link in the metadata"
+
+	```yaml hl_lines="2"
+	---
+	redirect: https://my_company.com/
+	---
+	```
+
+=== ":octicons-markdown-16: *03_my_company_link.md* - link in the content"
+
+	```yaml hl_lines="2 4"
+	---
+	redirect: true
+	---
+	[Link](https://my_company.com/)
+	```
+
+As you can see, the first option (one with line path inside metadata) is much simpler.
+
+#### Redirections
+
+Sometimes you may want to move a document to a new directory but also preserve the original URL. This scenario is quite often when you share the link to your page over social media, and you cannot edit all the places, where the link was published. So, how to set up the redirection?
+
+Let's consider the below directory structure:
+
+```console hl_lines="4 6"
+.
+└─ docs/
+       ├─ archive/
+       │    └─ redirected_to.md
+       └─ articles/
+              └─ redirected_from.md
+```
+
+`archive/redirected_to.md` is the file with the original content taken from `articles/redirected_from.md` file. Inside the file `articles/redirected_from.md` you have to enable redirection and put a link to the `archive/redirected_to.md` file. You have 2 options doing it:
+
+=== ":octicons-markdown-16: *redirected_from.md* - redirection in the metadata"
+
+	```yaml hl_lines="2"
+	---
+	redirect: ../archive/redirected_to.md
+	---
+	```
+
+=== ":octicons-markdown-16: *redirected_from.md* - redirection in the content"
+
+	```yaml hl_lines="2 4"
+	---
+	redirect: true
+	---
+	[Path](../archive/redirected_to.md)
+	```
+
+
+> [!warning] Path has to be relative
+> Just remember, that path to the redirected file, has to be relative.
+
+As you can see, the first option (one with redirection path inside metadata) is much simpler, but the second one is easier to create in tools like Obsidian.
 
 ### Slug
 
@@ -403,7 +478,19 @@ Above you can find all possible settings with their default values. You don't ha
 
 ### Redirect
 
+===+ ":octicons-file-code-16: mkdocs.yml"
 
+	```yaml hl_lines="3-4"
+	plugins:
+	  - pub-meta:
+		  redirect:
+			key_name: redirect
+	```
+
+Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
+
+> [!SETTINGS]- [key_name](#+meta.redirect.key_name){#+meta.redirect.key_name}
+> Metadata key name for redirect value.
 
 ### Slug
 
@@ -412,7 +499,7 @@ Above you can find all possible settings with their default values. You don't ha
 	```yaml hl_lines="3-7"
 	plugins:
 	  - pub-meta:
-		  slug:
+		  redirect:
 			enable: true
 			mode: title
 			warn_on_missing: true

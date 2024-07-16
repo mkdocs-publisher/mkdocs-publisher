@@ -41,18 +41,8 @@ from mkdocs_publisher.meta.plugin import MetaPlugin
 @pytest.mark.parametrize(
     "path,abs_path,expected_name,expected_parent",
     [
-        (
-            Path("docs/fake_file.md"),
-            Path("/Users/me/docs/fake_file.md"),
-            "fake_file.md",
-            Path("docs"),
-        ),
-        (
-            Path("fake_file.md"),
-            Path("/Users/me/docs/fake_file.md"),
-            "fake_file.md",
-            None,
-        ),
+        (Path("docs/fake_file.md"), Path("/Users/me/docs/fake_file.md"), "fake_file.md", Path("docs")),
+        (Path("fake_file.md"), Path("/Users/me/docs/fake_file.md"), "fake_file.md", None),
     ],
 )
 def test_properties(path: Path, abs_path: Path, expected_name: str, expected_parent: str):
@@ -110,46 +100,11 @@ def test_overview(
     [
         ({}, {"title": "Some title"}, "", False, "Some title", None),
         ({}, {"title": "Some title"}, "", True, "Some title", None),
-        (
-            {},
-            {},
-            "# Title",
-            False,
-            "Title",
-            'Title value from "title" meta data is missing for file: "fake_file.md"',
-        ),
-        (
-            {},
-            {},
-            "",
-            False,
-            "Fake File",
-            'Title value from first heading is missing for file: "fake_file.md"',
-        ),
-        (
-            {"title": {"warn_on_missing_meta": False}},
-            {},
-            "# Title",
-            False,
-            "Title",
-            None,
-        ),
-        (
-            {"title": {"warn_on_missing_header": False}},
-            {},
-            "",
-            False,
-            "Fake File",
-            None,
-        ),
-        (
-            {"title": {"mode": "head"}},
-            {},
-            "# Title",
-            False,
-            "Title",
-            None,
-        ),
+        ({}, {}, "# Title", False, "Title", 'Title value from "title" meta data is missing for file: "fake_file.md"'),
+        ({}, {}, "", False, "Fake File", 'Title value from first heading is missing for file: "fake_file.md"'),
+        ({"title": {"warn_on_missing_meta": False}}, {}, "# Title", False, "Title", None),
+        ({"title": {"warn_on_missing_header": False}}, {}, "", False, "Fake File", None),
+        ({"title": {"mode": "head"}}, {}, "# Title", False, "Title", None),
     ],
     indirect=["pub_meta_plugin"],
 )
@@ -339,7 +294,7 @@ def test_get_publish_status_for_dirs(
         ({"publish": True}, {"publish": False}, True, False),
         ({"publish": True}, {"publish": "hidden"}, False, True),
         ({"publish": "hidden"}, {"publish": True}, False, True),
-        ({"publish": "hidden"}, {"publish": False}, False, True),
+        ({"publish": "hidden"}, {"publish": False}, True, False),
         ({"publish": "hidden"}, {"publish": "hidden"}, False, True),
     ],
 )
@@ -366,64 +321,17 @@ def test_get_publish_status_with_parent(
 
 
 @pytest.mark.parametrize(
-    "publish_dir,publish_file,"
-    "draft_all_keys,draft_file_keys,draft_dir_keys,"
-    "hidden_all_keys,hidden_file_keys,hidden_dir_keys",
+    "publish_dir,publish_file,drafts_keys,draft_file_keys,draft_dir_keys,hidden_keys,hidden_file_keys,hidden_dir_keys",
     [
-        (
-            False,
-            False,
-            {"me/fake_file.md", "me"},
-            {"me/fake_file.md"},
-            {"me"},
-            set(),
-            set(),
-            set(),
-        ),
+        (False, False, {"me/fake_file.md", "me"}, {"me/fake_file.md"}, {"me"}, set(), set(), set()),
         (False, True, {"me/fake_file.md", "me"}, {"me/fake_file.md"}, {"me"}, set(), set(), set()),
-        (
-            False,
-            "hidden",
-            {"me/fake_file.md", "me"},
-            {"me/fake_file.md"},
-            {"me"},
-            set(),
-            set(),
-            set(),
-        ),
+        (False, "hidden", {"me/fake_file.md", "me"}, {"me/fake_file.md"}, {"me"}, set(), set(), set()),
         (True, False, {"me/fake_file.md"}, {"me/fake_file.md"}, set(), set(), set(), set()),
         (True, True, set(), set(), set(), set(), set(), set()),
         (True, "hidden", set(), set(), set(), {"me/fake_file.md"}, {"me/fake_file.md"}, set()),
-        (
-            "hidden",
-            False,
-            set(),
-            set(),
-            set(),
-            {"me/fake_file.md", "me"},
-            {"me/fake_file.md"},
-            {"me"},
-        ),
-        (
-            "hidden",
-            True,
-            set(),
-            set(),
-            set(),
-            {"me/fake_file.md", "me"},
-            {"me/fake_file.md"},
-            {"me"},
-        ),
-        (
-            "hidden",
-            "hidden",
-            set(),
-            set(),
-            set(),
-            {"me/fake_file.md", "me"},
-            {"me/fake_file.md"},
-            {"me"},
-        ),
+        ("hidden", False, {"me/fake_file.md"}, {"me/fake_file.md"}, set(), {"me"}, set(), {"me"}),
+        ("hidden", True, set(), set(), set(), {"me/fake_file.md", "me"}, {"me/fake_file.md"}, {"me"}),
+        ("hidden", "hidden", set(), set(), set(), {"me/fake_file.md", "me"}, {"me/fake_file.md"}, {"me"}),
     ],
 )
 def test_drafts_and_hidden(
@@ -432,10 +340,10 @@ def test_drafts_and_hidden(
     patched_meta_files: MetaFiles,
     publish_dir: Union[str, bool],
     publish_file: Union[str, bool],
-    draft_all_keys: list[str],
+    drafts_keys: list[str],
     draft_file_keys: list[str],
     draft_dir_keys: list[str],
-    hidden_all_keys: list[str],
+    hidden_keys: list[str],
     hidden_file_keys: list[str],
     hidden_dir_keys: list[str],
 ):
@@ -449,12 +357,12 @@ def test_drafts_and_hidden(
     patched_meta_files["me/fake_file.md"] = meta_file
     patched_meta_files._get_publish_status(meta_file=meta_file, meta={"publish": publish_file})
 
-    check.equal(set(patched_meta_files.drafts().keys()), draft_all_keys)
-    check.equal(set(patched_meta_files.drafts(files=True).keys()), draft_file_keys)
-    check.equal(set(patched_meta_files.drafts(dirs=True).keys()), draft_dir_keys)
-    check.equal(set(patched_meta_files.hidden().keys()), hidden_all_keys)
-    check.equal(set(patched_meta_files.hidden(files=True).keys()), hidden_file_keys)
-    check.equal(set(patched_meta_files.hidden(dirs=True).keys()), hidden_dir_keys)
+    check.equal(set(patched_meta_files.drafts.keys()), drafts_keys, "Wrong drafts keys")
+    check.equal(set(patched_meta_files.draft_files.keys()), draft_file_keys, "Wrong draft files keys")
+    check.equal(set(patched_meta_files.draft_dirs.keys()), draft_dir_keys, "Wrong draft dirs keys")
+    check.equal(set(patched_meta_files.hidden.keys()), hidden_keys, "Wrong hidden keys")
+    check.equal(set(patched_meta_files.hidden_files.keys()), hidden_file_keys, "Wrong hidden files keys")
+    check.equal(set(patched_meta_files.hidden_dirs.keys()), hidden_dir_keys, "Wrong hidden dirs keys")
 
 
 @pytest.mark.parametrize("exists", [True, False])

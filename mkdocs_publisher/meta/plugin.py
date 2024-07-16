@@ -71,8 +71,8 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         self._meta_files.add_meta_files(ignored_dirs=self._ignored_dirs)
 
         log.info(f"Ignored directories: " f"{[str(d.relative_to(config.docs_dir)) for d in self._ignored_dirs]}")
-        log.info(f"Draft files and directories: " f"{list(self._meta_files.drafts().keys())}")
-        log.info(f"Hidden files and directories: " f"{list(self._meta_files.hidden().keys())}")
+        log.info(f"Draft files and directories: " f"{list(self._meta_files.drafts.keys())}")
+        log.info(f"Hidden files and directories: " f"{list(self._meta_files.hidden.keys())}")
 
         config.nav = self._meta_nav.build_nav(mkdocs_config=config)
 
@@ -82,14 +82,14 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:  # pragma: no cover
         new_files = self._meta_files.clean_redirect_files(files=files)
         new_files = self._meta_files.change_files_slug(files=new_files, ignored_dirs=self._ignored_dirs)
+        new_files = self._meta_files.clean_draft_files(files=new_files)
 
         return new_files
 
     def on_nav(
         self, nav: Navigation, *, config: MkDocsConfig, files: Files
     ) -> Optional[Navigation]:  # pragma: no cover
-        removal_list = [*self._meta_files.drafts().keys(), *self._meta_files.hidden().keys()]
-
+        removal_list = [*self._meta_files.drafts.keys(), *self._meta_files.hidden.keys()]
         log.debug(f"Nav elements to remove: {removal_list}")
         nav.items = self._meta_nav.nav_cleanup(
             items=nav.items,
@@ -110,8 +110,8 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
         # Conditionally exclude file from Material for MkDocs search plugin
         if (  # pragma: no cover
-            page.file.src_uri in self._meta_files.drafts(files=True) and not self.config.publish.search_in_draft
-        ) or (page.file.src_uri in self._meta_files.hidden(files=True) and not self.config.publish.search_in_hidden):
+            page.file.src_uri in self._meta_files.draft_files and not self.config.publish.search_in_draft
+        ) or (page.file.src_uri in self._meta_files.hidden_files and not self.config.publish.search_in_hidden):
             page.meta["search"] = {"exclude": True}
 
     @event_priority(-100)  # Run after all other plugins
