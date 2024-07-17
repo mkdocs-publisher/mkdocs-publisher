@@ -123,6 +123,7 @@ class MetaFiles(UserDict):
                 and self._meta_plugin_config.title.warn_on_missing_meta
                 and not (meta_file.is_draft or (meta_file.is_dir and not meta_file.is_overview))
             ):
+                log.critical(meta_file.is_draft)
                 log.warning(
                     f'Title value from "{self._meta_plugin_config.title.key_name}" meta data '
                     f'is missing for file: "{str(meta_file.path)}"'
@@ -240,9 +241,8 @@ class MetaFiles(UserDict):
         if publish not in PublishChoiceEnum.choices():
             publish = self._meta_plugin_config.publish.file_default
             log.warning(
-                f'Wrong key "{self._meta_plugin_config.publish.key_name}" value '
-                f'({publish}) in file "{meta_file.path}" (only '
-                f"{PublishChoiceEnum.choices()} are possible)"
+                f'Wrong key "{self._meta_plugin_config.publish.key_name}" value ({publish}) '
+                f'in file "{meta_file.path}" (only {PublishChoiceEnum.choices()} are possible)'
             )
 
         # Set values depends on publish status
@@ -470,6 +470,8 @@ class MetaFiles(UserDict):
         return new_files
 
     def clean_draft_files(self, files: Files) -> Files:
+        """Remove draft files"""
+
         new_files = Files(files=[])
         for file in files:
             if file.src_path not in self.draft_files:
@@ -480,6 +482,7 @@ class MetaFiles(UserDict):
 
     def files_gen(self) -> Generator[MetaFile, Any, None]:
         """Meta files generator used for building navigation"""
+
         for meta_file in self.values():
             meta_file: MetaFile
             yield meta_file
