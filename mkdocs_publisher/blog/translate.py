@@ -32,7 +32,7 @@ from mkdocs_publisher.blog import lang as lang_path
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.blog.structures import Translation
 
-log = logging.getLogger("mkdocs.plugins.publisher.blog.translate")
+log = logging.getLogger("mkdocs.publisher.blog.translate")
 
 
 class Translate:
@@ -43,25 +43,17 @@ class Translate:
         self._read_lang()
 
     def _read_lang(self):
-        lang_yaml_oath = Path(
-            str(importlib.resources.files(lang_path).joinpath(f"{self._config.lang}.yaml"))
-        )
-        if not lang_yaml_oath.exists():
+        lang_yaml_path = Path(str(importlib.resources.files(lang_path).joinpath(f"{self._config.lang}.yaml")))
+        if not lang_yaml_path.exists():
             log.warning(
                 f"There is no translation for '{self._config.lang}' language, "
                 f"so default language ('{BlogPluginConfig.lang.default}') will be used"
             )
-            lang_yaml_oath = str(
-                importlib.resources.files(lang_path).joinpath(
-                    f"{BlogPluginConfig.lang.default}.yaml"
-                )
-            )
-        with open(lang_yaml_oath) as lang_yaml:
+            lang_yaml_path = str(importlib.resources.files(lang_path).joinpath(f"{BlogPluginConfig.lang.default}.yaml"))
+        with open(lang_yaml_path) as lang_yaml:
             translation_yaml_data = yaml.safe_load(lang_yaml)
         translation_keys = [f.name for f in fields(Translation)]
-        translation_data = {
-            k: v for k, v in translation_yaml_data.items() if k in translation_keys
-        }
+        translation_data = {k: v for k, v in translation_yaml_data.items() if k in translation_keys}
         # Inject overrides from mkdocs.yml config
         for key in translation_keys:
             value = self._config.translation.get(key, None)

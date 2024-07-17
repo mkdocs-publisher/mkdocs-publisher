@@ -24,19 +24,36 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher.minifier import config as minifier_config
 from mkdocs_publisher.minifier.base import BaseMinifier
 from mkdocs_publisher.minifier.base import CachedFile
 
-log = logging.getLogger("mkdocs.plugins.publisher.minifier.minifiers")
+log = logging.getLogger("mkdocs.publisher.minifier.minifiers")
+
+
+def _is_cmd_installed(cmd: list[str]) -> bool:
+    try:
+        file_utils.run_subprocess(cmd=cmd)
+    except FileNotFoundError:
+        return False
+    return True
 
 
 class PngMinifier(BaseMinifier):
     def __call__(self):
         self._minify_options: minifier_config._MinifierPngConfig = self._plugin_config.png
         super().__call__()
+
+    def are_tools_installed(self) -> bool:
+        are_installed = True
+        if self._minify_options.pngquant_enabled and not _is_cmd_installed(cmd=[self._minify_options.pngquant_path]):
+            log.warning("Pngquant is not installed.")
+            are_installed = False
+        if self._minify_options.oxipng_enabled and not _is_cmd_installed(cmd=[self._minify_options.oxipng_path]):
+            log.warning("Oxipng is not installed.")
+            are_installed = False
+        return are_installed
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         try:
@@ -49,9 +66,7 @@ class PngMinifier(BaseMinifier):
                     "--force",
                     "--strip" if self._minify_options.strip else None,
                     "--quality" if int(self._minify_options.pngquant_quality) > 0 else None,
-                    self._minify_options.pngquant_quality
-                    if int(self._minify_options.pngquant_quality) > 0
-                    else None,
+                    self._minify_options.pngquant_quality if int(self._minify_options.pngquant_quality) > 0 else None,
                     "--speed",
                     self._minify_options.pngquant_speed,
                     "--output",
@@ -72,9 +87,7 @@ class PngMinifier(BaseMinifier):
                     "--zopfli" if self._minify_options.oxipng_max_compression else None,
                     "--out" if not self._minify_options.pngquant_enabled else None,
                     str(output_file) if not self._minify_options.pngquant_enabled else None,
-                    str(input_file)
-                    if not self._minify_options.pngquant_enabled
-                    else str(output_file),
+                    str(input_file) if not self._minify_options.pngquant_enabled else str(output_file),
                 ]
                 if file_utils.run_subprocess(cmd=oxipng_cmd).returncode != 0:
                     output_file.unlink(missing_ok=True)
@@ -92,6 +105,18 @@ class JpegMinifier(BaseMinifier):
     def __call__(self):
         self._minify_options: minifier_config._MinifierJpegConfig = self._plugin_config.jpeg
         super().__call__()
+
+    def are_tools_installed(self) -> bool:
+        are_installed = True
+        if not _is_cmd_installed(cmd=[self._minify_options.cjpeg_path, "--version"]):
+            are_installed = False
+        if not _is_cmd_installed(cmd=[self._minify_options.djpeg_path, "--version"]):
+            are_installed = False
+        if not _is_cmd_installed(cmd=[self._minify_options.jpegtran_path, "--version"]):
+            are_installed = False
+        if not are_installed:
+            log.warning("Mozilla JPEG Encoder is not installed.")
+        return are_installed
 
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         try:
@@ -153,6 +178,12 @@ class SvgMinifier(BaseMinifier):
         self._minify_options: minifier_config._MinifierSvgConfig = self._plugin_config.svg
         super().__call__()
 
+    def are_tools_installed(self) -> bool:
+        if not _is_cmd_installed(cmd=[self._minify_options.svgo_path]):
+            log.warning("SVG Optimizer (SVGO) is not installed.")
+            return False
+        return True
+
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
@@ -184,6 +215,12 @@ class HtmlMinifier(BaseMinifier):
         self._minify_options: minifier_config._MinifierHtmlConfig = self._plugin_config.html
         super().__call__()
 
+    def are_tools_installed(self) -> bool:
+        if not _is_cmd_installed(cmd=[self._minify_options.html_minifier_path, "--version"]):
+            log.warning("HTMLMinifier is not installed.")
+            return False
+        return True
+
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
@@ -198,14 +235,10 @@ class HtmlMinifier(BaseMinifier):
                 "--remove-tag-whitespace" if self._minify_options.remove_tag_whitespace else None,
                 "--collapse-whitespace" if self._minify_options.collapse_whitespace else None,
                 "--conservative-collapse" if self._minify_options.conservative_collapse else None,
-                "--collapse-boolean-attributes"
-                if self._minify_options.collapse_boolean_attributes
-                else None,
+                "--collapse-boolean-attributes" if self._minify_options.collapse_boolean_attributes else None,
                 "--preserve-line-breaks" if self._minify_options.preserve_line_breaks else None,
                 "--max-line-length" if int(self._minify_options.max_line_length) > 0 else None,
-                self._minify_options.max_line_length
-                if int(self._minify_options.max_line_length) > 0
-                else None,
+                self._minify_options.max_line_length if int(self._minify_options.max_line_length) > 0 else None,
                 "--sort-attributes" if self._minify_options.sort_attributes else None,
                 "--sort-class-name" if self._minify_options.sort_class_name else None,
                 "--output",
@@ -229,15 +262,18 @@ class CssMinifier(BaseMinifier):
         self._minify_options: minifier_config._MinifierCssConfig = self._plugin_config.css
         super().__call__()
 
+    def are_tools_installed(self) -> bool:
+        if not _is_cmd_installed(cmd=[self._minify_options.postcss_path]):
+            log.warning("PostCSS is not installed.")
+            return False
+        return True
+
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
 
-            if (
-                ".min" in Path(str(input_file).lower()).suffixes
-                and self._minify_options.skip_minified
-            ):
+            if ".min" in Path(str(input_file).lower()).suffixes and self._minify_options.skip_minified:
                 return None
             css_minifier_cmd = [
                 self._minify_options.postcss_path,
@@ -266,15 +302,18 @@ class JsMinifier(BaseMinifier):
         self._minify_options: minifier_config._MinifierJsConfig = self._plugin_config.js
         super().__call__()
 
+    def are_tools_installed(self) -> bool:
+        if not _is_cmd_installed(cmd=[self._minify_options.uglifyjs_path, "--version"]):
+            log.warning("UglifyJS is not installed.")
+            return False
+        return True
+
     def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
 
-            if (
-                ".min" in Path(str(input_file).lower()).suffixes
-                and self._minify_options.skip_minified
-            ):
+            if ".min" in Path(str(input_file).lower()).suffixes and self._minify_options.skip_minified:
                 return None
             js_minifier_cmd = [
                 self._minify_options.uglifyjs_path,

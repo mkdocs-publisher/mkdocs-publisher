@@ -32,13 +32,12 @@ from zipfile import ZipFile
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.debugger import loggers
 from mkdocs_publisher.debugger.config import DebuggerConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.debug.plugin")
+log = logging.getLogger("mkdocs.publisher.debug.plugin")
 
 LOG_FILENAME_SUFFIX = "_mkdocs_build.log"
 ZIP_FILENAME_SUFFIX = "_mkdocs_debug.zip"
@@ -52,7 +51,6 @@ FILES_TO_ZIP_LIST = [
 PIP_FREEZE_FILENAME = "requirements_freeze.txt"
 
 
-# noinspection PyProtectedMember
 class DebuggerPlugin(BasePlugin[DebuggerConfig]):
     def __init__(self):
         self._mkdocs_log_stream_handler: logging.Handler = logging.getLogger("mkdocs").handlers[0]
@@ -82,9 +80,7 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
                 loggers.ProjectPathConsoleFilter(console_config=self.config.console_log)
             )
             # noinspection PyUnresolvedReferences
-            self._mkdocs_log_stream_handler.level = logging._nameToLevel[
-                self.config.console_log.log_level
-            ]
+            self._mkdocs_log_stream_handler.level = logging._nameToLevel[self.config.console_log.log_level]
 
             logging.getLogger("root").handlers = [self._mkdocs_log_stream_handler]
 
@@ -92,13 +88,9 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
             self._mkdocs_log_file_handler.setFormatter(
                 loggers.ProjectPathFileFormatter(fmt=self.config.file_log.log_format)
             )
-            self._mkdocs_log_file_handler.addFilter(
-                loggers.ProjectPathFileFilter(file_config=self.config.file_log)
-            )
+            self._mkdocs_log_file_handler.addFilter(loggers.ProjectPathFileFilter(file_config=self.config.file_log))
             # noinspection PyUnresolvedReferences
-            self._mkdocs_log_file_handler.level = logging._nameToLevel[
-                self.config.file_log.log_level
-            ]
+            self._mkdocs_log_file_handler.level = logging._nameToLevel[self.config.file_log.log_level]
 
             logging.getLogger("mkdocs").handlers.append(self._mkdocs_log_file_handler)
 

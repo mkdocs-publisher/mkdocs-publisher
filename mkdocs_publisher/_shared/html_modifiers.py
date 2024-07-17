@@ -23,7 +23,7 @@ import logging
 
 from bs4 import BeautifulSoup
 
-log = logging.getLogger("mkdocs.plugins.publisher._shared.html_modifiers")
+log = logging.getLogger("mkdocs.publisher._shared.html_modifiers")
 
 
 class HTMLModifier:
@@ -53,10 +53,3 @@ class HTMLModifier:
             head_property = self._soup.head.find(name="meta", attr={"property": prop})  # type: ignore
             if head_property is not None:
                 head_property.extract()
-
-    def fix_img_links(self):
-        images = self._soup.findAll(name="img")
-        for img in images:
-            img_src = str(img.attrs["src"])
-            if img_src.endswith("/"):
-                img["src"] = img_src[:-1]

@@ -35,7 +35,7 @@ from mkdocs_publisher.minifier import minifiers
 from mkdocs_publisher.minifier.base import CachedFile
 from mkdocs_publisher.minifier.config import MinifierConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.minifier.plugin")
+log = logging.getLogger("mkdocs.publisher.minifier.plugin")
 
 
 class MinifierPlugin(BasePlugin[MinifierConfig]):
@@ -71,47 +71,27 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
                 log.warning(f"File '{cached_files_list}' corrupted. Rebuilding cache.")
                 log.debug(e)
 
-        if self.config.png.enabled and (
-            (not self._on_serve) or (self._on_serve and self.config.png.enabled_on_serve)
-        ):
-            minifiers.PngMinifier(
-                plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
-            )()
+        if self.config.png.enabled and ((not self._on_serve) or (self._on_serve and self.config.png.enabled_on_serve)):
+            minifiers.PngMinifier(plugin_config=self.config, mkdocs_config=config, cached_files=cached_files)()
 
         if self.config.jpeg.enabled and (
             (not self._on_serve) or (self._on_serve and self.config.jpeg.enabled_on_serve)
         ):
-            minifiers.JpegMinifier(
-                plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
-            )()
+            minifiers.JpegMinifier(plugin_config=self.config, mkdocs_config=config, cached_files=cached_files)()
 
-        if self.config.svg.enabled and (
-            (not self._on_serve) or (self._on_serve and self.config.svg.enabled_on_serve)
-        ):
-            minifiers.SvgMinifier(
-                plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
-            )()
+        if self.config.svg.enabled and ((not self._on_serve) or (self._on_serve and self.config.svg.enabled_on_serve)):
+            minifiers.SvgMinifier(plugin_config=self.config, mkdocs_config=config, cached_files=cached_files)()
 
         if self.config.html.enabled and (
             (not self._on_serve) or (self._on_serve and self.config.html.enabled_on_serve)
         ):
-            minifiers.HtmlMinifier(
-                plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
-            )()
+            minifiers.HtmlMinifier(plugin_config=self.config, mkdocs_config=config, cached_files=cached_files)()
 
-        if self.config.css.enabled and (
-            (not self._on_serve) or (self._on_serve and self.config.css.enabled_on_serve)
-        ):
-            minifiers.CssMinifier(
-                plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
-            )()
+        if self.config.css.enabled and ((not self._on_serve) or (self._on_serve and self.config.css.enabled_on_serve)):
+            minifiers.CssMinifier(plugin_config=self.config, mkdocs_config=config, cached_files=cached_files)()
 
-        if self.config.js.enabled and (
-            (not self._on_serve) or (self._on_serve and self.config.js.enabled_on_serve)
-        ):
-            minifiers.JsMinifier(
-                plugin_config=self.config, mkdocs_config=config, cached_files=cached_files
-            )()
+        if self.config.js.enabled and ((not self._on_serve) or (self._on_serve and self.config.js.enabled_on_serve)):
+            minifiers.JsMinifier(plugin_config=self.config, mkdocs_config=config, cached_files=cached_files)()
 
         cached_files_for_yaml = {}
         for file_name, cached_file in cached_files.items():

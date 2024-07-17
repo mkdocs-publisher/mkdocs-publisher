@@ -43,7 +43,7 @@
 
 <div class="post-link">
 {% if post.is_teaser %}
-    <a href="{{ site_url }}{{ config.slug }}/{{ post.slug }}/" title="{ post.title }">
+    <a href="{{ site_url }}{{ config.slug }}/{{ post.slug }}/" title="{{ post.title }}">
         {{ translation.teaser_link_text }}
     </a>
 {% else %}

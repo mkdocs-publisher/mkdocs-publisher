@@ -1,5 +1,5 @@
 ---
-title: Backlog
+title: Credits
 icon:
 slug: credits
 publish: false

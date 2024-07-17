@@ -95,9 +95,7 @@ from mkdocs_publisher._shared import links
         ),
     },
 )
-def test_link_match_dataclass(
-    link: str, text: str, anchor: str, title: str, is_wiki: bool, expected: str
-):
+def test_link_match_dataclass(link: str, text: str, anchor: str, title: str, is_wiki: bool, expected: str):
     link_obj = links.LinkMatch(link=link, text=text, title=title, is_wiki=is_wiki, anchor=anchor)
     check.equal(expected, str(link_obj))
 
@@ -130,8 +128,7 @@ def test_link_match_dataclass(
             "title value",
             "",
             "#84d6d9cdfc51cbf2e88592d12c53d5a4",
-            '[Link text](../file.md#anchor-value "title value")'
-            "{#84d6d9cdfc51cbf2e88592d12c53d5a4}",
+            '[Link text](../file.md#anchor-value "title value")' "{#84d6d9cdfc51cbf2e88592d12c53d5a4}",
         ),
         (
             "../file.md",
@@ -167,8 +164,7 @@ def test_link_match_dataclass(
             "title value",
             "extra",
             "#84d6d9cdfc51cbf2e88592d12c53d5a4",
-            '[Link text](../file.md#anchor-value "title value")'
-            "{extra #84d6d9cdfc51cbf2e88592d12c53d5a4}",
+            '[Link text](../file.md#anchor-value "title value")' "{extra #84d6d9cdfc51cbf2e88592d12c53d5a4}",
         ),
     },
 )
@@ -219,9 +215,7 @@ def test_link_match_backlinks(
         ),
     },
 )
-def test_wiki_embed_link_match_dataclass(
-    link: str, image: str, anchor: str, extra: str, expected: str
-):
+def test_wiki_embed_link_match_dataclass(link: str, image: str, anchor: str, extra: str, expected: str):
     link_obj = links.WikiEmbedLinkMatch(link=link, image=image, anchor=anchor, extra=extra)
     assert expected == str(link_obj)
 
@@ -291,9 +285,7 @@ def test_wiki_embed_link_match_dataclass(
 def test_md_embed_link_match_dataclass(
     link: str, text: str, title: str, extra: str, is_loading_lazy: bool, expected: str
 ):
-    link_obj = links.MdEmbedLinkMatch(
-        link=link, text=text, title=title, extra=extra, is_loading_lazy=is_loading_lazy
-    )
+    link_obj = links.MdEmbedLinkMatch(link=link, text=text, title=title, extra=extra, is_loading_lazy=is_loading_lazy)
     assert expected == str(link_obj)
 
 
@@ -328,10 +320,7 @@ def test_relative_path_finder_get_non_existing_file_path(
     file_path = relative_path_finder.get_full_file_path(file_path=Path("non-existing.md"))
     assert file_path is None
     assert caplog.records[-1].levelno == logging.ERROR
-    assert (
-        f'File: "non-existing.md" doesn\'t exists (from: "{test_data_dir}")'
-        == caplog.records[-1].message
-    )
+    assert f'File: "non-existing.md" doesn\'t exists (from: "{test_data_dir}")' == caplog.records[-1].message
 
 
 def test_relative_path_finder_multiple_file_found(
@@ -340,11 +329,11 @@ def test_relative_path_finder_multiple_file_found(
 ):
     file_path = relative_path_finder.get_full_file_path(file_path=Path("other_rel_file.md"))
     assert file_path is None
-    assert caplog.records[-1].levelno == logging.ERROR
-    assert caplog.records[-1].message.startswith(
-        "Too much files found: ['relative/other_rel_file.md', "
-        "'current/cur_sub/other_rel_file.md']"
-    )
+    last_log_record = caplog.records[-1]
+    assert last_log_record.levelno == logging.ERROR
+    assert last_log_record.message.startswith("Too much files found:")
+    assert "current/cur_sub/other_rel_file.md" in last_log_record.message
+    assert "relative/other_rel_file.md" in last_log_record.message
 
 
 @pytest.mark.parametrize(

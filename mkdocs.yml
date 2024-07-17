@@ -5,7 +5,7 @@ site_description: Publishing plugin for MkDocs
 copyright: >
   &copy; 2023 Maciej 'maQ' Kusz
 
-repo_name: mkusz/mkdocs-publisher
+repo_name: mkdocs-publisher
 repo_url: https://github.com/mkusz/mkdocs-publisher/
 edit_uri: edit/main/mkdocs_publisher_docs/
 
@@ -25,8 +25,7 @@ extra_css:
 
 extra_javascript:
   # MathJax
-  - javascripts/mathjax.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - assets/javascripts/mathjax.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   # Icons hack
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js
@@ -131,6 +130,7 @@ markdown_extensions:
 plugins:
   - pub-debugger:
       console_log:
+#        show_code_link: true
         enabled: true
 #        log_level: DEBUG
 #        filter_logger_names:

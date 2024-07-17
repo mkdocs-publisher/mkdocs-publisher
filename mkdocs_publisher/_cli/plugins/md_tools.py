@@ -31,7 +31,7 @@ from mkdocs.utils import meta as meta_parser
 from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
 
-log = logging.getLogger("mkdocs.plugins.publisher.cli.md_tools")
+log = logging.getLogger("mkdocs.publisher.cli.md_tools")
 
 
 @click.group
@@ -53,9 +53,7 @@ def key_rename():
     if linter_config_file.is_file():
         with linter_config_file.open("r") as linter_json:
             linter_config = json.load(linter_json)["ruleConfigs"]
-            key_order_list = str(
-                linter_config["yaml-key-sort"]["yaml-key-priority-sort-order"]
-            ).split("\n")
+            key_order_list = str(linter_config["yaml-key-sort"]["yaml-key-priority-sort-order"]).split("\n")
 
     # old_key_name = click.prompt("Enter old key name you want to replace", type=str)
     old_key_name = "visibility"
@@ -71,9 +69,7 @@ def key_rename():
                     output = f"{output}{yaml.safe_dump({key: post_meta[key]}, indent=2)}"
                     post_meta.pop(key, None)
                 elif key in [old_key_name, new_key_name] and old_key_name in post_meta:
-                    yaml_text_dump = yaml.safe_dump(
-                        {new_key_name: post_meta[old_key_name]}, indent=2
-                    )
+                    yaml_text_dump = yaml.safe_dump({new_key_name: post_meta[old_key_name]}, indent=2)
                     output = f"{output}{yaml_text_dump}"
                     post_meta.pop(old_key_name, None)
             for key in post_meta:

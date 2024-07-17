@@ -4,7 +4,7 @@ icon: material/file-replace-outline
 slug: changelog
 publish: true
 date: 2023-02-12 22:00:00
-update: 2024-04-17 16:12:59
+update: 2024-07-16 15:42:54
 description: Publisher for MkDocs version history
 categories:
   - general
@@ -13,14 +13,37 @@ categories:
 
 # Version history
 
+## 1.4.0
+
+### :material-list-box: General
+
+- ❎ extend overall code coverage
+- ♻️ code refactor of some shared libraries
+
+### :material-newspaper-variant-multiple: Blog
+
+- ✅ blog post link title attribute
+
+### :material-file-tree: Meta
+
+- ❎ support for links and redirections
+- ✅ overview pages doesn't respect publication status
+- ✅ draft file in hidden directory is generated
+- ✅ images link (remove hack fix)
+- ♻️ code refactor in many places
+
+### :material-share: Social
+
+- ❎ site name is added to page title
+
 ## 1.3.1 - 2024-04-21
 
 ### :material-file-tree: Meta
 
-- fix for hidden pages not being hidden when in a hidden directory
-- fix for missing title warning display when file is an overview
-- fix for links normalization
-- fix cross plugins errors when one of the plugins is disabled
+- ✅ hidden pages not being hidden when in a hidden directory
+- ✅ missing title warning display when file is an overview
+- ✅ links normalization
+- ✅ cross plugins errors when one of the plugins is disabled
 
 ## 1.3.0 -2024-04-17
 

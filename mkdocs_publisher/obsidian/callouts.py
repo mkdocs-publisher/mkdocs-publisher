@@ -26,7 +26,7 @@ from typing import Optional
 
 from mkdocs_publisher.obsidian.config import _ObsidianCalloutsConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher.obsidian.callouts")
+log = logging.getLogger("mkdocs.publisher.obsidian.callouts")
 
 CALLOUT_BLOCK = re.compile(r"^ *(( ?>)+) *\[!([^]]*)]([\-+]?) *(.*)?")
 CALLOUT_BLOCK_FOLLOW = re.compile(r"^ *(( ?>)+) *(.*)?")
@@ -47,10 +47,9 @@ CALLOUT_MAPPING = {
     "warning": ["attention", "caution", "warning"],
     "settings": ["settings"],
     "yaml": ["yaml"],
+    "none": ["none"],
 }
-ADMONITION_MAPPING = {
-    callout: admonition for admonition, callouts in CALLOUT_MAPPING.items() for callout in callouts
-}
+ADMONITION_MAPPING = {callout: admonition for admonition, callouts in CALLOUT_MAPPING.items() for callout in callouts}
 INDENTATION_MAPPING = {
     "tabs": "\t",
     "spaces": "    ",
@@ -69,28 +68,21 @@ class CalloutToAdmonition:
         self._current_file_path: Optional[str] = None
 
     @staticmethod
-    def _callout_indentation(
-        match: re.Match, match_group: int, text_indentation: str = "spaces"
-    ) -> str:
+    def _callout_indentation(match: re.Match, match_group: int, text_indentation: str = "spaces") -> str:
         initial_indentation = "".join(" " for _ in range(match.start(match_group)))
         indentation = "".join(
-            INDENTATION_MAPPING.get(text_indentation, "spaces")
-            for _ in range(match.group(match_group).count(">") - 1)
+            INDENTATION_MAPPING.get(text_indentation, "spaces") for _ in range(match.group(match_group).count(">") - 1)
         )
         return f"{initial_indentation}{indentation}"
 
     def _callout_block_follow(self, match: re.Match, text_indentation: str = "spaces") -> str:
-        indentation = self._callout_indentation(
-            match=match, match_group=1, text_indentation=text_indentation
-        )
+        indentation = self._callout_indentation(match=match, match_group=1, text_indentation=text_indentation)
         return f"    {indentation} {match.group(3)}\n"
 
     def _callout_block(self, match: re.Match, text_indentation: str = "spaces") -> str:
         # TODO: add possibility to inject customized callout/admonition from CSS/config
 
-        indentation = self._callout_indentation(
-            match=match, match_group=1, text_indentation=text_indentation
-        )
+        indentation = self._callout_indentation(match=match, match_group=1, text_indentation=text_indentation)
 
         callout_type = match.group(3).lower()
         if "|" in callout_type:
@@ -137,9 +129,7 @@ class CalloutToAdmonition:
             if callout_match:
                 in_callout_block = True
                 markdown_lines.append(
-                    self._callout_block(
-                        match=callout_match, text_indentation=self._callouts_config.indentation
-                    )
+                    self._callout_block(match=callout_match, text_indentation=self._callouts_config.indentation)
                 )
             elif in_callout_block and callout_follow_match:
                 markdown_lines.append(

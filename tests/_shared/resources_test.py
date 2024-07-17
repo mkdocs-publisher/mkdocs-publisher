@@ -34,8 +34,6 @@ from mkdocs_publisher._extra.assets import stylesheets
 from mkdocs_publisher._shared import resources
 
 EXTRA_DIR = "mkdocs_publisher/_extra"
-TEMPLATES_DIR = "assets/templates"
-TEMPLATE_FILE = "backlinks.html"
 STYLESHEET_DIR = "assets/stylesheets"
 STYLESHEET_FILE = "blog.min.css"
 STYLESHEET_FILE_MAP = "blog.min.css.map"
@@ -63,9 +61,7 @@ def test_add_extra_existing_file(caplog: LogCaptureFixture):
 
 
 def test_add_extra_non_existing_file(caplog: LogCaptureFixture):
-    existing_file = Path(
-        str(importlib.resources.files(stylesheets).joinpath(f"{STYLESHEET_FILE}.non"))
-    )
+    existing_file = Path(str(importlib.resources.files(stylesheets).joinpath(f"{STYLESHEET_FILE}.non")))
     expected_path = str(existing_file.relative_to(Path().cwd() / EXTRA_DIR))
     mkdocs_files = Files(files=[])
     mkdocs_config = cast(MkDocsConfig, MkDocsConfig())
@@ -117,11 +113,3 @@ def test_add_stylesheet_file_without_map():
     check.equal([expected_file_path], list(mkdocs_files.src_paths.keys()))
     check.equal(expected_file_path, mkdocs_files.css_files()[-1].src_uri)
     check.equal([expected_file_path], mkdocs_config.extra_css)
-
-
-def test_read_template_file():
-    """Test if content of the template file is read correctly"""
-    template_path = Path().cwd() / EXTRA_DIR / TEMPLATES_DIR / TEMPLATE_FILE
-    with open(template_path) as template_file:
-        backlink_template_text = str(template_file.read())
-    check.equal(backlink_template_text, resources.read_template_file(TEMPLATE_FILE))

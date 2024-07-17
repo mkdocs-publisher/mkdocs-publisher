@@ -32,7 +32,7 @@ from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
-log = logging.getLogger("mkdocs.plugins.publisher._shared.publisher_utils")
+log = logging.getLogger("mkdocs.publisher._shared.publisher_utils")
 
 
 def get_blog_dir(mkdocs_config: MkDocsConfig) -> Optional[Path]:

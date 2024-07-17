@@ -29,7 +29,7 @@ import pymdownx.slugs
 
 from mkdocs_publisher.meta.config import SlugModeChoiceEnum
 
-log = logging.getLogger("mkdocs.plugins.publisher._shared.links")
+log = logging.getLogger("mkdocs.publisher._shared.links")
 
 
 def slugify(text: str) -> str:
@@ -60,9 +60,7 @@ def create_slug(
         slug = slugify(text=file_name)
 
         if warn_on_missing:
-            log.warning(
-                f'No slug for file "{file_name}" ' f"(mode: {slug_mode}). Fallback to file name."
-            )
+            log.warning(f'No slug for file "{file_name}" ' f"(mode: {slug_mode}). Fallback to file name.")
 
     log.debug(f'Slug for file "{file_name}" is: "{slug}"')
     return slug

@@ -35,38 +35,29 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import publisher_utils
-from mkdocs_publisher._shared.html_modifiers import HTMLModifier
 from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.meta_files import MetaFiles
-from mkdocs_publisher.meta.nav import MetaNav
+from mkdocs_publisher.meta.meta_nav import MetaNav
 
-log = logging.getLogger("mkdocs.plugins.publisher.meta.plugin")
+log = logging.getLogger("mkdocs.publisher.meta.plugin")
 
 
 class MetaPlugin(BasePlugin[MetaPluginConfig]):
     def __init__(self):
-        """
-        TODO: SEO optimizations
-        - https://octamedia.pl/blog/linkowanie-wewnetrzne/ (useful for obsidian backlinks)
-        """
-
         self._on_serve = False
         self._attachments_dir: Optional[Path] = None
         self._ignored_dirs: list[Path] = []
         self._meta_files: MetaFiles = MetaFiles()
         self._meta_nav: Optional[MetaNav] = None
 
-    def on_startup(
-        self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool
-    ) -> None:  # pragma: no cover
+    def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:  # pragma: no cover
         if command == "serve":
             self._on_serve = True
         self._meta_files.on_serve = self._on_serve
 
     @event_priority(100)  # Run before any other plugins
-    def on_config(self, config: MkDocsConfig) -> Optional[Config]:
+    def on_config(self, config: MkDocsConfig) -> Optional[Config]:  # pragma: no cover
         # Set some default values
         log.info("Read files and directories metadata")
         blog_dir: Optional[Path] = publisher_utils.get_blog_dir(mkdocs_config=config)
@@ -74,41 +65,31 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             meta_files=self._meta_files,
             blog_dir=blog_dir.relative_to(config.docs_dir) if blog_dir else blog_dir,
         )
-        self._ignored_dirs, self._attachments_dir = publisher_utils.get_obsidian_dirs(
-            mkdocs_config=config
-        )  # pragma: no cover
-        self._meta_files.set_configs(
-            mkdocs_config=config, meta_plugin_config=self.config
-        )  # pragma: no cover
-        self._meta_files.add_hidden_path(hidden_path=self._attachments_dir)  # pragma: no cover
-        self._meta_files.add_meta_files(ignored_dirs=self._ignored_dirs)  # pragma: no cover
+        self._ignored_dirs, self._attachments_dir = publisher_utils.get_obsidian_dirs(mkdocs_config=config)
+        self._meta_files.set_configs(mkdocs_config=config, meta_plugin_config=self.config)
+        self._meta_files.add_hidden_path(hidden_path=self._attachments_dir)
+        self._meta_files.add_meta_files(ignored_dirs=self._ignored_dirs)
 
-        log.info(
-            f"Ignored directories: "
-            f"{[str(d.relative_to(config.docs_dir)) for d in self._ignored_dirs]}"
-        )
-        log.info(f"Draft files and directories: " f"{list(self._meta_files.drafts().keys())}")
-        log.info(f"Hidden files and directories: " f"{list(self._meta_files.hidden().keys())}")
+        log.info(f"Ignored directories: " f"{[str(d.relative_to(config.docs_dir)) for d in self._ignored_dirs]}")
+        log.info(f"Draft files and directories: " f"{list(self._meta_files.drafts.keys())}")
+        log.info(f"Hidden files and directories: " f"{list(self._meta_files.hidden.keys())}")
 
         config.nav = self._meta_nav.build_nav(mkdocs_config=config)
 
         return config
 
     @event_priority(-100)
-    def on_files(
-        self, files: Files, *, config: MkDocsConfig
-    ) -> Optional[Files]:  # pragma: no cover
-        new_files = self._meta_files.change_files_slug(
-            files=files, ignored_dirs=self._ignored_dirs
-        )
+    def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:  # pragma: no cover
+        new_files = self._meta_files.clean_redirect_files(files=files)
+        new_files = self._meta_files.change_files_slug(files=new_files, ignored_dirs=self._ignored_dirs)
+        new_files = self._meta_files.clean_draft_files(files=new_files)
 
         return new_files
 
     def on_nav(
         self, nav: Navigation, *, config: MkDocsConfig, files: Files
     ) -> Optional[Navigation]:  # pragma: no cover
-        removal_list = [*self._meta_files.drafts().keys(), *self._meta_files.hidden().keys()]
-
+        removal_list = [*self._meta_files.drafts.keys(), *self._meta_files.hidden.keys()]
         log.debug(f"Nav elements to remove: {removal_list}")
         nav.items = self._meta_nav.nav_cleanup(
             items=nav.items,
@@ -128,18 +109,15 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             page.update_date = update_date.strftime("%Y-%m-%d")
 
         # Conditionally exclude file from Material for MkDocs search plugin
-        if (
-            page.file.src_uri in self._meta_files.drafts(files=True)
-            and not self.config.publish.search_in_draft
-        ) or (
-            page.file.src_uri in self._meta_files.hidden(files=True)
-            and not self.config.publish.search_in_hidden
-        ):
+        if (  # pragma: no cover
+            page.file.src_uri in self._meta_files.draft_files and not self.config.publish.search_in_draft
+        ) or (page.file.src_uri in self._meta_files.hidden_files and not self.config.publish.search_in_hidden):
             page.meta["search"] = {"exclude": True}
 
     @event_priority(-100)  # Run after all other plugins
-    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
-        html_modifier = HTMLModifier(markup=output)
-        html_modifier.fix_img_links()
-
-        return str(html_modifier)
+    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:  # pragma: no cover
+        if page.file.src_path in self._meta_files:
+            redirect_page: Optional[str] = self._meta_files.generate_redirect_page(file=page.file)
+            if redirect_page:
+                output = redirect_page
+        return output

@@ -4,7 +4,7 @@ icon: material/shield-bug
 slug: pub-debugger
 publish: true
 date: 2023-08-01 11:49:05
-update: 2024-04-15 20:58:40
+update: 2024-06-12 17:27:40
 description: Setting up a Publisher for MkDocs debugger plugin for development purposes
 categories:
   - plugin
@@ -17,9 +17,9 @@ categories:
 
 Each good developer knows, how important is the possibility to read proper logs from running application when there is some issue. MkDocs by default produces some logs while documentation is being built or while the built-in server is running. Because the whole MkDocs is written using the Python programming language, there is a possibility to configure a debugger in tools like PyCharm or VsCode. But how to handle logging when you are just a user and do not have a needed knowledge and just want to submit an issue because you have found some problem? To help with debugging by logging and producing additional files that can be attached to the issue submission, Publisher for MkDocs contains a `pub-debugger` plugin. It's built with 3 main modules:
 
-- [console logger](#Logging%20to%20the%20console) that allows to change the output produced to the console,
-- [file logger](#Logging%20to%20the%20file) that allows to produce the log file,
-- [Zip file generator](#Generating%20Zip%20file) that allows to produce a Zip file with log file produced by previous module and some additional files like `mkdocs.yml` and Python package files like `requirements.txt` or `pyproject.tml` and `poetry.lock` (depends on type of Python package manager you have used).
+- [console logger](#Console%20logging) that allows to change the output produced to the console,
+- [file logger](#File%20logging) that allows to produce the log file,
+- [Zip file generator](#Zip%20file%20generation) that allows to produce a Zip file with log file produced by previous module and some additional files like `mkdocs.yml` and Python package files like `requirements.txt` or `pyproject.tml` and `poetry.lock` (depends on type of Python package manager you have used).
 
 > [!INFO] Console and file logger settings
 > Both console and file loggers are configured separately and their defaults settings are different.
@@ -154,19 +154,19 @@ plugins:
 
 Above you can find all possible settings with their default values. You don't have to provide them. Just use them if you want to change some settings. The description of the meaning of given setting, you can find below.
 
-> [!SETTINGS]- [enabled](#+debugger.file.enabled){#+debugger.zip.enabled}
+> [!SETTINGS]- [enabled](#+debugger.file.enabled){#+debugger.file.enabled}
 > Controls if log file will be created.
 
-> [!SETTINGS]- [log_level](#+debugger.file.log_level){#+debugger.zip.log_level}
+> [!SETTINGS]- [log_level](#+debugger.file.log_level){#+debugger.file.log_level}
 > Set the [log level](https://docs.python.org/3/library/logging.html#logging-levels).
 
-> [!SETTINGS]- [log_format](#+debugger.file.log_format){#+debugger.zip.log_format}
+> [!SETTINGS]- [log_format](#+debugger.file.log_format){#+debugger.file.log_format}
 > Defines [format](https://docs.python.org/3/library/logging.html#logrecord-attributes) of the message that will be put into the log file.
 
-> [!SETTINGS]- [remove_old_files](#+debugger.file.remove_old_files){#+debugger.zip.remove_old_files}
+> [!SETTINGS]- [remove_old_files](#+debugger.file.remove_old_files){#+debugger.file.remove_old_files}
 > Controls if previously created log files will be removed while creating a new one.
 
-> [!SETTINGS]- [filter_logger_names](#+debugger.file.filter_logger_names){#+debugger.zip.filter_logger_names}
+> [!SETTINGS]- [filter_logger_names](#+debugger.file.filter_logger_names){#+debugger.file.filter_logger_names}
 > Define a list of logger names that will be filtered out of the log messages.
 
 ### Zip file generation

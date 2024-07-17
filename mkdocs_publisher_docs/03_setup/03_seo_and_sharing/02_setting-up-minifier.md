@@ -30,7 +30,7 @@ To simplify the entire process, below is presented a single way of installation 
 
 	    ```console
 	    brew install pngquant oxipng mozjpeg node
-	    npm install -f --no-fund svgo html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
+	    npm install -f --no-fund svgo html-minifier-terser postcss cssnano postcss-svgo postcss-cli uglify-js
 	    ```
 
 	=== ":material-file-png-box: PNG"
@@ -56,7 +56,7 @@ To simplify the entire process, below is presented a single way of installation 
 
 		```console
 	    brew install node
-	    npm install -f --no-fund html-minifier
+	    npm install -f --no-fund html-minifier-terser
 	    ```
 
 	=== ":simple-css3: CSS"
@@ -82,7 +82,7 @@ To simplify the entire process, below is presented a single way of installation 
 	    ```console
 	    scoop bucket add main
 		scoop install pngquant oxipng mozjpeg nodejs
-		npm install -f --no-fund svgo html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
+		npm install -f --no-fund svgo html-minifier-terser postcss cssnano postcss-svgo postcss-cli uglify-js
 	    ```
 
 	=== ":material-file-png-box: PNG"
@@ -108,7 +108,7 @@ To simplify the entire process, below is presented a single way of installation 
 
 		```console
 	    scoop install nodejs
-	    npm install -f --no-fund html-minifier
+	    npm install -f --no-fund html-minifier-terser
 	    ```
 
 	=== ":simple-css3: CSS"
@@ -136,7 +136,7 @@ To simplify the entire process, below is presented a single way of installation 
 		sudo apt update
 		sudo apt install -y rustc pngquant libjpeg-turbo-progs nodejs
 		cargo install oxipng
-		npm install --no-fund -f svgo html-minifier postcss cssnano postcss-svgo postcss-cli uglify-js
+		npm install --no-fund -f svgo html-minifier-terser postcss cssnano postcss-svgo postcss-cli uglify-js
 	    ```
 
 	=== ":material-file-png-box: PNG"
@@ -167,7 +167,7 @@ To simplify the entire process, below is presented a single way of installation 
 		```console
 	    sudo apt update
 		sudo apt install nodejs
-		npm install --no-fund -f html-minifier
+		npm install --no-fund -f html-minifier-terser
 	    ```
 
 	=== ":simple-css3: CSS"
@@ -445,7 +445,7 @@ plugins:
 		enabled_on_serve: false
 		exclude: []
 		extensions: [".[hH][tT][mM]", ".[hH][tT][mM][lL]"]
-		postcss_path: postcss
+		html_minifier_path: html-minifier
 		case_sensitive: true
 		minify_css: true
 		minify_js: true

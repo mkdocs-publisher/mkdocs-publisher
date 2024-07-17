@@ -29,7 +29,6 @@ from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 
-# noinspection PyProtectedMember
 from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
@@ -100,8 +99,7 @@ class BlogConfig:
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
         self.meta_config: Optional[MetaPluginConfig] = (
-            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta")
-            or None
+            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta") or None
         )  # type: ignore
         self.temp_dir = Path(plugin_config.temp_dir)
         self.docs_dir = Path(mkdocs_config.docs_dir)
