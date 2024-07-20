@@ -20,7 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import importlib.resources
 import json
 import logging
 import os
@@ -29,9 +28,7 @@ from pathlib import Path
 
 import click
 
-import mkdocs_publisher_docs
 from mkdocs_publisher._shared import file_utils
-from mkdocs_publisher._shared import mkdocs_utils
 
 log = logging.getLogger("mkdocs.publisher.cli.dev")
 
@@ -51,20 +48,6 @@ def iter_res(src_dir: Path, dst_dir: Path, res_path: Path):
             dst_file = dst_dir / src_file.relative_to(src_dir)
             os.makedirs(name=str(dst_file.parents[0]), exist_ok=True)
             shutil.copy(src=src_file, dst=dst_file)
-
-
-@app.command()
-def docs_copy():
-    mkdocs_config = mkdocs_utils.get_mkdocs_config()
-    docs_path = Path().cwd() / mkdocs_config.docs_dir
-    res_path = Path(str(importlib.resources.files(mkdocs_publisher_docs)))
-
-    if docs_path == res_path:
-        log.debug("Can't copy to the same directory!")
-    else:
-        if click.confirm(f"Remove content of '{docs_path}?'"):
-            shutil.rmtree(docs_path, ignore_errors=True)
-        iter_res(src_dir=res_path, dst_dir=docs_path, res_path=res_path)
 
 
 @app.command()
