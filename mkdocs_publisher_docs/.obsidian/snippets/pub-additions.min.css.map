@@ -1,1 +1,0 @@
-{"version":3,"sources":["pub-additions.css"],"names":[],"mappings":"AAAA,gCACI,2BAA8B,CAC9B,4BACJ","file":"pub-additions.min.css","sourcesContent":[".callout[data-callout=\"settings\"] {\n    --callout-color: 255, 255, 255;\n    --callout-icon: lucide-wrench;\n}\n"]}
