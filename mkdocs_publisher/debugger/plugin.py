@@ -52,6 +52,8 @@ PIP_FREEZE_FILENAME = "requirements_freeze.txt"
 
 
 class DebuggerPlugin(BasePlugin[DebuggerConfig]):
+    supports_multiple_instances = False
+
     def __init__(self):
         self._mkdocs_log_stream_handler: logging.Handler = logging.getLogger("mkdocs").handlers[0]
 

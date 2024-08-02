@@ -44,6 +44,7 @@ from mkdocs_publisher._shared import resources
 from mkdocs_publisher.blog import creators
 from mkdocs_publisher.blog import modifiers
 from mkdocs_publisher.blog import parsers
+from mkdocs_publisher.blog.blog_files import BlogFiles
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.blog.structures import BlogConfig
 from mkdocs_publisher.obsidian.md_links import MarkdownLinks
@@ -52,16 +53,28 @@ log = logging.getLogger("mkdocs.publisher.blog.plugin")
 
 
 class BlogPlugin(BasePlugin[BlogPluginConfig]):
+    supports_multiple_instances = False  # TODO: add multiple instances support (require changes in meta plugin)
+
     def __init__(self):
+        self._on_serve: bool = False
+        self._blog_files: BlogFiles = BlogFiles()
+
+        # ==== Old below
+
         self.blog_config = BlogConfig()  # Empty instance
         self._start_page: bool = False
-        self._on_serve: bool = False
 
     def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
         if command == "serve":
             self._on_serve = True
+        self._blog_files.on_serve = self._on_serve
 
     def on_config(self, config: MkDocsConfig) -> Config:
+        self._blog_files.set_configs(mkdocs_config=config, blog_plugin_config=self.config)
+        self._blog_files.add_blog_files()
+
+        # ==== Old below
+
         # Initialization of all the values
         self.blog_config.parse_configs(mkdocs_config=config, plugin_config=self.config)
 
@@ -164,10 +177,16 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
     @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:
+        self._blog_files.remove_temp_dirs()
+
+        # ==== Old below
         with contextlib.suppress(AttributeError):
             file_utils.remove_dir(directory=self.blog_config.temp_dir)
 
     @event_priority(-100)  # Run after all other plugins
     def on_shutdown(self) -> None:
+        self._blog_files.remove_temp_dirs()
+
+        # ==== Old below
         with contextlib.suppress(AttributeError):
             file_utils.remove_dir(directory=self.blog_config.temp_dir)

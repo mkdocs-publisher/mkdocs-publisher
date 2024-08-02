@@ -45,7 +45,7 @@ def remove_dir(directory: Path):
             file.unlink(missing_ok=True)
 
 
-def calculate_file_hash(file: Path, block_size: int = 8192) -> Optional[str]:
+def calculate_file_hash(file: Path, block_size: int = 65536) -> Optional[str]:
     try:
         with open(file, "rb") as binary_file:
             file_hash = md5()

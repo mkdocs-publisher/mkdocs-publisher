@@ -43,10 +43,10 @@ def get_blog_dir(mkdocs_config: MkDocsConfig) -> Optional[Path]:
             plugin_name="pub-blog",
         ),
     )
-    if blog_config is not None:
-        blog_config = Path(mkdocs_config.docs_dir).joinpath(blog_config.blog_dir)
 
-    return blog_config
+    blog_dir: Optional[Path] = Path(mkdocs_config.docs_dir).joinpath(blog_config.blog_dir) if blog_config else None
+
+    return blog_dir
 
 
 def get_obsidian_dirs(mkdocs_config: MkDocsConfig) -> tuple[list[Path], Optional[Path]]:
@@ -61,7 +61,8 @@ def get_obsidian_dirs(mkdocs_config: MkDocsConfig) -> tuple[list[Path], Optional
             plugin_name="pub-obsidian",
         ),
     )
-    if obsidian_config is not None:
+
+    if obsidian_config:
         ignored_dirs.append(docs_dir.joinpath(obsidian_config.obsidian_dir))
         ignored_dirs.append(docs_dir.joinpath(obsidian_config.templates_dir))
         attachments_dir = docs_dir.joinpath(obsidian_config.attachments_dir)

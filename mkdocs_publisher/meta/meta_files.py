@@ -35,11 +35,11 @@ from urllib.parse import quote
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
-from mkdocs.utils import meta as meta_parser
 
 from mkdocs_publisher._shared import links
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher._shared import templates
-from mkdocs_publisher._shared.urls import create_slug
+from mkdocs_publisher._shared import urls
 from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.config import OverviewChoiceEnum
 from mkdocs_publisher.meta.config import PublishChoiceEnum
@@ -86,7 +86,7 @@ class MetaFiles(UserDict):
         super().__init__()
 
     @property
-    def meta_file(self) -> str:
+    def dir_meta_file(self) -> str:
         return self._meta_plugin_config.dir_meta_file
 
     @property
@@ -105,12 +105,6 @@ class MetaFiles(UserDict):
         self._mkdocs_config = mkdocs_config
         self._meta_plugin_config = meta_plugin_config
 
-    @staticmethod
-    def _read_md_file(meta_file_path: Path) -> tuple[str, dict[str, Any]]:  # pragma: no cover
-        with meta_file_path.open(encoding="utf-8-sig", errors="strict") as md_file:
-            # Add empty line at the end of file and read all data
-            return meta_parser.get_data(f"{md_file.read()}\n")
-
     def _get_title(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str):
         """Calculate title for given file"""
 
@@ -123,7 +117,6 @@ class MetaFiles(UserDict):
                 and self._meta_plugin_config.title.warn_on_missing_meta
                 and not (meta_file.is_draft or (meta_file.is_dir and not meta_file.is_overview))
             ):
-                log.critical(meta_file.is_draft)
                 log.warning(
                     f'Title value from "{self._meta_plugin_config.title.key_name}" meta data '
                     f'is missing for file: "{str(meta_file.path)}"'
@@ -147,7 +140,7 @@ class MetaFiles(UserDict):
     def _get_slug(self, meta_file: MetaFile, meta: dict[str, Any]):
         """Calculate slug for given file"""
 
-        meta_file.slug = create_slug(  # pragma: no cover
+        meta_file.slug = urls.create_slug(  # pragma: no cover
             file_name=meta_file.path.stem,
             slug_mode=self._meta_plugin_config.slug.mode,
             slug=meta.get(self._meta_plugin_config.slug.key_name),
@@ -259,7 +252,7 @@ class MetaFiles(UserDict):
     def _get_metadata(self, meta_file: MetaFile, meta_file_path: Path):  # pragma: no cover
         """Read all metadata values for given file"""
 
-        markdown, meta = self._read_md_file(meta_file_path=meta_file_path)
+        markdown, meta = mkdocs_utils.read_md_file(md_file_path=meta_file_path)
 
         # Order of method execution is crucial for reading all values.
         meta = self._get_redirect(meta_file=meta_file, meta=meta, markdown=markdown)
@@ -273,17 +266,13 @@ class MetaFiles(UserDict):
         """Add file"""
 
         if meta_file.is_dir:
-            meta_file_exists = False
-
             # Calculate properties based on meta file metadata
             meta_file_path = meta_file.abs_path.joinpath(self._meta_plugin_config.dir_meta_file)
             if meta_file_path.exists():
-                meta_file_exists = True
                 self._get_metadata(meta_file=meta_file, meta_file_path=meta_file_path)
-
-            if not meta_file_exists:
+            else:
                 meta_file.title = str(meta_file.path.stem)
-                meta_file.slug = create_slug(
+                meta_file.slug = urls.create_slug(
                     file_name=str(meta_file.name),
                     slug_mode=self._meta_plugin_config.slug.mode,
                     slug=meta_file.path.stem,
@@ -353,11 +342,11 @@ class MetaFiles(UserDict):
         """Iterate over all files and directories in docs directory"""
 
         for docs_file in sorted(Path(self._mkdocs_config.docs_dir).rglob("*")):
-            meta_link: Optional[MetaFile] = None
+            meta_file: Optional[MetaFile] = None
             is_ignored = any([docs_file.is_relative_to(ignored_dir) for ignored_dir in ignored_dirs])
 
             if not is_ignored and docs_file.is_dir():
-                meta_link = MetaFile(
+                meta_file = MetaFile(
                     path=docs_file.relative_to(self._mkdocs_config.docs_dir),
                     abs_path=docs_file,
                     is_dir=True,
@@ -367,14 +356,14 @@ class MetaFiles(UserDict):
                 and docs_file.suffix == ".md"
                 and docs_file.name != self._meta_plugin_config.dir_meta_file
             ):
-                meta_link = MetaFile(
+                meta_file = MetaFile(
                     path=docs_file.relative_to(self._mkdocs_config.docs_dir),
                     abs_path=docs_file,
                     is_dir=False,
                 )
 
-            if meta_link is not None:
-                self[str(meta_link.path)] = meta_link
+            if meta_file is not None:
+                self[str(meta_file.path)] = meta_file
 
     def _change_file_slug(self, file: File, file_path: Path):
         # Get URL parts
@@ -394,7 +383,7 @@ class MetaFiles(UserDict):
         for position, path_part in enumerate(path_parts):
             meta_file: Optional[MetaFile] = self.get(str(path_part), None)
             if meta_file is not None:
-                url_parts[position] = meta_file.slug
+                url_parts[position] = str(meta_file.slug)
 
         # Recreate file params based on URL with replaced parts
         if file.url != ".":  # Do not modify main index page
@@ -405,7 +394,6 @@ class MetaFiles(UserDict):
             file.dest_uri = quote("/".join(url_parts))
             if file.dest_uri.endswith("index.html"):
                 file.url = f"{file.url}/"
-            file.abs_dest_path = str(Path(self._mkdocs_config.site_dir) / file.dest_uri)
 
     def change_files_slug(self, files: Files, ignored_dirs: list[Path]) -> Files:
         """Change file slug (part of the URL) based of file and parent directories slugs"""
@@ -418,7 +406,7 @@ class MetaFiles(UserDict):
             file_path: Path = Path(file.src_path)
             if (
                 (
-                    not any([Path(file.abs_src_path).is_relative_to(d) for d in ignored_dirs])
+                    not any([Path(str(file.abs_src_path)).is_relative_to(d) for d in ignored_dirs])
                     and file.src_path not in self.draft_files
                     and str(file_path.name) != self._meta_plugin_config.dir_meta_file
                 )

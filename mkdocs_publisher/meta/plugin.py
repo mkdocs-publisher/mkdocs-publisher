@@ -44,8 +44,10 @@ log = logging.getLogger("mkdocs.publisher.meta.plugin")
 
 
 class MetaPlugin(BasePlugin[MetaPluginConfig]):
+    supports_multiple_instances = False
+
     def __init__(self):
-        self._on_serve = False
+        self._on_serve: bool = False
         self._attachments_dir: Optional[Path] = None
         self._ignored_dirs: list[Path] = []
         self._meta_files: MetaFiles = MetaFiles()
@@ -95,6 +97,9 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             items=nav.items,
             removal_list=removal_list,
         )
+
+        # TODO: create prev/next page cleanup for hidden pages
+
         return nav
 
     @event_priority(-100)  # Run after all other plugins

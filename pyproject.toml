@@ -54,15 +54,15 @@ documentation = "https://mkdocs-publisher.github.io/"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-mkdocs = "~1.5.3"
+mkdocs = "^1.6.0"
 pymdown-extensions = "^10.7"
 beautifulsoup4 = "^4.12.3"
-mkdocs-material = "~9.5.18"
+mkdocs-material = "^9.5.29"
 
 [tool.poetry.group.dev.dependencies]
 yamllint = "^1.35.1"
 ruff = "^0.3.7"
-pyright = "^1.1.371"
+pyright = "^1.1.372"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.6.0"
@@ -86,9 +86,16 @@ exclude = [
     "docs",
     "mkdocs_publisher_docs",
 ]
-reportMissingImports = false
+reportMissingImports = true
 reportMissingTypeStubs = false
 reportOptionalMemberAccess = false
+reportUnusedImport = true
+reportUnusedClass = true
+reportUnusedFunction = true
+reportUnusedVariable = true
+reportUnnecessaryCast = true
+reportUnnecessaryComparison = true
+reportUnnecessaryContains = true
 typeCheckingMode = "basic"
 
 [tool.pytest.ini_options]

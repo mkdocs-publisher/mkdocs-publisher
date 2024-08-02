@@ -36,8 +36,8 @@ from mkdocs.plugins import event_priority
 from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
-from mkdocs.utils import meta as meta_parser
 
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher._shared import resources
 from mkdocs_publisher._shared import templates
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
@@ -63,6 +63,8 @@ class Comment:
 
 
 class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
+    supports_multiple_instances = False
+
     def __init__(self):
         self._backlink_links: Optional[BacklinkLinks] = None
         self._backlinks: dict[str, list[Link]] = {}
@@ -94,12 +96,9 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             for file in files:
                 if file.page is not None:
                     log.debug(f"Parsing backlinks in file '{file.src_path}'")
-                    with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
-                        markdown, _ = meta_parser.get_data(md_file.read())
-                        markdown = self._md_links.normalize_links(
-                            markdown=markdown, current_file_path=Path(file.src_uri)
-                        )
-                        self._backlink_links.find_markdown_links(markdown=markdown, page=file.page)
+                    markdown, _ = mkdocs_utils.read_md_file(md_file_path=Path(str(file.abs_src_path)))
+                    markdown = self._md_links.normalize_links(markdown=markdown, current_file_path=Path(file.src_uri))
+                    self._backlink_links.find_markdown_links(markdown=markdown, page=file.page)
         return nav
 
     @event_priority(100)  # Run before all other plugins
@@ -162,7 +161,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 return
 
             with server._rebuild_cond:
-                server._to_rebuild[server.builder] = True
+                server._want_rebuild = True  # type: ignore
                 server._rebuild_cond.notify_all()
 
         handler = watchdog.events.FileSystemEventHandler()

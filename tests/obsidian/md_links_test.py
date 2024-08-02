@@ -82,16 +82,16 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
         (
             "Lorem ipsum dolor sit ![[amet.pdf]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit ![amet.pdf](amet.pdf){pdfjs loading=lazy}, " "consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit ![amet.pdf](amet.pdf){ pdfjs loading=lazy }, " "consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing ![elit](elit.jpg).",
-            "Lorem ipsum dolor sit [amet](file.md), " "consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
+            "Lorem ipsum dolor sit [amet](file.md), " "consectetur adipiscing ![elit](elit.jpg){ loading=lazy }.",
         ),
         (
             "Lorem ipsum dolor sit [amet](https://test.it/), " "consectetur adipiscing ![elit](elit.jpg).",
             "Lorem ipsum dolor sit [amet](https://test.it/), "
-            "consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
+            "consectetur adipiscing ![elit](elit.jpg){ loading=lazy }.",
         ),
     },
 )
@@ -126,7 +126,7 @@ def test_normalize_wiki_links(
         ),
         (
             "Lorem ipsum dolor sit ![amet](main.md), consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit ![amet](main.md){loading=lazy}, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit ![amet](main.md){ loading=lazy }, consectetur adipiscing elit.",
         ),
     },
 )

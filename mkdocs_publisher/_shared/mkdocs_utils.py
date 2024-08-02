@@ -19,9 +19,10 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
 import logging
 from enum import Enum
+from functools import lru_cache
+from pathlib import Path
 from typing import Any
 from typing import Optional
 from typing import Union
@@ -29,6 +30,7 @@ from typing import cast
 
 from mkdocs.config.base import Config
 from mkdocs.config.defaults import MkDocsConfig
+from mkdocs.utils import meta as meta_parser
 
 log = logging.getLogger("mkdocs.publisher._shared.mkdocs_utils")
 
@@ -98,8 +100,16 @@ def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> Union[No
             return None
 
 
+@lru_cache
 def get_mkdocs_config() -> MkDocsConfig:
     config = MkDocsConfig()
     with open("mkdocs.yml") as mkdocs_yml:
         config.load_file(mkdocs_yml)
     return cast(MkDocsConfig, config)
+
+
+@lru_cache
+def read_md_file(md_file_path: Path) -> tuple[str, dict[str, Any]]:  # pragma: no cover
+    with md_file_path.open(encoding="utf-8-sig", errors="strict") as md_file:
+        # Add empty line at the end of file and read all data
+        return meta_parser.get_data(f"{md_file.read()}\n")

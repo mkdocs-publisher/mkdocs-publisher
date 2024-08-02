@@ -56,6 +56,8 @@ OPEN_GRAPH_PROPERTIES = [
 
 
 class SocialPlugin(BasePlugin[SocialConfig]):
+    supports_multiple_instances = False
+
     def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> Optional[str]:
         pass
 

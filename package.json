@@ -31,6 +31,7 @@
     "postcss": "^8.4.39",
     "postcss-cli": "^11.0.0",
     "postcss-svgo": "^7.0.1",
+    "pyright": "^1.1.372",
     "svgo": "^3.3.2",
     "uglify-js": "^3.18.0"
   }

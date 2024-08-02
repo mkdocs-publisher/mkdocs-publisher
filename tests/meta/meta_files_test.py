@@ -201,7 +201,7 @@ def test_meta_file(
     meta_files: MetaFiles = MetaFiles()
     meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
 
-    check.equal(meta_files.meta_file, "README.md", "Wrong meta file")
+    check.equal(meta_files.dir_meta_file, "README.md", "Wrong meta file")
 
 
 @pytest.mark.parametrize(
@@ -612,16 +612,7 @@ def test_change_files_slug(
             patched_meta_files[path] = meta_file
         meta_file.is_draft = is_draft
 
-    files = Files(
-        [
-            File(
-                path=path,
-                src_dir="/Users",
-                dest_dir="/Users/out",
-                use_directory_urls=True,
-            )
-        ]
-    )
+    files = Files([File(path=path, src_dir="/Users", dest_dir="/Users/out", use_directory_urls=True)])
 
     new_files = patched_meta_files.change_files_slug(
         files=files, ignored_dirs=[Path(ignored_dir)] if ignored_dir else []
