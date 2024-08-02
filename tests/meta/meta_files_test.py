@@ -201,7 +201,7 @@ def test_meta_file(
     meta_files: MetaFiles = MetaFiles()
     meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
 
-    check.equal(meta_files.meta_file, "README.md", "Wrong meta file")
+    check.equal(meta_files.dir_meta_file, "README.md", "Wrong meta file")
 
 
 @pytest.mark.parametrize(

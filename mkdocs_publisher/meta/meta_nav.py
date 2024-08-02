@@ -70,9 +70,9 @@ class MetaNav:
                     break
             # Iterate over meta links until last one
             if meta_file.is_dir and meta_file.abs_path.is_relative_to(current_dir):
-                overview_path: Path = meta_file.abs_path.joinpath(self._meta_files.meta_file)
-                overview_nav: list[Path] = (
-                    [meta_file.path.joinpath(self._meta_files.meta_file)]
+                overview_path: Path = meta_file.abs_path.joinpath(self._meta_files.dir_meta_file)
+                overview_nav: list[str] = (
+                    [str(meta_file.path.joinpath(self._meta_files.dir_meta_file))]
                     if meta_file.is_overview and overview_path.exists() and not meta_file.is_draft
                     else []
                 )
@@ -89,7 +89,7 @@ class MetaNav:
                 return nav, meta_file  # Jump to subdirectory
             elif not meta_file.is_dir and not meta_file.is_draft and meta_file.path.suffix == ".md":
                 if meta_file.redirect and re.search(links.URL_RE_PART, meta_file.redirect):
-                    nav.append({meta_file.title: meta_file.redirect})
+                    nav.append({meta_file.title: str(meta_file.redirect)})
                     meta_file = None  # File added, skip to next
                 elif meta_file.redirect or meta_file.abs_path.is_relative_to(current_dir):
                     nav.append({meta_file.title: str(meta_file.path)})

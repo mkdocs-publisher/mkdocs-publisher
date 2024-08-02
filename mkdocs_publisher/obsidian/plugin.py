@@ -94,7 +94,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             for file in files:
                 if file.page is not None:
                     log.debug(f"Parsing backlinks in file '{file.src_path}'")
-                    with open(file.abs_src_path, encoding="utf-8-sig", errors="strict") as md_file:
+                    with open(str(file.abs_src_path), encoding="utf-8-sig", errors="strict") as md_file:
                         markdown, _ = meta_parser.get_data(md_file.read())
                         markdown = self._md_links.normalize_links(
                             markdown=markdown, current_file_path=Path(file.src_uri)
@@ -162,7 +162,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 return
 
             with server._rebuild_cond:
-                server._to_rebuild[server.builder] = True
+                server._want_rebuild = True  # type: ignore
                 server._rebuild_cond.notify_all()
 
         handler = watchdog.events.FileSystemEventHandler()
