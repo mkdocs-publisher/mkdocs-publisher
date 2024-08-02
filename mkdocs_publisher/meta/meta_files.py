@@ -86,7 +86,7 @@ class MetaFiles(UserDict):
         super().__init__()
 
     @property
-    def meta_file(self) -> str:
+    def dir_meta_file(self) -> str:
         return self._meta_plugin_config.dir_meta_file
 
     @property
@@ -394,7 +394,7 @@ class MetaFiles(UserDict):
         for position, path_part in enumerate(path_parts):
             meta_file: Optional[MetaFile] = self.get(str(path_part), None)
             if meta_file is not None:
-                url_parts[position] = meta_file.slug
+                url_parts[position] = str(meta_file.slug)
 
         # Recreate file params based on URL with replaced parts
         if file.url != ".":  # Do not modify main index page
@@ -405,7 +405,6 @@ class MetaFiles(UserDict):
             file.dest_uri = quote("/".join(url_parts))
             if file.dest_uri.endswith("index.html"):
                 file.url = f"{file.url}/"
-            file.abs_dest_path = str(Path(self._mkdocs_config.site_dir) / file.dest_uri)
 
     def change_files_slug(self, files: Files, ignored_dirs: list[Path]) -> Files:
         """Change file slug (part of the URL) based of file and parent directories slugs"""
@@ -418,7 +417,7 @@ class MetaFiles(UserDict):
             file_path: Path = Path(file.src_path)
             if (
                 (
-                    not any([Path(file.abs_src_path).is_relative_to(d) for d in ignored_dirs])
+                    not any([Path(str(file.abs_src_path)).is_relative_to(d) for d in ignored_dirs])
                     and file.src_path not in self.draft_files
                     and str(file_path.name) != self._meta_plugin_config.dir_meta_file
                 )
