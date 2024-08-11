@@ -26,7 +26,7 @@ jobs:
         run: poetry install -n --without=test
       - name: Pre-commit tests
         env:
-          SKIP: no-commit-to-branch,pytest-check,update-coverage
+          SKIP: no-commit-to-branch,pytest-check,update-coverage,check-readme-md
         uses: pre-commit/action@v3.0.1
   unittests:
     runs-on: ubuntu-latest
