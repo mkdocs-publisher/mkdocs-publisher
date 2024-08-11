@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-publisher"
-version = "1.4.1"
+version = "1.4.2"
 description = "Publisher for MkDocs - set of plugins for content creators"
 authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
 license = "MIT License"
@@ -61,8 +61,8 @@ mkdocs-material = "^9.5.31"
 
 [tool.poetry.group.dev.dependencies]
 yamllint = "^1.35.1"
-ruff = "^0.3.7"
-pyright = "^1.1.374"
+ruff = "^0.5.7"
+pyright = "^1.1.375"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.6.0"
