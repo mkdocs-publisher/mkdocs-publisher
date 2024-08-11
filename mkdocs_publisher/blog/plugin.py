@@ -107,7 +107,6 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
             else:
                 new_nav.append(nav_item)
         config.nav = new_nav
-
         return config
 
     def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation:

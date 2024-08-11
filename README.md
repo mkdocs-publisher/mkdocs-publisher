@@ -1,12 +1,12 @@
 # Publisher for MkDocs
 
-[![License type](https://img.shields.io/github/license/mkdocs-publisher/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=License)](https://opensource.org/license/mit/)
+[![License type](https://img.shields.io/github/license/mkusz/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=License)](https://opensource.org/license/mit/)
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=PyPi)](https://pypi.org/project/mkdocs-publisher/)
-[![PyPI - Python Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmkdocs-publisher%2Fmkdocs-publisher%2Fmain%2Fpyproject.toml&query=%24.tool.poetry.dependencies.python&logo=python&logoColor=white&style=plastic&label=Python)](https://www.python.org)
+[![PyPI - Python Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmkusz%2Fmkdocs-publisher%2Fmain%2Fpyproject.toml&query=%24.tool.poetry.dependencies.python&logo=python&logoColor=white&style=plastic&label=Python)](https://www.python.org)
 [![PyPI Downloads last month](https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=Downloads)](https://pypistats.org/search/mkdocs-publisher)
-[![GitHub last commit]( https://img.shields.io/github/last-commit/mkdocs-publisher/mkdocs-publisher?logo=github&logoColor=white&style=plastic&label=Last%20commit)](https://github.com/mkusz/mkdocs-publisher/commits/main)
+[![GitHub last commit](https://img.shields.io/github/last-commit/mkusz/mkdocs-publisher?logo=github&logoColor=white&style=plastic&label=Last%20commit)](https://github.com/mkusz/mkdocs-publisher/commits/main)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=plastic&label=Pre-commit)](https://github.com/pre-commit/pre-commit)
-![Code Coverage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmkdocs-publisher%2Fmkdocs-publisher%2Fmain%2Fcov.json&query=%24.percent_covered_display&suffix=%25&color=green&style=plastic&label=Code%20coverage)
+![Code Coverage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmkusz%2Fmkdocs-publisher%2Fmain%2Fcov.json&query=%24.percent_covered_display&suffix=%25&color=green&style=plastic&label=Code%20coverage)
 
 Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that helps with content creation and publication.
 
@@ -17,11 +17,12 @@ Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that helps w
 	- document publication status,
 	- possibility to define document and directories URL (good for SEO),
 	- document creation and update date (good for SEO),
+	-
 - [pub-blog](https://mkdocs-publisher.github.io/setup/general/pub-blog/) – blogging capability:
 	- index creation,
 	- support for blog post teasers,
 	- automatic creation of pages for archive, categories and tags,
-- [pub-obsidian](https://mkdocs-publisher.github.io/setup/general/pub-obsidian/) – bindings for [Obsidina.md](https://obsidian.md) that allows you to use:
+- [pub-obsidian](https://mkdocs-publisher.github.io/setup/general/pub-obsidian/) – bindings for [Obsidian.md](https://obsidian.md) that allows you to use:
 	- [backlinks](https://help.obsidian.md/Plugins/Backlinks),
 	- [callouts](https://help.obsidian.md/Editing+and+formatting/Callouts),
 	- [wikilinks](https://help.obsidian.md/Linking+notes+and+files/Internal+links),
@@ -36,7 +37,7 @@ Publisher for [MkDocs](https://www.mkdocs.org/) is a set of plugins that helps w
 pip install mkdocs-publisher
 ```
 
-More information about installation methods and plugin setup can be found on this [documentation page](https://mkusz.github.io/mkdocs-publisher/setup/installation/).
+More information about installation methods and plugin setup can be found on this [documentation page](https://mkdocs-publisher.github.io/setup/installation/).
 
 > [!warning]
 > Before any use, make sure you have a backup of your data.
@@ -61,8 +62,8 @@ plugins:
 
 ## Planned features
 
-A full list of planned developments can be found on [this documentation page](https://mkdocs-publisher.github.io/development/other/backlog/). I'm planning to move it to the project [GitHub issues](https://github.com/mkdocs-publisher/mkdocs-publisher/issues) with proper badges and longer descriptions, but it's time-consuming and at this stage I'd rather spend it developing a project.
+A full list of planned developments can be found on [this documentation page](https://mkdocs-publisher.github.io/development/other/backlog/). I'm planning to move it to the project [GitHub issues](https://github.com/mkusz/mkdocs-publisher/issues) with proper badges and longer descriptions, but it's time-consuming and at this stage I'd rather spend it developing a project.
 
 ## Version history
 
-The entire version history can be found in the project [version history](https://mkdocs-publisher.github.io/development/changelog/) document and inside [releases](https://github.com/mkdocs-publisher/mkdocs-publisher/releases).
+The entire version history can be found in the project [version history](https://mkdocs-publisher.github.io/development/changelog/) document and inside [releases](https://github.com/mkusz/mkdocs-publisher/releases).

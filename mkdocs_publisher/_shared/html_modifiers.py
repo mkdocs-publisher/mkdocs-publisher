@@ -33,7 +33,7 @@ class HTMLModifier:
         self._soup = BeautifulSoup(markup=markup, features="html.parser")
 
     def __repr__(self):
-        return self._soup.prettify()
+        return str(self._soup)
 
     def add_head_script(self, src: str):
         """Add script to the head section"""
