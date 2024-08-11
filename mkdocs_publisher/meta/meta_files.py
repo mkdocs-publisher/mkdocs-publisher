@@ -123,7 +123,6 @@ class MetaFiles(UserDict):
                 and self._meta_plugin_config.title.warn_on_missing_meta
                 and not (meta_file.is_draft or (meta_file.is_dir and not meta_file.is_overview))
             ):
-                log.critical(meta_file.is_draft)
                 log.warning(
                     f'Title value from "{self._meta_plugin_config.title.key_name}" meta data '
                     f'is missing for file: "{str(meta_file.path)}"'
