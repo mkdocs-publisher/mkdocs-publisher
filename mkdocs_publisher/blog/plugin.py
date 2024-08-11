@@ -57,12 +57,12 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
     def __init__(self):
         self._on_serve: bool = False
+        self._start_page: bool = False
         self._blog_files: BlogFiles = BlogFiles()
 
         # ==== Old below
 
         self.blog_config = BlogConfig()  # Empty instance
-        self._start_page: bool = False
 
     def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
         if command == "serve":
@@ -120,7 +120,6 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
             else:
                 new_nav.append(nav_item)
         config.nav = new_nav
-
         return config
 
     def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation:

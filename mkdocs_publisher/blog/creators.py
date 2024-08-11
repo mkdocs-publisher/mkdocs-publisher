@@ -71,7 +71,7 @@ def create_blog_post_pages(
     for index, date in enumerate(sorted(blog_config.blog_posts, reverse=True)):
         index = (
             "index"
-            if start_page and index < blog_config.plugin_config.posts_per_page
+            if index < blog_config.plugin_config.posts_per_page
             else f"index-{str(index//blog_config.plugin_config.posts_per_page)}"
         )
         if index not in posts_chunks:
@@ -107,9 +107,18 @@ def create_blog_post_pages(
 
     config_nav[blog_config.translation.blog_navigation_name] = []
 
+    blog_temp_dir = blog_config.temp_dir / blog_config.plugin_config.blog_dir
+    blog_temp_dir.mkdir(exist_ok=True)
+
     for key, single_posts_chunk in posts_chunks.items():
         file_name = f"{key}.md"
-        file_path = blog_config.temp_dir / file_name
+
+        if start_page and file_name == "index.md":
+            file_path = blog_config.temp_dir / file_name
+            full_file_path = f"{file_name}"
+        else:
+            file_path = blog_temp_dir / file_name
+            full_file_path = f"{blog_config.plugin_config.blog_dir}/{file_name}"
 
         _render_and_write_page(
             single_posts_chunk=single_posts_chunk,
@@ -120,8 +129,7 @@ def create_blog_post_pages(
 
         blog_config.temp_files[f"{blog_config.translation.blog_navigation_name}/{key}"] = file_path
         log.debug(f"Creating blog post chunk file: {file_path}")
-
-        config_nav[blog_config.translation.blog_navigation_name].append({key: file_name})
+        config_nav[blog_config.translation.blog_navigation_name].append({key: full_file_path})
 
     config_nav[blog_config.translation.blog_navigation_name].append(
         {
@@ -210,9 +218,9 @@ def _render_and_write_page(
     # TODO: when using pub-meta key name should be taken from plugin config
     page_meta = {"title": page_title}
     # TODO: consider moving slugify configuration to mkdocs.yaml
-    if file_path.name.startswith("index-0"):
-        slug = blog_config.plugin_config.slug
-    elif file_path.name.startswith("index"):
+    if file_path.name == "index.md":
+        slug = "."
+    elif file_path.name.startswith("index-"):
         slug = f"{blog_config.plugin_config.slug}/{file_path.stem.split('-')[-1]}"
     else:
         slug = slugify(text=page_title.split("-")[-1].strip())
