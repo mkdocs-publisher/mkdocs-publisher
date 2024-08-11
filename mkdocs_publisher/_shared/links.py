@@ -30,23 +30,23 @@ from typing import Optional
 log = logging.getLogger("mkdocs.publisher._shared.links")
 
 
-ANCHOR_RE_PART = r"((#(?P<anchor>([^|\][()'\"]+)))?)"
-EXTRA_RE_PART = r"( *({(?P<extra>[\w+=. ]+)})?)"
-IMAGE_RE_PART = r"((\|(?P<image>([0-9x]+)))?)"
-LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^|#()\r\n\t\f\v]+)"
-URL_RE_PART = r"(?P<link>((https?|ftp)://)[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
-TEXT_RE_PART = r"(?P<text>[^\][|]+)"
-LINK_TITLE_RE_PART = r"(( \"(?P<title>[ \S]+)\")?)"
+ANCHOR_PART_RE = r"((#(?P<anchor>([^|\][()'\"]+)))?)"
+EXTRA_PART_RE = r"( *({(?P<extra>[\w+=. ]+)})?)"
+IMAGE_PART_RE = r"((\|(?P<image>([0-9x]+)))?)"
+LINK_PART_RE = r"(?P<link>(?!(https?|ftp)://)[^|#()\r\n\t\f\v]+)"
+URL_PART_RE = r"(?P<link>((https?|ftp)://)[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
+TEXT_PART_RE = r"(?P<text>[^\][|]+)"
+TITLE_PART_RE = r"(( \"(?P<title>[ \S]+)\")?)"
 
-HTTP_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}]\({URL_RE_PART}\)")
-WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[{LINK_RE_PART}{ANCHOR_RE_PART}(\|{TEXT_RE_PART})?]]")
-WIKI_EMBED_LINK_RE = re.compile(rf"!\[\[{LINK_RE_PART}{ANCHOR_RE_PART}{IMAGE_RE_PART}]]{EXTRA_RE_PART}")
+HTTP_LINK_RE = re.compile(rf"\[{TEXT_PART_RE}]\({URL_PART_RE}\)")
+WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[{LINK_PART_RE}{ANCHOR_PART_RE}(\|{TEXT_PART_RE})?]]")
+WIKI_EMBED_LINK_RE = re.compile(rf"!\[\[{LINK_PART_RE}{ANCHOR_PART_RE}{IMAGE_PART_RE}]]{EXTRA_PART_RE}")
 MD_LINK_RE = re.compile(
-    rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}" rf"{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
+    rf"(?<!!)\[{TEXT_PART_RE}]\({LINK_PART_RE}{ANCHOR_PART_RE}" rf"{TITLE_PART_RE}\){EXTRA_PART_RE}"
 )
-MD_EMBED_LINK_RE = re.compile(rf"!\[{TEXT_RE_PART}]\({LINK_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}")
-RELATIVE_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}?]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
-ANCHOR_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_RE_PART}]\({ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
+MD_EMBED_LINK_RE = re.compile(rf"!\[{TEXT_PART_RE}]\({LINK_PART_RE}{TITLE_PART_RE}\){EXTRA_PART_RE}")
+RELATIVE_LINK_RE = re.compile(rf"\[{TEXT_PART_RE}?]\({LINK_PART_RE}{ANCHOR_PART_RE}{TITLE_PART_RE}\)")
+ANCHOR_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_PART_RE}]\({ANCHOR_PART_RE}{TITLE_PART_RE}\)")
 
 
 def slugify(anchor: str) -> str:

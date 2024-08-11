@@ -27,7 +27,6 @@ from typing import Optional
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
-from mkdocs.structure.files import Files
 from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
@@ -58,15 +57,12 @@ OPEN_GRAPH_PROPERTIES = [
 class SocialPlugin(BasePlugin[SocialConfig]):
     supports_multiple_instances = False
 
-    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> Optional[str]:
-        pass
-
     @event_priority(-99)
     def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
         html_modifier = HTMLModifier(markup=output)
 
         log.debug(f"Processing social properties for file: '{page.file.src_path}'")
-        log.debug("Removing old Twitter and Open Graph properties")
+        log.debug(r"Removing old X\Twitter and Open Graph properties")
         html_modifier.remove_meta_properties(properties=OPEN_GRAPH_PROPERTIES)
         html_modifier.remove_meta_properties(properties=TWITTER_PROPERTIES)
 
@@ -111,7 +107,7 @@ class SocialPlugin(BasePlugin[SocialConfig]):
                 html_modifier.add_meta_property(name="og:image", value=image)
 
         if self.config.twitter.enabled and title and description:
-            log.debug("Adding Twitter/X properties")
+            log.debug(r"Adding X\Twitter properties")
             card_type = "summary_large_image" if image else "summary"
             html_modifier.add_meta_property(name="twitter:card", value=card_type)
             html_modifier.add_meta_property(name="twitter:title", value=title)

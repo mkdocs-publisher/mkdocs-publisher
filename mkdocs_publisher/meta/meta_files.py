@@ -166,14 +166,14 @@ class MetaFiles(UserDict):
                 anchor = f"#{link.anchor}" if link.anchor else ""
                 redirect = f"{link.link}{anchor}"
 
-            elif match := re.search(links.URL_RE_PART, markdown):
+            elif match := re.search(links.URL_PART_RE, markdown):
                 redirect = match.groupdict()["link"]
             else:
                 redirect = None
 
         meta[self._meta_plugin_config.redirect.key_name] = redirect
 
-        if isinstance(redirect, str) and not re.search(links.URL_RE_PART, redirect):
+        if isinstance(redirect, str) and not re.search(links.URL_PART_RE, redirect):
             # Document with redirection should be hidden
             meta[self._meta_plugin_config.publish.key_name] = PublishChoiceEnum.HIDDEN.name.lower()
 
@@ -428,7 +428,7 @@ class MetaFiles(UserDict):
         """Generates content of redirect page"""
 
         meta_file: MetaFile = self[file.src_path]
-        if meta_file.redirect and not re.search(links.URL_RE_PART, meta_file.redirect):
+        if meta_file.redirect and not re.search(links.URL_PART_RE, meta_file.redirect):
             log.debug(f"Generating redirect template in file: {meta_file.path}")
             redirect_context = {
                 "title": self[str(meta_file.path)].title,
@@ -448,7 +448,7 @@ class MetaFiles(UserDict):
             if (
                 file.src_path in self
                 and self[file.src_path].redirect
-                and re.search(links.URL_RE_PART, self[file.src_path].redirect)
+                and re.search(links.URL_PART_RE, self[file.src_path].redirect)
             ):
                 is_redirect_file = True
             if not is_redirect_file:

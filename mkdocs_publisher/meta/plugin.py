@@ -126,3 +126,9 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             if redirect_page:
                 output = redirect_page
         return output
+
+    # TODO: sitemap modification for hidden, draft and by frontmatter
+    # def on_post_template(self, output_content: str, /, *, template_name: str, config: MkDocsConfig) -> Optional[str]:
+    #     if template_name == "sitemap.xml":
+    #         log.warning(template_name)
+    #         log.warning(output_content)

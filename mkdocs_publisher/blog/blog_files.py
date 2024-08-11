@@ -95,7 +95,15 @@ class BlogFiles(UserDict):
             )
             self[str(blog_file.path)] = blog_file
 
+    def _get_metadata(self, blog_file: BlogFile, blog_file_path: Path):  # pragma: no cover
+        """Read all metadata values for given file"""
+
+        markdown, meta = mkdocs_utils.read_md_file(md_file_path=blog_file_path)
+        _ = markdown
+        log.critical(meta)
+
     def __setitem__(self, path: str, blog_file: BlogFile):
-        # TODO: add meta parser with meta or blog config
+        """Add file"""
+        self._get_metadata(blog_file=blog_file, blog_file_path=blog_file.abs_path)
 
         super().__setitem__(path, blog_file)
