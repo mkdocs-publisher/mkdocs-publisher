@@ -23,7 +23,6 @@
 import logging
 import re
 from pathlib import Path
-from typing import Optional
 from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
@@ -38,14 +37,14 @@ log = logging.getLogger("mkdocs.publisher.obsidian.md_links")
 
 class MarkdownLinks:
     def __init__(self, mkdocs_config: MkDocsConfig):
-        self._current_file_path: Optional[Path] = None
-        self._current_relative_path: Optional[Path] = None
+        self._current_file_path: Path | None = None
+        self._current_relative_path: Path | None = None
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._links_config: ObsidianPluginConfig = cast(
             ObsidianPluginConfig,
             mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-obsidian"),
         )
-        self._blog_config: Optional[BlogPluginConfig] = cast(
+        self._blog_config: BlogPluginConfig | None = cast(
             BlogPluginConfig,
             mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-blog"),
         )

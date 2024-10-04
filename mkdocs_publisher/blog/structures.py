@@ -25,7 +25,6 @@ from dataclasses import dataclass
 from dataclasses import field
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 
@@ -40,11 +39,11 @@ class BlogPost:
 
     title: str
     date: datetime
-    path: Optional[str]
-    content: Optional[str]
-    tags: Optional[list[str]]
-    categories: Optional[list[str]]
-    slug: Optional[str] = None
+    path: str | None
+    content: str | None
+    tags: list[str] | None
+    categories: list[str] | None
+    slug: str | None = None
     teaser: str = ""
     is_teaser: bool = False
 
@@ -77,7 +76,7 @@ class Translation:
 class BlogConfig:
     mkdocs_config: MkDocsConfig = field(init=False)
     plugin_config: BlogPluginConfig = field(init=False)
-    meta_config: Optional[MetaPluginConfig] = field(init=False, default=None)
+    meta_config: MetaPluginConfig | None = field(init=False, default=None)
     translation: Translation = field(init=False)
     temp_dir: Path = field(init=False)
     docs_dir: Path = field(init=False)
@@ -98,7 +97,7 @@ class BlogConfig:
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
-        self.meta_config: Optional[MetaPluginConfig] = (
+        self.meta_config: MetaPluginConfig | None = (
             mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta") or None
         )  # type: ignore
         self.temp_dir = Path(plugin_config.temp_dir)

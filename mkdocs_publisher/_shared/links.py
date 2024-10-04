@@ -22,10 +22,15 @@
 
 import logging
 import re
+import urllib.parse
 from dataclasses import dataclass
+from dataclasses import field
 from hashlib import md5
 from pathlib import Path
-from typing import Optional
+
+import pymdownx.slugs
+
+from mkdocs_publisher._shared.config_enums import SlugModeChoiceEnum
 
 log = logging.getLogger("mkdocs.publisher._shared.links")
 
@@ -41,16 +46,45 @@ TITLE_PART_RE = r"(( \"(?P<title>[ \S]+)\")?)"
 HTTP_LINK_RE = re.compile(rf"\[{TEXT_PART_RE}]\({URL_PART_RE}\)")
 WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[{LINK_PART_RE}{ANCHOR_PART_RE}(\|{TEXT_PART_RE})?]]")
 WIKI_EMBED_LINK_RE = re.compile(rf"!\[\[{LINK_PART_RE}{ANCHOR_PART_RE}{IMAGE_PART_RE}]]{EXTRA_PART_RE}")
-MD_LINK_RE = re.compile(
-    rf"(?<!!)\[{TEXT_PART_RE}]\({LINK_PART_RE}{ANCHOR_PART_RE}" rf"{TITLE_PART_RE}\){EXTRA_PART_RE}"
-)
+MD_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_PART_RE}]\({LINK_PART_RE}{ANCHOR_PART_RE}{TITLE_PART_RE}\){EXTRA_PART_RE}")
+MD_ANY_LINK_RE = re.compile(rf"!?\[{TEXT_PART_RE}]\({LINK_PART_RE}{ANCHOR_PART_RE}{TITLE_PART_RE}\){EXTRA_PART_RE}")
 MD_EMBED_LINK_RE = re.compile(rf"!\[{TEXT_PART_RE}]\({LINK_PART_RE}{TITLE_PART_RE}\){EXTRA_PART_RE}")
 RELATIVE_LINK_RE = re.compile(rf"\[{TEXT_PART_RE}?]\({LINK_PART_RE}{ANCHOR_PART_RE}{TITLE_PART_RE}\)")
 ANCHOR_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_PART_RE}]\({ANCHOR_PART_RE}{TITLE_PART_RE}\)")
 
 
-def slugify(anchor: str) -> str:
-    return anchor.lower().replace("%20", "-")
+def slugify(text: str) -> str:
+    """Text slugify function that produces the same slug as MkDocs one"""
+
+    text = urllib.parse.unquote(text)
+    text = pymdownx.slugs.slugify(case="lower", normalize="NFD")(text=text, sep="-")
+    return str(text).encode("ASCII", "ignore").decode("utf-8")
+
+
+def create_slug(
+    file_name: str,
+    slug_mode: SlugModeChoiceEnum | str,
+    slug: str | None,
+    title: str | None,
+    warn_on_missing: bool = True,
+) -> str | None:
+    """Generate slug for various modes"""
+    # When slug from meta key is not present, try to get slug value the other way
+    if slug is None or slug == "none":
+        if slug_mode == SlugModeChoiceEnum.TITLE and title is not None:
+            slug = slugify(text=title)
+        elif slug_mode == SlugModeChoiceEnum.FILENAME:
+            slug = slugify(text=file_name)
+
+    # Log slug value
+    if slug is None or slug == "none":
+        slug = slugify(text=file_name)
+
+        if warn_on_missing:
+            log.warning(f'No slug for file "{file_name}" ' f"(mode: {slug_mode}). Fallback to file name.")
+
+    log.debug(f'Slug for file "{file_name}" is: "{slug}"')
+    return slug
 
 
 class RelativePathFinder:
@@ -67,7 +101,7 @@ class RelativePathFinder:
     def relative_path(self) -> Path:
         return self._relative_path
 
-    def get_full_file_path(self, file_path: Path) -> Optional[Path]:
+    def get_full_file_path(self, file_path: Path) -> Path | None:
         """Find full file path."""
         full_file_path = self._docs_dir / file_path
         log.debug(f"Looking for file: {str(full_file_path)}")
@@ -95,7 +129,7 @@ class RelativePathFinder:
                 full_file_path = None
         return full_file_path
 
-    def get_relative_file_path(self, file_path: Optional[Path]) -> Optional[str]:
+    def get_relative_file_path(self, file_path: Path | None) -> str | None:
         """Get file path relative to currently opened file."""
         if file_path is not None:
             current_file_parts = list(Path(self._current_file_path).parts)
@@ -121,20 +155,32 @@ class RelativePathFinder:
             return None
 
 
-@dataclass
-class LinkMatch:
-    anchor: Optional[str]
-    text: Optional[str]
-    extra: Optional[str] = None
-    link: Optional[str] = None
-    title: Optional[str] = None
+@dataclass(kw_only=True)
+class _LinksCommon:
+    anchor: str | None = None
+    extra: str | None = None
+    title: str | None = None
+    _anchor: str = field(init=False, repr=False, compare=False, default="")
+    _extra_list: list[str] = field(init=False, repr=False, compare=False, default_factory=lambda: [])
+    _title: str = field(init=False, repr=False, compare=False, default="")
+
+    def __post_init__(self):
+        self._anchor = f"#{slugify(self.anchor)}" if self.anchor else ""
+        self._extra_list = self.extra.strip().split(" ") if self.extra else []
+        self._title = f' "{self.title}"' if self.title else ""
+
+    @property
+    def _extra(self) -> str:
+        return f'{{ {" ".join(self._extra_list)} }}' if self._extra_list else ""
+
+
+@dataclass(kw_only=True)
+class LinkMatch(_LinksCommon):
+    text: str | None
+    link: str | None = None
     is_wiki: bool = False
 
     def __repr__(self):
-        anchor = f"#{slugify(self.anchor)}" if self.anchor else ""
-        extra: list = self.extra.strip().split(" ") if self.extra else []
-        title = f' "{self.title}"' if self.title else ""
-
         if self.is_wiki:
             if self.text is None and self.anchor:
                 self.text = f"{self.link} > {self.anchor}"
@@ -144,8 +190,7 @@ class LinkMatch:
         else:
             link = self.link if self.link else ""
 
-        link_extra = f'{{ {" ".join(extra)} }}' if extra else ""
-        final_link = f"[{self.text}]({link}{anchor}{title}){link_extra}"
+        final_link = f"[{self.text}]({link}{self._anchor}{self._title}){self._extra}"
         log.debug(final_link)
         return final_link
 
@@ -155,83 +200,64 @@ class LinkMatch:
 
     @property
     def as_backlink(self):
-        anchor = f"#{slugify(self.anchor)}" if self.anchor else ""
-        extra: list = self.extra.strip().split(" ") if self.extra else []
-        extra.append(self.backlink_anchor)
+        self._extra_list.append(self.backlink_anchor)
         title = f' "{self.title}"' if self.title else ""
         link = self.link if self.link else ""
 
-        link_extra = f'{{ {" ".join(extra)} }}' if extra else ""
-        final_link = f"[{self.text}]({link}{anchor}{title}){link_extra}"
+        final_link = f"[{self.text}]({link}{self._anchor}{title}){self._extra}"
         log.debug(final_link)
         return final_link
 
 
-@dataclass
-class WikiEmbedLinkMatch:
-    anchor: Optional[str]
-    extra: Optional[str]
-    image: Optional[str]
+@dataclass(kw_only=True)
+class WikiEmbedLinkMatch(_LinksCommon):
+    image: str | None
     link: str
 
     def __repr__(self):
-        extra: list = self.extra.strip().split(" ") if self.extra else []
-
         if self.image:
             try:
                 width, height = self.image.split("x")
             except ValueError:
                 width = self.image
                 height = None
-            extra.append(f"width={width}")
+            self._extra_list.append(f"width={width}")
             if height:
-                extra.append(f"height={height}")
+                self._extra_list.append(f"height={height}")
 
         if str(self.link).lower().endswith(".pdf"):
-            extra.append("pdfjs")
+            self._extra_list.append("pdfjs")
             if self.anchor:
-                extra.append(self.anchor)
+                self._extra_list.append(self.anchor)
             self.anchor = None
 
-        link_extra = f'{{ {" ".join(extra)} }}' if extra else ""
-        final_link = f"![{self.link.split('/')[-1]}]({self.link}){link_extra}"
+        final_link = f"![{self.link.split('/')[-1]}]({self.link}){self._extra}"
         log.debug(final_link)
         return final_link
 
 
-@dataclass
-class MdEmbedLinkMatch:
-    extra: Optional[str]
+@dataclass(kw_only=True)
+class MdEmbedLinkMatch(_LinksCommon):
     link: str
     text: str
-    title: Optional[str]
     is_loading_lazy: bool = True
 
     def __repr__(self):
-        extra: list = self.extra.strip().split(" ") if self.extra else []
-        title = f' "{self.title}"' if self.title else ""
-
-        if self.is_loading_lazy and "loading=lazy" not in extra:
-            extra.append("loading=lazy")
-        link_extra = f'{{ {" ".join(extra)} }}' if extra else ""
-        final_link = f"![{self.text}]({self.link}{title}){link_extra}"
+        if self.is_loading_lazy and "loading=lazy" not in self._extra_list:
+            self._extra_list.append("loading=lazy")
+        final_link = f"![{self.text}]({self.link}{self._title}){self._extra}"
         log.debug(final_link)
         return final_link
 
 
-@dataclass
-class RelativeLinkMatch:
-    anchor: Optional[str]
+@dataclass(kw_only=True)
+class RelativeLinkMatch(_LinksCommon):
     link: str
     text: str
-    title: Optional[str]
-    relative_path_finder: Optional[RelativePathFinder] = None
+    relative_path_finder: RelativePathFinder | None = None
 
     def __repr__(self):
-        anchor = f"#{slugify(self.anchor)}" if self.anchor else ""
-        title = f' "{self.title}"' if self.title else ""
-
-        # The same page anchor link doesn't have file part
+        # On the same page anchor link doesn't have file part
         if self.link.startswith("#"):
             final_link = f"[{self.text}]({self.link})"
         else:
@@ -252,6 +278,6 @@ class RelativeLinkMatch:
                     link = ""
             else:
                 link = self.link
-            final_link = f"[{self.text}]({link}{anchor}{title})"
+            final_link = f"[{self.text}]({link}{self._anchor}{self._title})"
         log.debug(final_link)
         return final_link

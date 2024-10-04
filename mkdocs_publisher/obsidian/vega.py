@@ -23,7 +23,6 @@
 import json
 import logging
 import re
-from typing import Optional
 
 import jinja2
 
@@ -62,7 +61,7 @@ class VegaCharts:
     def generate_charts(self, markdown: str) -> str:
         in_vega_block: bool = False
         vega_block_lines: list = []
-        vega_schema: Optional[str] = None
+        vega_schema: str | None = None
         markdown_lines = []
 
         for line in markdown.split("\n"):

@@ -21,17 +21,18 @@
 # SOFTWARE.
 
 import logging
+import shutil
 import tempfile
-from collections import UserDict
 from dataclasses import dataclass
 from dataclasses import field
+from math import ceil
 from pathlib import Path
-from typing import Optional
 from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher._shared import mkdocs_utils
+from mkdocs_publisher._shared import publisher_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
 
@@ -42,46 +43,42 @@ log = logging.getLogger("mkdocs.publisher.blog.blog_files")
 class BlogFile:
     path: Path
     abs_path: Path = field(repr=False)
-    is_meta: bool = field(default=False)
-    teaser: Optional[str] = field(default=None, repr=False)
-    markdown: Optional[str] = field(default=None, repr=False)
-    date_created: Optional[int] = field(default=None)
-    date_updated: Optional[int] = field(default=None)
+    is_dir: bool = field(default=False)
+    is_draft: bool | None = field(default=None)
+    teaser: str | None = field(default=None, repr=False)
+    markdown: str | None = field(default=None, repr=False)
+    date_created: int | None = field(default=None)
+    date_updated: int | None = field(default=None)
+    read_time_sec: int | None = field(default=None)
     tags: list[str] = field(default_factory=lambda: [])
     categories: list[str] = field(default_factory=lambda: [])
 
 
-class BlogFiles(UserDict):
+class BlogFiles(publisher_utils.PublisherFiles):
     def __init__(self):
-        self._on_serve: bool = False
-        self._mkdocs_config: Optional[MkDocsConfig] = None
-        self._blog_plugin_config: Optional[BlogPluginConfig] = None
-        self._meta_plugin_config: Optional[MetaPluginConfig] = None
-        self._abs_blog_path: Optional[Path] = None
-        self._abs_blog_temp_path: Optional[Path] = None
+        self._blog_plugin_config: BlogPluginConfig | None = None
+        self._abs_blog_path: Path | None = None
+        self._abs_blog_temp_path: Path | None = None
         self._dir_meta_file: str = "README.md"
+
         super().__init__()
 
-    @property
-    def on_serve(self) -> bool:
-        return self._on_serve
-
-    @on_serve.setter
-    def on_serve(self, on_serve: bool):
-        self._on_serve = on_serve
-
     def remove_temp_dirs(self):
-        """Remove file"""
-        # shutil.rmtree(self._abs_blog_temp_path, ignore_errors=True)
+        """Remove temporary files"""
+        shutil.rmtree(str(self._abs_blog_temp_path), ignore_errors=True)
 
     def set_configs(self, mkdocs_config: MkDocsConfig, blog_plugin_config: BlogPluginConfig):
-        self._mkdocs_config = mkdocs_config
+        super().set_configs(
+            mkdocs_config=mkdocs_config,
+            meta_plugin_config=cast(
+                MetaPluginConfig, mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta")
+            ),
+        )
+
         self._blog_plugin_config = blog_plugin_config
         self._abs_blog_path = Path(self._mkdocs_config.docs_dir) / Path(self._blog_plugin_config.blog_dir)
         self._abs_blog_temp_path = Path(tempfile.mkdtemp(prefix=".pub_blog_", dir=Path(self._mkdocs_config.docs_dir)))
-        self._meta_plugin_config = cast(
-            MetaPluginConfig, mkdocs_utils.get_plugin_config(mkdocs_config=self._mkdocs_config, plugin_name="pub-meta")
-        )
+
         if self._meta_plugin_config:
             self._dir_meta_file = self._meta_plugin_config.dir_meta_file
 
@@ -91,16 +88,27 @@ class BlogFiles(UserDict):
             blog_file = BlogFile(
                 path=docs_file.relative_to(self._mkdocs_config.docs_dir),
                 abs_path=docs_file,
-                is_meta=docs_file.name == self._dir_meta_file,
+                is_dir=docs_file.name == self._dir_meta_file,
             )
             self[str(blog_file.path)] = blog_file
 
-    def _get_metadata(self, blog_file: BlogFile, blog_file_path: Path):  # pragma: no cover
+    def _get_metadata(self, blog_file: BlogFile, blog_file_path: Path):
         """Read all metadata values for given file"""
 
         markdown, meta = mkdocs_utils.read_md_file(md_file_path=blog_file_path)
-        _ = markdown
-        log.critical(meta)
+
+        log.warning(meta)
+
+        # Parse teaser
+        teaser_lines = []
+        for line in markdown.split("\n"):
+            teaser_lines.append(line)
+            if line == self._blog_plugin_config.posts.teaser_separator:
+                blog_file.teaser = "\n".join(teaser_lines)
+
+        blog_file.read_time_sec = ceil(
+            mkdocs_utils.count_words(markdown) * 60 / self._blog_plugin_config.posts.words_per_minute
+        )
 
     def __setitem__(self, path: str, blog_file: BlogFile):
         """Add file"""

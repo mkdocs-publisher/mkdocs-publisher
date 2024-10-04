@@ -56,6 +56,7 @@ class _BlogCommentsConfig(Config):
 
 class _BlogPostsConfig(Config):
     teaser_separator = option.Type(str, default="<!-- more -->")
+    words_per_minute = option.Type(int, default=238)
 
 
 class _BlogTagsConfig(Config):

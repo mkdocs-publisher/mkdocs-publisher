@@ -28,7 +28,6 @@ from dataclasses import field
 from pathlib import Path
 from threading import Semaphore
 from threading import Thread
-from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 
@@ -41,7 +40,7 @@ log = logging.getLogger("mkdocs.publisher.minifier.base")
 
 @dataclass
 class CachedFile:
-    original_file_hash: Optional[str] = field(default="")
+    original_file_hash: str | None = field(default="")
     original_file_path: Path = field(default_factory=lambda: Path(""))
     cached_file_name: Path = field(default_factory=lambda: Path(""))
 
@@ -74,13 +73,13 @@ class BaseMinifier:
     ):
         self._plugin_config: MinifierConfig = plugin_config
         self._mkdocs_config: MkDocsConfig = mkdocs_config
-        self._minify_options: Optional[_MinifierCommonConfig] = None
+        self._minify_options: _MinifierCommonConfig | None = None
         self._cached_files: dict[str, CachedFile] = cached_files
         self._cache_enabled: bool = self._plugin_config.cache_enabled
         self._exclude: list = self._plugin_config.exclude[:]
         self._system = platform.system()
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         raise NotImplementedError
 
     def are_tools_installed(self) -> bool:
@@ -120,7 +119,7 @@ class BaseMinifier:
             for thread in threads:
                 thread.join()
 
-    def _is_new_smaller(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def _is_new_smaller(self, cached_file: CachedFile) -> CachedFile | None:
         old_file = self._mkdocs_config.site_dir / cached_file.original_file_path
         new_file = self._plugin_config.cache_dir / cached_file.cached_file_name
         new_file_size = new_file.stat().st_size
@@ -150,6 +149,7 @@ class BaseMinifier:
 
     def _minify_with_cache(self, file: Path, cache_enabled: bool, semaphore: Semaphore):
         recreate_file = False
+        file_hash = None
         if cache_enabled and str(file) in self._cached_files:
             log.debug(f"{file} is in cache")
             file_hash = file_utils.calculate_file_hash(file=(self._mkdocs_config.site_dir / file))
@@ -166,6 +166,7 @@ class BaseMinifier:
                     f"{file} hash is not equal to one in cache "
                     f"(file: {file_hash} | cache: {cached_file.original_file_hash})"
                 )
+
                 recreate_file = True
         else:
             log.debug(f"{file} is not in cache (rebuilding")
@@ -180,6 +181,7 @@ class BaseMinifier:
             if cached_file:
                 cached_file = self._is_new_smaller(cached_file=cached_file)
             if cached_file:
+                cached_file.original_file_hash = file_hash
                 self._cached_files[str(cached_file.original_file_path)] = cached_file
                 self._copy_cached_file(cached_file=cached_file)
         else:

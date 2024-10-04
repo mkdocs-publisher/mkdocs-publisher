@@ -23,7 +23,6 @@
 import logging
 import re
 from pathlib import Path
-from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.nav import Link
@@ -38,9 +37,9 @@ log = logging.getLogger("mkdocs.publisher.meta.nav")
 
 
 class MetaNav:
-    def __init__(self, meta_files: MetaFiles, blog_dir: Optional[Path] = None):
+    def __init__(self, meta_files: MetaFiles, blog_dir: Path | None = None):
         self._meta_files: MetaFiles = meta_files
-        self._blog_dir: Optional[Path] = blog_dir
+        self._blog_dir: Path | None = blog_dir
 
     def nav_cleanup(self, items, removal_list: list[str]) -> list:
         # log.info(removal_list)
@@ -59,9 +58,9 @@ class MetaNav:
                 nav.append(item)
         return nav
 
-    def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, Optional[MetaFile]]:
+    def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, MetaFile | None]:
         nav = []
-        meta_file: Optional[MetaFile] = None
+        meta_file: MetaFile | None = None
         while True:
             if meta_file is None:
                 try:

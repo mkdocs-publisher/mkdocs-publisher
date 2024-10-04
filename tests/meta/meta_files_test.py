@@ -22,8 +22,6 @@
 
 import logging
 from pathlib import Path
-from typing import Optional
-from typing import Union
 from unittest.mock import patch
 
 import pytest
@@ -115,7 +113,7 @@ def test_title(
     markdown: str,
     is_dir: bool,
     expected: str,
-    warn: Optional[str],
+    warn: str | None,
     caplog: LogCaptureFixture,
 ):
     meta_file: MetaFile = MetaFile(
@@ -149,8 +147,8 @@ def test_redirect(
     pub_meta_plugin: MetaPlugin,
     meta: dict,
     markdown: str,
-    expected_publish: Optional[str],
-    expected_redirect: Optional[str],
+    expected_publish: str | None,
+    expected_redirect: str | None,
     caplog: LogCaptureFixture,
 ):
     meta_file: MetaFile = MetaFile(
@@ -184,7 +182,7 @@ def test_on_serve(mkdocs_config: MkDocsConfig, pub_meta_plugin: MetaPlugin):
 def test_add_hidden(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
-    hidden_path: Optional[Path],
+    hidden_path: Path | None,
     expected: list,
 ):
     meta_files: MetaFiles = MetaFiles()
@@ -228,7 +226,7 @@ def test_get_publish_status_for_files(
     on_serve: bool,
     is_draft: bool,
     is_hidden: bool,
-    warning: Optional[str],
+    warning: str | None,
 ):
     meta_files: MetaFiles = MetaFiles()
     meta_files.on_serve = on_serve
@@ -268,7 +266,7 @@ def test_get_publish_status_for_dirs(
     on_serve: bool,
     is_draft: bool,
     is_hidden: bool,
-    warning: Optional[str],
+    warning: str | None,
 ):
     meta_files: MetaFiles = MetaFiles()
     meta_files.on_serve = on_serve
@@ -338,8 +336,8 @@ def test_drafts_and_hidden(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     patched_meta_files: MetaFiles,
-    publish_dir: Union[str, bool],
-    publish_file: Union[str, bool],
+    publish_dir: str | bool,
+    publish_file: str | bool,
     drafts_keys: list[str],
     draft_file_keys: list[str],
     draft_dir_keys: list[str],
@@ -400,7 +398,7 @@ def test_add_meta_files(
         patch.object(Path, "is_dir", return_value=is_dir),
         patch.object(Path, "rglob", return_value=[Path(path)]),
     ):
-        patched_meta_files.add_meta_files(ignored_dirs=[Path(ignored_dir) for ignored_dir in ignored_dirs])
+        patched_meta_files.add_files(ignored_dirs=[Path(ignored_dir) for ignored_dir in ignored_dirs])
 
     check.equal(list(patched_meta_files.keys()), expected)
 
@@ -417,7 +415,7 @@ def test_files_gen(
             patch.object(Path, "is_dir", return_value=False),
             patch.object(Path, "rglob", return_value=[Path(path)]),
         ):
-            patched_meta_files.add_meta_files(ignored_dirs=[])
+            patched_meta_files.add_files(ignored_dirs=[])
 
     gen_files_paths = []
     for file in patched_meta_files.files_gen():
@@ -438,7 +436,7 @@ def test_clean_redirect_files(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     patched_meta_files: MetaFiles,
-    redirect: Optional[str],
+    redirect: str | None,
     expected_nr_of_files: int,
 ):
     patched_meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
@@ -479,8 +477,8 @@ def test_generate_redirect_page(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     patched_meta_files: MetaFiles,
-    redirect: Optional[str],
-    expected_result: Optional[str],
+    redirect: str | None,
+    expected_result: str | None,
 ):
     patched_meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
 
@@ -532,9 +530,9 @@ def test_change_file_slug(
     patched_meta_files: MetaFiles,
     path: str,
     with_meta_file: bool,
-    file_slug: Optional[str],
-    dir_slug: Optional[str],
-    expected_url: Optional[str],
+    file_slug: str | None,
+    dir_slug: str | None,
+    expected_url: str | None,
 ):
     patched_meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
 
@@ -589,8 +587,8 @@ def test_change_files_slug(
     path: str,
     with_meta_file: bool,
     is_draft: bool,
-    ignored_dir: Optional[str],
-    expected_url: Optional[str],
+    ignored_dir: str | None,
+    expected_url: str | None,
 ):
     patched_meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
 

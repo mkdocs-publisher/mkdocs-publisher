@@ -27,7 +27,6 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Any
 from typing import Literal
-from typing import Optional
 from typing import cast
 
 from mkdocs.config import Config
@@ -137,7 +136,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     @event_priority(-100)  # Run after all other plugins
     def on_page_context(
         self, context: dict[str, Any], *, page: Page, config: MkDocsConfig, nav: Navigation
-    ) -> Optional[dict[str, Any]]:
+    ) -> dict[str, Any] | None:
         if Path(page.file.src_path).parts[0] == self.config.blog_dir:
             page.meta[self.config.comments.key_name] = self.config.comments.enabled
 
@@ -149,7 +148,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         return context
 
     @event_priority(-100)  # Run after all other plugins
-    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> Optional[str]:
+    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> str | None:
         md_links = MarkdownLinks(mkdocs_config=config)
         markdown = md_links.normalize_relative_links(
             markdown=markdown,
@@ -173,6 +172,14 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
             markdown = re.sub(links.RELATIVE_LINK_RE, _blog_index_re, markdown)
         return markdown
+
+    @event_priority(-100)  # Run after all other plugins
+    def on_post_build(self, *, config: MkDocsConfig) -> None:
+        self._blog_files.remove_temp_dirs()
+
+        # ==== Old below
+        with contextlib.suppress(AttributeError):
+            file_utils.remove_dir(directory=self.blog_config.temp_dir)
 
     @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:

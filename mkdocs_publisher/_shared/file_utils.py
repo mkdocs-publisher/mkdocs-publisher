@@ -24,7 +24,6 @@ import logging
 import subprocess
 from hashlib import md5
 from pathlib import Path
-from typing import Optional
 from uuid import uuid4
 
 log = logging.getLogger("mkdocs.publisher._shared.file_utils")
@@ -45,7 +44,7 @@ def remove_dir(directory: Path):
             file.unlink(missing_ok=True)
 
 
-def calculate_file_hash(file: Path, block_size: int = 65536) -> Optional[str]:
+def calculate_file_hash(file: Path, block_size: int = 65536) -> str | None:
     try:
         with open(file, "rb") as binary_file:
             file_hash = md5()
@@ -58,22 +57,25 @@ def calculate_file_hash(file: Path, block_size: int = 65536) -> Optional[str]:
 
 def list_files(
     directory: Path,
-    extensions: Optional[list[str]] = None,
-    exclude: Optional[list[str]] = None,
+    extensions: list[str] | None = None,
+    exclude: list[str] | None = None,
 ) -> list[Path]:
-    temp_files_list: list[Path] = []
+    files_list: list[Path] = []
     extensions = [] if extensions is None else extensions
     exclude = [] if exclude is None else exclude
-    for ext in extensions:
-        for file in directory.glob(f"**/*{ext}"):
-            temp_files_list.append(file.relative_to(directory))
 
     excluded_files_list: list[Path] = []
     for exc in exclude:
         for file in directory.rglob(exc):
             excluded_files_list.append(file.relative_to(directory))
 
-    files_list: list[Path] = [file for file in temp_files_list if file not in excluded_files_list]
+    for ext in extensions:
+        for file in directory.glob(f"**/*{ext}"):
+            file_relative_path = file.relative_to(directory)
+            for exc in excluded_files_list:
+                if not str(file_relative_path).startswith(str(exc)):
+                    files_list.append(file.relative_to(directory))
+
     return files_list
 
 

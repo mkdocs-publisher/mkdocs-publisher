@@ -39,8 +39,8 @@ from mkdocs_publisher.debugger.config import DebuggerConfig
 
 log = logging.getLogger("mkdocs.publisher.debug.plugin")
 
-LOG_FILENAME_SUFFIX = "_mkdocs_build.log"
-ZIP_FILENAME_SUFFIX = "_mkdocs_debug.zip"
+LOG_FILENAME_SUFFIX = "_mkdocs_build.log"  # TODO: make it configurable
+ZIP_FILENAME_SUFFIX = "_mkdocs_debug.zip"  # TODO: make it configurable
 FILES_TO_ZIP_LIST = [
     "mkdocs.yml",
     "requirements.txt",
@@ -48,7 +48,7 @@ FILES_TO_ZIP_LIST = [
     "poetry.lock",
     ".gitignore",
 ]
-PIP_FREEZE_FILENAME = "requirements_freeze.txt"
+PIP_FREEZE_FILENAME = "requirements_pub_debugger.txt"  # TODO: make it configurable
 
 
 class DebuggerPlugin(BasePlugin[DebuggerConfig]):
@@ -82,9 +82,15 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
                 loggers.ProjectPathConsoleFilter(console_config=self.config.console_log)
             )
             # noinspection PyUnresolvedReferences
-            self._mkdocs_log_stream_handler.level = logging._nameToLevel[self.config.console_log.log_level]
+            mkdocs_log_level = logging.getLogger("mkdocs").level
+            console_log_level = logging._nameToLevel[self.config.console_log.log_level]
 
+            if mkdocs_log_level <= console_log_level:
+                console_log_level = mkdocs_log_level
+
+            self._mkdocs_log_stream_handler.setLevel(console_log_level)
             logging.getLogger("root").handlers = [self._mkdocs_log_stream_handler]
+            logging.getLogger("mkdocs").setLevel(console_log_level)
 
         if self.config.file_log.enabled:
             self._mkdocs_log_file_handler.setFormatter(
@@ -92,7 +98,7 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
             )
             self._mkdocs_log_file_handler.addFilter(loggers.ProjectPathFileFilter(file_config=self.config.file_log))
             # noinspection PyUnresolvedReferences
-            self._mkdocs_log_file_handler.level = logging._nameToLevel[self.config.file_log.log_level]
+            self._mkdocs_log_file_handler.setLevel(logging._nameToLevel[self.config.file_log.log_level])
 
             logging.getLogger("mkdocs").handlers.append(self._mkdocs_log_file_handler)
 

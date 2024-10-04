@@ -22,13 +22,74 @@
 
 import logging
 from pathlib import Path
-from typing import Optional
 
 import pytest
 from pytest import LogCaptureFixture
 from pytest_check import check_functions as check
 
 from mkdocs_publisher._shared import links
+from mkdocs_publisher.meta.config import SlugModeChoiceEnum
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    {
+        ("lorem ipsum dolor", "lorem-ipsum-dolor"),
+        ("lorem_ipsum_dolor", "lorem_ipsum_dolor"),
+        ("ąćęłńóśżź", "acenoszz"),
+        ("Lorem ipsum, dolor", "lorem-ipsum-dolor"),
+    },
+)
+def test_slugify(text, expected):
+    check.equal(expected, links.slugify(text))
+
+
+@pytest.mark.parametrize(
+    "slug,title,slug_mode,warn_on_missing,expected,exp_log_level",
+    {
+        (
+            "meta_slug",
+            "title_slug",
+            SlugModeChoiceEnum.TITLE.name,
+            False,
+            "meta_slug",
+            logging.DEBUG,
+        ),
+        (None, "title_slug", SlugModeChoiceEnum.TITLE.name, False, "title_slug", logging.DEBUG),
+        (
+            "meta_slug",
+            "title_slug",
+            SlugModeChoiceEnum.FILENAME.name,
+            False,
+            "meta_slug",
+            logging.DEBUG,
+        ),
+        (None, None, SlugModeChoiceEnum.FILENAME.name, False, "file_name_slug", logging.DEBUG),
+        (None, None, SlugModeChoiceEnum.TITLE.name, True, "file_name_slug", logging.WARNING),
+        (None, None, SlugModeChoiceEnum.TITLE.name, False, "file_name_slug", logging.DEBUG),
+        (None, None, None, False, "file_name_slug", logging.DEBUG),
+    },
+)
+def test_slug_create(
+    caplog: LogCaptureFixture,
+    slug: str,
+    title: str,
+    slug_mode: str,
+    warn_on_missing: bool,
+    expected: str,
+    exp_log_level: int,
+):
+    check.equal(
+        expected,
+        links.create_slug(
+            file_name="file_name_slug",
+            slug_mode=slug_mode,
+            slug=slug,
+            title=title,
+            warn_on_missing=warn_on_missing,
+        ),
+    )
+    check.equal(exp_log_level, caplog.records[0].levelno)
 
 
 @pytest.mark.parametrize(
@@ -57,7 +118,7 @@ from mkdocs_publisher._shared import links
         ),
         ("../file.md", "Link text", "", "title value", False, '[Link text](../file.md "title value")'),
         ("../file", "Link text", "", "title value", True, '[Link text](../file.md "title value")'),
-        (None, "Anchor link", "just/an anchor", "", False, "[Anchor link](#just/an anchor)"),
+        (None, "Anchor link", "just/an anchor", "", False, "[Anchor link](#justan-anchor)"),
     },
 )
 def test_link_match_dataclass(link: str, text: str, anchor: str, title: str, is_wiki: bool, expected: str):
@@ -286,8 +347,8 @@ def test_relative_path_finder_multiple_file_found(
     },
 )
 def test_get_relative_file_path(
-    file_path: Optional[str],
-    expected: Optional[str],
+    file_path: str | None,
+    expected: str | None,
     test_data_dir: Path,
     relative_sub_path_finder: links.RelativePathFinder,
 ):

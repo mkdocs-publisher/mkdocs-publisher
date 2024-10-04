@@ -53,22 +53,22 @@ documentation = "https://mkdocs-publisher.github.io/"
 "Bug Tracker" = "https://github.com/mkdocs-publisher/mkdocs-publisher/issues"
 
 [tool.poetry.dependencies]
-python = "^3.9"
-mkdocs = "^1.6.0"
-pymdown-extensions = "^10.7"
+python = "^3.10"
+mkdocs = "^1.6.1"
+pymdown-extensions = "^10.11.2"
 beautifulsoup4 = "^4.12.3"
-mkdocs-material = "^9.5.31"
+mkdocs-material = "^9.5.39"
 
 [tool.poetry.group.dev.dependencies]
 yamllint = "^1.35.1"
 ruff = "^0.5.7"
-pyright = "^1.1.375"
+pyright = "^1.1.383"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.6.1"
 pytest = "^7.4.4"
 pytest-cov = "^4.1.0"
-pytest-check = "^2.3.1"
+pytest-check = "^2.4.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -108,7 +108,7 @@ testpaths = [
 ]
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
 line-length = 120
 
 [tool.ruff.lint]

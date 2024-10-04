@@ -22,7 +22,6 @@
 
 import logging
 from pathlib import Path
-from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
@@ -58,7 +57,7 @@ class SocialPlugin(BasePlugin[SocialConfig]):
     supports_multiple_instances = False
 
     @event_priority(-99)
-    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
+    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> str | None:
         html_modifier = HTMLModifier(markup=output)
 
         log.debug(f"Processing social properties for file: '{page.file.src_path}'")
