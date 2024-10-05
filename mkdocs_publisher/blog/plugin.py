@@ -27,7 +27,6 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Any
 from typing import Literal
-from typing import Optional
 from typing import cast
 
 from mkdocs.config import Config
@@ -44,6 +43,7 @@ from mkdocs_publisher._shared import resources
 from mkdocs_publisher.blog import creators
 from mkdocs_publisher.blog import modifiers
 from mkdocs_publisher.blog import parsers
+from mkdocs_publisher.blog.blog_files import BlogFiles
 from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.blog.structures import BlogConfig
 from mkdocs_publisher.obsidian.md_links import MarkdownLinks
@@ -52,16 +52,28 @@ log = logging.getLogger("mkdocs.publisher.blog.plugin")
 
 
 class BlogPlugin(BasePlugin[BlogPluginConfig]):
+    supports_multiple_instances = False  # TODO: add multiple instances support (require changes in meta plugin)
+
     def __init__(self):
-        self.blog_config = BlogConfig()  # Empty instance
-        self._start_page: bool = False
         self._on_serve: bool = False
+        self._start_page: bool = False
+        self._blog_files: BlogFiles = BlogFiles()
+
+        # ==== Old below
+
+        self.blog_config = BlogConfig()  # Empty instance
 
     def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
         if command == "serve":
             self._on_serve = True
+        self._blog_files.on_serve = self._on_serve
 
     def on_config(self, config: MkDocsConfig) -> Config:
+        self._blog_files.set_configs(mkdocs_config=config, blog_plugin_config=self.config)
+        self._blog_files.add_blog_files()
+
+        # ==== Old below
+
         # Initialization of all the values
         self.blog_config.parse_configs(mkdocs_config=config, plugin_config=self.config)
 
@@ -124,7 +136,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
     @event_priority(-100)  # Run after all other plugins
     def on_page_context(
         self, context: dict[str, Any], *, page: Page, config: MkDocsConfig, nav: Navigation
-    ) -> Optional[dict[str, Any]]:
+    ) -> dict[str, Any] | None:
         if Path(page.file.src_path).parts[0] == self.config.blog_dir:
             page.meta[self.config.comments.key_name] = self.config.comments.enabled
 
@@ -136,7 +148,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         return context
 
     @event_priority(-100)  # Run after all other plugins
-    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> Optional[str]:
+    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> str | None:
         md_links = MarkdownLinks(mkdocs_config=config)
         markdown = md_links.normalize_relative_links(
             markdown=markdown,
@@ -162,11 +174,25 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         return markdown
 
     @event_priority(-100)  # Run after all other plugins
+    def on_post_build(self, *, config: MkDocsConfig) -> None:
+        self._blog_files.remove_temp_dirs()
+
+        # ==== Old below
+        with contextlib.suppress(AttributeError):
+            file_utils.remove_dir(directory=self.blog_config.temp_dir)
+
+    @event_priority(-100)  # Run after all other plugins
     def on_build_error(self, error: Exception) -> None:
+        self._blog_files.remove_temp_dirs()
+
+        # ==== Old below
         with contextlib.suppress(AttributeError):
             file_utils.remove_dir(directory=self.blog_config.temp_dir)
 
     @event_priority(-100)  # Run after all other plugins
     def on_shutdown(self) -> None:
+        self._blog_files.remove_temp_dirs()
+
+        # ==== Old below
         with contextlib.suppress(AttributeError):
             file_utils.remove_dir(directory=self.blog_config.temp_dir)

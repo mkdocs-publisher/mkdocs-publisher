@@ -31,7 +31,7 @@ from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
 from mkdocs_publisher._shared import templates
-from mkdocs_publisher._shared.urls import slugify
+from mkdocs_publisher._shared.links import slugify
 from mkdocs_publisher.blog.structures import BlogConfig
 
 log = logging.getLogger("mkdocs.publisher.blog.creators")

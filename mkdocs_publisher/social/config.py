@@ -23,7 +23,7 @@
 from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
 
-from mkdocs_publisher._shared.mkdocs_utils import ConfigChoiceEnum
+from mkdocs_publisher._shared.config_enums import SocialTitleLocationChoiceEnum
 
 
 class _SocialOpenGraphConfig(Config):
@@ -41,12 +41,6 @@ class _SocialMetaKeysConfig(Config):
     title_key = option.Type(str, default="title")
     description_key = option.Type(str, default="description")
     image_key = option.Type(str, default="image")
-
-
-class SocialTitleLocationChoiceEnum(ConfigChoiceEnum):
-    NONE = 0, False, False
-    BEFORE = 1, False, False
-    AFTER = 2, True, False
 
 
 class _SocialSiteNameInTitleConfig(Config):

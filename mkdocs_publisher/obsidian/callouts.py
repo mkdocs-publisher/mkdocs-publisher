@@ -22,7 +22,6 @@
 
 import logging
 import re
-from typing import Optional
 
 from mkdocs_publisher.obsidian.config import _ObsidianCalloutsConfig
 
@@ -65,7 +64,7 @@ ALIGN_MAPPING = {"left": " inline", "right": " inline end"}
 class CalloutToAdmonition:
     def __init__(self, callouts_config: _ObsidianCalloutsConfig):
         self._callouts_config: _ObsidianCalloutsConfig = callouts_config
-        self._current_file_path: Optional[str] = None
+        self._current_file_path: str | None = None
 
     @staticmethod
     def _callout_indentation(match: re.Match, match_group: int, text_indentation: str = "spaces") -> str:

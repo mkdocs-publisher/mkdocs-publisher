@@ -26,6 +26,7 @@ import pytest
 from _pytest.fixtures import SubRequest
 from mkdocs.config.defaults import MkDocsConfig
 
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.meta.meta_files import MetaFiles
 from mkdocs_publisher.meta.meta_nav import MetaNav
 
@@ -56,12 +57,13 @@ def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore
 
 @pytest.fixture()
 def patched_meta_files() -> MetaFiles:
-    def patch_read_md_file(meta_file_path: Path):
-        _ = meta_file_path
+    def patch_read_md_file(md_file_path: Path):
+        _ = md_file_path
         return "", {}
 
+    mkdocs_utils.read_md_file = patch_read_md_file
+
     meta_files: MetaFiles = MetaFiles()
-    meta_files._read_md_file = patch_read_md_file  # monkey patch
     return meta_files
 
 

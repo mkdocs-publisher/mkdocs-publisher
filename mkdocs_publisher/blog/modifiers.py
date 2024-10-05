@@ -23,7 +23,6 @@
 import logging
 from collections import OrderedDict
 from copy import deepcopy
-from typing import Optional
 
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.nav import Section
@@ -80,7 +79,7 @@ def blog_post_nav_next_prev_change(start_page: bool, blog_config: BlogConfig, pa
         page.previous_page is not None and str(page.previous_page.title).startswith("index")
     ):
         page.title = blog_config.translation.older_posts  # type: ignore
-        previous_page_copy: Optional[Page] = deepcopy(page.previous_page)
+        previous_page_copy: Page | None = deepcopy(page.previous_page)
         previous_page_copy.title = blog_config.translation.newer_posts  # type: ignore
         page.previous_page = previous_page_copy
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):

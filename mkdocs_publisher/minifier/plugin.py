@@ -39,6 +39,8 @@ log = logging.getLogger("mkdocs.publisher.minifier.plugin")
 
 
 class MinifierPlugin(BasePlugin[MinifierConfig]):
+    supports_multiple_instances = False
+
     def __init__(self):
         self._on_serve: bool = False
 
