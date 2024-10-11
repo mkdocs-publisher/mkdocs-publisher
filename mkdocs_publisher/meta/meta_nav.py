@@ -23,7 +23,6 @@
 import logging
 import re
 from pathlib import Path
-from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.nav import Link
@@ -38,12 +37,11 @@ log = logging.getLogger("mkdocs.publisher.meta.nav")
 
 
 class MetaNav:
-    def __init__(self, meta_files: MetaFiles, blog_dir: Optional[Path] = None):
+    def __init__(self, meta_files: MetaFiles, blog_dir: Path | None = None):
         self._meta_files: MetaFiles = meta_files
-        self._blog_dir: Optional[Path] = blog_dir
+        self._blog_dir: Path | None = blog_dir
 
     def nav_cleanup(self, items, removal_list: list[str]) -> list:
-        # log.info(removal_list)
         nav = []
         for item in items:
             if isinstance(item, Section):
@@ -59,9 +57,9 @@ class MetaNav:
                 nav.append(item)
         return nav
 
-    def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, Optional[MetaFile]]:
+    def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, MetaFile | None]:  # noqa: C901
         nav = []
-        meta_file: Optional[MetaFile] = None
+        meta_file: MetaFile | None = None
         while True:
             if meta_file is None:
                 try:
@@ -80,15 +78,14 @@ class MetaNav:
                 prev_path = meta_file.path
                 sub_nav, meta_file = self._build_nav(meta_files_gen=meta_files_gen, current_dir=meta_file.abs_path)
                 sub_nav = [*overview_nav, *sub_nav]
-                if sub_nav:
-                    if prev_path == self._blog_dir:
-                        nav.append({str(prev_path): str(prev_path)})
-                    else:
-                        nav.append({title: sub_nav})
+                if sub_nav and prev_path == self._blog_dir:
+                    nav.append({str(prev_path): str(prev_path)})
+                elif sub_nav:
+                    nav.append({title: sub_nav})
             elif meta_file.is_dir:
                 return nav, meta_file  # Jump to subdirectory
             elif not meta_file.is_dir and not meta_file.is_draft and meta_file.path.suffix == ".md":
-                if meta_file.redirect and re.search(links.URL_RE_PART, meta_file.redirect):
+                if meta_file.redirect and re.search(links.URL_PART_RE, meta_file.redirect):
                     nav.append({meta_file.title: str(meta_file.redirect)})
                     meta_file = None  # File added, skip to next
                 elif meta_file.redirect or meta_file.abs_path.is_relative_to(current_dir):
