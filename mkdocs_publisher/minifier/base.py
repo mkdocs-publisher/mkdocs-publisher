@@ -41,8 +41,8 @@ log = logging.getLogger("mkdocs.publisher.minifier.base")
 @dataclass
 class CachedFile:
     original_file_hash: str | None = field(default="")
-    original_file_path: Path = field(default_factory=lambda: Path(""))
-    cached_file_name: Path = field(default_factory=lambda: Path(""))
+    original_file_path: Path = field(default_factory=lambda: Path())
+    cached_file_name: Path = field(default_factory=lambda: Path())
 
     def __init__(
         self,
@@ -126,16 +126,16 @@ class BaseMinifier:
         old_file_size = old_file.stat().st_size
         log.debug(
             f"Minified: '{old_file.relative_to(self._mkdocs_config.site_dir)}' "
-            f"(size: {old_file_size} -> {new_file_size})"
+            f"(size: {old_file_size} -> {new_file_size})",
         )
         log.debug(
             f"{old_file.relative_to(self._mkdocs_config.site_dir)} -> "
-            f"{new_file.relative_to(self._plugin_config.cache_dir)} "
+            f"{new_file.relative_to(self._plugin_config.cache_dir)} ",
         )
         if new_file_size < old_file_size:
             return cached_file
 
-        log.debug(f"Minified file larger than original: " f"{cached_file.original_file_path} (removing cached file)")
+        log.debug(f"Minified file larger than original: {cached_file.original_file_path} (removing cached file)")
         new_file.unlink()
         return None
 
@@ -164,7 +164,7 @@ class BaseMinifier:
             else:
                 log.debug(
                     f"{file} hash is not equal to one in cache "
-                    f"(file: {file_hash} | cache: {cached_file.original_file_hash})"
+                    f"(file: {file_hash} | cache: {cached_file.original_file_hash})",
                 )
 
                 recreate_file = True

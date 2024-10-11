@@ -91,8 +91,7 @@ class MarkdownLinks:
             markdown = re.sub(links.WIKI_EMBED_LINK_RE, self._normalize_wiki_embed_link, markdown)
             markdown = re.sub(links.ANCHOR_LINK_RE, self._normalize_anchor_links, markdown)
         markdown = re.sub(links.MD_EMBED_LINK_RE, self._normalize_md_embed_link, markdown)
-        markdown = re.sub(links.MD_LINK_RE, self._normalize_md_links, markdown)
-        return markdown
+        return re.sub(links.MD_LINK_RE, self._normalize_md_links, markdown)
 
     def normalize_relative_link(self, match: re.Match) -> str:
         md_link_obj = links.RelativeLinkMatch(**match.groupdict())
@@ -106,5 +105,4 @@ class MarkdownLinks:
     def normalize_relative_links(self, markdown: str, current_file_path: Path, current_relative_path: Path) -> str:
         self._current_file_path = current_file_path
         self._current_relative_path = current_relative_path
-        markdown = re.sub(links.RELATIVE_LINK_RE, self.normalize_relative_link, markdown)
-        return markdown
+        return re.sub(links.RELATIVE_LINK_RE, self.normalize_relative_link, markdown)

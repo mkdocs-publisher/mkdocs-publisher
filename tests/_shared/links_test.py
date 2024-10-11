@@ -154,7 +154,7 @@ def test_link_match_dataclass(link: str, text: str, anchor: str, title: str, is_
             "title value",
             "",
             "#84d6d9cdfc51cbf2e88592d12c53d5a4",
-            '[Link text](../file.md#anchor-value "title value")' "{ #84d6d9cdfc51cbf2e88592d12c53d5a4 }",
+            '[Link text](../file.md#anchor-value "title value"){ #84d6d9cdfc51cbf2e88592d12c53d5a4 }',
         ),
         (
             "../file.md",
@@ -190,7 +190,7 @@ def test_link_match_dataclass(link: str, text: str, anchor: str, title: str, is_
             "title value",
             "extra",
             "#84d6d9cdfc51cbf2e88592d12c53d5a4",
-            '[Link text](../file.md#anchor-value "title value")' "{ extra #84d6d9cdfc51cbf2e88592d12c53d5a4 }",
+            '[Link text](../file.md#anchor-value "title value"){ extra #84d6d9cdfc51cbf2e88592d12c53d5a4 }',
         ),
     },
 )
@@ -283,7 +283,12 @@ def test_wiki_embed_link_match_dataclass(link: str, image: str, anchor: str, ext
     },
 )
 def test_md_embed_link_match_dataclass(
-    link: str, text: str, title: str, extra: str, is_loading_lazy: bool, expected: str
+    link: str,
+    text: str,
+    title: str,
+    extra: str,
+    is_loading_lazy: bool,
+    expected: str,
 ):
     link_obj = links.MdEmbedLinkMatch(link=link, text=text, title=title, extra=extra, is_loading_lazy=is_loading_lazy)
     assert expected == str(link_obj)

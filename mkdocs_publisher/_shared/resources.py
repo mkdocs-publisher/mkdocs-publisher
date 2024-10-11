@@ -50,7 +50,7 @@ def _add_extra_file(
                 src_dir=str(assets_path.parent),
                 dest_dir=str(site_dir),
                 use_directory_urls=use_directory_urls,
-            )
+            ),
         )
         config_extra_files.append(extra_file_path)
         log.debug(f"Extra file added: {extra_file_path}")

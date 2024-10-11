@@ -101,10 +101,10 @@ class MetaFiles(publisher_utils.PublisherFiles):
             ):
                 log.warning(
                     f'Title value from "{self._meta_plugin_config.title.key_name}" meta data '
-                    f'is missing for file: "{str(meta_file.path)}"'
+                    f'is missing for file: "{meta_file.path!s}"',
                 )
 
-        if title is None and (mode == TitleChoiceEnum.META or mode == TitleChoiceEnum.HEAD):
+        if title is None and mode in {TitleChoiceEnum.META.name, TitleChoiceEnum.HEAD.name}:
             headings = re.findall(HEADINGS_RE, markdown)
             title = str(headings[0]).strip() if len(headings) > 0 else None
             if (
@@ -112,9 +112,9 @@ class MetaFiles(publisher_utils.PublisherFiles):
                 and self._meta_plugin_config.title.warn_on_missing_header
                 and not (meta_file.is_draft or (meta_file.is_dir and not meta_file.is_overview))
             ):
-                log.warning(f'Title value from first heading is missing for file: "{str(meta_file.path)}"')
+                log.warning(f'Title value from first heading is missing for file: "{meta_file.path!s}"')
 
-        if title is None and (mode == TitleChoiceEnum.META or mode == TitleChoiceEnum.FILE):
+        if title is None and mode in {TitleChoiceEnum.META.name, TitleChoiceEnum.FILE.name}:
             title = str(meta_file.path.stem).replace("_", " ").title()
 
         meta_file.title = title
@@ -159,7 +159,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
             # Document with redirection should be hidden
             meta[self._meta_plugin_config.publish.key_name] = PublishChoiceEnum.HIDDEN.name.lower()
 
-        meta_file.redirect = redirect  # type: ignore
+        meta_file.redirect = redirect
 
         return meta
 
@@ -178,28 +178,27 @@ class MetaFiles(publisher_utils.PublisherFiles):
             else:
                 meta_file.is_overview = is_overview
 
-    def _get_publish_status(self, meta_file: MetaFile, meta: dict[str, Any]):
+    def _get_publish_status(self, meta_file: MetaFile, meta: dict[str, Any]):  # noqa: C901
         """Calculate publication status for given file"""
 
         publish = meta.get(str(self._meta_plugin_config.publish.key_name), None)
         # Get default values if publish status is not specified
-        if publish is None:
-            if meta_file.is_dir:
-                publish = self._meta_plugin_config.publish.dir_default
-                if self._meta_plugin_config.publish.dir_warn_on_missing:
-                    log.warning(
-                        f'Missing "{self._meta_plugin_config.publish.key_name}" value in '
-                        f'file "{meta_file.path}". Setting to '
-                        f'default value: "{self._meta_plugin_config.publish.dir_default}".'
-                    )
-            else:
-                publish = self._meta_plugin_config.publish.file_default
-                if self._meta_plugin_config.publish.file_warn_on_missing:
-                    log.warning(
-                        f'Missing "{self._meta_plugin_config.publish.key_name}" value in '
-                        f'file "{meta_file.path}". Setting to '
-                        f'default value: "{self._meta_plugin_config.publish.file_default}".'
-                    )
+        if publish is None and meta_file.is_dir:
+            publish = self._meta_plugin_config.publish.dir_default
+            if self._meta_plugin_config.publish.dir_warn_on_missing:
+                log.warning(
+                    f'Missing "{self._meta_plugin_config.publish.key_name}" value in '
+                    f'file "{meta_file.path}". Setting to '
+                    f'default value: "{self._meta_plugin_config.publish.dir_default}".',
+                )
+        elif publish is None:
+            publish = self._meta_plugin_config.publish.file_default
+            if self._meta_plugin_config.publish.file_warn_on_missing:
+                log.warning(
+                    f'Missing "{self._meta_plugin_config.publish.key_name}" value in '
+                    f'file "{meta_file.path}". Setting to '
+                    f'default value: "{self._meta_plugin_config.publish.file_default}".',
+                )
 
         # Override some values inherited from parent
         if meta_file.parent is not None:
@@ -207,7 +206,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
             if meta_file_parent.is_draft:
                 publish = False
             if meta_file_parent.is_hidden and publish not in PublishChoiceEnum.drafts():
-                publish = PublishChoiceEnum.HIDDEN.name.lower()
+                publish = PublishChoiceEnum.HIDDEN.name
 
         # When live preview is running, all pages are visible
         if self._on_serve and not meta_file.is_hidden:
@@ -217,17 +216,16 @@ class MetaFiles(publisher_utils.PublisherFiles):
             publish = self._meta_plugin_config.publish.file_default
             log.warning(
                 f'Wrong key "{self._meta_plugin_config.publish.key_name}" value ({publish}) '
-                f'in file "{meta_file.path}" (only {PublishChoiceEnum.choices()} are possible)'
+                f'in file "{meta_file.path}" (only {PublishChoiceEnum.choices()} are possible)',
             )
 
         # Set values depends on publish status
-        if meta_file.path in self._hidden_paths or publish == PublishChoiceEnum.HIDDEN:
+        if meta_file.path in self._hidden_paths or publish == PublishChoiceEnum.HIDDEN.name:
             meta_file.is_hidden = True
             meta_file.is_draft = False
         elif publish in PublishChoiceEnum.published():
             meta_file.is_hidden = False
             meta_file.is_draft = False
-
         else:
             meta_file.is_hidden = False
             meta_file.is_draft = True
@@ -329,7 +327,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
         for docs_file in sorted(Path(self._mkdocs_config.docs_dir).rglob("*")):
             meta_file: MetaFile | None = None
-            is_ignored = any([docs_file.is_relative_to(ignored_dir) for ignored_dir in ignored_dirs])
+            is_ignored = any(docs_file.is_relative_to(ignored_dir) for ignored_dir in ignored_dirs)
 
             if not is_ignored and docs_file.is_dir():
                 meta_file = MetaFile(
@@ -392,7 +390,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
             file_path: Path = Path(file.src_path)
             if (
                 (
-                    not any([Path(str(file.abs_src_path)).is_relative_to(d) for d in ignored_dirs])
+                    not any(Path(str(file.abs_src_path)).is_relative_to(d) for d in ignored_dirs)
                     and file.src_path not in self.draft_files
                     and str(file_path.name) != self._meta_plugin_config.dir_meta_file
                 )
@@ -421,8 +419,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
                 "url": f"{self._mkdocs_config.site_url}{self[meta_file.redirect].url}",
             }
             return templates.render(tpl_file="redirect.html", context=redirect_context)
-        else:
-            return None
+        return None
 
     def clean_redirect_files(self, files: Files) -> Files:
         """Remove documents that are just redirects to an external URL"""

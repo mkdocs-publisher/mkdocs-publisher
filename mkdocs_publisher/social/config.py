@@ -45,13 +45,14 @@ class _SocialMetaKeysConfig(Config):
 
 class _SocialSiteNameInTitleConfig(Config):
     location = option.Choice(
-        choices=SocialTitleLocationChoiceEnum.choices(), default=SocialTitleLocationChoiceEnum.default()
+        choices=SocialTitleLocationChoiceEnum.choices(),
+        default=SocialTitleLocationChoiceEnum.default(),
     )
     delimiter = option.Type(str, default=" - ")
 
 
 class SocialConfig(Config):
-    meta_keys: _SocialMetaKeysConfig = option.SubConfig(_SocialMetaKeysConfig)  # type: ignore
-    og: _SocialOpenGraphConfig = option.SubConfig(_SocialOpenGraphConfig)  # type: ignore
-    twitter: _SocialTwitterConfig = option.SubConfig(_SocialTwitterConfig)  # type: ignore
-    site_name_in_title: _SocialSiteNameInTitleConfig = option.SubConfig(_SocialSiteNameInTitleConfig)  # type: ignore
+    meta_keys: _SocialMetaKeysConfig = option.SubConfig(_SocialMetaKeysConfig)  # type: ignore [reportAssignmentType]
+    og: _SocialOpenGraphConfig = option.SubConfig(_SocialOpenGraphConfig)  # type: ignore [reportAssignmentType]
+    twitter: _SocialTwitterConfig = option.SubConfig(_SocialTwitterConfig)  # type: ignore [reportAssignmentType]
+    site_name_in_title: _SocialSiteNameInTitleConfig = option.SubConfig(_SocialSiteNameInTitleConfig)  # type: ignore [reportAssignmentType]

@@ -43,7 +43,7 @@ def test_data_dir() -> Path:
 
 
 @pytest.fixture(scope="function")
-def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore
+def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore [reportInvalidTypeForm]
     """Fixture returning MkDocsConfig
 
     How to change configuration:
@@ -63,7 +63,7 @@ def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore
         config_dict = {"docs_dir": "tests/_tests_data"}
     config = MkDocsConfig()
     config.load_dict(patch=config_dict)
-    yield config  # type: ignore
+    yield config  # type: ignore [reportReturnType]
 
 
 @pytest.fixture(scope="function")

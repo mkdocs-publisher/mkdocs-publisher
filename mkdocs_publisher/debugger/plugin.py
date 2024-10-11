@@ -58,7 +58,7 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
         self._mkdocs_log_stream_handler: logging.Handler = logging.getLogger("mkdocs").handlers[0]
 
         self._mkdocs_log_file_handler: loggers.DatedFileHandler = loggers.DatedFileHandler(
-            filename=f"%Y%m%d_%H%M%S{LOG_FILENAME_SUFFIX}"
+            filename=f"%Y%m%d_%H%M%S{LOG_FILENAME_SUFFIX}",
         )
 
         self._mkdocs_log_file: str = str(Path(self._mkdocs_log_file_handler.baseFilename).name)
@@ -68,7 +68,8 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
             options=cast(
                 dict,
                 mkdocs_utils.get_plugin_config(
-                    mkdocs_config=mkdocs_utils.get_mkdocs_config(), plugin_name="pub-debugger"
+                    mkdocs_config=mkdocs_utils.get_mkdocs_config(),
+                    plugin_name="pub-debugger",
                 ),
             ),
             config_file_path=mkdocs_utils.get_mkdocs_config().config_file_path,
@@ -76,14 +77,14 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
 
         if self.config.console_log.enabled:
             self._mkdocs_log_stream_handler.setFormatter(
-                loggers.ProjectPathStreamFormatter(console_config=self.config.console_log)
+                loggers.ProjectPathStreamFormatter(console_config=self.config.console_log),
             )
             self._mkdocs_log_stream_handler.addFilter(
-                loggers.ProjectPathConsoleFilter(console_config=self.config.console_log)
+                loggers.ProjectPathConsoleFilter(console_config=self.config.console_log),
             )
             # noinspection PyUnresolvedReferences
             mkdocs_log_level = logging.getLogger("mkdocs").level
-            console_log_level = logging._nameToLevel[self.config.console_log.log_level]
+            console_log_level = logging._nameToLevel[self.config.console_log.log_level]  # noqa: SLF001
 
             if mkdocs_log_level <= console_log_level:
                 console_log_level = mkdocs_log_level
@@ -94,16 +95,16 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
 
         if self.config.file_log.enabled:
             self._mkdocs_log_file_handler.setFormatter(
-                loggers.ProjectPathFileFormatter(fmt=self.config.file_log.log_format)
+                loggers.ProjectPathFileFormatter(fmt=self.config.file_log.log_format),
             )
             self._mkdocs_log_file_handler.addFilter(loggers.ProjectPathFileFilter(file_config=self.config.file_log))
             # noinspection PyUnresolvedReferences
-            self._mkdocs_log_file_handler.setLevel(logging._nameToLevel[self.config.file_log.log_level])
+            self._mkdocs_log_file_handler.setLevel(logging._nameToLevel[self.config.file_log.log_level])  # noqa: SLF001
 
             logging.getLogger("mkdocs").handlers.append(self._mkdocs_log_file_handler)
 
             if self.config.file_log.remove_old_files:
-                for log_file in Path(".").rglob(f"*{LOG_FILENAME_SUFFIX}"):
+                for log_file in Path().rglob(f"*{LOG_FILENAME_SUFFIX}"):
                     if str(log_file) != self._mkdocs_log_file:
                         log_file.unlink(missing_ok=True)
 
@@ -113,7 +114,7 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
             log.info(f"Platform: {platform.platform()}")
             log.info(
                 f"Python version: {platform.python_version()} "
-                f"(using virtual environment: {str(sys.prefix != sys.base_prefix).lower()})"
+                f"(using virtual environment: {str(sys.prefix != sys.base_prefix).lower()})",
             )
             log.info(f"Build log file: {self._mkdocs_log_file_handler.baseFilename}")
 
@@ -121,7 +122,7 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
             zip_file_name = f"{self._mkdocs_log_date}{ZIP_FILENAME_SUFFIX}"
 
             if self.config.zip_log.remove_old_files:
-                for log_file in Path(".").rglob(f"*{ZIP_FILENAME_SUFFIX}"):
+                for log_file in Path().rglob(f"*{ZIP_FILENAME_SUFFIX}"):
                     if str(log_file) != zip_file_name:
                         log_file.unlink(missing_ok=True)
 
@@ -146,6 +147,6 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
                 # Write build log file
                 archive_file.write(filename=self._mkdocs_log_file, arcname=self._mkdocs_log_file)
 
-            with open(zip_file_name, "wb") as zip_file:
+            with Path(zip_file_name).open("wb") as zip_file:
                 zip_file.write(archive.getvalue())
                 log.info(f"Debugger ZIP file: {zip_file_name}")

@@ -46,7 +46,7 @@ HEADERS_ID_RE = re.compile(r"{#.*}")
 HTML_RE = re.compile(r"</?[^>]*>")
 NEW_LINE_RE = re.compile(r"\n")
 SPACES_RE = re.compile(r" {2,}")
-SPECIAL_CHARS_RE = re.compile(r"[#*`~\-–_^=<>+|/:]")
+SPECIAL_CHARS_RE = re.compile(r"[#*`~\-_^=<>+|/:]")
 TAB_RE = re.compile(r"\t")
 
 
@@ -54,22 +54,20 @@ def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> None | d
     plugins = mkdocs_config.plugins
     if isinstance(plugins, list):
         for plugin in plugins:
-            if isinstance(plugin, dict) and list(plugin.keys())[0] == plugin_name:
-                return plugin[list(plugin.keys())[0]]
-            elif isinstance(plugin, str) and plugin == plugin_name:
+            if isinstance(plugin, dict) and next(iter(plugin.keys())) == plugin_name:
+                return plugin[next(iter(plugin.keys()))]
+            if isinstance(plugin, str) and plugin == plugin_name:
                 return {}
         raise SystemError("Break")
-    else:
-        if plugin_name in mkdocs_config.plugins:
-            return mkdocs_config.plugins[plugin_name].config
-        else:
-            return None
+    if plugin_name in mkdocs_config.plugins:
+        return mkdocs_config.plugins[plugin_name].config
+    return None
 
 
 @lru_cache
 def get_mkdocs_config() -> MkDocsConfig:
     config = MkDocsConfig()
-    with open("mkdocs.yml") as mkdocs_yml:
+    with Path("mkdocs.yml").open() as mkdocs_yml:
         config.load_file(mkdocs_yml)
     return cast(MkDocsConfig, config)
 

@@ -71,7 +71,8 @@ class BlogFiles(publisher_utils.PublisherFiles):
         super().set_configs(
             mkdocs_config=mkdocs_config,
             meta_plugin_config=cast(
-                MetaPluginConfig, mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta")
+                MetaPluginConfig,
+                mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta"),
             ),
         )
 
@@ -107,7 +108,7 @@ class BlogFiles(publisher_utils.PublisherFiles):
                 blog_file.teaser = "\n".join(teaser_lines)
 
         blog_file.read_time_sec = ceil(
-            mkdocs_utils.count_words(markdown) * 60 / self._blog_plugin_config.posts.words_per_minute
+            mkdocs_utils.count_words(markdown) * 60 / self._blog_plugin_config.posts.words_per_minute,
         )
 
     def __setitem__(self, path: str, blog_file: BlogFile):

@@ -83,14 +83,15 @@ class VegaCharts:
                         "vega_chart_id": self._vega_chart_id,
                         "vega_chart": json.dumps(vega_chart_json),
                     }
-                    vega_chart_template = jinja2.Environment(loader=jinja2.BaseLoader()).from_string(
-                        VEGA_CHART_TEMPLATE
+                    # TODO: move jinja renderrer to shared tools
+                    vega_chart_template = jinja2.Environment(loader=jinja2.BaseLoader(), autoescape=True).from_string(
+                        VEGA_CHART_TEMPLATE,
                     )
 
                     vega_chart = vega_chart_template.render(vega_chart_context)
 
                     for vega_chart_line in vega_chart.split("\n"):
-                        markdown_lines.append(vega_chart_line)
+                        markdown_lines.append(vega_chart_line)  # noqa: PERF402
 
                     # Mark that vega is in that page
                     self._vega_found = True

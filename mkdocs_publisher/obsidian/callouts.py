@@ -90,7 +90,7 @@ class CalloutToAdmonition:
             if align is None:
                 log.warning(
                     f'Wrong alignment type "{align}" in file: {self._current_file_path} '
-                    f"(fallback to no alignment, possible values {ALIGN_MAPPING.keys()})"
+                    f"(fallback to no alignment, possible values {ALIGN_MAPPING.keys()})",
                 )
                 align = ""
         else:
@@ -100,7 +100,7 @@ class CalloutToAdmonition:
         if admonition_type is None:
             log.warning(
                 f'There is no callout mapping for "{match.group(3)}" '
-                f'in file: {self._current_file_path} (fallback to "note")'
+                f'in file: {self._current_file_path} (fallback to "note")',
             )
             admonition_type = "note"
 
@@ -108,7 +108,7 @@ class CalloutToAdmonition:
         if foldable is None:
             log.warning(
                 f'Wrong definition of foldable "{match.group(4)}" '
-                f"in file: {self._current_file_path} (fallback to non foldable)"
+                f"in file: {self._current_file_path} (fallback to non foldable)",
             )
             foldable = "!!!"
 
@@ -128,14 +128,14 @@ class CalloutToAdmonition:
             if callout_match:
                 in_callout_block = True
                 markdown_lines.append(
-                    self._callout_block(match=callout_match, text_indentation=self._callouts_config.indentation)
+                    self._callout_block(match=callout_match, text_indentation=self._callouts_config.indentation),
                 )
             elif in_callout_block and callout_follow_match:
                 markdown_lines.append(
                     self._callout_block_follow(
                         match=callout_follow_match,
                         text_indentation=self._callouts_config.indentation,
-                    )
+                    ),
                 )
             else:
                 in_callout_block = False

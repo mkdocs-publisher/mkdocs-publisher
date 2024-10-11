@@ -82,14 +82,14 @@ class BlogConfig:
     docs_dir: Path = field(init=False)
     blog_dir: Path = field(init=False)
     site_dir: Path = field(init=False)
-    blog_posts: dict[datetime, BlogPost] = field(init=False, default_factory=lambda: dict())
-    temp_files: dict[str, Path] = field(init=False, default_factory=lambda: dict())
+    blog_posts: dict[datetime, BlogPost] = field(init=False, default_factory=lambda: {})
+    temp_files: dict[str, Path] = field(init=False, default_factory=lambda: {})
 
     @property
     def temp_files_list(self) -> list[str]:
         temp_files = []
         for path in self.temp_files.values():
-            temp_files.append(str(path.relative_to(self.temp_dir)))
+            temp_files.append(str(path.relative_to(self.temp_dir)))  # noqa: PERF401
         return temp_files
 
     def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogPluginConfig):
@@ -99,7 +99,7 @@ class BlogConfig:
         self.plugin_config = plugin_config
         self.meta_config: MetaPluginConfig | None = (
             mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta") or None
-        )  # type: ignore
+        )  # type: ignore [reportAttributeAccessIssue]
         self.temp_dir = Path(plugin_config.temp_dir)
         self.docs_dir = Path(mkdocs_config.docs_dir)
         self.blog_dir = Path(plugin_config.blog_dir)

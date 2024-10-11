@@ -57,7 +57,7 @@ class SocialPlugin(BasePlugin[SocialConfig]):
     supports_multiple_instances = False
 
     @event_priority(-99)
-    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> str | None:
+    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> str | None:  # noqa: C901
         html_modifier = HTMLModifier(markup=output)
 
         log.debug(f"Processing social properties for file: '{page.file.src_path}'")
@@ -85,9 +85,9 @@ class SocialPlugin(BasePlugin[SocialConfig]):
             image_path = Path(config.docs_dir) / Path(image)
             if not image_path.exists():
                 log.warning(
-                    f"File: '{str(image)}' doesn't exists!\n"
+                    f"File: '{image!s}' doesn't exists!\n"
                     f"('{self.config.meta_keys.image_key}' meta key"
-                    f" from '{page.file.src_path}' file.)"
+                    f" from '{page.file.src_path}' file.)",
                 )
             image = f'{config.site_url}{image.replace("//", "/")}'
         url = f"{config.site_url}{page.url}"

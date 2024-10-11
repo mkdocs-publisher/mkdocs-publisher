@@ -81,7 +81,7 @@ def create_slug(
         slug = slugify(text=file_name)
 
         if warn_on_missing:
-            log.warning(f'No slug for file "{file_name}" ' f"(mode: {slug_mode}). Fallback to file name.")
+            log.warning(f'No slug for file "{file_name}" (mode: {slug_mode}). Fallback to file name.')
 
     log.debug(f'Slug for file "{file_name}" is: "{slug}"')
     return slug
@@ -104,7 +104,7 @@ class RelativePathFinder:
     def get_full_file_path(self, file_path: Path) -> Path | None:
         """Find full file path."""
         full_file_path = self._docs_dir / file_path
-        log.debug(f"Looking for file: {str(full_file_path)}")
+        log.debug(f"Looking for file: {full_file_path!s}")
         if not full_file_path.is_file():
             # Build list of unique found files paths
             found_files_list: list[Path] = []
@@ -124,7 +124,7 @@ class RelativePathFinder:
                 log.error(
                     f"Too much files found: "
                     f"{[str(f.relative_to(self._docs_dir)) for f in found_files_list]} "
-                    f"for link in file: {str(full_file_path)}"
+                    f"for link in file: {full_file_path!s}",
                 )
                 full_file_path = None
         return full_file_path
@@ -140,19 +140,18 @@ class RelativePathFinder:
 
             index = 0
             for index, part in enumerate(current_file_parts[:-1]):
-                try:
+                if index < len(found_file_parts):
                     if part == found_file_parts[index]:
                         del relative_file_missing_pieces[0]
                     else:
                         relative_file_parts.append("..")
-                except IndexError:
+                else:
                     relative_file_parts.append("..")
                     relative_file_parts.extend(relative_file_missing_pieces)
             if index < len(found_file_parts):
                 relative_file_parts.extend(relative_file_missing_pieces)
             return str(Path(*relative_file_parts))
-        else:
-            return None
+        return None
 
 
 @dataclass(kw_only=True)
@@ -196,7 +195,7 @@ class LinkMatch(_LinksCommon):
 
     @property
     def backlink_anchor(self):
-        return f"#{md5(self.link.encode()).hexdigest()}"
+        return f"#{md5(self.link.encode()).hexdigest()}"  # noqa: S324
 
     @property
     def as_backlink(self):
@@ -264,7 +263,7 @@ class RelativeLinkMatch(_LinksCommon):
             # Link from blog sub-pages have to be recalculated for a new relative value
             if (
                 str(self.relative_path_finder.current_file_path).startswith(
-                    str(self.relative_path_finder.relative_path)
+                    str(self.relative_path_finder.relative_path),
                 )
                 or str(self.relative_path_finder.current_file_path).startswith("index-")
             ) and (

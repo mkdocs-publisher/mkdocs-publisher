@@ -32,7 +32,7 @@ log = logging.getLogger("mkdocs.publisher._shared.file_utils")
 def run_subprocess(cmd, capture_output: bool = True) -> subprocess.CompletedProcess:
     cmd = [arg for arg in cmd if arg is not None]
     log.debug(f"Run cmd: {' '.join(cmd)}")
-    return subprocess.run(cmd, capture_output=capture_output)
+    return subprocess.run(cmd, capture_output=capture_output, check=False)  # noqa: S603
 
 
 def remove_dir(directory: Path):
@@ -46,8 +46,8 @@ def remove_dir(directory: Path):
 
 def calculate_file_hash(file: Path, block_size: int = 65536) -> str | None:
     try:
-        with open(file, "rb") as binary_file:
-            file_hash = md5()
+        with Path(file).open(mode="rb") as binary_file:
+            file_hash = md5()  # noqa: S324
             while chunk := binary_file.read(block_size):
                 file_hash.update(chunk)
             return file_hash.hexdigest()
@@ -64,17 +64,17 @@ def list_files(
     extensions = [] if extensions is None else extensions
     exclude = [] if exclude is None else exclude
 
-    excluded_files_list: list[Path] = []
-    for exc in exclude:
-        for file in directory.rglob(exc):
-            excluded_files_list.append(file.relative_to(directory))
+    excluded_files_list: list[Path] = [file.relative_to(directory) for exc in exclude for file in directory.rglob(exc)]
 
     for ext in extensions:
         for file in directory.glob(f"**/*{ext}"):
             file_relative_path = file.relative_to(directory)
-            for exc in excluded_files_list:
-                if not str(file_relative_path).startswith(str(exc)):
-                    files_list.append(file.relative_to(directory))
+
+            files_list.extend(
+                file.relative_to(directory)
+                for exc in excluded_files_list
+                if not str(file_relative_path).startswith(str(exc))
+            )
 
     return files_list
 

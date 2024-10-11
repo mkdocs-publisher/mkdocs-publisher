@@ -67,12 +67,11 @@ class _BlogTagsConfig(Config):
 class BlogPluginConfig(Config):
     blog_dir = option.Type(str, default="blog")
 
-    archive: _BlogArchiveConfig = option.SubConfig(_BlogArchiveConfig)  # type: ignore
-    categories: _BlogCategoriesConfig = option.SubConfig(_BlogCategoriesConfig)  # type: ignore
-    comments: _BlogCommentsConfig = option.SubConfig(_BlogCommentsConfig)  # type: ignore
-    posts: _BlogPostsConfig = option.SubConfig(_BlogPostsConfig)  # type: ignore
-    tags: _BlogTagsConfig = option.SubConfig(_BlogTagsConfig)  # type: ignore
-
+    archive: _BlogArchiveConfig = option.SubConfig(_BlogArchiveConfig)  # type: ignore [reportAssignmentType]
+    categories: _BlogCategoriesConfig = option.SubConfig(_BlogCategoriesConfig)  # type: ignore [reportAssignmentType]
+    comments: _BlogCommentsConfig = option.SubConfig(_BlogCommentsConfig)  # type: ignore [reportAssignmentType]
+    posts: _BlogPostsConfig = option.SubConfig(_BlogPostsConfig)  # type: ignore [reportAssignmentType]
+    tags: _BlogTagsConfig = option.SubConfig(_BlogTagsConfig)  # type: ignore [reportAssignmentType]
     # ==== Old below ====
 
     # General settings
@@ -90,4 +89,4 @@ class BlogPluginConfig(Config):
     tags_subdir = option.Type(str, default="tags")
 
     # Values that are in lang files and can be overridden
-    translation: _BlogTranslationConfig = option.SubConfig(_BlogTranslationConfig)  # type: ignore
+    translation: _BlogTranslationConfig = option.SubConfig(_BlogTranslationConfig)  # type: ignore [reportAssignmentType]

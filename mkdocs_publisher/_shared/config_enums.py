@@ -37,7 +37,7 @@ class ConfigChoiceEnum(Enum):
     def _str_to_bool(text) -> bool:
         if text.lower() == "true":
             return True
-        elif text.lower() == "false":
+        if text.lower() == "false":
             return False
         raise ValueError(f"'{text}' cannot be converted into bool value")
 
@@ -64,7 +64,7 @@ class ConfigChoiceEnum(Enum):
         defaults = [f.name for f in cls if f.value[1]]
         if len(defaults) == 0:
             return None
-        elif len(defaults) > 1:
+        if len(defaults) > 1:
             raise ValueError(f"Multiple defaults specified: {defaults}")
         return defaults[0]
 

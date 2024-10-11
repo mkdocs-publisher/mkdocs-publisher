@@ -63,7 +63,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
         self.blog_config = BlogConfig()  # Empty instance
 
-    def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
+    def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:  # noqa: ARG002
         if command == "serve":
             self._on_serve = True
         self._blog_files.on_serve = self._on_serve
@@ -83,7 +83,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
         # Detect if blog is a starting page
         if len(config.nav) > 0:
-            first_value = list(config.nav[0].values())[0]
+            first_value = next(iter(config.nav[0].values()))
             if isinstance(first_value, str) and first_value == str(self.blog_config.blog_dir):
                 self._start_page = True
 
@@ -121,7 +121,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         config.nav = new_nav
         return config
 
-    def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation:
+    def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation:  # noqa: ARG002
         modifiers.blog_post_nav_remove(start_page=self._start_page, blog_config=self.blog_config, nav=nav)
 
         return nav
@@ -135,7 +135,12 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
 
     @event_priority(-100)  # Run after all other plugins
     def on_page_context(
-        self, context: dict[str, Any], *, page: Page, config: MkDocsConfig, nav: Navigation
+        self,
+        context: dict[str, Any],
+        *,
+        page: Page,
+        config: MkDocsConfig,  # noqa: ARG002
+        nav: Navigation,  # noqa: ARG002
     ) -> dict[str, Any] | None:
         if Path(page.file.src_path).parts[0] == self.config.blog_dir:
             page.meta[self.config.comments.key_name] = self.config.comments.enabled
@@ -148,7 +153,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         return context
 
     @event_priority(-100)  # Run after all other plugins
-    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> str | None:
+    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> str | None:  # noqa: ARG002
         md_links = MarkdownLinks(mkdocs_config=config)
         markdown = md_links.normalize_relative_links(
             markdown=markdown,
@@ -174,7 +179,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         return markdown
 
     @event_priority(-100)  # Run after all other plugins
-    def on_post_build(self, *, config: MkDocsConfig) -> None:
+    def on_post_build(self, *, config: MkDocsConfig) -> None:  # noqa: ARG002
         self._blog_files.remove_temp_dirs()
 
         # ==== Old below
@@ -182,7 +187,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
             file_utils.remove_dir(directory=self.blog_config.temp_dir)
 
     @event_priority(-100)  # Run after all other plugins
-    def on_build_error(self, error: Exception) -> None:
+    def on_build_error(self, error: Exception) -> None:  # noqa: ARG002
         self._blog_files.remove_temp_dirs()
 
         # ==== Old below

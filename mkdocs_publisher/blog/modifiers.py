@@ -70,19 +70,19 @@ def blog_post_nav_next_prev_change(start_page: bool, blog_config: BlogConfig, pa
     """Change blog post next/prev navigation"""
 
     if (start_page and page.title == "index") or (not start_page and page.title == "index-0"):
-        page.title = blog_config.translation.recent_blog_posts_navigation_name  # type: ignore
+        page.title = blog_config.translation.recent_blog_posts_navigation_name  # type: ignore [reportAttributeAccessIssue]
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):
             next_page_copy: Page = deepcopy(page.next_page)
-            next_page_copy.title = blog_config.translation.older_posts  # type: ignore
+            next_page_copy.title = blog_config.translation.older_posts  # type: ignore [reportAttributeAccessIssue]
             page.next_page = next_page_copy
     elif str(page.title).startswith("index") or (
         page.previous_page is not None and str(page.previous_page.title).startswith("index")
     ):
-        page.title = blog_config.translation.older_posts  # type: ignore
+        page.title = blog_config.translation.older_posts  # type: ignore [reportAttributeAccessIssue]
         previous_page_copy: Page | None = deepcopy(page.previous_page)
-        previous_page_copy.title = blog_config.translation.newer_posts  # type: ignore
+        previous_page_copy.title = blog_config.translation.newer_posts  # type: ignore [reportAttributeAccessIssue]
         page.previous_page = previous_page_copy
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):
             next_page_copy: Page = deepcopy(page.next_page)
-            next_page_copy.title = blog_config.translation.older_posts  # type: ignore
+            next_page_copy.title = blog_config.translation.older_posts  # type: ignore [reportAttributeAccessIssue]
             page.next_page = next_page_copy

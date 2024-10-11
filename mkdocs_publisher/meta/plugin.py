@@ -23,7 +23,7 @@
 import contextlib
 import logging
 from datetime import datetime
-from pathlib import Path
+from typing import TYPE_CHECKING
 from typing import Literal
 
 from mkdocs.config import Config
@@ -39,6 +39,9 @@ from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.meta_files import MetaFiles
 from mkdocs_publisher.meta.meta_nav import MetaNav
 
+if TYPE_CHECKING:  # pragma: no cover
+    from pathlib import Path
+
 log = logging.getLogger("mkdocs.publisher.meta.plugin")
 
 
@@ -53,6 +56,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         self._meta_nav: MetaNav | None = None
 
     def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:  # pragma: no cover
+        _ = dirty
         if command == "serve":
             self._on_serve = True
         self._meta_files.on_serve = self._on_serve
@@ -71,9 +75,9 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         self._meta_files.add_hidden_path(hidden_path=self._attachments_dir)
         self._meta_files.add_files(ignored_dirs=self._ignored_dirs)
 
-        log.info(f"Ignored directories: " f"{[str(d.relative_to(config.docs_dir)) for d in self._ignored_dirs]}")
-        log.info(f"Draft files and directories: " f"{list(self._meta_files.drafts.keys())}")
-        log.info(f"Hidden files and directories: " f"{list(self._meta_files.hidden.keys())}")
+        log.info(f"Ignored directories: {[str(d.relative_to(config.docs_dir)) for d in self._ignored_dirs]}")
+        log.info(f"Draft files and directories: {list(self._meta_files.drafts.keys())}")
+        log.info(f"Hidden files and directories: {list(self._meta_files.hidden.keys())}")
 
         config.nav = self._meta_nav.build_nav(mkdocs_config=config)
 
@@ -81,13 +85,13 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
     @event_priority(-100)
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Files | None:  # pragma: no cover
+        _ = config
         new_files = self._meta_files.clean_redirect_files(files=files)
         new_files = self._meta_files.change_files_slug(files=new_files, ignored_dirs=self._ignored_dirs)
-        new_files = self._meta_files.clean_draft_files(files=new_files)
-
-        return new_files
+        return self._meta_files.clean_draft_files(files=new_files)
 
     def on_nav(self, nav: Navigation, *, config: MkDocsConfig, files: Files) -> Navigation | None:  # pragma: no cover
+        _, _ = config, files
         removal_list = [*self._meta_files.drafts.keys(), *self._meta_files.hidden.keys()]
         log.debug(f"Nav elements to remove: {removal_list}")
         nav.items = self._meta_nav.nav_cleanup(
@@ -100,12 +104,13 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         return nav
 
     @event_priority(-100)  # Run after all other plugins
-    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files):
+    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files):  # noqa: ARG002
         # Modify page update date
         # TODO: move date format to config
         # TODO: warn on missing in config
         update_date: datetime = page.meta.get(
-            "update", page.meta.get("date", datetime.strptime(page.update_date, "%Y-%m-%d"))
+            "update",
+            page.meta.get("date", datetime.strptime(page.update_date, "%Y-%m-%d")),  # noqa: DTZ007
         )
         with contextlib.suppress(AttributeError):
             page.update_date = update_date.strftime("%Y-%m-%d")
@@ -118,6 +123,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
 
     @event_priority(-100)  # Run after all other plugins
     def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> str | None:  # pragma: no cover
+        _ = config
         if page.file.src_path in self._meta_files:
             redirect_page: str | None = self._meta_files.generate_redirect_page(file=page.file)
             if redirect_page:
@@ -125,7 +131,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         return output
 
     # TODO: sitemap modification for hidden, draft and by frontmatter
-    # def on_post_template(self, output_content: str, /, *, template_name: str, config: MkDocsConfig) -> Optional[str]:
-    #     if template_name == "sitemap.xml":
-    #         log.warning(template_name)
-    #         log.warning(output_content)
+    def on_post_template(self, output_content: str, /, *, template_name: str, config: MkDocsConfig) -> str | None:  # noqa: ARG002
+        if template_name == "sitemap.xml":
+            log.debug(template_name)
+            # log.debug(output_content)  # noqa: ERA001

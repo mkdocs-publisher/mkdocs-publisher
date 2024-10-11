@@ -44,16 +44,9 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
     def __init__(self):
         self._on_serve: bool = False
 
-    def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:
+    def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:  # noqa: ARG002
         if command == "serve":
             self._on_serve = True
-
-    @event_priority(-100)  # Run after all other plugins
-    def on_post_build(self, *, config: MkDocsConfig) -> None:
-        Path(self.config.cache_dir).mkdir(exist_ok=True)
-
-        # TODO: Add path to tools checker
-        cached_files: dict[str, CachedFile] = {}
 
         if self.config.threads == 0:
             self.config.threads = int(cpu_count())
@@ -62,10 +55,17 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
             self.config.threads = 1
         log.info(f"Threads used for minifiers: {self.config.threads}")
 
+    @event_priority(-100)  # Run after all other plugins
+    def on_post_build(self, *, config: MkDocsConfig) -> None:  # noqa: C901
+        Path(self.config.cache_dir).mkdir(exist_ok=True)
+
+        # TODO: Add path to tools checker
+        cached_files: dict[str, CachedFile] = {}
+
         cached_files_list: Path = Path(self.config.cache_dir) / self.config.cache_file
         if cached_files_list.exists():
             try:
-                with open(cached_files_list) as yaml_file:
+                with cached_files_list.open() as yaml_file:
                     cached_files = yaml.safe_load(yaml_file)
                     for file_path, cached_file in cached_files.items():
                         cached_files[file_path] = CachedFile(**cast(dict, cached_file))
@@ -101,5 +101,5 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
             cached_file = {k: str(v) for k, v in cached_file.as_dict.items()}
             cached_files_for_yaml[file_name] = cached_file
 
-        with open(cached_files_list, "w") as yaml_file:
+        with Path(cached_files_list).open(mode="w") as yaml_file:
             yaml.safe_dump(cached_files_for_yaml, yaml_file)

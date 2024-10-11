@@ -22,11 +22,14 @@
 
 import logging
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from mkdocs_publisher._shared import file_utils
-from mkdocs_publisher.minifier import config as minifier_config
 from mkdocs_publisher.minifier.base import BaseMinifier
 from mkdocs_publisher.minifier.base import CachedFile
+
+if TYPE_CHECKING:  # pragma: no cover
+    from mkdocs_publisher.minifier import config as minifier_config
 
 log = logging.getLogger("mkdocs.publisher.minifier.minifiers")
 
