@@ -1,0 +1,20 @@
+{
+    "recommendations": [
+        "charliermarsh.ruff",
+        "streetsidesoftware.code-spell-checker",
+        "socheatsok78-lab.dotenv-vscode-stripped",
+        "tamasfe.even-better-toml",
+        "zainchen.json",
+        "ms-vscode.live-server",
+        "alefragnani.project-manager",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "donjayamanne.python-environment-manager",
+        "donjayamanne.python-extension-pack",
+        "kevinrose.vsc-python-indent",
+        "adrianwilczynski.terminal-commands",
+        "gruntfuggly.todo-tree",
+        "vscode-icons-team.vscode-icons",
+        "redhat.vscode-yaml"
+    ]
+}

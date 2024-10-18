@@ -23,7 +23,6 @@ docs
 # Other
 .env
 .idea
-.vscode
 .venv
 dist
 
