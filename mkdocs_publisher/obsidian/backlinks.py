@@ -102,7 +102,7 @@ class BacklinkLinks:
         if original_link_source != original_link.link and original_link_source not in temp_blog_files:
             log.debug(
                 f"Found backlink to: {original_link.link}"
-                f"{original_link.anchor if original_link.anchor is not None else ''}"
+                f"{original_link.anchor if original_link.anchor is not None else ''}",
             )
             if original_link.link not in self._backlinks:
                 self._backlinks[original_link.link] = [new_link]

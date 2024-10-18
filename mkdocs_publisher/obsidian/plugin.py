@@ -22,10 +22,9 @@
 
 import logging
 import re
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable
-from typing import Optional
 
 import watchdog.events
 from mkdocs.config import Config
@@ -36,8 +35,8 @@ from mkdocs.plugins import event_priority
 from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
-from mkdocs.utils import meta as meta_parser
 
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher._shared import resources
 from mkdocs_publisher._shared import templates
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
@@ -56,30 +55,32 @@ log = logging.getLogger("mkdocs.publisher.obsidian.plugin")
 @dataclass
 class Comment:
     comment: str
-    is_html_comment: Optional[bool] = False
+    is_html_comment: bool | None = False
 
     def __repr__(self):
         return f"<!--{self.comment}-->" if self.is_html_comment else ""
 
 
 class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
+    supports_multiple_instances = False
+
     def __init__(self):
-        self._backlink_links: Optional[BacklinkLinks] = None
+        self._backlink_links: BacklinkLinks | None = None
         self._backlinks: dict[str, list[Link]] = {}
-        self._md_links: Optional[MarkdownLinks] = None
-        self._vega_pages: list[Page] = list()
+        self._md_links: MarkdownLinks | None = None
+        self._vega_pages: list[Page] = []
 
     def _normalize_comments(self, match: re.Match) -> str:
         comment = Comment(**match.groupdict())
         comment.is_html_comment = self.config.comments.inject_as_html
         return str(comment)
 
-    def on_config(self, config: MkDocsConfig) -> Optional[Config]:
+    def on_config(self, config: MkDocsConfig) -> Config | None:
         self._backlink_links = BacklinkLinks(mkdocs_config=config, backlinks=self._backlinks)
         self._md_links = MarkdownLinks(mkdocs_config=config)
         return config
 
-    def on_files(self, files: Files, *, config: MkDocsConfig) -> Optional[Files]:
+    def on_files(self, files: Files, *, config: MkDocsConfig) -> Files | None:
         if self.config.vega.enabled:
             resources.add_extra_css(
                 stylesheet_file_name="obsidian.min.css",
@@ -88,22 +89,19 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             )
         return files
 
-    def on_nav(self, nav: Navigation, *, config: MkDocsConfig, files: Files) -> Optional[Navigation]:
+    def on_nav(self, nav: Navigation, *, config: MkDocsConfig, files: Files) -> Navigation | None:  # noqa: ARG002
         if self.config.backlinks.enabled:
             log.info("Parsing backlinks")
             for file in files:
                 if file.page is not None:
                     log.debug(f"Parsing backlinks in file '{file.src_path}'")
-                    with open(str(file.abs_src_path), encoding="utf-8-sig", errors="strict") as md_file:
-                        markdown, _ = meta_parser.get_data(md_file.read())
-                        markdown = self._md_links.normalize_links(
-                            markdown=markdown, current_file_path=Path(file.src_uri)
-                        )
-                        self._backlink_links.find_markdown_links(markdown=markdown, page=file.page)
+                    markdown, _ = mkdocs_utils.read_md_file(md_file_path=Path(str(file.abs_src_path)))
+                    markdown = self._md_links.normalize_links(markdown=markdown, current_file_path=Path(file.src_uri))
+                    self._backlink_links.find_markdown_links(markdown=markdown, page=file.page)
         return nav
 
     @event_priority(100)  # Run before all other plugins
-    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> Optional[str]:
+    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> str | None:  # noqa: ARG002
         # TODO: add verification if relative backlinks are enabled in .obsidian config
         markdown = self._md_links.normalize_links(markdown=markdown, current_file_path=Path(page.file.src_uri))
         if self.config.comments.enabled:
@@ -134,7 +132,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
                 markdown = f"{markdown}{backlink_render}"
         return markdown
 
-    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
+    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> str | None:  # noqa: ARG002
         if self.config.vega.enabled and page in self._vega_pages:
             # TODO: embed scripts to assets and give possibility to serve from site_dir
             html_modifier = HTMLModifier(markup=output)
@@ -145,9 +143,8 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         return output
 
-    def on_serve(
-        self, server: LiveReloadServer, *, config: MkDocsConfig, builder: Callable
-    ) -> Optional[LiveReloadServer]:
+    # ruff: noqa: SLF001
+    def on_serve(self, server: LiveReloadServer, *, config: MkDocsConfig, builder: Callable) -> LiveReloadServer | None:  # noqa: ARG002
         server.unwatch(config.docs_dir)
 
         docs_dirs_to_skip = [str(Path(config.docs_dir) / self.config.obsidian_dir)]
@@ -156,13 +153,13 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
             """Watcher implementation that skips .obsidian directory"""
             if (
                 isinstance(event, watchdog.events.FileModifiedEvent)
-                and any([str(event.src_path).startswith(d) for d in docs_dirs_to_skip])
+                and any(str(event.src_path).startswith(d) for d in docs_dirs_to_skip)
                 or event.is_directory
             ):
                 return
 
             with server._rebuild_cond:
-                server._want_rebuild = True  # type: ignore
+                server._want_rebuild = True
                 server._rebuild_cond.notify_all()
 
         handler = watchdog.events.FileSystemEventHandler()
@@ -170,7 +167,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
 
         if config.docs_dir in server._watched_paths:
             server._watched_paths[config.docs_dir] += 1
-            return
+            return None
         server._watched_paths[config.docs_dir] = 1
 
         server._watch_refs[config.docs_dir] = server.observer.schedule(handler, config.docs_dir, recursive=True)
