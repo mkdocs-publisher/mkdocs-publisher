@@ -34,9 +34,8 @@ from mkdocs_publisher._shared.config_enums import SlugModeChoiceEnum
 
 log = logging.getLogger("mkdocs.publisher._shared.links")
 
-
 ANCHOR_PART_RE = r"((#(?P<anchor>([^|\][()'\"]+)))?)"
-EXTRA_PART_RE = r"( *({(?P<extra>[\w+=. ]+)})?)"
+EXTRA_PART_RE = r"(( ?{(?P<extra>[\w+=. ]+)})?)"
 IMAGE_PART_RE = r"((\|(?P<image>([0-9x]+)))?)"
 LINK_PART_RE = r"(?P<link>(?!(https?|ftp)://)[^|#()\r\n\t\f\v]+)"
 URL_PART_RE = r"(?P<link>((https?|ftp)://)[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"

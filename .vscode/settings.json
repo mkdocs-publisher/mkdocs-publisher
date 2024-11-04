@@ -5,5 +5,27 @@
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "editor.tabSize": 4,
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "cSpell.words": [
+        "backlink",
+        "backlinks",
+        "cjpeg",
+        "cssnano",
+        "djpeg",
+        "frontmatter",
+        "jpegtran",
+        "Kusz",
+        "Maciej",
+        "Minifier",
+        "mkdocs",
+        "multipass",
+        "optimise",
+        "oxipng",
+        "pngquant",
+        "postcss",
+        "pymdownx",
+        "pyright",
+        "svgo",
+        "uglifyjs"
+    ]
 }

@@ -55,12 +55,12 @@ python = "^3.10"
 mkdocs = "^1.6.1"
 pymdown-extensions = "^10.11.2"
 beautifulsoup4 = "^4.12.3"
-mkdocs-material = "^9.5.40"
+mkdocs-material = "^9.5.43"
 
 [tool.poetry.group.dev.dependencies]
 yamllint = "^1.35.1"
 ruff = "^0.5.7"
-pyright = "^1.1.384"
+pyright = "^1.1.387"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.6.2"
@@ -140,16 +140,17 @@ ignore = [
     "ANN101",
     "FIX002",
     "G004",
+    "ISC001",
     "PLR0913",
     "PLR2004",
     "PLW2901",
     "S101",
     "TD002",
-    "TD003",  # TODO: remove it
+    "TD003",   # TODO: remove it
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["SLF",]
+"tests/*" = ["SLF"]
 
 [tool.ruff.lint.isort]
 force-single-line = true
