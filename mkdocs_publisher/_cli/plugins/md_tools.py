@@ -55,9 +55,9 @@ def key_rename():
             linter_config = json.load(linter_json)["ruleConfigs"]
             key_order_list = str(linter_config["yaml-key-sort"]["yaml-key-priority-sort-order"]).split("\n")
 
-    # old_key_name = click.prompt("Enter old key name you want to replace", type=str)
+    # old_key_name = click.prompt("Enter old key name you want to replace", type=str)  # noqa: ERA001
     old_key_name = "visibility"
-    # new_key_name = click.prompt("Enter new key name", type=str)
+    # new_key_name = click.prompt("Enter new key name", type=str)  # noqa: ERA001
     new_key_name = "publish"
 
     for file_path in Path(mkdocs_config.docs_dir).glob("**/*.md"):

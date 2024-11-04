@@ -55,8 +55,8 @@ class ObsidianPluginConfig(Config):
     templates_dir = option.Type(str, default="_templates")
     attachments_dir = option.Type(str, default="_attachments")
 
-    backlinks: _ObsidianBacklinksConfig = option.SubConfig(_ObsidianBacklinksConfig)  # type: ignore
-    callouts: _ObsidianCalloutsConfig = option.SubConfig(_ObsidianCalloutsConfig)  # type: ignore
-    comments: _ObsidianCommentsConfig = option.SubConfig(_ObsidianCommentsConfig)  # type: ignore
-    vega: _ObsidianVegaConfig = option.SubConfig(_ObsidianVegaConfig)  # type: ignore
-    links: _ObsidianLinksConfig = option.SubConfig(_ObsidianLinksConfig)  # type: ignore
+    backlinks: _ObsidianBacklinksConfig = option.SubConfig(_ObsidianBacklinksConfig)  # type: ignore [reportAssignmentType]
+    callouts: _ObsidianCalloutsConfig = option.SubConfig(_ObsidianCalloutsConfig)  # type: ignore [reportAssignmentType]
+    comments: _ObsidianCommentsConfig = option.SubConfig(_ObsidianCommentsConfig)  # type: ignore [reportAssignmentType]
+    vega: _ObsidianVegaConfig = option.SubConfig(_ObsidianVegaConfig)  # type: ignore [reportAssignmentType]
+    links: _ObsidianLinksConfig = option.SubConfig(_ObsidianLinksConfig)  # type: ignore [reportAssignmentType]

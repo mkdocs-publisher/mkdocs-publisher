@@ -70,7 +70,6 @@ def test_nav_cleanup_for_page(
     ],
 )
 def test_nav_cleanup_for_link(
-    mkdocs_config: MkDocsConfig,
     meta_nav: MetaNav,
     removal_list: list,
     expected: bool,
@@ -92,7 +91,6 @@ def test_nav_cleanup_for_link(
     ],
 )
 def test_nav_cleanup_for_section(
-    mkdocs_config: MkDocsConfig,
     meta_nav: MetaNav,
     removal_list: list,
     expected: bool,

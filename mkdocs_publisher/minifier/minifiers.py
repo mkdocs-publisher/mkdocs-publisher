@@ -22,12 +22,14 @@
 
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import TYPE_CHECKING
 
 from mkdocs_publisher._shared import file_utils
-from mkdocs_publisher.minifier import config as minifier_config
 from mkdocs_publisher.minifier.base import BaseMinifier
 from mkdocs_publisher.minifier.base import CachedFile
+
+if TYPE_CHECKING:  # pragma: no cover
+    from mkdocs_publisher.minifier import config as minifier_config
 
 log = logging.getLogger("mkdocs.publisher.minifier.minifiers")
 
@@ -47,15 +49,19 @@ class PngMinifier(BaseMinifier):
 
     def are_tools_installed(self) -> bool:
         are_installed = True
-        if self._minify_options.pngquant_enabled and not _is_cmd_installed(cmd=[self._minify_options.pngquant_path]):
+        if self._minify_options.pngquant_enabled and not _is_cmd_installed(
+            cmd=[self._minify_options.pngquant_path, "--version"]
+        ):
             log.warning("Pngquant is not installed.")
             are_installed = False
-        if self._minify_options.oxipng_enabled and not _is_cmd_installed(cmd=[self._minify_options.oxipng_path]):
+        if self._minify_options.oxipng_enabled and not _is_cmd_installed(
+            cmd=[self._minify_options.oxipng_path, "--version"]
+        ):
             log.warning("Oxipng is not installed.")
             are_installed = False
         return are_installed
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -108,17 +114,17 @@ class JpegMinifier(BaseMinifier):
 
     def are_tools_installed(self) -> bool:
         are_installed = True
-        if not _is_cmd_installed(cmd=[self._minify_options.cjpeg_path, "--version"]):
+        if not _is_cmd_installed(cmd=[self._minify_options.cjpeg_path, "-version"]):
             are_installed = False
-        if not _is_cmd_installed(cmd=[self._minify_options.djpeg_path, "--version"]):
+        if not _is_cmd_installed(cmd=[self._minify_options.djpeg_path, "-version"]):
             are_installed = False
-        if not _is_cmd_installed(cmd=[self._minify_options.jpegtran_path, "--version"]):
+        if not _is_cmd_installed(cmd=[self._minify_options.jpegtran_path, "-version"]):
             are_installed = False
         if not are_installed:
             log.warning("Mozilla JPEG Encoder is not installed.")
         return are_installed
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -179,12 +185,12 @@ class SvgMinifier(BaseMinifier):
         super().__call__()
 
     def are_tools_installed(self) -> bool:
-        if not _is_cmd_installed(cmd=[self._minify_options.svgo_path]):
+        if not _is_cmd_installed(cmd=[self._minify_options.svgo_path, "--version"]):
             log.warning("SVG Optimizer (SVGO) is not installed.")
             return False
         return True
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -221,7 +227,7 @@ class HtmlMinifier(BaseMinifier):
             return False
         return True
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -263,12 +269,12 @@ class CssMinifier(BaseMinifier):
         super().__call__()
 
     def are_tools_installed(self) -> bool:
-        if not _is_cmd_installed(cmd=[self._minify_options.postcss_path]):
+        if not _is_cmd_installed(cmd=[self._minify_options.postcss_path, "--version"]):
             log.warning("PostCSS is not installed.")
             return False
         return True
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -308,7 +314,7 @@ class JsMinifier(BaseMinifier):
             return False
         return True
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
