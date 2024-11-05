@@ -26,6 +26,7 @@ from dataclasses import dataclass
 from hashlib import md5
 from pathlib import Path
 from typing import Optional
+
 from mkdocs_publisher._shared.urls import slugify
 
 log = logging.getLogger("mkdocs.publisher._shared.links")
