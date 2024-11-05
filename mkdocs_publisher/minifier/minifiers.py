@@ -47,10 +47,14 @@ class PngMinifier(BaseMinifier):
 
     def are_tools_installed(self) -> bool:
         are_installed = True
-        if self._minify_options.pngquant_enabled and not _is_cmd_installed(cmd=[self._minify_options.pngquant_path, "--version"]):
+        if self._minify_options.pngquant_enabled and not _is_cmd_installed(
+            cmd=[self._minify_options.pngquant_path, "--version"]
+        ):
             log.warning("Pngquant is not installed.")
             are_installed = False
-        if self._minify_options.oxipng_enabled and not _is_cmd_installed(cmd=[self._minify_options.oxipng_path, "--version"]):
+        if self._minify_options.oxipng_enabled and not _is_cmd_installed(
+            cmd=[self._minify_options.oxipng_path, "--version"]
+        ):
             log.warning("Oxipng is not installed.")
             are_installed = False
         return are_installed
