@@ -26,12 +26,13 @@ from dataclasses import dataclass
 from hashlib import md5
 from pathlib import Path
 from typing import Optional
+from mkdocs_publisher._shared.urls import slugify
 
 log = logging.getLogger("mkdocs.publisher._shared.links")
 
 
 ANCHOR_RE_PART = r"((#(?P<anchor>([^|\][()'\"]+)))?)"
-EXTRA_RE_PART = r"( *({(?P<extra>[\w+=. ]+)})?)"
+EXTRA_RE_PART = r"(( ?{(?P<extra>[\w+=. ]+)})?)"
 IMAGE_RE_PART = r"((\|(?P<image>([0-9x]+)))?)"
 LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^|#()\r\n\t\f\v]+)"
 URL_RE_PART = r"(?P<link>((https?|ftp)://)[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
@@ -47,10 +48,6 @@ MD_LINK_RE = re.compile(
 MD_EMBED_LINK_RE = re.compile(rf"!\[{TEXT_RE_PART}]\({LINK_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}")
 RELATIVE_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}?]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
 ANCHOR_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_RE_PART}]\({ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
-
-
-def slugify(anchor: str) -> str:
-    return anchor.lower().replace("%20", "-")
 
 
 class RelativePathFinder:

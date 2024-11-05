@@ -54,21 +54,21 @@ documentation = "https://mkdocs-publisher.github.io/"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-mkdocs = "^1.6.0"
+mkdocs = "^1.6.1"
 pymdown-extensions = "^10.7"
 beautifulsoup4 = "^4.12.3"
-mkdocs-material = "^9.5.31"
+mkdocs-material = "^9.5.43"
 
 [tool.poetry.group.dev.dependencies]
 yamllint = "^1.35.1"
 ruff = "^0.5.7"
-pyright = "^1.1.375"
+pyright = "^1.1.387"
 
 [tool.poetry.group.test.dependencies]
-coverage = "^7.6.0"
+coverage = "^7.6.4"
 pytest = "^7.4.4"
 pytest-cov = "^4.1.0"
-pytest-check = "^2.3.1"
+pytest-check = "^2.4.1"
 
 [build-system]
 requires = ["poetry-core"]

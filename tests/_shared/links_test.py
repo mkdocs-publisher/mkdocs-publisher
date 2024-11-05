@@ -91,7 +91,7 @@ from mkdocs_publisher._shared import links
             "just/an anchor",
             "",
             False,
-            "[Anchor link](#just/an anchor)",
+            "[Anchor link](#justan-anchor)",
         ),
     },
 )
