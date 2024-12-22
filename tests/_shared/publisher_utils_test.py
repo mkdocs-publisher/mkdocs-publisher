@@ -27,7 +27,7 @@ from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 from pytest_check import check_functions as check
 
-from mkdocs_publisher.meta.meta_nav import MetaNav
+from mkdocs_publisher._shared import publisher_utils
 
 
 @pytest.mark.parametrize(
@@ -40,7 +40,6 @@ from mkdocs_publisher.meta.meta_nav import MetaNav
 )
 def test_nav_cleanup_for_page(
     mkdocs_config: MkDocsConfig,
-    meta_nav: MetaNav,
     removal_list: list,
     expected: bool,
 ):
@@ -54,7 +53,7 @@ def test_nav_cleanup_for_page(
         ),
         config=mkdocs_config,
     )
-    nav = meta_nav.nav_cleanup(
+    nav = publisher_utils.nav_cleanup(
         items=[page],
         removal_list=removal_list,
     )
@@ -70,12 +69,11 @@ def test_nav_cleanup_for_page(
     ],
 )
 def test_nav_cleanup_for_link(
-    meta_nav: MetaNav,
     removal_list: list,
     expected: bool,
 ):
     link = Link(title="Fake file", url="fake-file")
-    nav = meta_nav.nav_cleanup(
+    nav = publisher_utils.nav_cleanup(
         items=[link],
         removal_list=removal_list,
     )
@@ -91,14 +89,13 @@ def test_nav_cleanup_for_link(
     ],
 )
 def test_nav_cleanup_for_section(
-    meta_nav: MetaNav,
     removal_list: list,
     expected: bool,
 ):
     link = Link(title="Fake file", url="fake-file")
     section = Section("Some section", children=[link])
 
-    nav = meta_nav.nav_cleanup(
+    nav = publisher_utils.nav_cleanup(
         items=[section],
         removal_list=removal_list,
     )

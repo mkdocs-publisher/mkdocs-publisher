@@ -108,7 +108,7 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
                     if str(log_file) != self._mkdocs_log_file:
                         log_file.unlink(missing_ok=True)
 
-    @event_priority(100)  # Run after  all other plugins
+    @event_priority(100)  # Run after all other plugins
     def on_shutdown(self) -> None:
         if self.config.file_log.enabled:
             log.info(f"Platform: {platform.platform()}")

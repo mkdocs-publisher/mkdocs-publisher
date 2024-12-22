@@ -25,6 +25,7 @@ import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Sequence  # noqa: UP035
 
 import watchdog.events
 from mkdocs.config import Config
@@ -37,6 +38,7 @@ from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared import mkdocs_utils
+from mkdocs_publisher._shared import publisher_utils
 from mkdocs_publisher._shared import resources
 from mkdocs_publisher._shared import templates
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
@@ -67,6 +69,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def __init__(self):
         self._backlink_links: BacklinkLinks | None = None
         self._backlinks: dict[str, list[Link]] = {}
+        self._ignored_dirs: list[Path] = []
         self._md_links: MarkdownLinks | None = None
         self._vega_pages: list[Page] = []
 
@@ -78,9 +81,22 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def on_config(self, config: MkDocsConfig) -> Config | None:
         self._backlink_links = BacklinkLinks(mkdocs_config=config, backlinks=self._backlinks)
         self._md_links = MarkdownLinks(mkdocs_config=config)
+        self._ignored_dirs, _ = publisher_utils.get_obsidian_dirs(mkdocs_config=config)
+        log.info(f"Ignored directories: {self._ignored_dirs}")
         return config
 
+    def files_cleanup(self, files, removal_list: Sequence[str | Path]) -> Files:
+        removal_list = [str(p) for p in removal_list]
+        new_files = Files(files=[])
+        for file in files:
+            if str(Path(file.src_path).parent) not in removal_list:
+                new_files.append(file=file)
+
+        return new_files
+
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Files | None:
+        files = self.files_cleanup(files=files, removal_list=self._ignored_dirs)
+
         if self.config.vega.enabled:
             resources.add_extra_css(
                 stylesheet_file_name="obsidian.min.css",
@@ -90,6 +106,8 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         return files
 
     def on_nav(self, nav: Navigation, *, config: MkDocsConfig, files: Files) -> Navigation | None:  # noqa: ARG002
+        nav.items = publisher_utils.nav_cleanup(items=nav.items, removal_list=self._ignored_dirs)
+
         if self.config.backlinks.enabled:
             log.info("Parsing backlinks")
             for file in files:
@@ -135,6 +153,7 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
     def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> str | None:  # noqa: ARG002
         if self.config.vega.enabled and page in self._vega_pages:
             # TODO: embed scripts to assets and give possibility to serve from site_dir
+            # TODO: add a tool to check if those libraries are the in the latest version
             html_modifier = HTMLModifier(markup=output)
             html_modifier.add_head_script(src="https://cdn.jsdelivr.net/npm/vega@5.22.1")
             html_modifier.add_head_script(src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.1")

@@ -23,13 +23,16 @@
 import logging
 import re
 from dataclasses import dataclass
+from pathlib import Path
 from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared import links
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.plugin import BlogPlugin
+from mkdocs_publisher.meta.config import MetaPluginConfig
 
 log = logging.getLogger("mkdocs.publisher.obsidian.backlinks")
 
@@ -49,6 +52,9 @@ class BacklinkLinks:
         backlinks: dict[str, list[Link]],
     ):
         self._mkdocs_config: MkDocsConfig = mkdocs_config
+        self._meta_config: MetaPluginConfig = cast(
+            MetaPluginConfig, mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta")
+        )
         self._backlinks: dict[str, list[Link]] = backlinks
 
     @staticmethod
@@ -85,11 +91,17 @@ class BacklinkLinks:
             original_link.link = "/".join(destination_pre)
         original_link.link = original_link.link.replace("../", "")
 
+        title = page.title
+        if title is None and self._meta_config is not None:
+            file_path = Path(self._mkdocs_config.docs_dir) / page.file.src_path
+            _, meta = mkdocs_utils.read_md_file(md_file_path=file_path)
+            title = meta.get(str(self._meta_config.title.key_name), None)
+
         new_link = Link(
             text=backlink_text,
             destination=backlink_link,
             source=original_link.link,
-            title=str(page.title),
+            title=str(title),
         )
 
         # Get blog temporary files

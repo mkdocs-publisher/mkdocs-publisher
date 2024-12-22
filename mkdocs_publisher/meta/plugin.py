@@ -94,13 +94,9 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         _, _ = config, files
         removal_list = [*self._meta_files.drafts.keys(), *self._meta_files.hidden.keys()]
         log.debug(f"Nav elements to remove: {removal_list}")
-        nav.items = self._meta_nav.nav_cleanup(
-            items=nav.items,
-            removal_list=removal_list,
-        )
-
         # TODO: create prev/next page cleanup for hidden pages
 
+        nav.items = publisher_utils.nav_cleanup(items=nav.items, removal_list=removal_list)
         return nav
 
     @event_priority(-100)  # Run after all other plugins

@@ -7,15 +7,21 @@
     "editor.tabSize": 4,
     "files.autoSave": "afterDelay",
     "cSpell.words": [
+        "addopts",
         "backlink",
         "backlinks",
+        "beautifulsoup",
+        "caplog",
         "cjpeg",
         "cssnano",
         "djpeg",
         "frontmatter",
+        "isort",
         "jpegtran",
         "Kusz",
+        "levelno",
         "Maciej",
+        "mccabe",
         "Minifier",
         "mkdocs",
         "multipass",
@@ -23,9 +29,16 @@
         "oxipng",
         "pngquant",
         "postcss",
+        "pymdown",
         "pymdownx",
         "pyright",
+        "pytest",
         "svgo",
+        "testpaths",
         "uglifyjs"
-    ]
+    ],
+    "cSpell.ignorePaths": [
+      ".venv",
+      ".vscode"
+    ],
 }

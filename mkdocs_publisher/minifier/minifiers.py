@@ -129,18 +129,18 @@ class JpegMinifier(BaseMinifier):
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
 
-            djpg_cmd = [
+            djpeg_cmd = [
                 self._minify_options.djpeg_path,
                 "-targa",
                 "-outfile",
                 str(output_file.with_suffix(".tga")),
                 str(input_file),
             ]
-            if file_utils.run_subprocess(cmd=djpg_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=djpeg_cmd).returncode != 0:
                 output_file.with_suffix(".tga").unlink(missing_ok=True)
                 return None
 
-            cjpg_cmd = [
+            cjpeg_cmd = [
                 self._minify_options.cjpeg_path,
                 "-targa",
                 "-smooth" if int(self._minify_options.smooth) > 0 else None,
@@ -151,7 +151,7 @@ class JpegMinifier(BaseMinifier):
                 str(output_file.with_suffix(".jpg_")),
                 str(output_file.with_suffix(".tga")),
             ]
-            if file_utils.run_subprocess(cmd=cjpg_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=cjpeg_cmd).returncode != 0:
                 output_file.with_suffix(".jpg_").unlink(missing_ok=True)
                 return None
             output_file.with_suffix(".tga").unlink(missing_ok=True)

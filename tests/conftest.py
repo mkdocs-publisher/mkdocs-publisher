@@ -60,7 +60,9 @@ def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore [reportI
     try:
         config_dict = request.param
     except AttributeError:
-        config_dict = {"docs_dir": "tests/_tests_data"}
+        config_dict = {}
+    if "docs_dir" not in config_dict:
+        config_dict["docs_dir"] = "docs"
     config = MkDocsConfig()
     config.load_dict(patch=config_dict)
     yield config  # type: ignore [reportReturnType]

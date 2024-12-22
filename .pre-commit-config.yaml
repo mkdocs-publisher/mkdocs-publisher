@@ -67,6 +67,7 @@ repos:
       - id: trailing-whitespace
         exclude: ^(docs|mkdocs_publisher_docs/.obsidian)/
       - id: check-json
+        exclude: ^.vscode
       - id: check-toml
 
   - repo: local

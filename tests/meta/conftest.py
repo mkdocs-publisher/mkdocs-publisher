@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import shutil
 from pathlib import Path
 
 import pytest
@@ -32,7 +33,9 @@ from mkdocs_publisher.meta.meta_nav import MetaNav
 
 
 @pytest.fixture(scope="function")
-def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore [reportInvalidTypeForm]
+def mkdocs_config_with_docs_dir(
+    request: SubRequest, tmp_path_factory: pytest.TempPathFactory
+) -> tuple[MkDocsConfig, Path]:  # type: ignore [reportInvalidTypeForm]
     """Fixture returning MkDocsConfig
 
     How to change configuration:
@@ -49,20 +52,24 @@ def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore [reportI
     try:
         config_dict = request.param
     except AttributeError:
-        config_dict = {"docs_dir": "/Users/me"}
+        config_dict = {}
+    if "docs_dir" not in config_dict:
+        config_dict["docs_dir"] = "docs"
+    docs_dir = tmp_path_factory.mktemp(config_dict["docs_dir"])
     config = MkDocsConfig()
     config.load_dict(patch=config_dict)
-    yield config  # type: ignore [reportReturnType]
+
+    yield (config, docs_dir)  # type: ignore [reportReportType]
+    shutil.rmtree(path=docs_dir.parent, ignore_errors=True)
 
 
 @pytest.fixture()
 def patched_meta_files() -> MetaFiles:
-    def patch_read_md_file(md_file_path: Path):
+    def patched_read_md_file(md_file_path: Path):
         _ = md_file_path
         return "", {}
 
-    mkdocs_utils.read_md_file = patch_read_md_file
-
+    mkdocs_utils.read_md_file = patched_read_md_file
     meta_files: MetaFiles = MetaFiles()
     return meta_files
 

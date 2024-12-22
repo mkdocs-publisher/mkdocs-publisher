@@ -23,9 +23,13 @@
 import logging
 from collections import UserDict
 from pathlib import Path
+from typing import Sequence  # noqa: UP035
 from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
+from mkdocs.structure.nav import Link
+from mkdocs.structure.nav import Section
+from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.config import BlogPluginConfig
@@ -94,3 +98,21 @@ class PublisherFiles(UserDict):
 
     def add_files(self):
         raise NotImplementedError
+
+
+def nav_cleanup(items, removal_list: Sequence[str | Path]) -> list:
+    removal_list = [str(p) for p in removal_list]
+    nav = []
+    for item in items:
+        if isinstance(item, Section):
+            item.children = nav_cleanup(items=item.children, removal_list=removal_list)
+            # If section is empty, skip it
+            if len(item.children) > 0:
+                nav.append(item)
+        elif (
+            isinstance(item, Page)
+            and str(item.file.src_path) not in removal_list
+            and str(Path(item.file.src_path).parent) not in removal_list
+        ) or (isinstance(item, Link) and item.title not in removal_list):
+            nav.append(item)
+    return nav

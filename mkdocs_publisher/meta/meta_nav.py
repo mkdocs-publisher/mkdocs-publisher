@@ -25,9 +25,6 @@ import re
 from pathlib import Path
 
 from mkdocs.config.defaults import MkDocsConfig
-from mkdocs.structure.nav import Link
-from mkdocs.structure.nav import Section
-from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared import links
 from mkdocs_publisher.meta.meta_files import MetaFile
@@ -40,22 +37,6 @@ class MetaNav:
     def __init__(self, meta_files: MetaFiles, blog_dir: Path | None = None):
         self._meta_files: MetaFiles = meta_files
         self._blog_dir: Path | None = blog_dir
-
-    def nav_cleanup(self, items, removal_list: list[str]) -> list:
-        nav = []
-        for item in items:
-            if isinstance(item, Section):
-                item.children = self.nav_cleanup(items=item.children, removal_list=removal_list)
-                # If section is empty, skip it
-                if len(item.children) > 0:
-                    nav.append(item)
-            elif (
-                isinstance(item, Page)
-                and str(item.file.src_path) not in removal_list
-                and str(Path(item.file.src_path).parent) not in removal_list
-            ) or (isinstance(item, Link) and item.title not in removal_list):
-                nav.append(item)
-        return nav
 
     def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, MetaFile | None]:  # noqa: C901
         nav = []
