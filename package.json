@@ -1,6 +1,6 @@
 {
   "name": "mkdocs-publisher",
-  "version": "1.4.2",
+  "version": "2.0.0",
   "description": "Publisher for MkDocs - set of plugins for content creators",
   "directories": {
     "doc": "docs"
@@ -35,6 +35,6 @@
     "uglify-js": "^3.19.3"
   },
   "devDependencies": {
-    "pyright": "^1.1.387"
+    "pyright": "^1.1.391"
   }
 }
