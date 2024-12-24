@@ -314,22 +314,113 @@ def test_get_publish_status_with_parent(
 
 
 @pytest.mark.parametrize(
-    "publish_dir,publish_file,drafts_keys,draft_file_keys,draft_dir_keys,hidden_keys,hidden_file_keys,hidden_dir_keys",
+    "publish_dir,publish_file,is_overview,drafts_keys,draft_file_keys,draft_dir_keys,hidden_keys,hidden_file_keys,hidden_dir_keys",
     [
-        (False, False, {"docs/fake_file.md", "docs"}, {"docs/fake_file.md"}, {"docs"}, set(), set(), set()),
-        (False, True, {"docs/fake_file.md", "docs"}, {"docs/fake_file.md"}, {"docs"}, set(), set(), set()),
-        (False, "hidden", {"docs/fake_file.md", "docs"}, {"docs/fake_file.md"}, {"docs"}, set(), set(), set()),
-        (True, False, {"docs/fake_file.md"}, {"docs/fake_file.md"}, set(), set(), set(), set()),
-        (True, True, set(), set(), set(), set(), set(), set()),
-        (True, "hidden", set(), set(), set(), {"docs/fake_file.md"}, {"docs/fake_file.md"}, set()),
-        ("hidden", False, {"docs/fake_file.md"}, {"docs/fake_file.md"}, set(), {"docs"}, set(), {"docs"}),
-        ("hidden", True, set(), set(), set(), {"docs/fake_file.md", "docs"}, {"docs/fake_file.md"}, {"docs"}),
-        ("hidden", "hidden", set(), set(), set(), {"docs/fake_file.md", "docs"}, {"docs/fake_file.md"}, {"docs"}),
+        (False, False, False, {"docs/fake_file.md", "docs"}, {"docs/fake_file.md"}, {"docs"}, set(), set(), set()),
+        (False, True, False, {"docs/fake_file.md", "docs"}, {"docs/fake_file.md"}, {"docs"}, set(), set(), set()),
+        (False, "hidden", False, {"docs/fake_file.md", "docs"}, {"docs/fake_file.md"}, {"docs"}, set(), set(), set()),
+        (True, False, False, {"docs/fake_file.md"}, {"docs/fake_file.md"}, set(), set(), set(), set()),
+        (True, True, False, set(), set(), set(), set(), set(), set()),
+        (True, "hidden", False, set(), set(), set(), {"docs/fake_file.md"}, {"docs/fake_file.md"}, set()),
+        ("hidden", False, False, {"docs/fake_file.md"}, {"docs/fake_file.md"}, set(), {"docs"}, set(), {"docs"}),
+        ("hidden", True, False, set(), set(), set(), {"docs/fake_file.md", "docs"}, {"docs/fake_file.md"}, {"docs"}),
+        (
+            "hidden",
+            "hidden",
+            False,
+            set(),
+            set(),
+            set(),
+            {"docs/fake_file.md", "docs"},
+            {"docs/fake_file.md"},
+            {"docs"},
+        ),
+        (
+            False,
+            False,
+            True,
+            {"docs/fake_file.md", "docs"},
+            {"docs/fake_file.md", "docs/README.md"},
+            {"docs"},
+            set(),
+            set(),
+            set(),
+        ),
+        (
+            False,
+            False,
+            True,
+            {"docs/fake_file.md", "docs"},
+            {"docs/fake_file.md", "docs/README.md"},
+            {"docs"},
+            set(),
+            set(),
+            set(),
+        ),
+        (
+            False,
+            True,
+            True,
+            {"docs/fake_file.md", "docs"},
+            {"docs/fake_file.md", "docs/README.md"},
+            {"docs"},
+            set(),
+            set(),
+            set(),
+        ),
+        (
+            False,
+            "hidden",
+            True,
+            {"docs/fake_file.md", "docs"},
+            {"docs/fake_file.md", "docs/README.md"},
+            {"docs"},
+            set(),
+            set(),
+            set(),
+        ),
+        (True, False, True, {"docs/fake_file.md"}, {"docs/fake_file.md"}, set(), set(), set(), set()),
+        (True, True, True, set(), set(), set(), set(), set(), set()),
+        (True, "hidden", True, set(), set(), set(), {"docs/fake_file.md"}, {"docs/fake_file.md"}, set()),
+        (
+            "hidden",
+            False,
+            True,
+            {"docs/fake_file.md"},
+            {"docs/fake_file.md"},
+            set(),
+            {"docs"},
+            {"docs/README.md"},
+            {"docs"},
+        ),
+        (
+            "hidden",
+            True,
+            True,
+            set(),
+            set(),
+            set(),
+            {"docs/fake_file.md", "docs"},
+            {"docs/fake_file.md", "docs/README.md"},
+            {"docs"},
+        ),
+        (
+            "hidden",
+            "hidden",
+            True,
+            set(),
+            set(),
+            set(),
+            {"docs/fake_file.md", "docs"},
+            {"docs/fake_file.md", "docs/README.md"},
+            {"docs"},
+        ),
     ],
 )
 def test_drafts_and_hidden(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
+    is_overview: bool,
     patched_meta_files: MetaFiles,
     publish_dir: str | bool,
     publish_file: str | bool,
@@ -342,7 +433,9 @@ def test_drafts_and_hidden(
 ):
     patched_meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
 
-    meta_file_dir: MetaFile = MetaFile(path=Path("docs"), abs_path=Path("/Users/docs"), is_dir=True)
+    meta_file_dir: MetaFile = MetaFile(
+        path=Path("docs"), abs_path=Path("/Users/docs"), is_dir=True, is_overview=is_overview
+    )
     patched_meta_files["docs"] = meta_file_dir
     patched_meta_files._get_publish_status(meta_file=meta_file_dir, meta={"publish": publish_dir})
 
@@ -358,6 +451,41 @@ def test_drafts_and_hidden(
     check.equal(set(patched_meta_files.hidden.keys()), hidden_keys, "Wrong hidden keys")
     check.equal(set(patched_meta_files.hidden_files.keys()), hidden_file_keys, "Wrong hidden files keys")
     check.equal(set(patched_meta_files.hidden_dirs.keys()), hidden_dir_keys, "Wrong hidden dirs keys")
+
+
+@pytest.mark.parametrize("is_draft,expected_files", [(False, 1), (True, 0)])
+def test_clean_draft_files(
+    mkdocs_config: MkDocsConfig,
+    pub_meta_plugin: MetaPlugin,
+    patched_meta_files: MetaFiles,
+    caplog,
+    is_draft: bool,
+    expected_files: int,
+):
+    patched_meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
+    meta_file: MetaFile = MetaFile(path=Path("fake_file.md"), abs_path=Path("/docs/fake_file.md"), is_dir=False)
+    patched_meta_files["fake_file.md"] = meta_file
+    patched_meta_files["fake_file.md"].is_draft = is_draft
+
+    files = Files(
+        files=[
+            File(
+                path="fake_file.md",
+                src_dir="docs/",
+                dest_dir="site/",
+                use_directory_urls=True,
+            )
+        ]
+    )
+
+    new_files = patched_meta_files.clean_draft_files(files=files)
+
+    check.equal(len(new_files), expected_files, "Wrong number of files")
+    if expected_files == 0:
+        check.equal(caplog.records[-1].levelno, logging.DEBUG, "Wrong log level")
+        check.is_true(caplog.records[-1].message.startswith("Removed draft file:"), "Wrong log message")
+    elif expected_files == 1:
+        check.equal(next(iter(new_files.src_paths.keys())), "fake_file.md")
 
 
 @pytest.mark.parametrize("exists", [True, False])
