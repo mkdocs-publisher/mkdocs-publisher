@@ -28,8 +28,10 @@ from _pytest.fixtures import SubRequest
 from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher._shared import mkdocs_utils
+from mkdocs_publisher.meta.meta_files import MetaFile
 from mkdocs_publisher.meta.meta_files import MetaFiles
 from mkdocs_publisher.meta.meta_nav import MetaNav
+from mkdocs_publisher.meta.plugin import MetaPluginConfig
 
 
 @pytest.fixture(scope="function")
@@ -75,6 +77,17 @@ def patched_meta_files() -> MetaFiles:
 
 
 @pytest.fixture()
-def meta_nav(patched_meta_files: MetaFiles) -> MetaNav:
-    meta_nav: MetaNav = MetaNav(meta_files=patched_meta_files)
+def patched_meta_nav(patched_meta_files: MetaFiles, mkdocs_config) -> MetaNav:
+    def patched_get_metadata(meta_file: MetaFile, meta_file_path: Path):
+        _, _ = meta_file, meta_file_path
+
+    meta_plugin_config: MetaPluginConfig = MetaPluginConfig()  # type: ignore[reportAssignmentType]
+    meta_plugin_config.validate()
+
+    patched_meta_files.set_configs(
+        mkdocs_config=mkdocs_config,
+        meta_plugin_config=meta_plugin_config,
+    )
+    patched_meta_files._get_metadata = patched_get_metadata
+    meta_nav: MetaNav = MetaNav(meta_files=patched_meta_files, blog_dir=Path("blog"))
     return meta_nav

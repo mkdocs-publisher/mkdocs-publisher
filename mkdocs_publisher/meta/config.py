@@ -67,8 +67,8 @@ class _MetaRedirectConfig(Config):
 class MetaPluginConfig(Config):
     dir_meta_file = option.Choice(["README.md", "index.md"], default="README.md")  # TODO: Move to ConfigEnum
 
-    overview: _MetaOverviewConfig = option.SubConfig(_MetaOverviewConfig)  # type: ignore [reportAssignmentType]
-    publish: _MetaPublishConfig = option.SubConfig(_MetaPublishConfig)  # type: ignore [reportAssignmentType]
-    redirect: _MetaRedirectConfig = option.SubConfig(_MetaRedirectConfig)  # type: ignore [reportAssignmentType]
-    slug: _MetaSlugConfig = option.SubConfig(_MetaSlugConfig)  # type: ignore [reportAssignmentType]
-    title: _MetaTitleConfig = option.SubConfig(_MetaTitleConfig)  # type: ignore [reportAssignmentType]
+    overview: _MetaOverviewConfig = option.SubConfig(_MetaOverviewConfig)  # type: ignore[reportAssignmentType]
+    publish: _MetaPublishConfig = option.SubConfig(_MetaPublishConfig)  # type: ignore[reportAssignmentType]
+    redirect: _MetaRedirectConfig = option.SubConfig(_MetaRedirectConfig)  # type: ignore[reportAssignmentType]
+    slug: _MetaSlugConfig = option.SubConfig(_MetaSlugConfig)  # type: ignore[reportAssignmentType]
+    title: _MetaTitleConfig = option.SubConfig(_MetaTitleConfig)  # type: ignore[reportAssignmentType]

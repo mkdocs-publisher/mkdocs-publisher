@@ -38,6 +38,15 @@ class MetaNav:
         self._meta_files: MetaFiles = meta_files
         self._blog_dir: Path | None = blog_dir
 
+    def _get_overview_nav(self, meta_file: MetaFile) -> list[str]:
+        overview_path: Path = meta_file.abs_path.joinpath(self._meta_files.dir_meta_file)
+        overview_nav: list[str] = (
+            [str(meta_file.path.joinpath(self._meta_files.dir_meta_file))]
+            if meta_file.is_overview and overview_path.exists() and not meta_file.is_draft
+            else []
+        )
+        return overview_nav
+
     def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, MetaFile | None]:  # noqa: C901
         nav = []
         meta_file: MetaFile | None = None
@@ -45,16 +54,15 @@ class MetaNav:
             if meta_file is None:
                 try:
                     meta_file = next(meta_files_gen)
+                    is_dir = "D" if meta_file.is_dir else "F"
+                    is_overview = "O" if meta_file.is_dir else "R"
+                    log.debug(f"[{is_dir}{is_overview}] {meta_file.path} - {meta_file.parent} ({meta_file.abs_path})")
                 except StopIteration:
                     break
             # Iterate over meta links until last one
             if meta_file.is_dir and meta_file.abs_path.is_relative_to(current_dir):
-                overview_path: Path = meta_file.abs_path.joinpath(self._meta_files.dir_meta_file)
-                overview_nav: list[str] = (
-                    [str(meta_file.path.joinpath(self._meta_files.dir_meta_file))]
-                    if meta_file.is_overview and overview_path.exists() and not meta_file.is_draft
-                    else []
-                )
+                overview_nav = self._get_overview_nav(meta_file=meta_file)
+                log.debug(f"Overview files: {overview_nav}")
                 title = meta_file.title
                 prev_path = meta_file.path
                 sub_nav, meta_file = self._build_nav(meta_files_gen=meta_files_gen, current_dir=meta_file.abs_path)

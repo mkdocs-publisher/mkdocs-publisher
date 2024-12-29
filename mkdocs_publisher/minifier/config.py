@@ -98,9 +98,9 @@ class MinifierConfig(Config):
     exclude = option.Type(list, default=[])
     threads = option.Type(int, default=0)  # 0 - default (read from system)
 
-    js: _MinifierJsConfig = option.SubConfig(_MinifierJsConfig)  # type: ignore [reportAssignmentType]
-    css: _MinifierCssConfig = option.SubConfig(_MinifierCssConfig)  # type: ignore [reportAssignmentType]
-    jpeg: _MinifierJpegConfig = option.SubConfig(_MinifierJpegConfig)  # type: ignore [reportAssignmentType]
-    png: _MinifierPngConfig = option.SubConfig(_MinifierPngConfig)  # type: ignore [reportAssignmentType]
-    svg: _MinifierSvgConfig = option.SubConfig(_MinifierSvgConfig)  # type: ignore [reportAssignmentType]
-    html: _MinifierHtmlConfig = option.SubConfig(_MinifierHtmlConfig)  # type: ignore [reportAssignmentType]
+    js: _MinifierJsConfig = option.SubConfig(_MinifierJsConfig)  # type: ignore[reportAssignmentType]
+    css: _MinifierCssConfig = option.SubConfig(_MinifierCssConfig)  # type: ignore[reportAssignmentType]
+    jpeg: _MinifierJpegConfig = option.SubConfig(_MinifierJpegConfig)  # type: ignore[reportAssignmentType]
+    png: _MinifierPngConfig = option.SubConfig(_MinifierPngConfig)  # type: ignore[reportAssignmentType]
+    svg: _MinifierSvgConfig = option.SubConfig(_MinifierSvgConfig)  # type: ignore[reportAssignmentType]
+    html: _MinifierHtmlConfig = option.SubConfig(_MinifierHtmlConfig)  # type: ignore[reportAssignmentType]

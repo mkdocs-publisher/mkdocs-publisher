@@ -51,9 +51,8 @@ TAB_RE = re.compile(r"\t")
 
 
 def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> None | dict[str, Any] | Config:
-    plugins = mkdocs_config.plugins
-    if isinstance(plugins, list):
-        for plugin in plugins:
+    if isinstance(mkdocs_config.plugins, list):
+        for plugin in mkdocs_config.plugins:
             if isinstance(plugin, dict) and next(iter(plugin.keys())) == plugin_name:
                 return plugin[next(iter(plugin.keys()))]
             if isinstance(plugin, str) and plugin == plugin_name:

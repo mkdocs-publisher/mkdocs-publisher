@@ -164,7 +164,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
         return meta
 
     def _get_overview(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str):
-        """Overview works only for metafiles ("README.md", "index.md") that are detected as dir"""
+        """Overview works only for meta files ("README.md", "index.md") that are detected as dir"""
 
         if not meta_file.is_dir:
             meta_file.is_overview = False

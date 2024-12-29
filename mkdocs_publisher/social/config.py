@@ -52,7 +52,7 @@ class _SocialSiteNameInTitleConfig(Config):
 
 
 class SocialConfig(Config):
-    meta_keys: _SocialMetaKeysConfig = option.SubConfig(_SocialMetaKeysConfig)  # type: ignore [reportAssignmentType]
-    og: _SocialOpenGraphConfig = option.SubConfig(_SocialOpenGraphConfig)  # type: ignore [reportAssignmentType]
-    twitter: _SocialTwitterConfig = option.SubConfig(_SocialTwitterConfig)  # type: ignore [reportAssignmentType]
-    site_name_in_title: _SocialSiteNameInTitleConfig = option.SubConfig(_SocialSiteNameInTitleConfig)  # type: ignore [reportAssignmentType]
+    meta_keys: _SocialMetaKeysConfig = option.SubConfig(_SocialMetaKeysConfig)  # type: ignore[reportAssignmentType]
+    og: _SocialOpenGraphConfig = option.SubConfig(_SocialOpenGraphConfig)  # type: ignore[reportAssignmentType]
+    twitter: _SocialTwitterConfig = option.SubConfig(_SocialTwitterConfig)  # type: ignore[reportAssignmentType]
+    site_name_in_title: _SocialSiteNameInTitleConfig = option.SubConfig(_SocialSiteNameInTitleConfig)  # type: ignore[reportAssignmentType]

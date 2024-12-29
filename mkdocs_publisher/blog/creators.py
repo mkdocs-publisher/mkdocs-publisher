@@ -230,7 +230,7 @@ def _render_and_write_page(
     page_meta["slug"] = slug
     page_meta["publish"] = "true"
     if not blog_config.plugin_config.searchable_non_posts:
-        page_meta["search"] = {"exclude": True}  # type: ignore [reportArgumentType]
+        page_meta["search"] = {"exclude": True}  # type: ignore[reportArgumentType]
 
     with Path(file_path).open(mode="w") as teasers_index:
         teasers_index.write(f"---\n{yaml.dump(page_meta)}\n---\n\n{markdown}")

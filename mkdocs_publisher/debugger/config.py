@@ -57,6 +57,6 @@ class _DebuggerZipConfig(Config):
 
 
 class DebuggerConfig(Config):
-    console_log: _DebuggerConsoleConfig = option.SubConfig(_DebuggerConsoleConfig)  # type: ignore [reportAssignmentType]
-    file_log: _DebuggerFileConfig = option.SubConfig(_DebuggerFileConfig)  # type: ignore [reportAssignmentType]
-    zip_log: _DebuggerZipConfig = option.SubConfig(_DebuggerZipConfig)  # type: ignore [reportAssignmentType]
+    console_log: _DebuggerConsoleConfig = option.SubConfig(_DebuggerConsoleConfig)  # type: ignore[reportAssignmentType]
+    file_log: _DebuggerFileConfig = option.SubConfig(_DebuggerFileConfig)  # type: ignore[reportAssignmentType]
+    zip_log: _DebuggerZipConfig = option.SubConfig(_DebuggerZipConfig)  # type: ignore[reportAssignmentType]
