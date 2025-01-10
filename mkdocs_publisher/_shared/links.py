@@ -20,6 +20,29 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# MIT License
+#
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import logging
 import re
 import urllib.parse
@@ -43,7 +66,7 @@ TEXT_PART_RE = r"(?P<text>[^\][|]+)"
 TITLE_PART_RE = r"(( \"(?P<title>[ \S]+)\")?)"
 
 HTTP_LINK_RE = re.compile(rf"\[{TEXT_PART_RE}]\({URL_PART_RE}\)")
-WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[{LINK_PART_RE}{ANCHOR_PART_RE}(\|{TEXT_PART_RE})?]]")
+WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[({LINK_PART_RE}?){ANCHOR_PART_RE}(\|{TEXT_PART_RE})?]]")
 WIKI_EMBED_LINK_RE = re.compile(rf"!\[\[{LINK_PART_RE}{ANCHOR_PART_RE}{IMAGE_PART_RE}]]{EXTRA_PART_RE}")
 MD_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_PART_RE}]\({LINK_PART_RE}{ANCHOR_PART_RE}{TITLE_PART_RE}\){EXTRA_PART_RE}")
 MD_ANY_LINK_RE = re.compile(rf"!?\[{TEXT_PART_RE}]\({LINK_PART_RE}{ANCHOR_PART_RE}{TITLE_PART_RE}\){EXTRA_PART_RE}")
@@ -180,8 +203,10 @@ class LinkMatch(_LinksCommon):
 
     def __repr__(self):
         if self.is_wiki:
-            if self.text is None and self.anchor:
+            if self.text is None and self.link is not None and self.anchor:
                 self.text = f"{self.link} > {self.anchor}"
+            elif self.text is None and self.anchor:
+                self.text = self.anchor
             elif self.text is None:
                 self.text = self.link
             link = f"{self.link}.md" if self.link else ""
