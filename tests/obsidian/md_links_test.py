@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -67,6 +67,10 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         (
             "Lorem ipsum dolor sit [[file with space]] amet, consectetur adipiscing elit.",
             "Lorem ipsum dolor sit [file with space](file with space.md) amet, consectetur adipiscing elit.",
+        ),
+        (
+            "Lorem ipsum dolor sit amet [[#anchor part]], consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit amet [anchor part](#anchor-part), consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit amet [[file#anchor part]], consectetur adipiscing elit.",

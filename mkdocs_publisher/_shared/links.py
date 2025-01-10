@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -41,10 +41,10 @@ TEXT_RE_PART = r"(?P<text>[^\][|]+)"
 LINK_TITLE_RE_PART = r"(( \"(?P<title>[ \S]+)\")?)"
 
 HTTP_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}]\({URL_RE_PART}\)")
-WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[{LINK_RE_PART}{ANCHOR_RE_PART}(\|{TEXT_RE_PART})?]]")
+WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[({LINK_RE_PART}?){ANCHOR_RE_PART}(\|{TEXT_RE_PART})?]]")
 WIKI_EMBED_LINK_RE = re.compile(rf"!\[\[{LINK_RE_PART}{ANCHOR_RE_PART}{IMAGE_RE_PART}]]{EXTRA_RE_PART}")
 MD_LINK_RE = re.compile(
-    rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}" rf"{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
+    rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
 )
 MD_EMBED_LINK_RE = re.compile(rf"!\[{TEXT_RE_PART}]\({LINK_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}")
 RELATIVE_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}?]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
@@ -134,8 +134,10 @@ class LinkMatch:
         title = f' "{self.title}"' if self.title else ""
 
         if self.is_wiki:
-            if self.text is None and self.anchor:
+            if self.text is None and self.link is not None and self.anchor:
                 self.text = f"{self.link} > {self.anchor}"
+            elif self.text is None and self.anchor:
+                self.text = self.anchor
             elif self.text is None:
                 self.text = self.link
             link = f"{self.link}.md" if self.link else ""
