@@ -47,10 +47,10 @@ class Translate:
         if not lang_yaml_path.exists():
             log.warning(
                 f"There is no translation for '{self._config.lang}' language, "
-                f"so default language ('{BlogPluginConfig.lang.default}') will be used"
+                f"so default language ('{BlogPluginConfig.lang.default}') will be used",
             )
             lang_yaml_path = str(importlib.resources.files(lang_path).joinpath(f"{BlogPluginConfig.lang.default}.yaml"))
-        with open(lang_yaml_path) as lang_yaml:
+        with Path(lang_yaml_path).open() as lang_yaml:
             translation_yaml_data = yaml.safe_load(lang_yaml)
         translation_keys = [f.name for f in fields(Translation)]
         translation_data = {k: v for k, v in translation_yaml_data.items() if k in translation_keys}

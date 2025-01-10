@@ -24,47 +24,16 @@
 from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
 
-from mkdocs_publisher._shared.mkdocs_utils import ConfigChoiceEnum
-
-
-class SlugModeChoiceEnum(ConfigChoiceEnum):
-    TITLE = 0, True, False
-    FILENAME = 1, False, False
-
-
-class _MetaSlugConfig(Config):
-    enabled = option.Type(bool, default=True)
-    mode = option.Choice(choices=SlugModeChoiceEnum.choices(), default=SlugModeChoiceEnum.default())
-    warn_on_missing = option.Type(bool, default=True)
-    key_name = option.Type(str, default="slug")
-
-
-class OverviewChoiceEnum(ConfigChoiceEnum):
-    AUTO = 0, True, False
-    TRUE = 1, False, True
-    FALSE = 2, False, True
+from mkdocs_publisher._shared.config_enums import OverviewChoiceEnum
+from mkdocs_publisher._shared.config_enums import PublishChoiceEnum
+from mkdocs_publisher._shared.config_enums import SlugModeChoiceEnum
+from mkdocs_publisher._shared.config_enums import TitleChoiceEnum
 
 
 class _MetaOverviewConfig(Config):
     default = option.Choice(choices=OverviewChoiceEnum.choices(), default=OverviewChoiceEnum.default())
     enabled = option.Type(bool, default=True)
     key_name = option.Type(str, default="overview")
-
-
-class PublishChoiceEnum(ConfigChoiceEnum):
-    DRAFT = 0, False, False
-    HIDDEN = 1, False, False
-    PUBLISHED = 2, False, False
-    TRUE = 3, False, True
-    FALSE = 4, False, True
-
-    @classmethod
-    def drafts(cls) -> list:
-        return cls._get_enums([cls.DRAFT, cls.FALSE])  # pragma: no cover
-
-    @classmethod
-    def published(cls) -> list:
-        return cls._get_enums([cls.PUBLISHED, cls.TRUE])  # pragma: no cover
 
 
 class _MetaPublishConfig(Config):
@@ -77,10 +46,11 @@ class _MetaPublishConfig(Config):
     search_in_draft = option.Type(bool, default=False)
 
 
-class TitleChoiceEnum(ConfigChoiceEnum):
-    META = 0, True, False
-    HEAD = 1, False, False
-    FILE = 2, False, False
+class _MetaSlugConfig(Config):
+    enabled = option.Type(bool, default=True)
+    mode = option.Choice(choices=SlugModeChoiceEnum.choices(), default=SlugModeChoiceEnum.default())
+    warn_on_missing = option.Type(bool, default=True)
+    key_name = option.Type(str, default="slug")
 
 
 class _MetaTitleConfig(Config):
@@ -95,10 +65,10 @@ class _MetaRedirectConfig(Config):
 
 
 class MetaPluginConfig(Config):
-    dir_meta_file = option.Choice(["README.md", "index.md"], default="README.md")
+    dir_meta_file = option.Choice(["README.md", "index.md"], default="README.md")  # TODO: Move to ConfigEnum
 
-    overview: _MetaOverviewConfig = option.SubConfig(_MetaOverviewConfig)  # type: ignore
-    publish: _MetaPublishConfig = option.SubConfig(_MetaPublishConfig)  # type: ignore
-    redirect: _MetaRedirectConfig = option.SubConfig(_MetaRedirectConfig)  # type: ignore
-    slug: _MetaSlugConfig = option.SubConfig(_MetaSlugConfig)  # type: ignore
-    title: _MetaTitleConfig = option.SubConfig(_MetaTitleConfig)  # type: ignore
+    overview: _MetaOverviewConfig = option.SubConfig(_MetaOverviewConfig)  # type: ignore[reportAssignmentType]
+    publish: _MetaPublishConfig = option.SubConfig(_MetaPublishConfig)  # type: ignore[reportAssignmentType]
+    redirect: _MetaRedirectConfig = option.SubConfig(_MetaRedirectConfig)  # type: ignore[reportAssignmentType]
+    slug: _MetaSlugConfig = option.SubConfig(_MetaSlugConfig)  # type: ignore[reportAssignmentType]
+    title: _MetaTitleConfig = option.SubConfig(_MetaTitleConfig)  # type: ignore[reportAssignmentType]

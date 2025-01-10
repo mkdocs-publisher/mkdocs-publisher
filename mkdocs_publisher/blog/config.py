@@ -24,7 +24,7 @@ from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
 
 
-class _BlogTranslationConfig(Config):
+class _BlogTranslationConfig(Config):  # TODO: probably remove
     teaser_link_text = option.Optional(option.Type(str))
     blog_page_title = option.Optional(option.Type(str))
     blog_navigation_name = option.Optional(option.Type(str))
@@ -39,12 +39,41 @@ class _BlogTranslationConfig(Config):
     older_posts = option.Optional(option.Type(str))
 
 
+class _BlogArchiveConfig(Config):
+    enabled = option.Type(bool, default=False)
+    slug = option.Type(str, default="archive")
+
+
+class _BlogCategoriesConfig(Config):
+    enabled = option.Type(bool, default=False)
+    slug = option.Type(str, default="categories")
+
+
 class _BlogCommentsConfig(Config):
     enabled = option.Type(bool, default=False)
     key_name = option.Type(str, default="comments")
 
 
+class _BlogPostsConfig(Config):
+    teaser_separator = option.Type(str, default="<!-- more -->")
+    words_per_minute = option.Type(int, default=238)
+
+
+class _BlogTagsConfig(Config):
+    enabled = option.Type(bool, default=False)
+    slug = option.Type(str, default="tags")
+
+
 class BlogPluginConfig(Config):
+    blog_dir = option.Type(str, default="blog")
+
+    archive: _BlogArchiveConfig = option.SubConfig(_BlogArchiveConfig)  # type: ignore[reportAssignmentType]
+    categories: _BlogCategoriesConfig = option.SubConfig(_BlogCategoriesConfig)  # type: ignore[reportAssignmentType]
+    comments: _BlogCommentsConfig = option.SubConfig(_BlogCommentsConfig)  # type: ignore[reportAssignmentType]
+    posts: _BlogPostsConfig = option.SubConfig(_BlogPostsConfig)  # type: ignore[reportAssignmentType]
+    tags: _BlogTagsConfig = option.SubConfig(_BlogTagsConfig)  # type: ignore[reportAssignmentType]
+    # ==== Old below ====
+
     # General settings
     lang = option.Choice(["en", "pl"], default="en")  # TODO: auto update based on files
     teaser_marker = option.Type(str, default="<!-- more -->")
@@ -54,11 +83,10 @@ class BlogPluginConfig(Config):
 
     # Directories
     temp_dir = option.Type(str, default=".pub_blog_temp")
-    blog_dir = option.Type(str, default="blog")
+
     archive_subdir = option.Type(str, default="archive")
     categories_subdir = option.Type(str, default="categories")
     tags_subdir = option.Type(str, default="tags")
 
-    comments: _BlogCommentsConfig = option.SubConfig(_BlogCommentsConfig)  # type: ignore
-    # Values that are in lang files and can be overriden
-    translation: _BlogTranslationConfig = option.SubConfig(_BlogTranslationConfig)  # type: ignore
+    # Values that are in lang files and can be overridden
+    translation: _BlogTranslationConfig = option.SubConfig(_BlogTranslationConfig)  # type: ignore[reportAssignmentType]

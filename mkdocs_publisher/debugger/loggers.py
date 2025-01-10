@@ -82,8 +82,8 @@ class ProjectPathStreamFormatter(logging.Formatter):
         if self._console_config.show_logger_name:
             fmt = f"{fmt} {colorama.Fore.CYAN}[%(name)s]{colorama.Fore.RESET}"
 
-        self._style._fmt = fmt
-        self.datefmt = str(self._console_config.entry_time_format).replace("%f", str(record.msecs)[0:3])
+        self._style._fmt = fmt  # noqa: SLF001
+        self.datefmt = str(self._console_config.time_format).replace("%f", str(record.msecs)[0:3])
 
         if self._console_config.show_entry_time:
             record.msg = re.sub(LIVERELOAD_MSG_RE, self._livereload_msg_strip_time, str(record.msg))
@@ -97,8 +97,8 @@ class ProjectPathFileFormatter(logging.Formatter):
         try:
             record.project_path = str(
                 project_file_path.relative_to(
-                    SITE_PACKAGES_DIR if "site-packages" in str(project_file_path) else project_file_path.cwd()
-                )
+                    SITE_PACKAGES_DIR if "site-packages" in str(project_file_path) else project_file_path.cwd(),
+                ),
             )
         except ValueError:
             record.project_path = str(project_file_path)

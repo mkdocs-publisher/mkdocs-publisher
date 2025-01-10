@@ -23,7 +23,6 @@
 import logging
 import re
 from pathlib import Path
-from typing import Optional
 from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
@@ -38,17 +37,17 @@ log = logging.getLogger("mkdocs.publisher.obsidian.md_links")
 
 class MarkdownLinks:
     def __init__(self, mkdocs_config: MkDocsConfig):
-        self._current_file_path: Optional[Path] = None
-        self._current_relative_path: Optional[Path] = None
+        self._current_file_path: Path | None = None
+        self._current_relative_path: Path | None = None
         self._mkdocs_config: MkDocsConfig = mkdocs_config
-        self._links_config: ObsidianPluginConfig = cast(
-            ObsidianPluginConfig,
-            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-obsidian"),
-        )
-        self._blog_config: Optional[BlogPluginConfig] = cast(
-            BlogPluginConfig,
-            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-blog"),
-        )
+        self._links_config: ObsidianPluginConfig = mkdocs_utils.get_plugin_config(
+            plugin_config_type=ObsidianPluginConfig,  # type: ignore[reportArgumentType]
+            mkdocs_config=mkdocs_config,
+        )  # type: ignore[reportAttributeAccessIssue]
+        self._blog_config: BlogPluginConfig | None = mkdocs_utils.get_plugin_config(
+            plugin_config_type=BlogPluginConfig,  # type: ignore[reportArgumentType]
+            mkdocs_config=mkdocs_config,
+        )  # type: ignore[reportAttributeAccessIssue]
 
     @staticmethod
     def _normalize_wiki_embed_link(match: re.Match) -> str:
@@ -87,25 +86,23 @@ class MarkdownLinks:
 
     def normalize_links(self, markdown: str, current_file_path: Path) -> str:
         self._current_file_path = current_file_path
-        if self._links_config is not None and self._links_config.links.wikilinks_enabled:
+        if self._links_config and self._links_config.links.wikilinks_enabled:
             markdown = re.sub(links.WIKI_LINK_RE, self._normalize_wiki_link, markdown)
             markdown = re.sub(links.WIKI_EMBED_LINK_RE, self._normalize_wiki_embed_link, markdown)
             markdown = re.sub(links.ANCHOR_LINK_RE, self._normalize_anchor_links, markdown)
         markdown = re.sub(links.MD_EMBED_LINK_RE, self._normalize_md_embed_link, markdown)
-        markdown = re.sub(links.MD_LINK_RE, self._normalize_md_links, markdown)
-        return markdown
+        return re.sub(links.MD_LINK_RE, self._normalize_md_links, markdown)
 
     def normalize_relative_link(self, match: re.Match) -> str:
         md_link_obj = links.RelativeLinkMatch(**match.groupdict())
         md_link_obj.relative_path_finder = links.RelativePathFinder(
             current_file_path=cast(Path, self._current_file_path),
             docs_dir=Path(self._mkdocs_config.docs_dir),
-            relative_path=Path(cast(str, self._blog_config.blog_dir)),
+            relative_path=Path(self._blog_config.blog_dir),
         )
         return str(md_link_obj)
 
     def normalize_relative_links(self, markdown: str, current_file_path: Path, current_relative_path: Path) -> str:
         self._current_file_path = current_file_path
         self._current_relative_path = current_relative_path
-        markdown = re.sub(links.RELATIVE_LINK_RE, self.normalize_relative_link, markdown)
-        return markdown
+        return re.sub(links.RELATIVE_LINK_RE, self.normalize_relative_link, markdown)

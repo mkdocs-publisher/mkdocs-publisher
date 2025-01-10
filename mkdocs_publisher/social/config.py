@@ -23,7 +23,7 @@
 from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
 
-from mkdocs_publisher._shared.mkdocs_utils import ConfigChoiceEnum
+from mkdocs_publisher._shared.config_enums import SocialTitleLocationChoiceEnum
 
 
 class _SocialOpenGraphConfig(Config):
@@ -43,21 +43,16 @@ class _SocialMetaKeysConfig(Config):
     image_key = option.Type(str, default="image")
 
 
-class SocialTitleLocationChoiceEnum(ConfigChoiceEnum):
-    NONE = 0, False, False
-    BEFORE = 1, False, False
-    AFTER = 2, True, False
-
-
 class _SocialSiteNameInTitleConfig(Config):
     location = option.Choice(
-        choices=SocialTitleLocationChoiceEnum.choices(), default=SocialTitleLocationChoiceEnum.default()
+        choices=SocialTitleLocationChoiceEnum.choices(),
+        default=SocialTitleLocationChoiceEnum.default(),
     )
     delimiter = option.Type(str, default=" - ")
 
 
-class SocialConfig(Config):
-    meta_keys: _SocialMetaKeysConfig = option.SubConfig(_SocialMetaKeysConfig)  # type: ignore
-    og: _SocialOpenGraphConfig = option.SubConfig(_SocialOpenGraphConfig)  # type: ignore
-    twitter: _SocialTwitterConfig = option.SubConfig(_SocialTwitterConfig)  # type: ignore
-    site_name_in_title: _SocialSiteNameInTitleConfig = option.SubConfig(_SocialSiteNameInTitleConfig)  # type: ignore
+class SocialPluginConfig(Config):
+    meta_keys: _SocialMetaKeysConfig = option.SubConfig(_SocialMetaKeysConfig)  # type: ignore[reportAssignmentType]
+    og: _SocialOpenGraphConfig = option.SubConfig(_SocialOpenGraphConfig)  # type: ignore[reportAssignmentType]
+    twitter: _SocialTwitterConfig = option.SubConfig(_SocialTwitterConfig)  # type: ignore[reportAssignmentType]
+    site_name_in_title: _SocialSiteNameInTitleConfig = option.SubConfig(_SocialSiteNameInTitleConfig)  # type: ignore[reportAssignmentType]

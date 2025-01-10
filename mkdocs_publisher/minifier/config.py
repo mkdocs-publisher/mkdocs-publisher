@@ -91,16 +91,16 @@ class _MinifierPngConfig(_MinifierCommonConfig):
     strip = option.Type(bool, default=True)
 
 
-class MinifierConfig(Config):
+class MinifierPluginConfig(Config):
     cache_enabled = option.Type(bool, default=True)
-    cache_dir = option.Type(str, default=".pub_min_cache")
+    cache_dir = option.Type(str, default=".cache/plugins/pub-minifier")
     cache_file = option.Type(str, default=".cached_files_list.yml")
     exclude = option.Type(list, default=[])
     threads = option.Type(int, default=0)  # 0 - default (read from system)
 
-    js: _MinifierJsConfig = option.SubConfig(_MinifierJsConfig)  # type: ignore
-    css: _MinifierCssConfig = option.SubConfig(_MinifierCssConfig)  # type: ignore
-    jpeg: _MinifierJpegConfig = option.SubConfig(_MinifierJpegConfig)  # type: ignore
-    png: _MinifierPngConfig = option.SubConfig(_MinifierPngConfig)  # type: ignore
-    svg: _MinifierSvgConfig = option.SubConfig(_MinifierSvgConfig)  # type: ignore
-    html: _MinifierHtmlConfig = option.SubConfig(_MinifierHtmlConfig)  # type: ignore
+    js: _MinifierJsConfig = option.SubConfig(_MinifierJsConfig)  # type: ignore[reportAssignmentType]
+    css: _MinifierCssConfig = option.SubConfig(_MinifierCssConfig)  # type: ignore[reportAssignmentType]
+    jpeg: _MinifierJpegConfig = option.SubConfig(_MinifierJpegConfig)  # type: ignore[reportAssignmentType]
+    png: _MinifierPngConfig = option.SubConfig(_MinifierPngConfig)  # type: ignore[reportAssignmentType]
+    svg: _MinifierSvgConfig = option.SubConfig(_MinifierSvgConfig)  # type: ignore[reportAssignmentType]
+    html: _MinifierHtmlConfig = option.SubConfig(_MinifierHtmlConfig)  # type: ignore[reportAssignmentType]

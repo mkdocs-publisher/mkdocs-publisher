@@ -22,16 +22,14 @@
 
 import logging
 from pathlib import Path
-from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
-from mkdocs.structure.files import Files
 from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
-from mkdocs_publisher.social.config import SocialConfig
+from mkdocs_publisher.social.config import SocialPluginConfig
 from mkdocs_publisher.social.config import SocialTitleLocationChoiceEnum
 
 log = logging.getLogger("mkdocs.publisher.social.plugin")
@@ -55,16 +53,15 @@ OPEN_GRAPH_PROPERTIES = [
 ]
 
 
-class SocialPlugin(BasePlugin[SocialConfig]):
-    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> Optional[str]:
-        pass
+class SocialPlugin(BasePlugin[SocialPluginConfig]):
+    supports_multiple_instances = False
 
     @event_priority(-99)
-    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> Optional[str]:
+    def on_post_page(self, output: str, *, page: Page, config: MkDocsConfig) -> str | None:  # noqa: C901
         html_modifier = HTMLModifier(markup=output)
 
         log.debug(f"Processing social properties for file: '{page.file.src_path}'")
-        log.debug("Removing old Twitter and Open Graph properties")
+        log.debug(r"Removing old X\Twitter and Open Graph properties")
         html_modifier.remove_meta_properties(properties=OPEN_GRAPH_PROPERTIES)
         html_modifier.remove_meta_properties(properties=TWITTER_PROPERTIES)
 
@@ -88,9 +85,9 @@ class SocialPlugin(BasePlugin[SocialConfig]):
             image_path = Path(config.docs_dir) / Path(image)
             if not image_path.exists():
                 log.warning(
-                    f"File: '{str(image)}' doesn't exists!\n"
+                    f"File: '{image!s}' doesn't exists!\n"
                     f"('{self.config.meta_keys.image_key}' meta key"
-                    f" from '{page.file.src_path}' file.)"
+                    f" from '{page.file.src_path}' file.)",
                 )
             image = f'{config.site_url}{image.replace("//", "/")}'
         url = f"{config.site_url}{page.url}"
@@ -109,7 +106,7 @@ class SocialPlugin(BasePlugin[SocialConfig]):
                 html_modifier.add_meta_property(name="og:image", value=image)
 
         if self.config.twitter.enabled and title and description:
-            log.debug("Adding Twitter/X properties")
+            log.debug(r"Adding X\Twitter properties")
             card_type = "summary_large_image" if image else "summary"
             html_modifier.add_meta_property(name="twitter:card", value=card_type)
             html_modifier.add_meta_property(name="twitter:title", value=title)

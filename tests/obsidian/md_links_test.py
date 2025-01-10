@@ -20,6 +20,29 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# MIT License
+#
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 from pathlib import Path
 from typing import cast
 
@@ -61,16 +84,16 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
             "Lorem ipsum dolor sit [amet](#justan-anchor), consectetur adipiscing elit.",
         ),
         (
-            "Lorem ipsum dolor sit [[file]] amet, consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [file](file.md) amet, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [[file]] amet amet, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [file](file.md) amet amet, consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file with space]] amet, consectetur adipiscing elit.",
             "Lorem ipsum dolor sit [file with space](file with space.md) amet, consectetur adipiscing elit.",
         ),
         (
-            "Lorem ipsum dolor sit amet [[#anchor part]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit amet [anchor part](#anchor-part), consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit amet [[#anchor only]], consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit amet [anchor only](#anchor-only), consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit amet [[file#anchor part]], consectetur adipiscing elit.",
@@ -86,16 +109,16 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
         (
             "Lorem ipsum dolor sit ![[amet.pdf]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit ![amet.pdf](amet.pdf){pdfjs loading=lazy}, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit ![amet.pdf](amet.pdf){ pdfjs loading=lazy }, consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing ![elit](elit.jpg).",
-            "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
+            "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing ![elit](elit.jpg){ loading=lazy }.",
         ),
         (
             "Lorem ipsum dolor sit [amet](https://test.it/), consectetur adipiscing ![elit](elit.jpg).",
             "Lorem ipsum dolor sit [amet](https://test.it/), "
-            "consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
+            "consectetur adipiscing ![elit](elit.jpg){ loading=lazy }.",
         ),
     },
 )
@@ -108,6 +131,7 @@ def test_normalize_wiki_links(
 ):
     mkdocs_config.plugins = cast(PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin})
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
+    markdown_links._blog_config = pub_blog_plugin.config
     markdown = markdown_links.normalize_links(markdown=markdown, current_file_path=Path("main.md"))
 
     check.equal(expected, markdown, "Wrong wiki link to markdown link")
@@ -130,7 +154,7 @@ def test_normalize_wiki_links(
         ),
         (
             "Lorem ipsum dolor sit ![amet](main.md), consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit ![amet](main.md){loading=lazy}, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit ![amet](main.md){ loading=lazy }, consectetur adipiscing elit.",
         ),
     },
 )

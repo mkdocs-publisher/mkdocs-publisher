@@ -38,7 +38,7 @@ def app(debug):
     logging.basicConfig(level=log_level)
 
 
-def build_app(app: click.group):  # type: ignore
+def build_app(app: click.group):  # type: ignore[reportGeneralTypeIssue]
     plugins_path = pathlib.Path(__file__).parent.resolve() / "plugins"
     for plugin_file_name in pathlib.Path(plugins_path).rglob("*.py"):
         plugin_name = pathlib.PurePath(plugin_file_name).stem

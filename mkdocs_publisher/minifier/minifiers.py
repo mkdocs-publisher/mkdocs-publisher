@@ -22,19 +22,22 @@
 
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import TYPE_CHECKING
 
 from mkdocs_publisher._shared import file_utils
-from mkdocs_publisher.minifier import config as minifier_config
 from mkdocs_publisher.minifier.base import BaseMinifier
 from mkdocs_publisher.minifier.base import CachedFile
+
+if TYPE_CHECKING:  # pragma: no cover
+    from mkdocs_publisher.minifier import config as minifier_config
 
 log = logging.getLogger("mkdocs.publisher.minifier.minifiers")
 
 
 def _is_cmd_installed(cmd: list[str]) -> bool:
     try:
-        file_utils.run_subprocess(cmd=cmd)
+        cmd_output = file_utils.run_subprocess(cmd=cmd)
+        log.debug(cmd_output.stdout.decode("utf-8") if cmd_output.stdout else cmd_output.stderr.decode("utf-8"))
     except FileNotFoundError:
         return False
     return True
@@ -59,7 +62,7 @@ class PngMinifier(BaseMinifier):
             are_installed = False
         return are_installed
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -122,23 +125,23 @@ class JpegMinifier(BaseMinifier):
             log.warning("Mozilla JPEG Encoder is not installed.")
         return are_installed
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
 
-            djpg_cmd = [
+            djpeg_cmd = [
                 self._minify_options.djpeg_path,
                 "-targa",
                 "-outfile",
                 str(output_file.with_suffix(".tga")),
                 str(input_file),
             ]
-            if file_utils.run_subprocess(cmd=djpg_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=djpeg_cmd).returncode != 0:
                 output_file.with_suffix(".tga").unlink(missing_ok=True)
                 return None
 
-            cjpg_cmd = [
+            cjpeg_cmd = [
                 self._minify_options.cjpeg_path,
                 "-targa",
                 "-smooth" if int(self._minify_options.smooth) > 0 else None,
@@ -149,7 +152,7 @@ class JpegMinifier(BaseMinifier):
                 str(output_file.with_suffix(".jpg_")),
                 str(output_file.with_suffix(".tga")),
             ]
-            if file_utils.run_subprocess(cmd=cjpg_cmd).returncode != 0:
+            if file_utils.run_subprocess(cmd=cjpeg_cmd).returncode != 0:
                 output_file.with_suffix(".jpg_").unlink(missing_ok=True)
                 return None
             output_file.with_suffix(".tga").unlink(missing_ok=True)
@@ -188,7 +191,7 @@ class SvgMinifier(BaseMinifier):
             return False
         return True
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -225,7 +228,7 @@ class HtmlMinifier(BaseMinifier):
             return False
         return True
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -272,7 +275,7 @@ class CssMinifier(BaseMinifier):
             return False
         return True
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name
@@ -312,7 +315,7 @@ class JsMinifier(BaseMinifier):
             return False
         return True
 
-    def minifier(self, cached_file: CachedFile) -> Optional[CachedFile]:
+    def minifier(self, cached_file: CachedFile) -> CachedFile | None:
         try:
             input_file = self._mkdocs_config.site_dir / cached_file.original_file_path
             output_file = self._plugin_config.cache_dir / cached_file.cached_file_name

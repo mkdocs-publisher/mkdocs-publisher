@@ -22,7 +22,6 @@
 
 import json
 import logging
-import os
 import shutil
 from pathlib import Path
 
@@ -46,7 +45,7 @@ def iter_res(src_dir: Path, dst_dir: Path, res_path: Path):
         else:
             src_file = path
             dst_file = dst_dir / src_file.relative_to(src_dir)
-            os.makedirs(name=str(dst_file.parents[0]), exist_ok=True)
+            Path(str(dst_file.parents[0])).mkdir(parents=True, exist_ok=True)
             shutil.copy(src=src_file, dst=dst_file)
 
 
@@ -57,7 +56,6 @@ def css_min():
     for input_css_file in project_dir.rglob("*.css"):
         if ".min" not in input_css_file.suffixes:
             output_css_file = input_css_file.parent / f"{input_css_file.stem}.min.css"
-            print(output_css_file)
             cmd = [
                 "postcss",
                 str(input_css_file),
