@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,21 +30,26 @@ import yaml
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
+from mkdocs.structure.files import Files
+from mkdocs.structure.nav import Navigation
 
+from mkdocs_publisher._shared.file_utils import FilesList
 from mkdocs_publisher.minifier import minifiers
 from mkdocs_publisher.minifier.base import CachedFile
-from mkdocs_publisher.minifier.config import MinifierConfig
+from mkdocs_publisher.minifier.config import MinifierPluginConfig
 
 log = logging.getLogger("mkdocs.publisher.minifier.plugin")
 
 
-class MinifierPlugin(BasePlugin[MinifierConfig]):
+class MinifierPlugin(BasePlugin[MinifierPluginConfig]):
     supports_multiple_instances = False
 
     def __init__(self):
         self._on_serve: bool = False
 
     def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:  # noqa: ARG002
+        self._files_list: FilesList | None = None
+
         if command == "serve":
             self._on_serve = True
 
@@ -55,14 +60,23 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
             self.config.threads = 1
         log.info(f"Threads used for minifiers: {self.config.threads}")
 
+    def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation | None:
+        _ = nav
+        self._files_list = FilesList(mkdocs_config=config, files=files, exclude=[Path(p) for p in self.config.exclude])
+
     @event_priority(-100)  # Run after all other plugins
     def on_post_build(self, *, config: MkDocsConfig) -> None:  # noqa: C901
-        Path(self.config.cache_dir).mkdir(exist_ok=True)
+        self._files_list.list_files(extension=[".jpg", ".jpeg"], exclude=[])
+
+        # >>>>> Old below <<<<<
+
+        # Create missing directories and files
+        Path(self.config.cache_dir).mkdir(parents=True, exist_ok=True)
+        cached_files_list: Path = Path(self.config.cache_dir) / self.config.cache_file
 
         # TODO: Add path to tools checker
         cached_files: dict[str, CachedFile] = {}
 
-        cached_files_list: Path = Path(self.config.cache_dir) / self.config.cache_file
         if cached_files_list.exists():
             try:
                 with cached_files_list.open() as yaml_file:
@@ -70,7 +84,7 @@ class MinifierPlugin(BasePlugin[MinifierConfig]):
                     for file_path, cached_file in cached_files.items():
                         cached_files[file_path] = CachedFile(**cast(dict, cached_file))
             except (yaml.YAMLError, AttributeError) as e:
-                log.warning(f"File '{cached_files_list}' corrupted. Rebuilding cache.")
+                log.info(f"File '{cached_files_list}' corrupted. Rebuilding cache.")
                 log.debug(e)
 
         if self.config.png.enabled and ((not self._on_serve) or (self._on_serve and self.config.png.enabled_on_serve)):

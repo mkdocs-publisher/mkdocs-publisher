@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -91,9 +91,9 @@ class _MinifierPngConfig(_MinifierCommonConfig):
     strip = option.Type(bool, default=True)
 
 
-class MinifierConfig(Config):
+class MinifierPluginConfig(Config):
     cache_enabled = option.Type(bool, default=True)
-    cache_dir = option.Type(str, default=".pub_min_cache")
+    cache_dir = option.Type(str, default=".cache/plugins/pub-minifier")
     cache_file = option.Type(str, default=".cached_files_list.yml")
     exclude = option.Type(list, default=[])
     threads = option.Type(int, default=0)  # 0 - default (read from system)

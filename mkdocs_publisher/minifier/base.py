@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ from threading import Thread
 from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher._shared import file_utils
-from mkdocs_publisher.minifier.config import MinifierConfig
+from mkdocs_publisher.minifier.config import MinifierPluginConfig
 from mkdocs_publisher.minifier.config import _MinifierCommonConfig
 
 log = logging.getLogger("mkdocs.publisher.minifier.base")
@@ -67,11 +67,11 @@ class CachedFile:
 class BaseMinifier:
     def __init__(
         self,
-        plugin_config: MinifierConfig,
+        plugin_config: MinifierPluginConfig,
         mkdocs_config: MkDocsConfig,
         cached_files: dict[str, CachedFile],
     ):
-        self._plugin_config: MinifierConfig = plugin_config
+        self._plugin_config: MinifierPluginConfig = plugin_config
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._minify_options: _MinifierCommonConfig | None = None
         self._cached_files: dict[str, CachedFile] = cached_files

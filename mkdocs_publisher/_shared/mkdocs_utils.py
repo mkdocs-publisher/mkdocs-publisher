@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -19,18 +19,26 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
 import logging
 import re
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
+from typing import TypeVar
 from typing import cast
 
-from mkdocs.config.base import Config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.utils import meta as meta_parser
+from mkdocs.utils import yaml
 
 from mkdocs_publisher._shared import links
+from mkdocs_publisher.blog.config import BlogPluginConfig
+from mkdocs_publisher.debugger.config import DebuggerPluginConfig
+from mkdocs_publisher.meta.config import MetaPluginConfig
+from mkdocs_publisher.minifier.config import MinifierPluginConfig
+from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
+from mkdocs_publisher.social.config import SocialPluginConfig
 
 log = logging.getLogger("mkdocs.publisher._shared.mkdocs_utils")
 
@@ -49,26 +57,64 @@ SPACES_RE = re.compile(r" {2,}")
 SPECIAL_CHARS_RE = re.compile(r"[#*`~\-_^=<>+|/:]")
 TAB_RE = re.compile(r"\t")
 
+PLUGIN_CONFIG_MAPPING = {
+    BlogPluginConfig: "pub-blog",
+    DebuggerPluginConfig: "pub-debugger",
+    MetaPluginConfig: "pub-meta",
+    MinifierPluginConfig: "pub-minifier",
+    ObsidianPluginConfig: "pub-obsidian",
+    SocialPluginConfig: "pub-social",
+}
 
-def get_plugin_config(mkdocs_config: MkDocsConfig, plugin_name: str) -> None | dict[str, Any] | Config:
-    if isinstance(mkdocs_config.plugins, list):
-        for plugin in mkdocs_config.plugins:
-            if isinstance(plugin, dict) and next(iter(plugin.keys())) == plugin_name:
-                return plugin[next(iter(plugin.keys()))]
-            if isinstance(plugin, str) and plugin == plugin_name:
-                return {}
-        raise SystemError("Break")
-    if plugin_name in mkdocs_config.plugins:
-        return mkdocs_config.plugins[plugin_name].config
-    return None
+PluginConfigType = TypeVar(
+    "PluginConfigType",
+    BlogPluginConfig,
+    DebuggerPluginConfig,
+    MetaPluginConfig,
+    MinifierPluginConfig,
+    ObsidianPluginConfig,
+    SocialPluginConfig,
+)
 
 
 @lru_cache
 def get_mkdocs_config() -> MkDocsConfig:
-    config = MkDocsConfig()
-    with Path("mkdocs.yml").open() as mkdocs_yml:
-        config.load_file(mkdocs_yml)
-    return cast(MkDocsConfig, config)
+    mkdocs_config = MkDocsConfig()
+    with Path("mkdocs.yml").open() as mkdocs_yaml_file:
+        mkdocs_config_dict = yaml.yaml_load(mkdocs_yaml_file)
+        mkdocs_config.set_defaults()
+        mkdocs_config.load_dict(patch=mkdocs_config_dict)
+    return cast(MkDocsConfig, mkdocs_config)
+
+
+def get_plugin_config(
+    plugin_config_type: PluginConfigType,
+    mkdocs_config: MkDocsConfig,
+) -> PluginConfigType | list[PluginConfigType] | None:
+    plugin_config: PluginConfigType | None = None
+    plugin_name = PLUGIN_CONFIG_MAPPING[plugin_config_type]  # type: ignore[reportArgumentType]
+
+    if isinstance(mkdocs_config.plugins, list):
+        plugin_config_dict = {}
+
+        for plugin in mkdocs_config.plugins:
+            if isinstance(plugin, dict) and next(iter(plugin.keys())) == plugin_name:
+                plugin_config_dict = plugin[next(iter(plugin.keys()))]
+            elif isinstance(plugin, str) and plugin == plugin_name:
+                plugin_config_dict = {}
+
+        if plugin_config_dict:
+            plugin_config = cast(
+                PluginConfigType,
+                plugin_config_type(config_file_path=mkdocs_config.config_file_path),  # type: ignore[reportCallIssue]
+            )
+            plugin_config.load_dict(patch=plugin_config_dict)
+            plugin_config.validate()
+            return plugin_config
+    elif isinstance(mkdocs_config.plugins, dict):
+        if plugin_name in mkdocs_config.plugins:
+            return cast(PluginConfigType, mkdocs_config.plugins[plugin_name].config)
+    return None
 
 
 @lru_cache

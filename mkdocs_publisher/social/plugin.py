@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ from mkdocs.plugins import event_priority
 from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared.html_modifiers import HTMLModifier
-from mkdocs_publisher.social.config import SocialConfig
+from mkdocs_publisher.social.config import SocialPluginConfig
 from mkdocs_publisher.social.config import SocialTitleLocationChoiceEnum
 
 log = logging.getLogger("mkdocs.publisher.social.plugin")
@@ -53,7 +53,7 @@ OPEN_GRAPH_PROPERTIES = [
 ]
 
 
-class SocialPlugin(BasePlugin[SocialConfig]):
+class SocialPlugin(BasePlugin[SocialPluginConfig]):
     supports_multiple_instances = False
 
     @event_priority(-99)

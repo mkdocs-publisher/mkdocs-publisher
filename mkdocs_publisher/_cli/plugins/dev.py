@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,6 @@ def css_min():
     for input_css_file in project_dir.rglob("*.css"):
         if ".min" not in input_css_file.suffixes:
             output_css_file = input_css_file.parent / f"{input_css_file.stem}.min.css"
-            print(output_css_file)
             cmd = [
                 "postcss",
                 str(input_css_file),

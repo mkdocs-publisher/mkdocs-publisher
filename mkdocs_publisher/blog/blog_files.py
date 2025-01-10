@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,6 @@ from dataclasses import dataclass
 from dataclasses import field
 from math import ceil
 from pathlib import Path
-from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 
@@ -40,11 +39,7 @@ log = logging.getLogger("mkdocs.publisher.blog.blog_files")
 
 
 @dataclass
-class BlogFile:
-    path: Path
-    abs_path: Path = field(repr=False)
-    is_dir: bool = field(default=False)
-    is_draft: bool | None = field(default=None)
+class BlogFile(publisher_utils.PublisherFile):
     teaser: str | None = field(default=None, repr=False)
     markdown: str | None = field(default=None, repr=False)
     date_created: int | None = field(default=None)
@@ -70,9 +65,9 @@ class BlogFiles(publisher_utils.PublisherFiles):
     def set_configs(self, mkdocs_config: MkDocsConfig, blog_plugin_config: BlogPluginConfig):
         super().set_configs(
             mkdocs_config=mkdocs_config,
-            meta_plugin_config=cast(
-                MetaPluginConfig,
-                mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta"),
+            meta_plugin_config=mkdocs_utils.get_plugin_config(
+                plugin_config_type=MetaPluginConfig,  # type: ignore[reportArgumentType]
+                mkdocs_config=mkdocs_config,
             ),
         )
 
@@ -93,10 +88,10 @@ class BlogFiles(publisher_utils.PublisherFiles):
             )
             self[str(blog_file.path)] = blog_file
 
-    def _get_metadata(self, blog_file: BlogFile, blog_file_path: Path):
+    def _get_metadata(self, blog_file: BlogFile):
         """Read all metadata values for given file"""
 
-        markdown, meta = mkdocs_utils.read_md_file(md_file_path=blog_file_path)
+        markdown, meta = mkdocs_utils.read_md_file(md_file_path=blog_file.abs_path)
 
         log.warning(meta)
 
@@ -107,12 +102,13 @@ class BlogFiles(publisher_utils.PublisherFiles):
             if line == self._blog_plugin_config.posts.teaser_separator:
                 blog_file.teaser = "\n".join(teaser_lines)
 
+        # Parse reading time
         blog_file.read_time_sec = ceil(
             mkdocs_utils.count_words(markdown) * 60 / self._blog_plugin_config.posts.words_per_minute,
         )
 
     def __setitem__(self, path: str, blog_file: BlogFile):
         """Add file"""
-        self._get_metadata(blog_file=blog_file, blog_file_path=blog_file.abs_path)
+        self._get_metadata(blog_file=blog_file)
 
         super().__setitem__(path, blog_file)

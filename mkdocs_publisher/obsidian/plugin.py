@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -82,7 +82,8 @@ class ObsidianPlugin(BasePlugin[ObsidianPluginConfig]):
         self._backlink_links = BacklinkLinks(mkdocs_config=config, backlinks=self._backlinks)
         self._md_links = MarkdownLinks(mkdocs_config=config)
         self._ignored_dirs, _ = publisher_utils.get_obsidian_dirs(mkdocs_config=config)
-        log.info(f"Ignored directories: {self._ignored_dirs}")
+        ignored_dirs: str = ", ".join([f"'{d.relative_to(config.docs_dir)}'" for d in self._ignored_dirs])
+        log.info(f"Obsidian ignored directories: {ignored_dirs}")
         return config
 
     def files_cleanup(self, files, removal_list: Sequence[str | Path]) -> Files:

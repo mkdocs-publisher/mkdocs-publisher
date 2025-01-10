@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,15 @@ from mkdocs_publisher.blog.structures import BlogPost
 
 log = logging.getLogger("mkdocs.publisher.blog.parsers")
 
-REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description", "publish"]
+REQUIRED_META_KEYS = [
+    "title",
+    "date",
+    "slug",
+    "tags",
+    "categories",
+    "description",
+    "publish",
+]
 # TODO: read it from pub-meta if configured
 
 
@@ -92,7 +100,11 @@ def parse_markdown_files(  # noqa: C901, PLR0912
                         post_meta["publish"] = "draft"
 
                     # Skip non-published
-                    if not on_serve and post_meta["publish"] not in ["published", "true", True]:
+                    if not on_serve and post_meta["publish"] not in [
+                        "published",
+                        "true",
+                        True,
+                    ]:
                         # TODO: make it configurable
                         continue
 
@@ -126,8 +138,10 @@ def parse_markdown_files(  # noqa: C901, PLR0912
                     post_data["path"] = str(path)
                     if "slug" in post_meta and post_meta["slug"] is not None and post_meta["slug"].strip() != "":
                         post_data["slug"] = post_meta["slug"]
-
-                    blog_post: BlogPost = BlogPost(**post_data)
+                    try:
+                        blog_post: BlogPost = BlogPost(**post_data)
+                    except TypeError:
+                        log.critical(f"Error in file: {blog_post.path}")
 
                     # Add new post to blog posts collection
                     blog_config.blog_posts[blog_post.date] = blog_post

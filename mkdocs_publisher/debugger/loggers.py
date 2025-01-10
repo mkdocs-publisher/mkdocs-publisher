@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -83,7 +83,7 @@ class ProjectPathStreamFormatter(logging.Formatter):
             fmt = f"{fmt} {colorama.Fore.CYAN}[%(name)s]{colorama.Fore.RESET}"
 
         self._style._fmt = fmt  # noqa: SLF001
-        self.datefmt = str(self._console_config.entry_time_format).replace("%f", str(record.msecs)[0:3])
+        self.datefmt = str(self._console_config.time_format).replace("%f", str(record.msecs)[0:3])
 
         if self._console_config.show_entry_time:
             record.msg = re.sub(LIVERELOAD_MSG_RE, self._livereload_msg_strip_time, str(record.msg))

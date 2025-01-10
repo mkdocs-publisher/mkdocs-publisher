@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -104,6 +104,7 @@ def test_normalize_wiki_links(
 ):
     mkdocs_config.plugins = cast(PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin})
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
+    markdown_links._blog_config = pub_blog_plugin.config
     markdown = markdown_links.normalize_links(markdown=markdown, current_file_path=Path("main.md"))
 
     check.equal(expected, markdown, "Wrong wiki link to markdown link")

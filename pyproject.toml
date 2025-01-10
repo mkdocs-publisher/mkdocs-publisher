@@ -129,6 +129,7 @@ select = [
     "SLF",
     "SIM",
     "T10",
+    "T20",
     "TCH",
     "TD",
     "TID",
@@ -145,6 +146,9 @@ ignore = [
     "PLR2004",
     "PLW2901",
     "S101",
+    "TCH001",
+    "TCH002",
+    "TCH003",
     "TD002",
     "TD003",   # TODO: remove it
 ]

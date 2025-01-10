@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,8 @@ log = logging.getLogger("mkdocs.publisher.minifier.minifiers")
 
 def _is_cmd_installed(cmd: list[str]) -> bool:
     try:
-        file_utils.run_subprocess(cmd=cmd)
+        cmd_output = file_utils.run_subprocess(cmd=cmd)
+        log.debug(cmd_output.stdout.decode("utf-8") if cmd_output.stdout else cmd_output.stderr.decode("utf-8"))
     except FileNotFoundError:
         return False
     return True

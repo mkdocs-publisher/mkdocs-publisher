@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ class _SocialSiteNameInTitleConfig(Config):
     delimiter = option.Type(str, default=" - ")
 
 
-class SocialConfig(Config):
+class SocialPluginConfig(Config):
     meta_keys: _SocialMetaKeysConfig = option.SubConfig(_SocialMetaKeysConfig)  # type: ignore[reportAssignmentType]
     og: _SocialOpenGraphConfig = option.SubConfig(_SocialOpenGraphConfig)  # type: ignore[reportAssignmentType]
     twitter: _SocialTwitterConfig = option.SubConfig(_SocialTwitterConfig)  # type: ignore[reportAssignmentType]

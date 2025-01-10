@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,17 +25,17 @@ import platform
 import sys
 from io import BytesIO
 from pathlib import Path
-from typing import cast
 from zipfile import ZIP_DEFLATED
 from zipfile import ZipFile
 
+from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.plugins import event_priority
 
 from mkdocs_publisher._shared import file_utils
 from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.debugger import loggers
-from mkdocs_publisher.debugger.config import DebuggerConfig
+from mkdocs_publisher.debugger.config import DebuggerPluginConfig
 
 log = logging.getLogger("mkdocs.publisher.debug.plugin")
 
@@ -51,7 +51,7 @@ FILES_TO_ZIP_LIST = [
 PIP_FREEZE_FILENAME = "requirements_pub_debugger.txt"  # TODO: make it configurable
 
 
-class DebuggerPlugin(BasePlugin[DebuggerConfig]):
+class DebuggerPlugin(BasePlugin[DebuggerPluginConfig]):
     supports_multiple_instances = False
 
     def __init__(self):
@@ -63,17 +63,12 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
 
         self._mkdocs_log_file: str = str(Path(self._mkdocs_log_file_handler.baseFilename).name)
         self._mkdocs_log_date: str = self._mkdocs_log_file.replace(LOG_FILENAME_SUFFIX, "")
+        self._mkdocs_config: MkDocsConfig = mkdocs_utils.get_mkdocs_config()
 
-        self.load_config(
-            options=cast(
-                dict,
-                mkdocs_utils.get_plugin_config(
-                    mkdocs_config=mkdocs_utils.get_mkdocs_config(),
-                    plugin_name="pub-debugger",
-                ),
-            ),
-            config_file_path=mkdocs_utils.get_mkdocs_config().config_file_path,
-        )
+        self.config: DebuggerPluginConfig = mkdocs_utils.get_plugin_config(
+            plugin_config_type=DebuggerPluginConfig,  # type: ignore[reportArgumentType]
+            mkdocs_config=self._mkdocs_config,
+        )  # type: ignore[reportAttributeAccessIssue]
 
         if self.config.console_log.enabled:
             self._mkdocs_log_stream_handler.setFormatter(
@@ -95,7 +90,10 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
 
         if self.config.file_log.enabled:
             self._mkdocs_log_file_handler.setFormatter(
-                loggers.ProjectPathFileFormatter(fmt=self.config.file_log.log_format),
+                loggers.ProjectPathFileFormatter(
+                    fmt=self.config.file_log.log_format,
+                    datefmt=self.config.file_log.time_format,
+                ),
             )
             self._mkdocs_log_file_handler.addFilter(loggers.ProjectPathFileFilter(file_config=self.config.file_log))
             # noinspection PyUnresolvedReferences

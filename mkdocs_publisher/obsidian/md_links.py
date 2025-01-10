@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -40,14 +40,14 @@ class MarkdownLinks:
         self._current_file_path: Path | None = None
         self._current_relative_path: Path | None = None
         self._mkdocs_config: MkDocsConfig = mkdocs_config
-        self._links_config: ObsidianPluginConfig = cast(
-            ObsidianPluginConfig,
-            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-obsidian"),
-        )
-        self._blog_config: BlogPluginConfig | None = cast(
-            BlogPluginConfig,
-            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-blog"),
-        )
+        self._links_config: ObsidianPluginConfig = mkdocs_utils.get_plugin_config(
+            plugin_config_type=ObsidianPluginConfig,  # type: ignore[reportArgumentType]
+            mkdocs_config=mkdocs_config,
+        )  # type: ignore[reportAttributeAccessIssue]
+        self._blog_config: BlogPluginConfig | None = mkdocs_utils.get_plugin_config(
+            plugin_config_type=BlogPluginConfig,  # type: ignore[reportArgumentType]
+            mkdocs_config=mkdocs_config,
+        )  # type: ignore[reportAttributeAccessIssue]
 
     @staticmethod
     def _normalize_wiki_embed_link(match: re.Match) -> str:

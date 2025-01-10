@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 import contextlib
 import logging
 from datetime import datetime
-from typing import TYPE_CHECKING
+from pathlib import Path
 from typing import Literal
 
 from mkdocs.config import Config
@@ -34,13 +34,12 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.nav import Navigation
 from mkdocs.structure.pages import Page
 
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher._shared import publisher_utils
+from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.meta.meta_files import MetaFiles
 from mkdocs_publisher.meta.meta_nav import MetaNav
-
-if TYPE_CHECKING:  # pragma: no cover
-    from pathlib import Path
 
 log = logging.getLogger("mkdocs.publisher.meta.plugin")
 
@@ -65,10 +64,13 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
     def on_config(self, config: MkDocsConfig) -> Config | None:  # pragma: no cover
         # Set some default values
         log.info("Read files and directories metadata")
-        blog_dir: Path | None = publisher_utils.get_blog_dir(mkdocs_config=config)
+        blog_config: BlogPluginConfig = mkdocs_utils.get_plugin_config(
+            plugin_config_type=BlogPluginConfig,  # type: ignore[reportArgumentType]
+            mkdocs_config=config,
+        )  # type: ignore[reportAssignmentType]
         self._meta_nav = MetaNav(
             meta_files=self._meta_files,
-            blog_dir=blog_dir.relative_to(config.docs_dir) if blog_dir else blog_dir,
+            blog_dir=blog_config.blog_dir if blog_config is not None else None,  # type: ignore[reportArgumentType]
         )
         self._ignored_dirs, self._attachments_dir = publisher_utils.get_obsidian_dirs(mkdocs_config=config)
         self._meta_files.set_configs(mkdocs_config=config, meta_plugin_config=self.config)
@@ -90,9 +92,13 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         new_files = self._meta_files.change_files_slug(files=new_files, ignored_dirs=self._ignored_dirs)
         return self._meta_files.clean_draft_files(files=new_files)
 
+    @event_priority(-99)
     def on_nav(self, nav: Navigation, *, config: MkDocsConfig, files: Files) -> Navigation | None:  # pragma: no cover
         _, _ = config, files
-        removal_list = [*self._meta_files.drafts.keys(), *self._meta_files.hidden.keys()]
+        removal_list = [
+            *self._meta_files.drafts.keys(),
+            *self._meta_files.hidden.keys(),
+        ]
         log.debug(f"Nav elements to remove: {removal_list}")
         # TODO: create prev/next page cleanup for hidden pages
 

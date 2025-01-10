@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -48,17 +48,11 @@ HEADINGS_RE = re.compile(r"^#+ (?P<title>[^|#\r\n\t\f\v]+)$")
 
 
 @dataclass
-class MetaFile:
-    is_dir: bool
-    path: Path
-    abs_path: Path = field(repr=False)
+class MetaFile(publisher_utils.PublisherFile):
     file: File | None = field(default=None, repr=False)
-    is_draft: bool | None = field(default=None)
     is_hidden: bool = field(default=False)
     is_overview: bool = field(default=False)
     redirect: str | None = field(default=None)
-    slug: str | None = field(default=None)
-    title: str | None = field(default=None)
     url: str | None = field(default=None)
 
     @property

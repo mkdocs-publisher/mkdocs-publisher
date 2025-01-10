@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,9 @@ import subprocess
 from hashlib import md5
 from pathlib import Path
 from uuid import uuid4
+
+from mkdocs.config.defaults import MkDocsConfig
+from mkdocs.structure.files import Files
 
 log = logging.getLogger("mkdocs.publisher._shared.file_utils")
 
@@ -55,6 +58,21 @@ def calculate_file_hash(file: Path, block_size: int = 65536) -> str | None:
         return None
 
 
+class FilesList:
+    def __init__(self, mkdocs_config: MkDocsConfig, files: Files, exclude: list[Path] | None = None):
+        self._mkdocs_config: MkDocsConfig = mkdocs_config
+        self._all_files: Files = files
+        self._exlcude: list[Path] = [] if exclude is None else exclude
+
+    def list_files(self, extension: list[str], exclude: list[Path]):
+        excluded = [*exclude, *self._exlcude]
+        for file in self._all_files:
+            if Path(file.dest_path).suffix.lower() in extension and not any(
+                Path(file.dest_path).is_relative_to(e) for e in excluded
+            ):
+                log.critical(file.dest_path)
+
+
 def list_files(
     directory: Path,
     extensions: list[str] | None = None,
@@ -69,6 +87,9 @@ def list_files(
     for ext in extensions:
         for file in directory.glob(f"**/*{ext}"):
             file_relative_path = file.relative_to(directory)
+            for exc in excluded_files_list:
+                log.warning(exc)
+                log.warning(str(file_relative_path).startswith(str(exc)))
 
             files_list.extend(
                 file.relative_to(directory)

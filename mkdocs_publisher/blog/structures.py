@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2023-2024 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
+# Copyright (c) 2023-2025 Maciej 'maQ' Kusz <maciej.kusz@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -97,8 +97,9 @@ class BlogConfig:
 
         self.mkdocs_config = mkdocs_config
         self.plugin_config = plugin_config
-        self.meta_config: MetaPluginConfig | None = (
-            mkdocs_utils.get_plugin_config(mkdocs_config=mkdocs_config, plugin_name="pub-meta") or None
+        self.meta_config: MetaPluginConfig | None = mkdocs_utils.get_plugin_config(
+            plugin_config_type=MetaPluginConfig,  # type: ignore[reportArgumentType]
+            mkdocs_config=mkdocs_config,
         )  # type: ignore[reportAttributeAccessIssue]
         self.temp_dir = Path(plugin_config.temp_dir)
         self.docs_dir = Path(mkdocs_config.docs_dir)

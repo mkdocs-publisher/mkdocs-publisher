@@ -1,6 +1,5 @@
 {
     "recommendations": [
-        "charliermarsh.ruff",
         "streetsidesoftware.code-spell-checker",
         "socheatsok78-lab.dotenv-vscode-stripped",
         "tamasfe.even-better-toml",
@@ -15,6 +14,7 @@
         "adrianwilczynski.terminal-commands",
         "gruntfuggly.todo-tree",
         "vscode-icons-team.vscode-icons",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "charliermarsh.ruff"
     ]
 }
