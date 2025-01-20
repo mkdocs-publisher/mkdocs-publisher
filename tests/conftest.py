@@ -104,11 +104,7 @@ def pub_minifier_plugin(request: SubRequest) -> MinifierPlugin:
     try:
         config_dict = request.param
     except AttributeError:
-        config_dict = {
-            "jpeg": {
-                "enabled": True,
-            }
-        }
+        config_dict = {}
     plugin = MinifierPlugin()
     plugin.load_config(options=config_dict)
     return plugin
