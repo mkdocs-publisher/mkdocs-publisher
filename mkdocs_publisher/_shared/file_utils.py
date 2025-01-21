@@ -54,7 +54,7 @@ def calculate_file_hash(file: Path, block_size: int = 65536) -> str | None:
             while chunk := binary_file.read(block_size):
                 file_hash.update(chunk)
             return file_hash.hexdigest()
-    except IsADirectoryError:
+    except (IsADirectoryError, FileNotFoundError):
         return None
 
 
@@ -62,10 +62,10 @@ class FilesList:
     def __init__(self, mkdocs_config: MkDocsConfig, files: Files, exclude: list[Path] | None = None):
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._all_files: Files = files
-        self._exlcude: list[Path] = [] if exclude is None else exclude
+        self._exclude: list[Path] = [] if exclude is None else exclude
 
     def list_files(self, extension: list[str], exclude: list[Path]):
-        excluded = [*exclude, *self._exlcude]
+        excluded = [*exclude, *self._exclude]
         for file in self._all_files:
             if Path(file.dest_path).suffix.lower() in extension and not any(
                 Path(file.dest_path).is_relative_to(e) for e in excluded

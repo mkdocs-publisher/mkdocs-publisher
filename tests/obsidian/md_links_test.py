@@ -84,8 +84,12 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
             "Lorem ipsum dolor sit [amet](#justan-anchor), consectetur adipiscing elit.",
         ),
         (
-            "Lorem ipsum dolor sit [[file]] amet amet, consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [file](file.md) amet amet, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [[file|amet]], consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing elit.",
+        ),
+        (
+            "Lorem ipsum dolor sit [[file|amet]]{ .extraStyle }, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [amet](file.md){ .extraStyle }, consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file with space]] amet, consectetur adipiscing elit.",
