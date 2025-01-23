@@ -30,7 +30,6 @@ from mkdocs.config.defaults import MkDocsConfig
 from mkdocs_publisher.blog.plugin import BlogPlugin
 from mkdocs_publisher.meta.plugin import MetaPlugin
 from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
-from mkdocs_publisher.minifier.plugin import MinifierPlugin
 
 
 @pytest.fixture()
@@ -96,15 +95,5 @@ def pub_meta_plugin(request: SubRequest) -> MetaPlugin:
     except AttributeError:
         config_dict = {}
     plugin = MetaPlugin()
-    plugin.load_config(options=config_dict)
-    return plugin
-
-@pytest.fixture(scope="function")
-def pub_minifier_plugin(request: SubRequest) -> MinifierPlugin:
-    try:
-        config_dict = request.param
-    except AttributeError:
-        config_dict = {}
-    plugin = MinifierPlugin()
     plugin.load_config(options=config_dict)
     return plugin
