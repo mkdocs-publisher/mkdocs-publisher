@@ -34,7 +34,10 @@ log = logging.getLogger("mkdocs.publisher.minifier.minifiers")
 
 def _is_cmd_installed(cmd: list[str]) -> bool:
     try:
-        file_utils.run_subprocess(cmd=cmd)
+        result = file_utils.run_subprocess(cmd=cmd)
+
+        if result.returncode != 0:
+            return False
     except FileNotFoundError:
         return False
     return True
