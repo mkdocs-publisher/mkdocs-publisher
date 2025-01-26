@@ -102,7 +102,6 @@ class BacklinkLinks:
         title = page.title
         if title is None and self._meta_config is not None:
             file_path = Path(self._mkdocs_config.docs_dir) / page.file.src_path
-            log.warning(file_path)
             _, meta = mkdocs_utils.read_md_file(md_file_path=file_path)
             title = meta.get(str(self._meta_config.title.key_name), None)
 

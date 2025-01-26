@@ -38,6 +38,9 @@ def _is_cmd_installed(cmd: list[str]) -> bool:
     try:
         cmd_output = file_utils.run_subprocess(cmd=cmd)
         log.debug(cmd_output.stdout.decode("utf-8") if cmd_output.stdout else cmd_output.stderr.decode("utf-8"))
+
+        if cmd_output.returncode != 0:
+            return False
     except FileNotFoundError:
         return False
     return True
