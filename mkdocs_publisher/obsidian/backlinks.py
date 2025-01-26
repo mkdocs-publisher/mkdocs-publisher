@@ -85,6 +85,8 @@ class BacklinkLinks:
             original_link.link = "/".join(destination_pre)
         original_link.link = original_link.link.replace("../", "")
 
+        # TODO: fix title when page.title is None (can happen, when link is in the overview page/README.md file)
+
         new_link = Link(
             text=backlink_text,
             destination=backlink_link,
