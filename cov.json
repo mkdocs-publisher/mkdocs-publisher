@@ -1,12 +1,12 @@
 {
-    "covered_lines": 1036,
-    "num_statements": 2336,
-    "percent_covered": 41.63265306122449,
-    "percent_covered_display": "42",
-    "missing_lines": 1300,
-    "excluded_lines": 73,
-    "num_branches": 604,
-    "num_partial_branches": 4,
-    "covered_branches": 188,
-    "missing_branches": 416
+    "covered_lines": 1287,
+    "num_statements": 2516,
+    "percent_covered": 47.70992366412214,
+    "percent_covered_display": "48",
+    "missing_lines": 1229,
+    "excluded_lines": 84,
+    "num_branches": 628,
+    "num_partial_branches": 3,
+    "covered_branches": 213,
+    "missing_branches": 415
 }

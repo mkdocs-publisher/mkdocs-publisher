@@ -22,8 +22,8 @@
 
 import logging
 from collections import OrderedDict
-from datetime import datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
 from typing import cast
 
 import yaml
@@ -31,8 +31,11 @@ from mkdocs.structure.files import File
 from mkdocs.structure.files import Files
 
 from mkdocs_publisher._shared import templates
-from mkdocs_publisher._shared.urls import slugify
+from mkdocs_publisher._shared.links import slugify
 from mkdocs_publisher.blog.structures import BlogConfig
+
+if TYPE_CHECKING:  # pragma: no cover
+    from datetime import datetime
 
 log = logging.getLogger("mkdocs.publisher.blog.creators")
 
@@ -50,11 +53,11 @@ def create_blog_files(
                 use_directory_urls=blog_config.mkdocs_config.use_directory_urls,
             )
             files.append(file)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             pass
 
 
-def create_blog_post_pages(
+def create_blog_post_pages(  # noqa: C901
     start_page: bool,
     blog_config: BlogConfig,
     config_nav: OrderedDict,
@@ -72,7 +75,7 @@ def create_blog_post_pages(
         index = (
             "index"
             if index < blog_config.plugin_config.posts_per_page
-            else f"index-{str(index//blog_config.plugin_config.posts_per_page)}"
+            else f"index-{index//blog_config.plugin_config.posts_per_page!s}"
         )
         if index not in posts_chunks:
             posts_chunks[index] = []
@@ -138,8 +141,8 @@ def create_blog_post_pages(
                 posts_chunks=archive_chunks,
                 sub_dir=Path(blog_config.plugin_config.archive_subdir),
                 page_title=blog_config.translation.archive_page_title,
-            )
-        }
+            ),
+        },
     )
 
     config_nav[blog_config.translation.blog_navigation_name].append(
@@ -149,8 +152,8 @@ def create_blog_post_pages(
                 posts_chunks=categories_chunks,
                 sub_dir=Path(blog_config.plugin_config.categories_subdir),
                 page_title=blog_config.translation.categories_page_title,
-            )
-        }
+            ),
+        },
     )
 
     config_nav[blog_config.translation.blog_navigation_name].append(
@@ -160,8 +163,8 @@ def create_blog_post_pages(
                 posts_chunks=tags_chunks,
                 sub_dir=Path(blog_config.plugin_config.tags_subdir),
                 page_title=blog_config.translation.tags_page_title,
-            )
-        }
+            ),
+        },
     )
 
 
@@ -203,9 +206,9 @@ def _render_and_write_page(
     page_title: str,
 ):
     # TODO: Add templates from override
-    # templates = jinja2.Environment(loader=jinja2.FileSystemLoader("templates/"))
-    # print(templates.list_templates())
-    # template = templates.get_template("index.html")
+    # templates = jinja2.Environment(loader=jinja2.FileSystemLoader("templates/"))  # noqa: ERA001
+    # print(templates.list_templates())  # noqa: ERA001
+    # template = templates.get_template("index.html")  # noqa: ERA001
 
     post_context = {
         "posts": single_posts_chunk,
@@ -227,7 +230,7 @@ def _render_and_write_page(
     page_meta["slug"] = slug
     page_meta["publish"] = "true"
     if not blog_config.plugin_config.searchable_non_posts:
-        page_meta["search"] = {"exclude": True}  # type: ignore
+        page_meta["search"] = {"exclude": True}  # type: ignore[reportArgumentType]
 
-    with open(file_path, mode="w") as teasers_index:
+    with Path(file_path).open(mode="w") as teasers_index:
         teasers_index.write(f"---\n{yaml.dump(page_meta)}\n---\n\n{markdown}")

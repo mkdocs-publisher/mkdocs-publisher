@@ -23,13 +23,16 @@
 import logging
 import re
 from dataclasses import dataclass
+from pathlib import Path
 from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared import links
+from mkdocs_publisher._shared import mkdocs_utils
 from mkdocs_publisher.blog.plugin import BlogPlugin
+from mkdocs_publisher.meta.config import MetaPluginConfig
 
 log = logging.getLogger("mkdocs.publisher.obsidian.backlinks")
 
@@ -48,8 +51,19 @@ class BacklinkLinks:
         mkdocs_config: MkDocsConfig,
         backlinks: dict[str, list[Link]],
     ):
-        self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._backlinks: dict[str, list[Link]] = backlinks
+        self._mkdocs_config: MkDocsConfig = mkdocs_config
+        self._meta_config: MetaPluginConfig = mkdocs_utils.get_plugin_config(
+            plugin_config_type=MetaPluginConfig,  # type: ignore[reportArgumentType]
+            mkdocs_config=mkdocs_config,
+        )  # type: ignore[reportAttributeAccessIssue]
+        self._blog_plugin: BlogPlugin | None = None
+        self._blog_temp_files = []
+
+        # Get blog temporary files
+        if "pub-blog" in self._mkdocs_config.plugins:
+            self._blog_plugin = cast(BlogPlugin, self._mkdocs_config.plugins["pub-blog"])
+            self._blog_temp_files = self._blog_plugin.blog_config.temp_files_list
 
     @staticmethod
     def _other_link_to_text(match: re.Match) -> str:
@@ -85,26 +99,24 @@ class BacklinkLinks:
             original_link.link = "/".join(destination_pre)
         original_link.link = original_link.link.replace("../", "")
 
-        # TODO: fix title when page.title is None (can happen, when link is in the overview page/README.md file)
+        title = page.title
+        if title is None and self._meta_config is not None:
+            file_path = Path(self._mkdocs_config.docs_dir) / page.file.src_path
+            _, meta = mkdocs_utils.read_md_file(md_file_path=file_path)
+            title = meta.get(str(self._meta_config.title.key_name), None)
 
         new_link = Link(
             text=backlink_text,
             destination=backlink_link,
             source=original_link.link,
-            title=str(page.title),
+            title=str(title),
         )
 
-        # Get blog temporary files
-        temp_blog_files = []
-        if "pub-blog" in self._mkdocs_config.plugins:
-            blog_plugin: BlogPlugin = cast(BlogPlugin, self._mkdocs_config.plugins["pub-blog"])
-            temp_blog_files = blog_plugin.blog_config.temp_files_list
-
         # Do not add backlink if backlinks points to the same document
-        if original_link_source != original_link.link and original_link_source not in temp_blog_files:
+        if original_link_source != original_link.link and original_link_source not in self._blog_temp_files:
             log.debug(
                 f"Found backlink to: {original_link.link}"
-                f"{original_link.anchor if original_link.anchor is not None else ''}"
+                f"{original_link.anchor if original_link.anchor is not None else ''}",
             )
             if original_link.link not in self._backlinks:
                 self._backlinks[original_link.link] = [new_link]

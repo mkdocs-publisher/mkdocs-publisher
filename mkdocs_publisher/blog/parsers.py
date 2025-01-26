@@ -25,6 +25,7 @@ import re
 from collections import OrderedDict
 from dataclasses import fields
 from datetime import datetime
+from datetime import timezone
 from pathlib import Path
 
 from mkdocs.utils import meta as meta_parser
@@ -34,7 +35,15 @@ from mkdocs_publisher.blog.structures import BlogPost
 
 log = logging.getLogger("mkdocs.publisher.blog.parsers")
 
-REQUIRED_META_KEYS = ["title", "date", "slug", "tags", "categories", "description", "publish"]
+REQUIRED_META_KEYS = [
+    "title",
+    "date",
+    "slug",
+    "tags",
+    "categories",
+    "description",
+    "publish",
+]
 # TODO: read it from pub-meta if configured
 
 
@@ -52,19 +61,14 @@ def count_words(content):
     content = content.replace("\n", " ")  # Replace newlines with spaces for uniform handling
     content = re.sub(r"!\[[^]]*]\([^)]*\)", "", content)  # Remove images
     content = re.sub(r"</?[^>]*>", "", content)  # Remove HTML tags
-    content = re.sub(r"[#*`~\-–^=<>+|/:]", "", content)  # Remove special characters
+    content = re.sub(r"[#*`~\-^=<>+|/:]", "", content)  # Remove special characters
     content = re.sub(r"\[[0-9]*]", "", content)  # Remove footnote references
     content = re.sub(r"[0-9#]*\.", "", content)  # Remove enumerations
 
     return len(content.split())
 
 
-# from mkdocs.utils import meta as meta_parser
-# with file.open(encoding="utf-8-sig", errors="strict") as md_file:
-#     markdown, meta = meta_parser.get_data(md_file.read())
-
-
-def parse_markdown_files(
+def parse_markdown_files(  # noqa: C901, PLR0912
     blog_config: BlogConfig,
     config_nav: OrderedDict,
     on_serve: bool = False,
@@ -91,12 +95,16 @@ def parse_markdown_files(
                         # TODO: read default value from meta config
                         log.info(
                             f"File: {file_path} - missing 1 required positional argument: "
-                            f"'publish' (setting to default: draft)"
+                            f"'publish' (setting to default: draft)",
                         )
                         post_meta["publish"] = "draft"
 
                     # Skip non-published
-                    if not on_serve and post_meta["publish"] not in ["published", "true", True]:
+                    if not on_serve and post_meta["publish"] not in [
+                        "published",
+                        "true",
+                        True,
+                    ]:
                         # TODO: make it configurable
                         continue
 
@@ -121,7 +129,7 @@ def parse_markdown_files(
 
                     # Setup date to current one, when missing
                     if "date" in post_meta and post_meta["date"] is None:
-                        post_meta["date"] = datetime.utcnow()
+                        post_meta["date"] = datetime.now(tz=timezone.utc)
 
                     # Create a new blog post
                     blog_post_keys = [f.name for f in fields(BlogPost)]
@@ -130,15 +138,14 @@ def parse_markdown_files(
                     post_data["path"] = str(path)
                     if "slug" in post_meta and post_meta["slug"] is not None and post_meta["slug"].strip() != "":
                         post_data["slug"] = post_meta["slug"]
-
-                    blog_post: BlogPost = BlogPost(**post_data)
+                    try:
+                        blog_post: BlogPost = BlogPost(**post_data)
+                    except TypeError:
+                        log.critical(f"Error in file: {blog_post.path}")
 
                     # Add new post to blog posts collection
                     blog_config.blog_posts[blog_post.date] = blog_post
                     log.debug(f"New blog posts: {blog_post.title}")
-
-                    # TODO: add reading time
-                    # print(f"{file_path} - {count_words(post.content) / 265 * 60}")
 
 
 def create_blog_post_teaser(blog_config: BlogConfig):
@@ -150,7 +157,7 @@ def create_blog_post_teaser(blog_config: BlogConfig):
     """
     for date in sorted(blog_config.blog_posts, reverse=True):
         content = []
-        for line in blog_config.blog_posts[date].content.split("\n"):  # type: ignore
+        for line in blog_config.blog_posts[date].content.split("\n"):
             if line == blog_config.plugin_config.teaser_marker:
                 blog_config.blog_posts[date].is_teaser = True
                 blog_config.blog_posts[date].teaser = "\n".join(c for c in content)
@@ -158,5 +165,5 @@ def create_blog_post_teaser(blog_config: BlogConfig):
         if not blog_config.blog_posts[date].is_teaser:
             blog_config.blog_posts[date].teaser = "\n".join(c for c in content)
         log.debug(
-            f"Post: '{blog_config.blog_posts[date].title}' " f"is a teaser: {blog_config.blog_posts[date].is_teaser}"
+            f"Post: '{blog_config.blog_posts[date].title}' is a teaser: {blog_config.blog_posts[date].is_teaser}",
         )

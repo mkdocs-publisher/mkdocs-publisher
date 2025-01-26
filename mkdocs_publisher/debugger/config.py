@@ -29,22 +29,24 @@ from mkdocs.config.base import Config
 class _DebuggerConsoleConfig(Config):
     enabled = option.Type(bool, default=True)
     # noinspection PyUnresolvedReferences,PyProtectedMember
-    log_level = option.Choice(choices=logging._nameToLevel.keys(), default="INFO")
+    log_level = option.Choice(choices=logging._nameToLevel.keys(), default="INFO")  # noqa: SLF001
     show_code_link = option.Type(bool, default=False)
     show_logger_name = option.Type(bool, default=True)
     show_entry_time = option.Type(bool, default=True)
     show_deprecation_warnings = option.Type(bool, default=False)
-    entry_time_format = option.Type(str, default="%H:%M:%S.%f")
+    time_format = option.Type(str, default="%H:%M:%S.%f")
     filter_logger_names = option.Type(list, default=[])
 
 
 class _DebuggerFileConfig(Config):
     enabled = option.Type(bool, default=True)
     # noinspection PyUnresolvedReferences,PyProtectedMember
-    log_level = option.Choice(choices=logging._nameToLevel.keys(), default="DEBUG")
+    log_level = option.Choice(choices=logging._nameToLevel.keys(), default="DEBUG")  # noqa: SLF001
     log_format = option.Type(
-        str, default="[%(created).14s][%(levelname)-5.5s][%(project_path)s:%(lineno)d] %(message)s"
+        str,
+        default="[%(asctime)s.%(msecs)03d][%(levelname)-5.5s][%(project_path)s:%(lineno)d] %(message)s",
     )
+    time_format = option.Type(str, default="%H:%M:%S")
     remove_old_files = option.Type(bool, default=True)
     filter_logger_names = option.Type(list, default=[])
 
@@ -55,7 +57,7 @@ class _DebuggerZipConfig(Config):
     add_pip_freeze = option.Type(bool, default=True)
 
 
-class DebuggerConfig(Config):
-    console_log: _DebuggerConsoleConfig = option.SubConfig(_DebuggerConsoleConfig)  # type: ignore
-    file_log: _DebuggerFileConfig = option.SubConfig(_DebuggerFileConfig)  # type: ignore
-    zip_log: _DebuggerZipConfig = option.SubConfig(_DebuggerZipConfig)  # type: ignore
+class DebuggerPluginConfig(Config):
+    console_log: _DebuggerConsoleConfig = option.SubConfig(_DebuggerConsoleConfig)  # type: ignore[reportAssignmentType]
+    file_log: _DebuggerFileConfig = option.SubConfig(_DebuggerFileConfig)  # type: ignore[reportAssignmentType]
+    zip_log: _DebuggerZipConfig = option.SubConfig(_DebuggerZipConfig)  # type: ignore[reportAssignmentType]

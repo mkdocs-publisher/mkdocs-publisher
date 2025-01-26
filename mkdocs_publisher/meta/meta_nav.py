@@ -23,12 +23,8 @@
 import logging
 import re
 from pathlib import Path
-from typing import Optional
 
 from mkdocs.config.defaults import MkDocsConfig
-from mkdocs.structure.nav import Link
-from mkdocs.structure.nav import Section
-from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared import links
 from mkdocs_publisher.meta.meta_files import MetaFile
@@ -38,53 +34,43 @@ log = logging.getLogger("mkdocs.publisher.meta.nav")
 
 
 class MetaNav:
-    def __init__(self, meta_files: MetaFiles, blog_dir: Optional[Path] = None):
+    def __init__(self, meta_files: MetaFiles, blog_dir: Path | None = None):
         self._meta_files: MetaFiles = meta_files
-        self._blog_dir: Optional[Path] = blog_dir
+        self._blog_dir: Path | None = blog_dir
 
-    def nav_cleanup(self, items, removal_list: list[str]) -> list:
-        # log.info(removal_list)
-        nav = []
-        for item in items:
-            if isinstance(item, Section):
-                item.children = self.nav_cleanup(items=item.children, removal_list=removal_list)
-                # If section is empty, skip it
-                if len(item.children) > 0:
-                    nav.append(item)
-            elif (
-                isinstance(item, Page)
-                and str(item.file.src_path) not in removal_list
-                and str(Path(item.file.src_path).parent) not in removal_list
-            ) or (isinstance(item, Link) and item.title not in removal_list):
-                nav.append(item)
-        return nav
+    def _get_overview_nav(self, meta_file: MetaFile) -> list[str]:
+        overview_path: Path = meta_file.abs_path.joinpath(self._meta_files.dir_meta_file)
+        overview_nav: list[str] = (
+            [str(meta_file.path.joinpath(self._meta_files.dir_meta_file))]
+            if meta_file.is_overview and overview_path.exists() and not meta_file.is_draft
+            else []
+        )
+        return overview_nav
 
-    def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, Optional[MetaFile]]:
+    def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, MetaFile | None]:  # noqa: C901
         nav = []
-        meta_file: Optional[MetaFile] = None
+        meta_file: MetaFile | None = None
         while True:
             if meta_file is None:
                 try:
                     meta_file = next(meta_files_gen)
+                    is_dir = "D" if meta_file.is_dir else "F"
+                    is_overview = "O" if meta_file.is_dir else "R"
+                    log.debug(f"[{is_dir}{is_overview}] {meta_file.path} - {meta_file.parent} ({meta_file.abs_path})")
                 except StopIteration:
                     break
             # Iterate over meta links until last one
             if meta_file.is_dir and meta_file.abs_path.is_relative_to(current_dir):
-                overview_path: Path = meta_file.abs_path.joinpath(self._meta_files.dir_meta_file)
-                overview_nav: list[str] = (
-                    [str(meta_file.path.joinpath(self._meta_files.dir_meta_file))]
-                    if meta_file.is_overview and overview_path.exists() and not meta_file.is_draft
-                    else []
-                )
+                overview_nav = self._get_overview_nav(meta_file=meta_file)
+                log.debug(f"Overview files: {overview_nav}")
                 title = meta_file.title
                 prev_path = meta_file.path
                 sub_nav, meta_file = self._build_nav(meta_files_gen=meta_files_gen, current_dir=meta_file.abs_path)
                 sub_nav = [*overview_nav, *sub_nav]
-                if sub_nav:
-                    if prev_path == self._blog_dir:
-                        nav.append({str(prev_path): str(prev_path)})
-                    else:
-                        nav.append({title: sub_nav})
+                if sub_nav and prev_path == self._blog_dir:
+                    nav.append({str(prev_path): str(prev_path)})
+                elif sub_nav:
+                    nav.append({title: sub_nav})
             elif meta_file.is_dir:
                 return nav, meta_file  # Jump to subdirectory
             elif not meta_file.is_dir and not meta_file.is_draft and meta_file.path.suffix == ".md":
