@@ -65,8 +65,16 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
             "Lorem ipsum dolor sit [file](file.md) amet, consectetur adipiscing elit.",
         ),
         (
+            "Lorem ipsum dolor sit [[file]]{ .some .extra } amet, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [file](file.md){.some .extra} amet, consectetur adipiscing elit.",
+        ),
+        (
             "Lorem ipsum dolor sit [[file with space]] amet, consectetur adipiscing elit.",
             "Lorem ipsum dolor sit [file with space](file with space.md) amet, consectetur adipiscing elit.",
+        ),
+        (
+            "Lorem ipsum dolor sit [[file with space]]{ .extra } amet, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [file with space](file with space.md){.extra} amet, consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit amet [[#anchor part]], consectetur adipiscing elit.",
@@ -87,6 +95,10 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         (
             "Lorem ipsum dolor sit ![[amet.pdf]], consectetur adipiscing elit.",
             "Lorem ipsum dolor sit ![amet.pdf](amet.pdf){pdfjs loading=lazy}, consectetur adipiscing elit.",
+        ),
+        (
+            "Lorem ipsum dolor sit ![[amet.pdf]]{ .extra }, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit ![amet.pdf](amet.pdf){.extra pdfjs loading=lazy}, consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing ![elit](elit.jpg).",

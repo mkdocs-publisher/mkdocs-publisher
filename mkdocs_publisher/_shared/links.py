@@ -33,7 +33,7 @@ log = logging.getLogger("mkdocs.publisher._shared.links")
 
 
 ANCHOR_RE_PART = r"((#(?P<anchor>([^|\][()'\"]+)))?)"
-EXTRA_RE_PART = r"(( ?{(?P<extra>[\w+=. ]+)})?)"
+EXTRA_RE_PART = r"(( ?{(?P<extra>[\w\d\S ]+)})?)"
 IMAGE_RE_PART = r"((\|(?P<image>([0-9x]+)))?)"
 LINK_RE_PART = r"(?P<link>(?!(https?|ftp)://)[^|#()\r\n\t\f\v]+)"
 URL_RE_PART = r"(?P<link>((https?|ftp)://)[\w\-]{2,}\.[\w\-]{2,}(\.[\w\-]{2,})?([^\s\][)(]*))"
@@ -41,7 +41,7 @@ TEXT_RE_PART = r"(?P<text>[^\][|]+)"
 LINK_TITLE_RE_PART = r"(( \"(?P<title>[ \S]+)\")?)"
 
 HTTP_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}]\({URL_RE_PART}\)")
-WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[({LINK_RE_PART}?){ANCHOR_RE_PART}(\|{TEXT_RE_PART})?]]")
+WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[({LINK_RE_PART}?){ANCHOR_RE_PART}(\|{TEXT_RE_PART})?]]{EXTRA_RE_PART}")
 WIKI_EMBED_LINK_RE = re.compile(rf"!\[\[{LINK_RE_PART}{ANCHOR_RE_PART}{IMAGE_RE_PART}]]{EXTRA_RE_PART}")
 MD_LINK_RE = re.compile(
     rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
