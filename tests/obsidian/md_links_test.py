@@ -57,7 +57,7 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
 
 
 @pytest.mark.parametrize(
-    "markdown,expected",
+    ("markdown", "expected"),
     {
         (
             "Lorem ipsum dolor [sit](file.md) amet, consectetur adipiscing elit.",
@@ -152,7 +152,7 @@ def test_normalize_wiki_links(
     mkdocs_config: MkDocsConfig,
     pub_obsidian_plugin: ObsidianPlugin,
     pub_blog_plugin: BlogPlugin,
-):
+) -> None:
     mkdocs_config.plugins = cast(PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin})
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown_links._blog_config = pub_blog_plugin.config
@@ -162,7 +162,7 @@ def test_normalize_wiki_links(
 
 
 @pytest.mark.parametrize(
-    "markdown,expected",
+    ("markdown", "expected"),
     {
         (
             "Lorem ipsum dolor sit [[file|amet]], consectetur adipiscing elit.",
@@ -188,7 +188,7 @@ def test_normalize_links(
     mkdocs_config: MkDocsConfig,
     pub_obsidian_plugin: ObsidianPlugin,
     pub_blog_plugin: BlogPlugin,
-):
+) -> None:
     pub_obsidian_plugin.config.links.wikilinks_enabled = False
     mkdocs_config.plugins = cast(PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin})
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
@@ -198,7 +198,7 @@ def test_normalize_links(
 
 
 @pytest.mark.parametrize(
-    "markdown,expected",
+    ("markdown", "expected"),
     {
         (
             "Lorem ipsum dolor sit [amet](main.md), consectetur adipiscing elit.",
@@ -216,7 +216,7 @@ def test_normalize_relative_links(
     mkdocs_config: MkDocsConfig,
     pub_obsidian_plugin: ObsidianPlugin,
     pub_blog_plugin: BlogPlugin,
-):
+) -> None:
     mkdocs_config.plugins = cast(PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin})
     markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
     markdown = markdown_links.normalize_relative_links(

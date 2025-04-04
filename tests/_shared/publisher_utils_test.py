@@ -31,7 +31,7 @@ from mkdocs_publisher._shared import publisher_utils
 
 
 @pytest.mark.parametrize(
-    "removal_list,expected",
+    ("removal_list", "expected"),
     [
         ([], True),
         (["fake_file.md"], False),
@@ -42,7 +42,7 @@ def test_nav_cleanup_for_page(
     mkdocs_config: MkDocsConfig,
     removal_list: list,
     expected: bool,
-):
+) -> None:
     page = Page(
         "Fake file",
         file=File(
@@ -61,7 +61,7 @@ def test_nav_cleanup_for_page(
 
 
 @pytest.mark.parametrize(
-    "removal_list,expected",
+    ("removal_list", "expected"),
     [
         ([], True),
         (["Fake file"], False),
@@ -71,7 +71,7 @@ def test_nav_cleanup_for_page(
 def test_nav_cleanup_for_link(
     removal_list: list,
     expected: bool,
-):
+) -> None:
     link = Link(title="Fake file", url="fake-file")
     nav = publisher_utils.nav_cleanup(
         items=[link],
@@ -81,7 +81,7 @@ def test_nav_cleanup_for_link(
 
 
 @pytest.mark.parametrize(
-    "removal_list,expected",
+    ("removal_list", "expected"),
     [
         ([], True),
         (["Fake file"], False),
@@ -91,7 +91,7 @@ def test_nav_cleanup_for_link(
 def test_nav_cleanup_for_section(
     removal_list: list,
     expected: bool,
-):
+) -> None:
     link = Link(title="Fake file", url="fake-file")
     section = Section("Some section", children=[link])
 

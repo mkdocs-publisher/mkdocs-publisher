@@ -32,13 +32,13 @@ from mkdocs.structure.files import Files
 log = logging.getLogger("mkdocs.publisher._shared.file_utils")
 
 
-def run_subprocess(cmd, capture_output: bool = True) -> subprocess.CompletedProcess:
+def run_subprocess(cmd, capture_output: bool = True) -> subprocess.CompletedProcess:  # noqa: ANN001
     cmd = [arg for arg in cmd if arg is not None]
     log.debug(f"Run cmd: {' '.join(cmd)}")
     return subprocess.run(cmd, capture_output=capture_output, check=False)  # noqa: S603
 
 
-def remove_dir(directory: Path):
+def remove_dir(directory: Path) -> None:
     for file in directory.iterdir():
         if file.is_dir():
             remove_dir(directory=file)
@@ -59,12 +59,12 @@ def calculate_file_hash(file: Path, block_size: int = 65536) -> str | None:
 
 
 class FilesList:
-    def __init__(self, mkdocs_config: MkDocsConfig, files: Files, exclude: list[Path] | None = None):
+    def __init__(self, mkdocs_config: MkDocsConfig, files: Files, exclude: list[Path] | None = None) -> None:
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._all_files: Files = files
         self._exclude: list[Path] = [] if exclude is None else exclude
 
-    def list_files(self, extension: list[str], exclude: list[Path]):
+    def list_files(self, extension: list[str], exclude: list[Path]) -> None:
         excluded = [*exclude, *self._exclude]
         for file in self._all_files:
             if Path(file.dest_path).suffix.lower() in extension and not any(

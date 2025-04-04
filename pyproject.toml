@@ -53,20 +53,20 @@ documentation = "https://mkdocs-publisher.github.io/"
 [tool.poetry.dependencies]
 python = "^3.10"
 mkdocs = "^1.6.1"
-pymdown-extensions = "^10.11.2"
-beautifulsoup4 = "^4.12.3"
-mkdocs-material = "^9.5.49"
+pymdown-extensions = "^10.14.3"
+beautifulsoup4 = "^4.13.3"
+mkdocs-material = "^9.6.11"
 
 [tool.poetry.group.dev.dependencies]
-yamllint = "^1.35.1"
+yamllint = "^1.37.0"
 ruff = "^0.5.7"
-pyright = "^1.1.391"
+pyright = "^1.1.398"
 
 [tool.poetry.group.test.dependencies]
-coverage = "^7.6.9"
+coverage = "^7.8.0"
 pytest = "^7.4.4"
 pytest-cov = "^4.1.0"
-pytest-check = "^2.4.1"
+pytest-check = "^2.5.3"
 
 [build-system]
 requires = ["poetry-core"]
@@ -97,50 +97,16 @@ target-version = "py310"
 line-length = 120
 
 [tool.ruff.lint]
-select = [
-    "A",
-    # "ANN",  # TODO: uncomment
-    "ARG",
-    "B",
-    "BLE",
-    "C4",
-    "C90",
-    "DTZ",
-    "E",
-    "ERA",
-    "F",
-    "FIX",
-    "FURB",
-    "G",
-    "I",
-    "ICN",
-    "ISC",
-    "LOG",
-    "N",
-    "PERF",
-    "PGH",
-    "PL",
-    "PTH",
-    "Q",
-    "RSE",
-    "RET",
-    "RUF",
-    "S",
-    "SLF",
-    "SIM",
-    "T10",
-    "T20",
-    "TCH",
-    "TD",
-    "TID",
-    "UP",
-    "W",
-    "YTT",
-]
+select = ["ALL"]
 ignore = [
+    # "ANN",
     "ANN101",
+    "D",
+    "EM102",
     "FIX002",
+    "FBT",
     "G004",
+    "INP",
     "ISC001",
     "PLR0913",
     "PLR2004",
@@ -151,6 +117,8 @@ ignore = [
     "TCH003",
     "TD002",
     "TD003",   # TODO: remove it
+    "TRY003",
+    "TRY300",
 ]
 
 [tool.ruff.lint.per-file-ignores]

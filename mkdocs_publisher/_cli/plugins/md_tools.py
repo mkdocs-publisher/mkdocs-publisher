@@ -35,13 +35,12 @@ log = logging.getLogger("mkdocs.publisher.cli.md_tools")
 
 
 @click.group
-def app():
+def app() -> None:
     """Markdown tools."""
-    pass
 
 
 @app.command()
-def key_rename():
+def key_rename() -> None:
     mkdocs_config = mkdocs_utils.get_mkdocs_config()
     obsidian_plugin = ObsidianPlugin()
     obsidian_plugin.load_config(options={"plugins": mkdocs_config.plugins})

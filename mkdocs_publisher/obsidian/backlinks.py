@@ -50,7 +50,7 @@ class BacklinkLinks:
         self,
         mkdocs_config: MkDocsConfig,
         backlinks: dict[str, list[Link]],
-    ):
+    ) -> None:
         self._backlinks: dict[str, list[Link]] = backlinks
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._meta_config: MetaPluginConfig = mkdocs_utils.get_plugin_config(
@@ -71,11 +71,11 @@ class BacklinkLinks:
         return match.groupdict()["link"]
 
     @staticmethod
-    def _create_backlink(match: re.Match):
+    def _create_backlink(match: re.Match) -> str:
         link = links.LinkMatch(**match.groupdict())
         return link.as_backlink
 
-    def _parse_markdown_link(self, match: re.Match, page: Page, line: str):
+    def _parse_markdown_link(self, match: re.Match, page: Page, line: str) -> None:
         """Parse markdown link"""
         original_link = links.LinkMatch(**match.groupdict())
         backlink_link = f"{self._mkdocs_config.site_url}{page.url}{original_link.backlink_anchor}"
@@ -100,7 +100,7 @@ class BacklinkLinks:
         original_link.link = original_link.link.replace("../", "")
 
         title = page.title
-        if title is None and self._meta_config is not None:
+        if title is None and self._meta_config:
             file_path = Path(self._mkdocs_config.docs_dir) / page.file.src_path
             _, meta = mkdocs_utils.read_md_file(md_file_path=file_path)
             title = meta.get(str(self._meta_config.title.key_name), None)
@@ -130,7 +130,7 @@ class BacklinkLinks:
                 if not link_found:
                     self._backlinks[original_link.link].append(new_link)
 
-    def find_markdown_links(self, markdown: str, page: Page):
+    def find_markdown_links(self, markdown: str, page: Page) -> None:
         # """Find all markdown backlinks"""
         for line in markdown.split("\n"):
             for match in re.finditer(links.MD_LINK_RE, line):

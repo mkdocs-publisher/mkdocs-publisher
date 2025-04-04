@@ -24,7 +24,7 @@ import logging
 from pathlib import Path
 
 import pytest
-from _pytest.fixtures import SubRequest
+from _pytest.fixtures import SubRequest  # type: ignore[reportPrivateImportUsage]
 from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher.blog.plugin import BlogPlugin
@@ -33,7 +33,7 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
 
 
 @pytest.fixture()
-def log():
+def log() -> logging.Logger:
     return logging.getLogger("tests")
 
 
@@ -42,7 +42,7 @@ def test_data_dir() -> Path:
     return Path().cwd() / "tests/_tests_data"
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore [reportInvalidTypeForm]
     """Fixture returning MkDocsConfig
 
@@ -65,10 +65,10 @@ def mkdocs_config(request: SubRequest) -> MkDocsConfig:  # type: ignore [reportI
         config_dict["docs_dir"] = "docs"
     config = MkDocsConfig()
     config.load_dict(patch=config_dict)
-    yield config  # type: ignore [reportReturnType]
+    return config  # type: ignore [reportReturnType]
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def pub_obsidian_plugin(request: SubRequest) -> ObsidianPlugin:
     try:
         config_dict = request.param
@@ -79,7 +79,7 @@ def pub_obsidian_plugin(request: SubRequest) -> ObsidianPlugin:
     return plugin
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def pub_blog_plugin(request: SubRequest) -> BlogPlugin:
     try:
         config_dict = request.param
@@ -90,7 +90,7 @@ def pub_blog_plugin(request: SubRequest) -> BlogPlugin:
     return plugin
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def pub_meta_plugin(request: SubRequest) -> MetaPlugin:
     try:
         config_dict = request.param

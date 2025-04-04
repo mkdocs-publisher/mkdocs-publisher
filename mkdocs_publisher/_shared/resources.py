@@ -40,7 +40,7 @@ def _add_extra_file(
     use_directory_urls: bool,
     config_extra_files: list,
     files: Files,
-):
+) -> None:
     assets_path = Path(str(importlib.resources.files(assets)))
     extra_file_path = str(resource_file_path.relative_to(assets_path.parent))
     if resource_file_path.exists():
@@ -58,9 +58,8 @@ def _add_extra_file(
         log.error(f"Extra file doesn't exists: {extra_file_path}")
 
 
-def add_extra_css(stylesheet_file_name: str, config: MkDocsConfig, files: Files, add_map: bool = True):
+def add_extra_css(stylesheet_file_name: str, config: MkDocsConfig, files: Files, add_map: bool = True) -> None:
     """Add CSS file from mkdocs_publisher._extra to mkdocs.yml config file"""
-
     css_file_path = Path(str(importlib.resources.files(stylesheets).joinpath(stylesheet_file_name)))
     _add_extra_file(
         resource_file_path=css_file_path,

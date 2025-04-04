@@ -54,7 +54,10 @@ PIP_FREEZE_FILENAME = "requirements_pub_debugger.txt"  # TODO: make it configura
 class DebuggerPlugin(BasePlugin[DebuggerPluginConfig]):
     supports_multiple_instances = False
 
-    def __init__(self):
+    def __init__(self) -> None:
+        if len(logging.getLogger("mkdocs").handlers) == 0:
+            mkdocs_log = logging.getLogger("mkdocs")
+            mkdocs_log.addHandler(logging.StreamHandler())
         self._mkdocs_log_stream_handler: logging.Handler = logging.getLogger("mkdocs").handlers[0]
 
         self._mkdocs_log_file_handler: loggers.DatedFileHandler = loggers.DatedFileHandler(
@@ -79,7 +82,9 @@ class DebuggerPlugin(BasePlugin[DebuggerPluginConfig]):
             )
             # noinspection PyUnresolvedReferences
             mkdocs_log_level = logging.getLogger("mkdocs").level
-            console_log_level = logging._nameToLevel[self.config.console_log.log_level]  # noqa: SLF001
+            console_log_level = logging._nameToLevel[  # noqa: SLF001
+                self.config.console_log.log_level.upper()
+            ]
 
             if mkdocs_log_level <= console_log_level:
                 console_log_level = mkdocs_log_level
@@ -97,7 +102,9 @@ class DebuggerPlugin(BasePlugin[DebuggerPluginConfig]):
             )
             self._mkdocs_log_file_handler.addFilter(loggers.ProjectPathFileFilter(file_config=self.config.file_log))
             # noinspection PyUnresolvedReferences
-            self._mkdocs_log_file_handler.setLevel(logging._nameToLevel[self.config.file_log.log_level])  # noqa: SLF001
+            self._mkdocs_log_file_handler.setLevel(
+                logging._nameToLevel[self.config.file_log.log_level.upper()],  # noqa: SLF001
+            )
 
             logging.getLogger("mkdocs").handlers.append(self._mkdocs_log_file_handler)
 

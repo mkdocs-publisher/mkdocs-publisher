@@ -128,7 +128,7 @@ def _md_any_link_to_text(match: re.Match) -> str:
     return f'{match.groupdict()["text"]} '
 
 
-def count_words(content: str):
+def count_words(content: str) -> int:
     """Count words in markdown content.
 
     Based on: https://github.com/gandreadis/markdown-word-count
@@ -146,7 +146,7 @@ def count_words(content: str):
     content = re.sub(ENUMERATIONS_RE, "", content)
     content = re.sub(ADMONITIONS_RE, "", content)
     content = re.sub(SPACES_RE, " ", content)
-    content = re.sub(links.MD_ANY_LINK_RE, _md_any_link_to_text, content)
+    content = re.sub(links.MD_LINK_RE, _md_any_link_to_text, content)
     content = re.sub(COMMA_RE, ",", content)
 
     return len(content.split())

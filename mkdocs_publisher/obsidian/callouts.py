@@ -62,7 +62,7 @@ ALIGN_MAPPING = {"left": " inline", "right": " inline end"}
 
 
 class CalloutToAdmonition:
-    def __init__(self, callouts_config: _ObsidianCalloutsConfig):
+    def __init__(self, callouts_config: _ObsidianCalloutsConfig) -> None:
         self._callouts_config: _ObsidianCalloutsConfig = callouts_config
         self._current_file_path: str | None = None
 

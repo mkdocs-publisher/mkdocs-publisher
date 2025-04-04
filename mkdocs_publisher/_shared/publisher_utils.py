@@ -25,6 +25,7 @@ from collections import UserDict
 from dataclasses import dataclass
 from dataclasses import field
 from pathlib import Path
+from typing import NoReturn
 from typing import Sequence  # noqa: UP035
 
 from mkdocs.config.defaults import MkDocsConfig
@@ -67,11 +68,22 @@ class PublisherFile:
     title: str | None = field(default=None)
 
 
+@dataclass
+class PublisherTitleConfig:
+    key_name: str
+
+
+@dataclass
+class PublisherFilesConfig:
+    title: PublisherTitleConfig
+
+
 class PublisherFiles(UserDict):
-    def __init__(self):
+    def __init__(self) -> None:
         self._on_serve: bool = False
         self._mkdocs_config: MkDocsConfig | None = None
         self._meta_plugin_config: MetaPluginConfig | None = None
+        self._config: PublisherFilesConfig | None = None
 
         super().__init__()
 
@@ -80,18 +92,18 @@ class PublisherFiles(UserDict):
         return self._on_serve
 
     @on_serve.setter
-    def on_serve(self, on_serve: bool):
+    def on_serve(self, on_serve: bool) -> None:
         self._on_serve = on_serve
 
-    def set_configs(self, mkdocs_config: MkDocsConfig, meta_plugin_config: MetaPluginConfig):
+    def set_configs(self, mkdocs_config: MkDocsConfig, meta_plugin_config: MetaPluginConfig) -> None:
         self._mkdocs_config = mkdocs_config
         self._meta_plugin_config = meta_plugin_config
 
-    def add_files(self):
+    def add_files(self) -> NoReturn:
         raise NotImplementedError  # pragma: no cover
 
 
-def nav_cleanup(items, removal_list: Sequence[str | Path]) -> list:
+def nav_cleanup(items, removal_list: Sequence[str | Path]) -> list:  # noqa: ANN001
     removal_list = [str(p) for p in removal_list]
     nav = []
     for item in items:

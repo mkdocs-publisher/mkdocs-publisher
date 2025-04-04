@@ -33,12 +33,11 @@ log = logging.getLogger("mkdocs.publisher.cli.dev")
 
 
 @click.group
-def app():
+def app() -> None:
     """Development tools."""
-    pass
 
 
-def iter_res(src_dir: Path, dst_dir: Path, res_path: Path):
+def iter_res(src_dir: Path, dst_dir: Path, res_path: Path) -> None:
     for path in res_path.iterdir():
         if path.is_dir():
             iter_res(src_dir=src_dir, dst_dir=dst_dir, res_path=path)
@@ -50,7 +49,7 @@ def iter_res(src_dir: Path, dst_dir: Path, res_path: Path):
 
 
 @app.command()
-def css_min():
+def css_min() -> None:
     """Minify project CSS files."""
     project_dir = Path.cwd() / "mkdocs_publisher"
     for input_css_file in project_dir.rglob("*.css"):
@@ -71,10 +70,11 @@ def css_min():
 
 
 @app.command()
-def update_cov():
+def update_cov() -> None:
     """Update cov.json file based on full coverage.json file.
 
-    File cov.json is used by shields.io to display % code coverage in a badge."""
+    File cov.json is used by shields.io to display % code coverage in a badge.
+    """
     coverage_file = Path.cwd() / "coverage.json"
     cov_file = Path.cwd() / "cov.json"
 

@@ -24,7 +24,6 @@ import logging
 from pathlib import Path
 
 import pytest
-from pytest import LogCaptureFixture
 from pytest_check import check_functions as check
 
 from mkdocs_publisher._shared import links
@@ -32,7 +31,7 @@ from mkdocs_publisher.meta.config import SlugModeChoiceEnum
 
 
 @pytest.mark.parametrize(
-    "text,expected",
+    ("text", "expected"),
     {
         ("lorem ipsum dolor", "lorem-ipsum-dolor"),
         ("lorem_ipsum_dolor", "lorem_ipsum_dolor"),
@@ -40,12 +39,12 @@ from mkdocs_publisher.meta.config import SlugModeChoiceEnum
         ("Lorem ipsum, dolor", "lorem-ipsum-dolor"),
     },
 )
-def test_slugify(text, expected):
+def test_slugify(text: str, expected: str) -> None:
     check.equal(expected, links.slugify(text))
 
 
 @pytest.mark.parametrize(
-    "slug,title,slug_mode,warn_on_missing,expected,exp_log_level",
+    ("slug", "title", "slug_mode", "warn_on_missing", "expected", "exp_log_level"),
     {
         (
             "meta_slug",
@@ -71,14 +70,14 @@ def test_slugify(text, expected):
     },
 )
 def test_slug_create(
-    caplog: LogCaptureFixture,
+    caplog: pytest.LogCaptureFixture,
     slug: str,
     title: str,
     slug_mode: str,
     warn_on_missing: bool,
     expected: str,
     exp_log_level: int,
-):
+) -> None:
     check.equal(
         expected,
         links.create_slug(
@@ -93,7 +92,7 @@ def test_slug_create(
 
 
 @pytest.mark.parametrize(
-    "link,text,anchor,title,is_wiki,expected",
+    ("link", "text", "anchor", "title", "is_wiki", "expected"),
     {
         ("../file.md", "Link text", "", "", False, "[Link text](../file.md)"),
         ("../file with space.md", "Link text", "", "", False, "[Link text](../file with space.md)"),
@@ -121,13 +120,13 @@ def test_slug_create(
         (None, "Anchor link", "just/an anchor", "", False, "[Anchor link](#justan-anchor)"),
     },
 )
-def test_link_match_dataclass(link: str, text: str, anchor: str, title: str, is_wiki: bool, expected: str):
+def test_link_match_dataclass(link: str, text: str, anchor: str, title: str, is_wiki: bool, expected: str) -> None:
     link_obj = links.LinkMatch(link=link, text=text, title=title, is_wiki=is_wiki, anchor=anchor)
     check.equal(expected, str(link_obj))
 
 
 @pytest.mark.parametrize(
-    "link,text,anchor,title,extra,expected_anchor,expected_link",
+    ("link", "text", "anchor", "title", "extra", "expected_anchor", "expected_link"),
     {
         (
             "../file.md",
@@ -202,7 +201,7 @@ def test_link_match_backlinks(
     extra: str,
     expected_anchor: str,
     expected_link: str,
-):
+) -> None:
     link_obj = links.LinkMatch(link=link, text=text, title=title, extra=extra, anchor=anchor)
 
     check.equal(expected_anchor, link_obj.backlink_anchor, "Wrong backlink anchor")
@@ -210,7 +209,7 @@ def test_link_match_backlinks(
 
 
 @pytest.mark.parametrize(
-    "link,image,anchor,extra,expected",
+    ("link", "image", "anchor", "extra", "expected"),
     {
         ("../image.jpg", "", "", "", "![image.jpg](../image.jpg)"),
         ("../image with space.jpg", "", "", "", "![image with space.jpg](../image with space.jpg)"),
@@ -229,13 +228,13 @@ def test_link_match_backlinks(
         ("../document.pdf", "", "height=300", "", "![document.pdf](../document.pdf){ pdfjs height=300 }"),
     },
 )
-def test_wiki_embed_link_match_dataclass(link: str, image: str, anchor: str, extra: str, expected: str):
+def test_wiki_embed_link_match_dataclass(link: str, image: str, anchor: str, extra: str, expected: str) -> None:
     link_obj = links.WikiEmbedLinkMatch(link=link, image=image, anchor=anchor, extra=extra)
     assert expected == str(link_obj)
 
 
 @pytest.mark.parametrize(
-    "link,text,title,extra,is_loading_lazy,expected",
+    ("link", "text", "title", "extra", "is_loading_lazy", "expected"),
     {
         ("../image.jpg", "Description", "", "", False, "![Description](../image.jpg)"),
         ("../image with space.jpg", "Description", "", "", False, "![Description](../image with space.jpg)"),
@@ -289,14 +288,14 @@ def test_md_embed_link_match_dataclass(
     extra: str,
     is_loading_lazy: bool,
     expected: str,
-):
+) -> None:
     link_obj = links.MdEmbedLinkMatch(link=link, text=text, title=title, extra=extra, is_loading_lazy=is_loading_lazy)
     assert expected == str(link_obj)
 
 
 def test_relative_path_finder_properties(
     relative_path_finder: links.RelativePathFinder,
-):
+) -> None:
     assert Path("relative") == relative_path_finder.relative_path
     assert Path("current/file.md") == relative_path_finder.current_file_path
 
@@ -304,7 +303,7 @@ def test_relative_path_finder_properties(
 def test_relative_path_finder_get_existing_file_path(
     test_data_dir: Path,
     relative_path_finder: links.RelativePathFinder,
-):
+) -> None:
     file_path = relative_path_finder.get_full_file_path(file_path=Path("rel_file.md"))
     assert test_data_dir / "relative/rel_file.md" == file_path
 
@@ -312,16 +311,16 @@ def test_relative_path_finder_get_existing_file_path(
 def test_relative_path_finder_get_existing_full_file_path(
     test_data_dir: Path,
     relative_path_finder: links.RelativePathFinder,
-):
+) -> None:
     file_path = relative_path_finder.get_full_file_path(file_path=Path("relative/rel_file.md"))
     assert test_data_dir / "relative/rel_file.md" == file_path
 
 
 def test_relative_path_finder_get_non_existing_file_path(
-    caplog: LogCaptureFixture,
+    caplog: pytest.LogCaptureFixture,
     test_data_dir: Path,
     relative_path_finder: links.RelativePathFinder,
-):
+) -> None:
     file_path = relative_path_finder.get_full_file_path(file_path=Path("non-existing.md"))
     assert file_path is None
     assert caplog.records[-1].levelno == logging.ERROR
@@ -329,9 +328,9 @@ def test_relative_path_finder_get_non_existing_file_path(
 
 
 def test_relative_path_finder_multiple_file_found(
-    caplog: LogCaptureFixture,
+    caplog: pytest.LogCaptureFixture,
     relative_path_finder: links.RelativePathFinder,
-):
+) -> None:
     file_path = relative_path_finder.get_full_file_path(file_path=Path("other_rel_file.md"))
     assert file_path is None
     last_log_record = caplog.records[-1]
@@ -342,7 +341,7 @@ def test_relative_path_finder_multiple_file_found(
 
 
 @pytest.mark.parametrize(
-    "file_path,expected",
+    ("file_path", "expected"),
     {
         ("main.md", "../../main.md"),
         ("current/file.md", "../../current/file.md"),
@@ -356,14 +355,14 @@ def test_get_relative_file_path(
     expected: str | None,
     test_data_dir: Path,
     relative_sub_path_finder: links.RelativePathFinder,
-):
+) -> None:
     file_new_path = (test_data_dir / file_path) if file_path is not None else None
     relative_file_path = relative_sub_path_finder.get_relative_file_path(file_path=file_new_path)
     assert expected == relative_file_path
 
 
 @pytest.mark.parametrize(
-    "link,text,anchor,title,expected",
+    ("link", "text", "anchor", "title", "expected"),
     {
         ("main.md", "Main markdown", "", "", "[Main markdown](../main.md)"),
         ("main.md", "Main with anchor", "anchor", "", "[Main with anchor](../main.md#anchor)"),
@@ -381,14 +380,14 @@ def test_blog_link_match_dataclass(
     title: str,
     expected: str,
     relative_blog_path_finder: links.RelativePathFinder,
-):
+) -> None:
     link_obj = links.RelativeLinkMatch(link=link, text=text, anchor=anchor, title=title)
     link_obj.relative_path_finder = relative_blog_path_finder
     assert expected == str(link_obj)
 
 
 @pytest.mark.parametrize(
-    "link,text,anchor,title,expected",
+    ("link", "text", "anchor", "title", "expected"),
     {
         ("current/cur_sub/cur_sub_file.md", "Sub markdown", "", "", "[Sub markdown](current/cur_sub/cur_sub_file.md)"),
         (
@@ -421,7 +420,7 @@ def test_relative_link_match_dataclass(
     title: str,
     expected: str,
     relative_path_finder: links.RelativePathFinder,
-):
+) -> None:
     link_obj = links.RelativeLinkMatch(link=link, text=text, anchor=anchor, title=title)
     link_obj.relative_path_finder = relative_path_finder
     assert expected == str(link_obj)

@@ -31,11 +31,11 @@ from mkdocs_publisher.meta.meta_files import MetaFile
 from mkdocs_publisher.meta.meta_nav import MetaNav
 
 
-def test_nav_no_files(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig):
+def test_nav_no_files(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig) -> None:
     check.is_false(patched_meta_nav.build_nav(mkdocs_config=mkdocs_config), "To much files")
 
 
-def test_nav_basic_structure(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig):
+def test_nav_basic_structure(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig) -> None:
     parent_dir: MetaFile = MetaFile(
         path=Path("fake_dir"),
         abs_path=Path("docs/fake_dir"),
@@ -92,7 +92,7 @@ def test_nav_basic_structure(patched_meta_nav: MetaNav, mkdocs_config: MkDocsCon
     )
 
 
-def test_nav_with_blog_dir(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig):
+def test_nav_with_blog_dir(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig) -> None:
     parent_meta_file: MetaFile = MetaFile(
         path=Path("blog"),
         abs_path=Path("docs/blog"),
@@ -118,13 +118,13 @@ def test_nav_with_blog_dir(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfi
 
 
 @pytest.mark.parametrize(
-    "redirect,expected",
+    ("redirect", "expected"),
     [
         ("other_fake_file.md", "fake_file.md"),
         ("https://fake_url.com/", "https://fake_url.com/"),
     ],
 )
-def test_nav_redirect(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig, redirect: str, expected: str):
+def test_nav_redirect(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig, redirect: str, expected: str) -> None:
     meta_file: MetaFile = MetaFile(
         path=Path("fake_file.md"),
         abs_path=Path("docs/fake_file.md"),
@@ -141,7 +141,7 @@ def test_nav_redirect(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig, re
 
 
 @pytest.mark.parametrize(
-    "file_name,is_draft,is_hidden,expected",
+    ("file_name", "is_draft", "is_hidden", "expected"),
     [
         ("fake_file.txt", False, False, []),
         ("fake_file.md", True, False, []),
@@ -155,7 +155,7 @@ def test_nav_by_publication_status(
     is_draft: bool,
     is_hidden: bool,
     expected: list,
-):
+) -> None:
     meta_file: MetaFile = MetaFile(
         path=Path(file_name),
         abs_path=Path(f"docs/{file_name}"),
@@ -172,13 +172,18 @@ def test_nav_by_publication_status(
 
 
 @pytest.mark.parametrize(
-    "is_overview,expected",
+    ("is_overview", "expected"),
     [
         (True, [{"fake_dir": ["fake_dir/README.md", {"Fake title sub": "fake_dir/fake_sub_file.md"}]}]),
         (False, [{"fake_dir": [{"Fake title sub": "fake_dir/fake_sub_file.md"}]}]),
     ],
 )
-def test_nav_overview(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig, is_overview, expected: list):
+def test_nav_overview(
+    patched_meta_nav: MetaNav,
+    mkdocs_config: MkDocsConfig,
+    is_overview: bool,
+    expected: list,
+) -> None:
     def patched_get_overview_nav(meta_file: MetaFile) -> list[str]:
         return [str(meta_file.path.joinpath("README.md"))]
 
@@ -209,7 +214,7 @@ def test_nav_overview(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig, is
 
 
 @pytest.mark.parametrize("is_relative_to", [(True), (False)])
-def test_nav_empty_relative_dir(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig, is_relative_to: bool):
+def test_nav_empty_relative_dir(patched_meta_nav: MetaNav, mkdocs_config: MkDocsConfig, is_relative_to: bool) -> None:
     parent_dir: MetaFile = MetaFile(
         path=Path("fake_dir"),
         abs_path=Path("docs/fake_dir"),

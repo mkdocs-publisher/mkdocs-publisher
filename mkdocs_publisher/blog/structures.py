@@ -82,8 +82,8 @@ class BlogConfig:
     docs_dir: Path = field(init=False)
     blog_dir: Path = field(init=False)
     site_dir: Path = field(init=False)
-    blog_posts: dict[datetime, BlogPost] = field(init=False, default_factory=lambda: {})
-    temp_files: dict[str, Path] = field(init=False, default_factory=lambda: {})
+    blog_posts: dict[datetime, BlogPost] = field(init=False, default_factory=dict)
+    temp_files: dict[str, Path] = field(init=False, default_factory=dict)
 
     @property
     def temp_files_list(self) -> list[str]:
@@ -92,7 +92,7 @@ class BlogConfig:
             temp_files.append(str(path.relative_to(self.temp_dir)))  # noqa: PERF401
         return temp_files
 
-    def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogPluginConfig):
+    def parse_configs(self, mkdocs_config: MkDocsConfig, plugin_config: BlogPluginConfig) -> None:
         from mkdocs_publisher.blog.translate import Translate
 
         self.mkdocs_config = mkdocs_config

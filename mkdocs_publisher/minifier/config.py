@@ -75,8 +75,8 @@ class _MinifierJpegConfig(_MinifierCommonConfig):
     optimise = option.Type(bool, default=True)
     progressive = option.Type(bool, default=True)
     copy_meta = option.Choice(["none", "comments", "icc", "all"], default="none")
-    smooth = option.Choice([str(i) for i in range(0, 101)], default="10")  # 0 - disabled
-    quality = option.Choice([str(i) for i in range(0, 101)], default="85")  # 0 - disabled
+    smooth = option.Choice([str(i) for i in range(101)], default="10")  # 0 - disabled
+    quality = option.Choice([str(i) for i in range(101)], default="85")  # 0 - disabled
 
 
 class _MinifierPngConfig(_MinifierCommonConfig):
@@ -84,7 +84,7 @@ class _MinifierPngConfig(_MinifierCommonConfig):
     pngquant_enabled = option.Type(bool, default=True)
     pngquant_path = option.Type(str, default="pngquant")
     pngquant_speed = option.Choice([str(i) for i in range(1, 12)], default="1")
-    pngquant_quality = option.Choice([str(i) for i in range(0, 101)], default="95")  # 0 - disabled
+    pngquant_quality = option.Choice([str(i) for i in range(101)], default="95")  # 0 - disabled
     oxipng_enabled = option.Type(bool, default=True)
     oxipng_path = option.Type(str, default="oxipng")
     oxipng_max_compression = option.Type(bool, default=True)

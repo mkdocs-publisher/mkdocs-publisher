@@ -36,7 +36,7 @@ log = logging.getLogger("mkdocs.publisher.blog.modifiers")
 def blog_post_nav_sorter(
     blog_config: BlogConfig,
     config_nav: OrderedDict,
-):
+) -> None:
     """Reorder blog posts in config navigation section from newest to oldest."""
     log.info("Reorder blog posts from newest to oldest")
     config_nav["_blog_posts_"] = [
@@ -51,7 +51,6 @@ def blog_post_nav_remove(
     nav: Navigation,
 ) -> None:
     """Remove blog posts pages, subindexes and section from direct navigation."""
-
     log.info("Removing blog posts pages and section from direct navigation")
     nav.items = [i for i in nav.items if not (isinstance(i, Section) and i.title.lower() == "_blog_posts_")]
     log.info("Removing blog sub index pages from navigation menu")
@@ -66,9 +65,8 @@ def blog_post_nav_remove(
             item.children = children
 
 
-def blog_post_nav_next_prev_change(start_page: bool, blog_config: BlogConfig, page: Page):
+def blog_post_nav_next_prev_change(start_page: bool, blog_config: BlogConfig, page: Page) -> None:
     """Change blog post next/prev navigation"""
-
     if (start_page and page.title == "index") or (not start_page and page.title == "index-0"):
         page.title = blog_config.translation.recent_blog_posts_navigation_name  # type: ignore[reportAttributeAccessIssue]
         if page.next_page is not None and str(page.next_page.title).startswith("index-"):

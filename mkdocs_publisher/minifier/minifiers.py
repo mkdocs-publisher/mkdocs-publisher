@@ -47,19 +47,19 @@ def _is_cmd_installed(cmd: list[str]) -> bool:
 
 
 class PngMinifier(BaseMinifier):
-    def __call__(self):
+    def __call__(self) -> None:
         self._minify_options: minifier_config._MinifierPngConfig = self._plugin_config.png
         super().__call__()
 
     def are_tools_installed(self) -> bool:
         are_installed = True
         if self._minify_options.pngquant_enabled and not _is_cmd_installed(
-            cmd=[self._minify_options.pngquant_path, "--version"]
+            cmd=[self._minify_options.pngquant_path, "--version"],
         ):
             log.warning("Pngquant is not installed.")
             are_installed = False
         if self._minify_options.oxipng_enabled and not _is_cmd_installed(
-            cmd=[self._minify_options.oxipng_path, "--version"]
+            cmd=[self._minify_options.oxipng_path, "--version"],
         ):
             log.warning("Oxipng is not installed.")
             are_installed = False
@@ -112,7 +112,7 @@ class PngMinifier(BaseMinifier):
 
 
 class JpegMinifier(BaseMinifier):
-    def __call__(self):
+    def __call__(self) -> None:
         self._minify_options: minifier_config._MinifierJpegConfig = self._plugin_config.jpeg
         super().__call__()
 
@@ -184,7 +184,7 @@ class JpegMinifier(BaseMinifier):
 
 
 class SvgMinifier(BaseMinifier):
-    def __call__(self):
+    def __call__(self) -> None:
         self._minify_options: minifier_config._MinifierSvgConfig = self._plugin_config.svg
         super().__call__()
 
@@ -221,7 +221,7 @@ class SvgMinifier(BaseMinifier):
 
 
 class HtmlMinifier(BaseMinifier):
-    def __call__(self):
+    def __call__(self) -> None:
         self._minify_options: minifier_config._MinifierHtmlConfig = self._plugin_config.html
         super().__call__()
 
@@ -268,7 +268,7 @@ class HtmlMinifier(BaseMinifier):
 
 
 class CssMinifier(BaseMinifier):
-    def __call__(self):
+    def __call__(self) -> None:
         self._minify_options: minifier_config._MinifierCssConfig = self._plugin_config.css
         super().__call__()
 
@@ -308,7 +308,7 @@ class CssMinifier(BaseMinifier):
 
 
 class JsMinifier(BaseMinifier):
-    def __call__(self):
+    def __call__(self) -> None:
         self._minify_options: minifier_config._MinifierJsConfig = self._plugin_config.js
         super().__call__()
 

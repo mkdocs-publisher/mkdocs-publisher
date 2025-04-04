@@ -24,7 +24,7 @@ import shutil
 from pathlib import Path
 
 import pytest
-from _pytest.fixtures import SubRequest
+from _pytest.fixtures import SubRequest  # type: ignore[reportPrivateImportUsage]
 from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher._shared import mkdocs_utils
@@ -34,9 +34,10 @@ from mkdocs_publisher.meta.meta_nav import MetaNav
 from mkdocs_publisher.meta.plugin import MetaPluginConfig
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def mkdocs_config_with_docs_dir(
-    request: SubRequest, tmp_path_factory: pytest.TempPathFactory
+    request: SubRequest,
+    tmp_path_factory: pytest.TempPathFactory,
 ) -> tuple[MkDocsConfig, Path]:  # type: ignore [reportInvalidTypeForm]
     """Fixture returning MkDocsConfig
 
@@ -67,7 +68,7 @@ def mkdocs_config_with_docs_dir(
 
 @pytest.fixture()
 def patched_meta_files() -> MetaFiles:
-    def patched_read_md_file(md_file_path: Path):
+    def patched_read_md_file(md_file_path: Path) -> tuple[str, dict]:
         _ = md_file_path
         return "", {}
 
@@ -77,8 +78,8 @@ def patched_meta_files() -> MetaFiles:
 
 
 @pytest.fixture()
-def patched_meta_nav(patched_meta_files: MetaFiles, mkdocs_config) -> MetaNav:
-    def patched_get_metadata(meta_file: MetaFile, meta_file_path: Path):
+def patched_meta_nav(patched_meta_files: MetaFiles, mkdocs_config: MkDocsConfig) -> MetaNav:
+    def patched_get_metadata(meta_file: MetaFile, meta_file_path: Path) -> None:
         _, _ = meta_file, meta_file_path
 
     meta_plugin_config: MetaPluginConfig = MetaPluginConfig()  # type: ignore[reportAssignmentType]

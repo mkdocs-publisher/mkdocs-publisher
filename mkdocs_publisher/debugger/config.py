@@ -25,11 +25,13 @@ import logging
 from mkdocs.config import config_options as option
 from mkdocs.config.base import Config
 
+# noinspection PyUnresolvedReferences,PyProtectedMember
+_ALL_LOG_LEVEL_NAMES = [k for key in logging._nameToLevel for k in [key, key.lower()]]  # noqa: SLF001
+
 
 class _DebuggerConsoleConfig(Config):
     enabled = option.Type(bool, default=True)
-    # noinspection PyUnresolvedReferences,PyProtectedMember
-    log_level = option.Choice(choices=logging._nameToLevel.keys(), default="INFO")  # noqa: SLF001
+    log_level = option.Choice(choices=_ALL_LOG_LEVEL_NAMES, default="INFO")
     show_code_link = option.Type(bool, default=False)
     show_logger_name = option.Type(bool, default=True)
     show_entry_time = option.Type(bool, default=True)
@@ -40,8 +42,7 @@ class _DebuggerConsoleConfig(Config):
 
 class _DebuggerFileConfig(Config):
     enabled = option.Type(bool, default=True)
-    # noinspection PyUnresolvedReferences,PyProtectedMember
-    log_level = option.Choice(choices=logging._nameToLevel.keys(), default="DEBUG")  # noqa: SLF001
+    log_level = option.Choice(choices=_ALL_LOG_LEVEL_NAMES, default="DEBUG")
     log_format = option.Type(
         str,
         default="[%(asctime)s.%(msecs)03d][%(levelname)-5.5s][%(project_path)s:%(lineno)d] %(message)s",

@@ -44,7 +44,7 @@ log = logging.getLogger("mkdocs.publisher.minifier.plugin")
 class MinifierPlugin(BasePlugin[MinifierPluginConfig]):
     supports_multiple_instances = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._on_serve: bool = False
 
     def on_startup(self, *, command: Literal["build", "gh-deploy", "serve"], dirty: bool) -> None:  # noqa: ARG002

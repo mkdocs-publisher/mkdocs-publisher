@@ -47,7 +47,7 @@ log = logging.getLogger("mkdocs.publisher.meta.plugin")
 class MetaPlugin(BasePlugin[MetaPluginConfig]):
     supports_multiple_instances = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._on_serve: bool = False
         self._attachments_dir: Path | None = None
         self._ignored_dirs: list[Path] = []
@@ -106,7 +106,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         return nav
 
     @event_priority(-100)  # Run after all other plugins
-    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files):  # noqa: ARG002
+    def on_page_markdown(self, markdown: str, *, page: Page, config: MkDocsConfig, files: Files) -> None:  # noqa: ARG002
         # Modify page update date
         # TODO: move date format to config
         # TODO: warn on missing in config

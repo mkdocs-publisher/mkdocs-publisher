@@ -29,7 +29,7 @@ import click
 
 @click.group
 @click.option("--debug", is_flag=True, default=False, help="Show debug messages")
-def app(debug):
+def app(debug: bool) -> None:
     """Publisher plugin for MkDocs (by Maciej 'maQ' Kusz).
 
     More information can be fount at: https://github.com/mkusz/mkdocs-publisher
@@ -38,7 +38,7 @@ def app(debug):
     logging.basicConfig(level=log_level)
 
 
-def build_app(app: click.group):  # type: ignore[reportGeneralTypeIssue]
+def build_app(app: click.group) -> None:  # type: ignore[reportGeneralTypeIssue]
     plugins_path = pathlib.Path(__file__).parent.resolve() / "plugins"
     for plugin_file_name in pathlib.Path(plugins_path).rglob("*.py"):
         plugin_name = pathlib.PurePath(plugin_file_name).stem

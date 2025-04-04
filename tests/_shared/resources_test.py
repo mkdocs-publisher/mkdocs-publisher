@@ -25,9 +25,9 @@ import logging
 from pathlib import Path
 from typing import cast
 
+import pytest
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import Files
-from pytest import LogCaptureFixture
 from pytest_check import check_functions as check
 
 from mkdocs_publisher._extra.assets import stylesheets
@@ -39,7 +39,7 @@ STYLESHEET_FILE = "blog.min.css"
 STYLESHEET_FILE_MAP = "blog.min.css.map"
 
 
-def test_add_extra_existing_file(caplog: LogCaptureFixture):
+def test_add_extra_existing_file(caplog: pytest.LogCaptureFixture) -> None:
     existing_file = Path(str(importlib.resources.files(stylesheets).joinpath(STYLESHEET_FILE)))
     expected_path = str(existing_file.relative_to(Path().cwd() / EXTRA_DIR))
     mkdocs_files = Files(files=[])
@@ -60,7 +60,7 @@ def test_add_extra_existing_file(caplog: LogCaptureFixture):
     check.is_in(expected_path, caplog.records[-1].message)
 
 
-def test_add_extra_non_existing_file(caplog: LogCaptureFixture):
+def test_add_extra_non_existing_file(caplog: pytest.LogCaptureFixture) -> None:
     existing_file = Path(str(importlib.resources.files(stylesheets).joinpath(f"{STYLESHEET_FILE}.non")))
     expected_path = str(existing_file.relative_to(Path().cwd() / EXTRA_DIR))
     mkdocs_files = Files(files=[])
@@ -81,7 +81,7 @@ def test_add_extra_non_existing_file(caplog: LogCaptureFixture):
     check.is_in(expected_path, caplog.records[-1].message)
 
 
-def test_add_stylesheet_file_with_map():
+def test_add_stylesheet_file_with_map() -> None:
     mkdocs_files = Files(files=[])
     mkdocs_config = cast(MkDocsConfig, MkDocsConfig())
     expected_file_path = str(Path(STYLESHEET_DIR) / STYLESHEET_FILE)
@@ -98,7 +98,7 @@ def test_add_stylesheet_file_with_map():
     check.equal([expected_file_path, expected_file_map_path], mkdocs_config.extra_css)
 
 
-def test_add_stylesheet_file_without_map():
+def test_add_stylesheet_file_without_map() -> None:
     mkdocs_files = Files(files=[])
     mkdocs_config = cast(MkDocsConfig, MkDocsConfig())
     expected_file_path = str(Path(STYLESHEET_DIR) / STYLESHEET_FILE)

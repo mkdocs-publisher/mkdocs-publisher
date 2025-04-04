@@ -70,7 +70,7 @@ HTTP_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}]\({URL_RE_PART}\)")
 WIKI_LINK_RE = re.compile(rf"(?<!!)\[\[({LINK_RE_PART}?){ANCHOR_RE_PART}(\|{TEXT_RE_PART})?]]{EXTRA_RE_PART}")
 WIKI_EMBED_LINK_RE = re.compile(rf"!\[\[{LINK_RE_PART}{ANCHOR_RE_PART}{IMAGE_RE_PART}]]{EXTRA_RE_PART}")
 MD_LINK_RE = re.compile(
-    rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}"
+    rf"(?<!!)\[{TEXT_RE_PART}]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}",
 )
 MD_EMBED_LINK_RE = re.compile(rf"!\[{TEXT_RE_PART}]\({LINK_RE_PART}{LINK_TITLE_RE_PART}\){EXTRA_RE_PART}")
 RELATIVE_LINK_RE = re.compile(rf"\[{TEXT_RE_PART}?]\({LINK_RE_PART}{ANCHOR_RE_PART}{LINK_TITLE_RE_PART}\)")
@@ -79,7 +79,6 @@ ANCHOR_LINK_RE = re.compile(rf"(?<!!)\[{TEXT_RE_PART}]\({ANCHOR_RE_PART}{LINK_TI
 
 def slugify(text: str) -> str:
     """Text slugify function that produces the same slug as MkDocs one"""
-
     text = urllib.parse.unquote(text)
     text = pymdownx.slugs.slugify(case="lower", normalize="NFD")(text=text, sep="-")
     return str(text).encode("ASCII", "ignore").decode("utf-8")
@@ -112,7 +111,7 @@ def create_slug(
 
 
 class RelativePathFinder:
-    def __init__(self, current_file_path: Path, docs_dir: Path, relative_path: Path):
+    def __init__(self, current_file_path: Path, docs_dir: Path, relative_path: Path) -> None:
         self._current_file_path: Path = current_file_path
         self._docs_dir: Path = docs_dir
         self._relative_path: Path = relative_path
@@ -184,10 +183,10 @@ class _LinksCommon:
     extra: str | None = None
     title: str | None = None
     _anchor: str = field(init=False, repr=False, compare=False, default="")
-    _extra_list: list[str] = field(init=False, repr=False, compare=False, default_factory=lambda: [])
+    _extra_list: list[str] = field(init=False, repr=False, compare=False, default_factory=list)
     _title: str = field(init=False, repr=False, compare=False, default="")
 
-    def __post_init__(self):
+    def __post_init__(self):  # noqa: ANN204
         self._anchor = f"#{slugify(self.anchor)}" if self.anchor else ""
         self._extra_list = self.extra.strip().split(" ") if self.extra else []
         self._title = f' "{self.title}"' if self.title else ""
@@ -203,7 +202,7 @@ class LinkMatch(_LinksCommon):
     link: str | None = None
     is_wiki: bool = False
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         if self.is_wiki:
             if self.text is None and self.link is not None and self.anchor:
                 self.text = f"{self.link} > {self.anchor}"
@@ -220,11 +219,11 @@ class LinkMatch(_LinksCommon):
         return final_link
 
     @property
-    def backlink_anchor(self):
+    def backlink_anchor(self) -> str:
         return f"#{md5(self.link.encode()).hexdigest()}"  # noqa: S324
 
     @property
-    def as_backlink(self):
+    def as_backlink(self) -> str:
         self._extra_list.append(self.backlink_anchor)
         title = f' "{self.title}"' if self.title else ""
         link = self.link if self.link else ""
@@ -239,7 +238,7 @@ class WikiEmbedLinkMatch(_LinksCommon):
     image: str | None
     link: str
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         if self.image:
             try:
                 width, height = self.image.split("x")
@@ -267,7 +266,7 @@ class MdEmbedLinkMatch(_LinksCommon):
     text: str
     is_loading_lazy: bool = True
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         if self.is_loading_lazy and "loading=lazy" not in self._extra_list:
             self._extra_list.append("loading=lazy")
         final_link = f"![{self.text}]({self.link}{self._title}){self._extra}"
@@ -281,7 +280,7 @@ class RelativeLinkMatch(_LinksCommon):
     text: str
     relative_path_finder: RelativePathFinder | None = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         # On the same page anchor link doesn't have file part
         if self.link.startswith("#"):
             final_link = f"[{self.text}]({self.link})"

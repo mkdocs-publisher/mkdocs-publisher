@@ -47,7 +47,7 @@ REQUIRED_META_KEYS = [
 # TODO: read it from pub-meta if configured
 
 
-def count_words(content):
+def count_words(content: str) -> int:
     """Count words in markdown content.
 
     This code is based on: https://github.com/gandreadis/markdown-word-count
@@ -72,7 +72,7 @@ def parse_markdown_files(  # noqa: C901, PLR0912
     blog_config: BlogConfig,
     config_nav: OrderedDict,
     on_serve: bool = False,
-):
+) -> None:
     """Parse all markdown files and extract blog posts from `blog_dir` (default: 'posts').
     BlogPost object is created and filled with content and metadata of the post.
     """
@@ -148,7 +148,7 @@ def parse_markdown_files(  # noqa: C901, PLR0912
                     log.debug(f"New blog posts: {blog_post.title}")
 
 
-def create_blog_post_teaser(blog_config: BlogConfig):
+def create_blog_post_teaser(blog_config: BlogConfig) -> None:
     """Extracting beginning of a blog content as a teaser. End of a teaser is determined by
     'teaser_marker' config value (default: '<!-- more -->'). When not found entire blog post
     is considered a teaser and link to full blog posts is not displayed, but whole blog post

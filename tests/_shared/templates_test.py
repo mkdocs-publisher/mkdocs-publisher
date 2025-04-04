@@ -30,9 +30,8 @@ HTML_COMMENT_RE = re.compile(r"<!--(.*)-->", re.DOTALL)
 TEMPLATE_FILE = "backlinks.html"
 
 
-def test_templates_render():
+def test_templates_render() -> None:
     """Test if content of the template file is read correctly"""
-
     exp_template = (
         '<p class="obsidian_backlink_title">Test:</p>'
         '<div class="obsidian_backlink" markdown=1 data-search-exclude></div>'

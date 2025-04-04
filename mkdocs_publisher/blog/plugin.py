@@ -54,7 +54,7 @@ log = logging.getLogger("mkdocs.publisher.blog.plugin")
 class BlogPlugin(BasePlugin[BlogPluginConfig]):
     supports_multiple_instances = False  # TODO: add multiple instances support (require changes in meta plugin)
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._on_serve: bool = False
         self._start_page: bool = False
         self._blog_files: BlogFiles = BlogFiles()
@@ -72,6 +72,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         self._blog_files.set_configs(mkdocs_config=config, blog_plugin_config=self.config)
         self._blog_files.add_blog_files()
 
+        self._blog_files.list_blog_files()
         # ==== Old below
 
         # Initialization of all the values
@@ -164,7 +165,7 @@ class BlogPlugin(BasePlugin[BlogPluginConfig]):
         # Dirty hack for blog standalone mode index file
         if page.file.src_path == "index.md":
 
-            def _blog_index_re(match: re.Match):
+            def _blog_index_re(match: re.Match):  # noqa: ANN202
                 blog_link = links.LinkMatch(**match.groupdict())
                 relative_path_finder = links.RelativePathFinder(
                     current_file_path=Path(page.file.src_path),

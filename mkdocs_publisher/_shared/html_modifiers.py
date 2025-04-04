@@ -29,25 +29,25 @@ log = logging.getLogger("mkdocs.publisher._shared.html_modifiers")
 class HTMLModifier:
     """HTML modifications"""
 
-    def __init__(self, markup: str):
+    def __init__(self, markup: str) -> None:
         self._soup = BeautifulSoup(markup=markup, features="html.parser")
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self._soup)
 
-    def add_head_script(self, src: str):
+    def add_head_script(self, src: str) -> None:
         """Add script to the head section"""
         self._soup.head.append(
             self._soup.new_tag(name="script", attrs={"src": src}),
         )
 
-    def add_meta_property(self, name: str, value: str):
+    def add_meta_property(self, name: str, value: str) -> None:
         """Add property to the head section"""
         self._soup.head.append(
             self._soup.new_tag(name="meta", attrs={"property": name, "content": value}),
         )
 
-    def remove_meta_properties(self, properties: list[str]):
+    def remove_meta_properties(self, properties: list[str]) -> None:
         """Remove meta tags with given properties from head section"""
         for prop in properties:
             head_property = self._soup.head.find(name="meta", attr={"property": prop})

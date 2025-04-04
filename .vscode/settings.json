@@ -22,7 +22,9 @@
         "jpegtran",
         "justan",
         "Kusz",
+        "levelname",
         "levelno",
+        "livereload",
         "Maciej",
         "mccabe",
         "Minifier",
@@ -40,7 +42,8 @@
         "pytest",
         "svgo",
         "testpaths",
-        "uglifyjs"
+        "uglifyjs",
+        "unwatch"
     ],
     "cSpell.ignorePaths": [
       ".venv",

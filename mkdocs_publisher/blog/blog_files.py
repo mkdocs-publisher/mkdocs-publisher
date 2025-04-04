@@ -45,12 +45,12 @@ class BlogFile(publisher_utils.PublisherFile):
     date_created: int | None = field(default=None)
     date_updated: int | None = field(default=None)
     read_time_sec: int | None = field(default=None)
-    tags: list[str] = field(default_factory=lambda: [])
-    categories: list[str] = field(default_factory=lambda: [])
+    tags: list[str] = field(default_factory=list)
+    categories: list[str] = field(default_factory=list)
 
 
 class BlogFiles(publisher_utils.PublisherFiles):
-    def __init__(self):
+    def __init__(self) -> None:
         self._blog_plugin_config: BlogPluginConfig | None = None
         self._abs_blog_path: Path | None = None
         self._abs_blog_temp_path: Path | None = None
@@ -58,11 +58,11 @@ class BlogFiles(publisher_utils.PublisherFiles):
 
         super().__init__()
 
-    def remove_temp_dirs(self):
+    def remove_temp_dirs(self) -> None:
         """Remove temporary files"""
         shutil.rmtree(str(self._abs_blog_temp_path), ignore_errors=True)
 
-    def set_configs(self, mkdocs_config: MkDocsConfig, blog_plugin_config: BlogPluginConfig):
+    def set_configs(self, mkdocs_config: MkDocsConfig, blog_plugin_config: BlogPluginConfig) -> None:
         super().set_configs(
             mkdocs_config=mkdocs_config,
             meta_plugin_config=mkdocs_utils.get_plugin_config(
@@ -78,7 +78,7 @@ class BlogFiles(publisher_utils.PublisherFiles):
         if self._meta_plugin_config:
             self._dir_meta_file = self._meta_plugin_config.dir_meta_file
 
-    def add_blog_files(self):
+    def add_blog_files(self) -> None:
         """Iterate over all files and directories in blog subdirectory"""
         for docs_file in sorted(self._abs_blog_path.glob("**/*.md")):
             blog_file = BlogFile(
@@ -88,26 +88,38 @@ class BlogFiles(publisher_utils.PublisherFiles):
             )
             self[str(blog_file.path)] = blog_file
 
-    def _get_metadata(self, blog_file: BlogFile):
-        """Read all metadata values for given file"""
+    def list_blog_files(self) -> None:
+        for f in self:
+            log.warning(f)
 
-        markdown, meta = mkdocs_utils.read_md_file(md_file_path=blog_file.abs_path)
-
-        log.warning(meta)
-
-        # Parse teaser
+    def _get_teaser(self, blog_file: BlogFile, markdown: str) -> None:
         teaser_lines = []
         for line in markdown.split("\n"):
             teaser_lines.append(line)
             if line == self._blog_plugin_config.posts.teaser_separator:
                 blog_file.teaser = "\n".join(teaser_lines)
 
-        # Parse reading time
+    def _get_reading_time(self, blog_file: BlogFile, markdown: str) -> None:
         blog_file.read_time_sec = ceil(
             mkdocs_utils.count_words(markdown) * 60 / self._blog_plugin_config.posts.words_per_minute,
         )
 
-    def __setitem__(self, path: str, blog_file: BlogFile):
+    def _get_metadata(self, blog_file: BlogFile) -> None:
+        """Read all metadata values for given file"""
+        markdown, meta = mkdocs_utils.read_md_file(md_file_path=blog_file.abs_path)
+        self._get_teaser(blog_file=blog_file, markdown=markdown)
+        self._get_reading_time(blog_file=blog_file, markdown=markdown)
+
+        # TODO: add published status read
+        _ = meta
+
+        """
+        self._get_publish_status(meta_file=meta_file, meta=meta)
+        self._get_title(meta_file=meta_file, meta=meta, markdown=markdown)
+        self._get_slug(meta_file=meta_file, meta=meta)
+        """
+
+    def __setitem__(self, path: str, blog_file: BlogFile) -> None:
         """Add file"""
         self._get_metadata(blog_file=blog_file)
 

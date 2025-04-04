@@ -43,7 +43,7 @@ log = logging.getLogger("mkdocs.publisher.blog.creators")
 def create_blog_files(
     blog_config: BlogConfig,
     files: Files,
-):
+) -> None:
     for temp_file in blog_config.temp_files.values():
         try:
             file = File(
@@ -63,7 +63,6 @@ def create_blog_post_pages(  # noqa: C901
     config_nav: OrderedDict,
 ) -> None:
     """Create blog posts index files."""
-
     log.info("Creating blog posts index files")
     posts_chunks: dict[str, list] = {}
     archive_chunks: dict[str, list] = {}
@@ -204,7 +203,7 @@ def _render_and_write_page(
     file_path: Path,
     blog_config: BlogConfig,
     page_title: str,
-):
+) -> None:
     # TODO: Add templates from override
     # templates = jinja2.Environment(loader=jinja2.FileSystemLoader("templates/"))  # noqa: ERA001
     # print(templates.list_templates())  # noqa: ERA001

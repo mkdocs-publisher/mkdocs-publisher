@@ -36,13 +36,13 @@ log = logging.getLogger("mkdocs.publisher.blog.translate")
 
 
 class Translate:
-    def __init__(self, config: BlogPluginConfig):
+    def __init__(self, config: BlogPluginConfig) -> None:
         self._config: BlogPluginConfig = config
         self._translation: Translation = cast(Translation, None)
 
         self._read_lang()
 
-    def _read_lang(self):
+    def _read_lang(self) -> None:
         lang_yaml_path = Path(str(importlib.resources.files(lang_path).joinpath(f"{self._config.lang}.yaml")))
         if not lang_yaml_path.exists():
             log.warning(

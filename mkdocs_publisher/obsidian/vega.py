@@ -45,7 +45,7 @@ VEGA_CHART_TEMPLATE = """
 
 
 class VegaCharts:
-    def __init__(self, vega_config: _ObsidianVegaConfig):
+    def __init__(self, vega_config: _ObsidianVegaConfig) -> None:
         self._vega_config: _ObsidianVegaConfig = vega_config
         self._vega_schema_mapping: dict = {
             "vega": self._vega_config.vega_schema,

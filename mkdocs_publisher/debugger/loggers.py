@@ -46,14 +46,14 @@ LOG_LEVEL_COLOR_MAPPING = {
 
 
 class DatedFileHandler(logging.FileHandler):
-    def __init__(self, filename):
+    def __init__(self, filename) -> None:  # noqa: ANN001
         dated_filename = datetime.datetime.now(tz=datetime.timezone.utc).strftime(str(filename))
         Path(dated_filename).parent.mkdir(parents=True, exist_ok=True)
         super().__init__(filename=dated_filename)
 
 
 class ProjectPathStreamFormatter(logging.Formatter):
-    def __init__(self, console_config: _DebuggerConsoleConfig):
+    def __init__(self, console_config: _DebuggerConsoleConfig) -> None:
         self._console_config: _DebuggerConsoleConfig = console_config
 
         super().__init__()
@@ -107,11 +107,11 @@ class ProjectPathFileFormatter(logging.Formatter):
 
 
 class ProjectPathConsoleFilter(logging.Filter):
-    def __init__(self, console_config: _DebuggerConsoleConfig):
+    def __init__(self, console_config: _DebuggerConsoleConfig) -> None:
         self._console_config: _DebuggerConsoleConfig = console_config
         super().__init__()
 
-    def filter(self, record):
+    def filter(self, record: logging.LogRecord) -> logging.LogRecord | None:
         if (
             not self._console_config.show_deprecation_warnings
             and isinstance(record.msg, str)
@@ -122,9 +122,9 @@ class ProjectPathConsoleFilter(logging.Filter):
 
 
 class ProjectPathFileFilter(logging.Filter):
-    def __init__(self, file_config: _DebuggerFileConfig):
+    def __init__(self, file_config: _DebuggerFileConfig) -> None:
         self._file_config: _DebuggerFileConfig = file_config
         super().__init__()
 
-    def filter(self, record):
+    def filter(self, record: logging.LogRecord) -> logging.LogRecord | None:
         return record if record.name not in self._file_config.filter_logger_names else None

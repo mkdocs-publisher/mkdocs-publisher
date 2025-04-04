@@ -21,6 +21,8 @@
 # SOFTWARE.
 
 
+import re
+
 import pytest
 
 from mkdocs_publisher._shared.config_enums import ConfigChoiceEnum
@@ -42,7 +44,7 @@ class ConfigChoiceEnumTest(ConfigChoiceEnum):
         return cls._get_enums([cls.FIRST, cls.SECOND])
 
 
-def test_config_choices():
+def test_config_choices() -> None:
     assert ConfigChoiceEnumTest.choices() == [
         "default",
         "first",
@@ -54,20 +56,20 @@ def test_config_choices():
     ]
 
 
-def test_get_bool_enums():
+def test_get_bool_enums() -> None:
     assert ConfigChoiceEnumTest.bools() == ["true", True, "false", False]
 
 
-def test_get_text_enums():
+def test_get_text_enums() -> None:
     assert ConfigChoiceEnumTest.texts() == ["first", "second"]
 
 
-def test_get_default():
+def test_get_default() -> None:
     assert ConfigChoiceEnumTest.default() == "default"
 
 
 @pytest.mark.parametrize(
-    "enum,expected",
+    ("enum", "expected"),
     {
         (ConfigChoiceEnumTest.TRUE, True),
         (ConfigChoiceEnumTest.TRUE, "true"),
@@ -79,29 +81,29 @@ def test_get_default():
         (ConfigChoiceEnumTest.FIRST, ConfigChoiceEnumTest.FIRST),
     },
 )
-def test_eg(enum: ConfigChoiceEnumTest, expected: str | bool):
+def test_eg(enum: ConfigChoiceEnumTest, expected: str | bool) -> None:
     assert enum == expected
 
 
-def test_no_defaults():
+def test_no_defaults() -> None:
     class NoDefaultChoicesEnum(ConfigChoiceEnum):
         NO_DEFAULT = 0, False, False
 
     assert NoDefaultChoicesEnum.default() is None
 
 
-def test_multiple_defaults():
+def test_multiple_defaults() -> None:
     class MultipleDefaultChoicesEnum(ConfigChoiceEnum):
         FIRST_DEFAULT = 0, True, False
         SECOND_DEFAULT = 1, True, False
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=re.escape("Multiple defaults specified: ['first_default', 'second_default']")):
         MultipleDefaultChoicesEnum.default()
 
 
-def test_non_bool_as_bool():
+def test_non_bool_as_bool() -> None:
     class NoneBoolChoicesEnum(ConfigChoiceEnum):
         NON_BOOL = 0, False, True
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=re.escape("'non_bool' cannot be converted into bool value")):
         NoneBoolChoicesEnum.NON_BOOL.choices()

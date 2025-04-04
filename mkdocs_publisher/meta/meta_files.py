@@ -68,7 +68,7 @@ class MetaFile(publisher_utils.PublisherFile):
 
 
 class MetaFiles(publisher_utils.PublisherFiles):
-    def __init__(self):
+    def __init__(self) -> None:
         self._hidden_paths: list[Path] = []
 
         super().__init__()
@@ -77,13 +77,12 @@ class MetaFiles(publisher_utils.PublisherFiles):
     def dir_meta_file(self) -> str:
         return self._meta_plugin_config.dir_meta_file
 
-    def add_hidden_path(self, hidden_path: Path | None):
+    def add_hidden_path(self, hidden_path: Path | None) -> None:
         if hidden_path is not None:
             self._hidden_paths.append(hidden_path.relative_to(self._mkdocs_config.docs_dir))
 
-    def _get_title(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str):
+    def _get_title(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str) -> None:
         """Calculate title for given file"""
-
         title: str | None = None
         mode = self._meta_plugin_config.title.mode
         if mode == TitleChoiceEnum.META:
@@ -113,9 +112,8 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
         meta_file.title = title
 
-    def _get_slug(self, meta_file: MetaFile, meta: dict[str, Any]):
+    def _get_slug(self, meta_file: MetaFile, meta: dict[str, Any]) -> None:
         """Calculate slug for given file"""
-
         meta_file.slug = links.create_slug(  # pragma: no cover
             file_name=meta_file.path.stem,
             slug_mode=self._meta_plugin_config.slug.mode,
@@ -126,7 +124,6 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
     def _get_redirect(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str) -> dict[str, Any]:
         """Determine if given file is a redirection"""
-
         redirect = meta.get(self._meta_plugin_config.redirect.key_name, None)
         relative_path_finder = links.RelativePathFinder(
             current_file_path=meta_file.path,
@@ -157,9 +154,8 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
         return meta
 
-    def _get_overview(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str):
+    def _get_overview(self, meta_file: MetaFile, meta: dict[str, Any], markdown: str) -> None:
         """Overview works only for meta files ("README.md", "index.md") that are detected as dir"""
-
         if not meta_file.is_dir:
             meta_file.is_overview = False
         else:
@@ -172,9 +168,8 @@ class MetaFiles(publisher_utils.PublisherFiles):
             else:
                 meta_file.is_overview = is_overview
 
-    def _get_publish_status(self, meta_file: MetaFile, meta: dict[str, Any]):  # noqa: C901
+    def _get_publish_status(self, meta_file: MetaFile, meta: dict[str, Any]) -> None:  # noqa: C901
         """Calculate publication status for given file"""
-
         publish = meta.get(str(self._meta_plugin_config.publish.key_name), None)
         # Get default values if publish status is not specified
         if publish is None and meta_file.is_dir:
@@ -224,9 +219,8 @@ class MetaFiles(publisher_utils.PublisherFiles):
             meta_file.is_hidden = False
             meta_file.is_draft = True
 
-    def _get_metadata(self, meta_file: MetaFile, meta_file_path: Path):  # pragma: no cover
+    def _get_metadata(self, meta_file: MetaFile, meta_file_path: Path) -> None:  # pragma: no cover
         """Read all metadata values for given file"""
-
         markdown, meta = mkdocs_utils.read_md_file(md_file_path=meta_file_path)
 
         # Order of method execution is crucial for reading all values.
@@ -237,9 +231,8 @@ class MetaFiles(publisher_utils.PublisherFiles):
         self._get_title(meta_file=meta_file, meta=meta, markdown=markdown)
         self._get_slug(meta_file=meta_file, meta=meta)
 
-    def __setitem__(self, path: str, meta_file: MetaFile):
+    def __setitem__(self, path: str, meta_file: MetaFile) -> None:
         """Add file"""
-
         if meta_file.is_dir:
             # Calculate properties based on meta file metadata
             meta_file_path = meta_file.abs_path.joinpath(self._meta_plugin_config.dir_meta_file)
@@ -262,7 +255,6 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
     def _drafts(self, files: bool = False, dirs: bool = False) -> dict[str, MetaFile]:
         """Returns draft files and/or directories"""
-
         draft_files = {}
         for path, meta_file in self.items():
             if meta_file.is_draft and (
@@ -277,7 +269,6 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
     def _hidden(self, files: bool = False, dirs: bool = False) -> dict[str, MetaFile]:
         """Returns hidden files and/or directories"""
-
         hidden_files = {}
         for path, meta_file in self.items():
             if meta_file.is_hidden and (
@@ -314,7 +305,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
     def hidden(self) -> dict[str, MetaFile]:
         return self._hidden()
 
-    def add_files(self, ignored_dirs: list[Path] | None = None):
+    def add_files(self, ignored_dirs: list[Path] | None = None) -> None:
         """Iterate over all files and directories in docs directory"""
         if not ignored_dirs:
             ignored_dirs = []
@@ -343,7 +334,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
             if meta_file is not None:
                 self[str(meta_file.path)] = meta_file
 
-    def _change_file_slug(self, file: File, file_path: Path):
+    def _change_file_slug(self, file: File, file_path: Path) -> None:
         # Get URL parts
         if file.url.endswith("/"):
             file.url = file.url[0:-1]
@@ -375,7 +366,6 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
     def change_files_slug(self, files: Files, ignored_dirs: list[Path]) -> Files:
         """Change file slug (part of the URL) based of file and parent directories slugs"""
-
         ignored_dirs.extend([d.abs_path for d in self.draft_files.values()])
 
         new_files = Files(files=[])
@@ -404,7 +394,6 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
     def generate_redirect_page(self, file: File) -> str | None:
         """Generates content of redirect page"""
-
         meta_file: MetaFile = self[file.src_path]
         if meta_file.redirect and not re.search(links.URL_RE_PART, meta_file.redirect):
             log.debug(f"Generating redirect template in file: {meta_file.path}")
@@ -417,7 +406,6 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
     def clean_redirect_files(self, files: Files) -> Files:
         """Remove documents that are just redirects to an external URL"""
-
         new_files = Files(files=[])
         for file in files:
             file: File
@@ -436,7 +424,6 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
     def clean_draft_files(self, files: Files) -> Files:
         """Remove draft files"""
-
         new_files = Files(files=[])
         for file in files:
             if file.src_path not in self.draft_files:
@@ -447,7 +434,6 @@ class MetaFiles(publisher_utils.PublisherFiles):
 
     def files_gen(self) -> Generator[MetaFile, Any, None]:
         """Meta files generator used for building navigation"""
-
         for meta_file in self.values():
             meta_file: MetaFile
             yield meta_file

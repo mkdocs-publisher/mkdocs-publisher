@@ -36,7 +36,7 @@ log = logging.getLogger("mkdocs.publisher.obsidian.md_links")
 
 
 class MarkdownLinks:
-    def __init__(self, mkdocs_config: MkDocsConfig):
+    def __init__(self, mkdocs_config: MkDocsConfig) -> None:
         self._current_file_path: Path | None = None
         self._current_relative_path: Path | None = None
         self._mkdocs_config: MkDocsConfig = mkdocs_config

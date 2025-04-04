@@ -49,12 +49,12 @@ class CachedFile:
         original_file_hash: str = "",
         original_file_path: str = "",
         cached_file_name: str = "",
-    ):
+    ) -> None:
         self.original_file_hash = original_file_hash
         self.original_file_path = Path(original_file_path)
         self.cached_file_name = Path(cached_file_name)
 
-    def based_on(self, file: Path, directory: Path):
+    def based_on(self, file: Path, directory: Path) -> None:
         self.original_file_path = file
         self.original_file_hash = file_utils.calculate_file_hash(file=directory / file)
         self.cached_file_name = file_utils.get_hashed_file_name(file=file)
@@ -70,7 +70,7 @@ class BaseMinifier:
         plugin_config: MinifierPluginConfig,
         mkdocs_config: MkDocsConfig,
         cached_files: dict[str, CachedFile],
-    ):
+    ) -> None:
         self._plugin_config: MinifierPluginConfig = plugin_config
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._minify_options: _MinifierCommonConfig | None = None
@@ -85,7 +85,7 @@ class BaseMinifier:
     def are_tools_installed(self) -> bool:
         raise NotImplementedError
 
-    def __call__(self):
+    def __call__(self):  # noqa: ANN204
         minifier_name = self.__class__.__name__.replace("Minifier", "").upper()
         self._cache_enabled = self._minify_options.cache_enabled if self._cache_enabled else False
         self._exclude.extend(self._minify_options.exclude)
@@ -139,7 +139,7 @@ class BaseMinifier:
         new_file.unlink()
         return None
 
-    def _copy_cached_file(self, cached_file: CachedFile):
+    def _copy_cached_file(self, cached_file: CachedFile) -> None:
         original_file = self._mkdocs_config.site_dir / cached_file.original_file_path
         cache_file = self._plugin_config.cache_dir / cached_file.cached_file_name
         try:
@@ -147,7 +147,7 @@ class BaseMinifier:
         except FileNotFoundError as e:
             log.warning(e)
 
-    def _minify_with_cache(self, file: Path, cache_enabled: bool, semaphore: Semaphore):
+    def _minify_with_cache(self, file: Path, cache_enabled: bool, semaphore: Semaphore) -> None:
         recreate_file = False
         file_hash = None
         if cache_enabled and str(file) in self._cached_files:

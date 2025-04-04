@@ -29,10 +29,9 @@ from mkdocs_publisher._extra.assets import templates
 
 def render(tpl_file: str, context: dict) -> str:
     """Render template file with given context"""
-
     template_file_path = importlib.resources.files(templates).joinpath(tpl_file)
     with importlib.resources.as_file(template_file_path) as template_file:
         template = jinja2.Environment(loader=jinja2.BaseLoader(), autoescape=True).from_string(
-            template_file.read_text(encoding="utf-8")
+            template_file.read_text(encoding="utf-8"),
         )
     return template.render(context)

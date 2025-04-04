@@ -23,6 +23,8 @@
 import logging
 import re
 from pathlib import Path
+from typing import Any
+from typing import Generator  # noqa: UP035
 
 from mkdocs.config.defaults import MkDocsConfig
 
@@ -34,7 +36,7 @@ log = logging.getLogger("mkdocs.publisher.meta.nav")
 
 
 class MetaNav:
-    def __init__(self, meta_files: MetaFiles, blog_dir: Path | None = None):
+    def __init__(self, meta_files: MetaFiles, blog_dir: Path | None = None) -> None:
         self._meta_files: MetaFiles = meta_files
         self._blog_dir: Path | None = blog_dir
 
@@ -47,7 +49,11 @@ class MetaNav:
         )
         return overview_nav
 
-    def _build_nav(self, meta_files_gen, current_dir: Path) -> tuple[list, MetaFile | None]:  # noqa: C901
+    def _build_nav(  # noqa: C901
+        self,
+        meta_files_gen: Generator[MetaFile, Any, None],
+        current_dir: Path,
+    ) -> tuple[list, MetaFile | None]:
         nav = []
         meta_file: MetaFile | None = None
         while True:

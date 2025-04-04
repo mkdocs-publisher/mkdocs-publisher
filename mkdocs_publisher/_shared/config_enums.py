@@ -25,16 +25,16 @@ from typing import cast
 
 
 class ConfigChoiceEnum(Enum):
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other) -> bool:  # noqa: ANN001
         if isinstance(other, bool) and self.is_bool:
             return self._str_to_bool(self.name) is other
         return self.name.lower() == str(other).lower()
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return super().__hash__()
 
     @staticmethod
-    def _str_to_bool(text) -> bool:
+    def _str_to_bool(text: str) -> bool:
         if text.lower() == "true":
             return True
         if text.lower() == "false":
