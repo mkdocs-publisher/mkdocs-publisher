@@ -53,6 +53,9 @@ PIP_FREEZE_FILENAME = "requirements_freeze.txt"
 
 class DebuggerPlugin(BasePlugin[DebuggerConfig]):
     def __init__(self):
+        if len(logging.getLogger("mkdocs").handlers) == 0:
+            mkdocs_log = logging.getLogger("mkdocs")
+            mkdocs_log.addHandler(logging.StreamHandler())
         self._mkdocs_log_stream_handler: logging.Handler = logging.getLogger("mkdocs").handlers[0]
 
         self._mkdocs_log_file_handler: loggers.DatedFileHandler = loggers.DatedFileHandler(
@@ -80,22 +83,35 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
                 loggers.ProjectPathConsoleFilter(console_config=self.config.console_log)
             )
             # noinspection PyUnresolvedReferences
-            self._mkdocs_log_stream_handler.level = logging._nameToLevel[self.config.console_log.log_level]
+            mkdocs_log_level = logging.getLogger("mkdocs").level
+            console_log_level = logging._nameToLevel[  # noqa: SLF001
+                self.config.console_log.log_level.upper()
+            ]
 
+            if mkdocs_log_level <= console_log_level:
+                console_log_level = mkdocs_log_level
+
+            self._mkdocs_log_stream_handler.setLevel(console_log_level)
             logging.getLogger("root").handlers = [self._mkdocs_log_stream_handler]
+            logging.getLogger("mkdocs").setLevel(console_log_level)
 
         if self.config.file_log.enabled:
             self._mkdocs_log_file_handler.setFormatter(
-                loggers.ProjectPathFileFormatter(fmt=self.config.file_log.log_format)
+                loggers.ProjectPathFileFormatter(
+                    fmt=self.config.file_log.log_format,
+                    datefmt=self.config.file_log.time_format,
+                ),
             )
             self._mkdocs_log_file_handler.addFilter(loggers.ProjectPathFileFilter(file_config=self.config.file_log))
             # noinspection PyUnresolvedReferences
-            self._mkdocs_log_file_handler.level = logging._nameToLevel[self.config.file_log.log_level]
+            self._mkdocs_log_file_handler.setLevel(
+                logging._nameToLevel[self.config.file_log.log_level.upper()]  # noqa: SLF001
+            )
 
             logging.getLogger("mkdocs").handlers.append(self._mkdocs_log_file_handler)
 
             if self.config.file_log.remove_old_files:
-                for log_file in Path(".").rglob(f"*{LOG_FILENAME_SUFFIX}"):
+                for log_file in Path().rglob(f"*{LOG_FILENAME_SUFFIX}"):
                     if str(log_file) != self._mkdocs_log_file:
                         log_file.unlink(missing_ok=True)
 

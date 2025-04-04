@@ -24,7 +24,7 @@ import logging
 from pathlib import Path
 
 import pytest
-from _pytest.fixtures import SubRequest
+from _pytest.fixtures import SubRequest  # pyright: ignore [reportPrivateImportUsage]
 from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher.blog.plugin import BlogPlugin
