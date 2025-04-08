@@ -89,7 +89,7 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
             ]
 
             if mkdocs_log_level <= console_log_level:
-                console_log_level = mkdocs_log_level
+                mkdocs_log_level = console_log_level
 
             self._mkdocs_log_stream_handler.setLevel(console_log_level)
             logging.getLogger("root").handlers = [self._mkdocs_log_stream_handler]
