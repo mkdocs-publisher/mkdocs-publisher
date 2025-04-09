@@ -51,7 +51,7 @@ class MetaNav:
 
     def _build_nav(  # noqa: C901
         self,
-        meta_files_gen: Generator[MetaFile, Any, None],
+        generator: Generator[MetaFile, Any, None],
         current_dir: Path,
     ) -> tuple[list, MetaFile | None]:
         nav = []
@@ -59,7 +59,7 @@ class MetaNav:
         while True:
             if meta_file is None:
                 try:
-                    meta_file = next(meta_files_gen)
+                    meta_file = next(generator)
                     is_dir = "D" if meta_file.is_dir else "F"
                     is_overview = "O" if meta_file.is_dir else "R"
                     log.debug(f"[{is_dir}{is_overview}] {meta_file.path} - {meta_file.parent} ({meta_file.abs_path})")
@@ -71,7 +71,7 @@ class MetaNav:
                 log.debug(f"Overview files: {overview_nav}")
                 title = meta_file.title
                 prev_path = meta_file.path
-                sub_nav, meta_file = self._build_nav(meta_files_gen=meta_files_gen, current_dir=meta_file.abs_path)
+                sub_nav, meta_file = self._build_nav(generator=generator, current_dir=meta_file.abs_path)
                 sub_nav = [*overview_nav, *sub_nav]
                 if sub_nav and prev_path == self._blog_dir:
                     nav.append({str(prev_path): str(prev_path)})
@@ -94,7 +94,7 @@ class MetaNav:
 
     def build_nav(self, mkdocs_config: MkDocsConfig) -> list:
         nav, _ = self._build_nav(
-            meta_files_gen=self._meta_files.files_gen(),
+            generator=self._meta_files.generator(),
             current_dir=Path(mkdocs_config.docs_dir),
         )
         return nav

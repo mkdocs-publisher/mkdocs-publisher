@@ -102,6 +102,7 @@ ignore = [
     # "ANN",
     "ANN101",
     "D",
+    "DTZ007",
     "EM102",
     "FIX002",
     "FBT",

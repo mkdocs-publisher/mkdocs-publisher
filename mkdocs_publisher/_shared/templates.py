@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 import importlib.resources
+import re
 
 import jinja2
 
@@ -32,6 +33,6 @@ def render(tpl_file: str, context: dict) -> str:
     template_file_path = importlib.resources.files(templates).joinpath(tpl_file)
     with importlib.resources.as_file(template_file_path) as template_file:
         template = jinja2.Environment(loader=jinja2.BaseLoader(), autoescape=True).from_string(
-            template_file.read_text(encoding="utf-8"),
+            re.sub(r"<!--.*?-->", "", template_file.read_text(encoding="utf-8"), flags=re.DOTALL),
         )
     return template.render(context)

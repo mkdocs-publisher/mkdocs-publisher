@@ -93,15 +93,18 @@ class MarkdownLinks:
         markdown = re.sub(links.MD_EMBED_LINK_RE, self._normalize_md_embed_link, markdown)
         return re.sub(links.MD_LINK_RE, self._normalize_md_links, markdown)
 
+    # TODO: check all references and remove if needed
     def normalize_relative_link(self, match: re.Match) -> str:
         md_link_obj = links.RelativeLinkMatch(**match.groupdict())
         md_link_obj.relative_path_finder = links.RelativePathFinder(
             current_file_path=cast(Path, self._current_file_path),
             docs_dir=Path(self._mkdocs_config.docs_dir),
+            blog_dir=Path(self._blog_config.blog_dir) if self._blog_config else None,
             relative_path=Path(self._blog_config.blog_dir),
         )
         return str(md_link_obj)
 
+    # TODO: check all references and remove if needed
     def normalize_relative_links(self, markdown: str, current_file_path: Path, current_relative_path: Path) -> str:
         self._current_file_path = current_file_path
         self._current_relative_path = current_relative_path

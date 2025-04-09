@@ -223,7 +223,7 @@ def _render_and_write_page(
     if file_path.name == "index.md":
         slug = "."
     elif file_path.name.startswith("index-"):
-        slug = f"{blog_config.plugin_config.slug}/{file_path.stem.split('-')[-1]}"
+        slug = f"{blog_config.plugin_config.slug_old}/{file_path.stem.split('-')[-1]}"
     else:
         slug = slugify(text=page_title.split("-")[-1].strip())
     page_meta["slug"] = slug

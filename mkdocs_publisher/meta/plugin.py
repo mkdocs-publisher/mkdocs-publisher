@@ -64,7 +64,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
     def on_config(self, config: MkDocsConfig) -> Config | None:  # pragma: no cover
         # Set some default values
         log.info("Read files and directories metadata")
-        blog_config: BlogPluginConfig = mkdocs_utils.get_plugin_config(
+        blog_config: BlogPluginConfig | None = mkdocs_utils.get_plugin_config(
             plugin_config_type=BlogPluginConfig,  # type: ignore[reportArgumentType]
             mkdocs_config=config,
         )  # type: ignore[reportAssignmentType]
@@ -73,7 +73,11 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
             blog_dir=blog_config.blog_dir if blog_config is not None else None,  # type: ignore[reportArgumentType]
         )
         self._ignored_dirs, self._attachments_dir = publisher_utils.get_obsidian_dirs(mkdocs_config=config)
-        self._meta_files.set_configs(mkdocs_config=config, meta_plugin_config=self.config)
+        self._meta_files.set_configs(
+            mkdocs_config=config,
+            meta_plugin_config=self.config,
+            blog_plugin_config=blog_config,
+        )
         self._meta_files.add_hidden_path(hidden_path=self._attachments_dir)
         self._meta_files.add_files(ignored_dirs=self._ignored_dirs)
 
@@ -112,7 +116,7 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         # TODO: warn on missing in config
         update_date: datetime = page.meta.get(
             "update",
-            page.meta.get("date", datetime.strptime(page.update_date, "%Y-%m-%d")),  # noqa: DTZ007
+            page.meta.get("date", datetime.strptime(page.update_date, "%Y-%m-%d")),
         )
         with contextlib.suppress(AttributeError):
             page.update_date = update_date.strftime("%Y-%m-%d")

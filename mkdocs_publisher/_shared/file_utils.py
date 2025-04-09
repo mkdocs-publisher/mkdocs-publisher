@@ -39,12 +39,13 @@ def run_subprocess(cmd, capture_output: bool = True) -> subprocess.CompletedProc
 
 
 def remove_dir(directory: Path) -> None:
-    for file in directory.iterdir():
-        if file.is_dir():
-            remove_dir(directory=file)
-            file.rmdir()
-        else:
-            file.unlink(missing_ok=True)
+    # for file in directory.iterdir():
+    #     if file.is_dir():
+    #         remove_dir(directory=file)
+    #         file.rmdir()
+    #     else:
+    #         file.unlink(missing_ok=True)
+    pass
 
 
 def calculate_file_hash(file: Path, block_size: int = 65536) -> str | None:
@@ -59,7 +60,12 @@ def calculate_file_hash(file: Path, block_size: int = 65536) -> str | None:
 
 
 class FilesList:
-    def __init__(self, mkdocs_config: MkDocsConfig, files: Files, exclude: list[Path] | None = None) -> None:
+    def __init__(
+        self,
+        mkdocs_config: MkDocsConfig,
+        files: Files,
+        exclude: list[Path] | None = None,
+    ) -> None:
         self._mkdocs_config: MkDocsConfig = mkdocs_config
         self._all_files: Files = files
         self._exclude: list[Path] = [] if exclude is None else exclude
@@ -70,7 +76,8 @@ class FilesList:
             if Path(file.dest_path).suffix.lower() in extension and not any(
                 Path(file.dest_path).is_relative_to(e) for e in excluded
             ):
-                log.critical(file.dest_path)
+                # log.critical(file.dest_path)
+                pass
 
 
 def list_files(

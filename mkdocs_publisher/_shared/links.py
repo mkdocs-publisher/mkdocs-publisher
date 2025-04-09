@@ -111,9 +111,10 @@ def create_slug(
 
 
 class RelativePathFinder:
-    def __init__(self, current_file_path: Path, docs_dir: Path, relative_path: Path) -> None:
+    def __init__(self, current_file_path: Path, docs_dir: Path, blog_dir: Path | None, relative_path: Path) -> None:
         self._current_file_path: Path = current_file_path
         self._docs_dir: Path = docs_dir
+        self._blog_dir: Path | None = blog_dir
         self._relative_path: Path = relative_path
 
     @property
@@ -135,6 +136,12 @@ class RelativePathFinder:
                 f = f.resolve(strict=True)
                 if f not in found_files_list:  # pragma: no cover
                     found_files_list.append(f)
+
+            # Remove blog duplicates (generated during build process)
+            if len(found_files_list) == 2 and self._blog_dir:
+                blog_dir = self._docs_dir.joinpath(self._blog_dir)
+                found_files_list = [f for f in found_files_list if not f.is_relative_to(blog_dir)]
+
             # Check how many files were found (there should be only one)
             no_of_found_files = len(found_files_list)
             if no_of_found_files == 1:

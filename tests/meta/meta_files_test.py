@@ -538,7 +538,7 @@ def test_add_meta_files(
     check.equal(list(patched_meta_files.keys()), expected)
 
 
-def test_files_gen(
+def test_files_generator(
     mkdocs_config: MkDocsConfig,
     pub_meta_plugin: MetaPlugin,
     patched_meta_files: MetaFiles,
@@ -552,7 +552,7 @@ def test_files_gen(
         ):
             patched_meta_files.add_files(ignored_dirs=[])
 
-    gen_files_paths = [str(file.abs_path) for file in patched_meta_files.files_gen()]
+    gen_files_paths = [str(file.abs_path) for file in patched_meta_files.generator()]
 
     check.equal(files_paths, gen_files_paths)
 

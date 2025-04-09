@@ -49,8 +49,6 @@ HEADINGS_RE = re.compile(r"^#+ (?P<title>[^|#\r\n\t\f\v]+)$")
 
 @dataclass
 class MetaFile(publisher_utils.PublisherFile):
-    file: File | None = field(default=None, repr=False)
-    is_hidden: bool = field(default=False)
     is_overview: bool = field(default=False)
     redirect: str | None = field(default=None)
     url: str | None = field(default=None)
@@ -97,7 +95,10 @@ class MetaFiles(publisher_utils.PublisherFiles):
                     f'is missing for file: "{meta_file.path!s}"',
                 )
 
-        if title is None and mode in {TitleChoiceEnum.META.name, TitleChoiceEnum.HEAD.name}:
+        if title is None and mode in {
+            TitleChoiceEnum.META.name,
+            TitleChoiceEnum.HEAD.name,
+        }:
             headings = re.findall(HEADINGS_RE, markdown)
             title = str(headings[0]).strip() if len(headings) > 0 else None
             if (
@@ -107,7 +108,10 @@ class MetaFiles(publisher_utils.PublisherFiles):
             ):
                 log.warning(f'Title value from first heading is missing for file: "{meta_file.path!s}"')
 
-        if title is None and mode in {TitleChoiceEnum.META.name, TitleChoiceEnum.FILE.name}:
+        if title is None and mode in {
+            TitleChoiceEnum.META.name,
+            TitleChoiceEnum.FILE.name,
+        }:
             title = str(meta_file.path.stem).replace("_", " ").title()
 
         meta_file.title = title
@@ -128,6 +132,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
         relative_path_finder = links.RelativePathFinder(
             current_file_path=meta_file.path,
             docs_dir=Path(self._mkdocs_config.docs_dir),
+            blog_dir=Path(self._blog_plugin_config.blog_dir) if self._blog_plugin_config else None,
             relative_path=meta_file.path,
         )
 
@@ -177,16 +182,14 @@ class MetaFiles(publisher_utils.PublisherFiles):
             if self._meta_plugin_config.publish.dir_warn_on_missing:
                 log.warning(
                     f'Missing "{self._meta_plugin_config.publish.key_name}" value in '
-                    f'file "{meta_file.path}". Setting to '
-                    f'default value: "{self._meta_plugin_config.publish.dir_default}".',
+                    f'file "{meta_file.path}". Setting to default value: "{publish}".',
                 )
         elif publish is None:
             publish = self._meta_plugin_config.publish.file_default
             if self._meta_plugin_config.publish.file_warn_on_missing:
                 log.warning(
                     f'Missing "{self._meta_plugin_config.publish.key_name}" value in '
-                    f'file "{meta_file.path}". Setting to '
-                    f'default value: "{self._meta_plugin_config.publish.file_default}".',
+                    f'file "{meta_file.path}". Setting to default value: "{publish}".',
                 )
 
         # Override some values inherited from parent
@@ -432,7 +435,7 @@ class MetaFiles(publisher_utils.PublisherFiles):
                 log.debug(f"Removed draft file: {file.src_path}")
         return new_files
 
-    def files_gen(self) -> Generator[MetaFile, Any, None]:
+    def generator(self) -> Generator[MetaFile, Any, None]:
         """Meta files generator used for building navigation"""
         for meta_file in self.values():
             meta_file: MetaFile

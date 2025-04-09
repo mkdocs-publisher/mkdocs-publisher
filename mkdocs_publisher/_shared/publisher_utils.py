@@ -29,11 +29,13 @@ from typing import NoReturn
 from typing import Sequence  # noqa: UP035
 
 from mkdocs.config.defaults import MkDocsConfig
+from mkdocs.structure.files import File
 from mkdocs.structure.nav import Link
 from mkdocs.structure.nav import Section
 from mkdocs.structure.pages import Page
 
 from mkdocs_publisher._shared import mkdocs_utils
+from mkdocs_publisher.blog.config import BlogPluginConfig
 from mkdocs_publisher.meta.config import MetaPluginConfig
 from mkdocs_publisher.obsidian.config import ObsidianPluginConfig
 
@@ -62,20 +64,12 @@ def get_obsidian_dirs(mkdocs_config: MkDocsConfig) -> tuple[list[Path], Path | N
 class PublisherFile:
     path: Path
     abs_path: Path = field(repr=False)
+    file: File | None = field(default=None, repr=False)
     is_dir: bool = field(default=False)
     is_draft: bool | None = field(default=None)
+    is_hidden: bool = field(default=False)
     slug: str | None = field(default=None)
     title: str | None = field(default=None)
-
-
-@dataclass
-class PublisherTitleConfig:
-    key_name: str
-
-
-@dataclass
-class PublisherFilesConfig:
-    title: PublisherTitleConfig
 
 
 class PublisherFiles(UserDict):
@@ -83,7 +77,7 @@ class PublisherFiles(UserDict):
         self._on_serve: bool = False
         self._mkdocs_config: MkDocsConfig | None = None
         self._meta_plugin_config: MetaPluginConfig | None = None
-        self._config: PublisherFilesConfig | None = None
+        self._blog_plugin_config: BlogPluginConfig | None = None
 
         super().__init__()
 
@@ -95,12 +89,21 @@ class PublisherFiles(UserDict):
     def on_serve(self, on_serve: bool) -> None:
         self._on_serve = on_serve
 
-    def set_configs(self, mkdocs_config: MkDocsConfig, meta_plugin_config: MetaPluginConfig) -> None:
+    def set_configs(
+        self,
+        mkdocs_config: MkDocsConfig,
+        meta_plugin_config: MetaPluginConfig | None,
+        blog_plugin_config: BlogPluginConfig | None,
+    ) -> None:
         self._mkdocs_config = mkdocs_config
         self._meta_plugin_config = meta_plugin_config
+        self._blog_plugin_config = blog_plugin_config
 
     def add_files(self) -> NoReturn:
-        raise NotImplementedError  # pragma: no cover
+        raise NotImplementedError
+
+    def generator(self) -> NoReturn:
+        raise NotImplementedError
 
 
 def nav_cleanup(items, removal_list: Sequence[str | Path]) -> list:  # noqa: ANN001

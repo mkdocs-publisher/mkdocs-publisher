@@ -24,7 +24,6 @@ import logging
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import cast
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.pages import Page
@@ -58,12 +57,14 @@ class BacklinkLinks:
             mkdocs_config=mkdocs_config,
         )  # type: ignore[reportAttributeAccessIssue]
         self._blog_plugin: BlogPlugin | None = None
+        """
         self._blog_temp_files = []
 
         # Get blog temporary files
         if "pub-blog" in self._mkdocs_config.plugins:
             self._blog_plugin = cast(BlogPlugin, self._mkdocs_config.plugins["pub-blog"])
             self._blog_temp_files = self._blog_plugin.blog_config.temp_files_list
+        """
 
     @staticmethod
     def _other_link_to_text(match: re.Match) -> str:
