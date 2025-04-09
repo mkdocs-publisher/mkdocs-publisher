@@ -53,18 +53,6 @@ PIP_FREEZE_FILENAME = "requirements_freeze.txt"
 
 class DebuggerPlugin(BasePlugin[DebuggerConfig]):
     def __init__(self):
-        if len(logging.getLogger("mkdocs").handlers) == 0:
-            mkdocs_log = logging.getLogger("mkdocs")
-            mkdocs_log.addHandler(logging.StreamHandler())
-        self._mkdocs_log_stream_handler: logging.Handler = logging.getLogger("mkdocs").handlers[0]
-
-        self._mkdocs_log_file_handler: loggers.DatedFileHandler = loggers.DatedFileHandler(
-            filename=f"%Y%m%d_%H%M%S{LOG_FILENAME_SUFFIX}"
-        )
-
-        self._mkdocs_log_file: str = str(Path(self._mkdocs_log_file_handler.baseFilename).name)
-        self._mkdocs_log_date: str = self._mkdocs_log_file.replace(LOG_FILENAME_SUFFIX, "")
-
         self.load_config(
             options=cast(
                 dict,
@@ -75,45 +63,47 @@ class DebuggerPlugin(BasePlugin[DebuggerConfig]):
             config_file_path=mkdocs_utils.get_mkdocs_config().config_file_path,
         )
 
+        logging.getLogger("root").handlers = []
+        mkdocs_logger = logging.getLogger("mkdocs")
+
         if self.config.console_log.enabled:
+            mkdocs_logger.handlers = []
+            mkdocs_logger.setLevel(logging.DEBUG)
+
+            self._mkdocs_log_stream_handler = logging.StreamHandler()
             self._mkdocs_log_stream_handler.setFormatter(
-                loggers.ProjectPathStreamFormatter(console_config=self.config.console_log)
+                loggers.ProjectPathStreamFormatter(console_log_config=self.config.console_log)
             )
             self._mkdocs_log_stream_handler.addFilter(
-                loggers.ProjectPathConsoleFilter(console_config=self.config.console_log)
+                loggers.ProjectPathConsoleFilter(console_log_config=self.config.console_log)
             )
-            # noinspection PyUnresolvedReferences
-            mkdocs_log_level = logging.getLogger("mkdocs").level
-            console_log_level = logging._nameToLevel[  # noqa: SLF001
-                self.config.console_log.log_level.upper()
-            ]
-
-            if mkdocs_log_level <= console_log_level:
-                mkdocs_log_level = console_log_level
-
-            self._mkdocs_log_stream_handler.setLevel(console_log_level)
-            logging.getLogger("root").handlers = [self._mkdocs_log_stream_handler]
-            logging.getLogger("mkdocs").setLevel(console_log_level)
+            self._mkdocs_log_stream_handler.setLevel(logging._nameToLevel[self.config.console_log.log_level.upper()])
+            mkdocs_logger.handlers = [self._mkdocs_log_stream_handler]
 
         if self.config.file_log.enabled:
-            self._mkdocs_log_file_handler.setFormatter(
-                loggers.ProjectPathFileFormatter(
-                    fmt=self.config.file_log.log_format,
-                    datefmt=self.config.file_log.time_format,
-                ),
-            )
-            self._mkdocs_log_file_handler.addFilter(loggers.ProjectPathFileFilter(file_config=self.config.file_log))
-            # noinspection PyUnresolvedReferences
-            self._mkdocs_log_file_handler.setLevel(
-                logging._nameToLevel[self.config.file_log.log_level.upper()]  # noqa: SLF001
-            )
-
-            logging.getLogger("mkdocs").handlers.append(self._mkdocs_log_file_handler)
+            if not self.config.console_log.enabled:
+                console_logger_handler = mkdocs_logger.handlers[0]
+                console_logger_handler.setLevel(mkdocs_logger.level)
+                mkdocs_logger.level = logging.DEBUG
 
             if self.config.file_log.remove_old_files:
                 for log_file in Path().rglob(f"*{LOG_FILENAME_SUFFIX}"):
-                    if str(log_file) != self._mkdocs_log_file:
-                        log_file.unlink(missing_ok=True)
+                    log_file.unlink(missing_ok=True)
+
+            self._mkdocs_log_file_handler: loggers.DatedFileHandler = loggers.DatedFileHandler(
+                filename=f"%Y%m%d_%H%M%S{LOG_FILENAME_SUFFIX}"
+            )
+
+            self._mkdocs_log_file: str = str(Path(self._mkdocs_log_file_handler.baseFilename).name)
+            self._mkdocs_log_date: str = self._mkdocs_log_file.replace(LOG_FILENAME_SUFFIX, "")
+
+            self._mkdocs_log_file_handler.setFormatter(
+                loggers.ProjectPathFileFormatter(file_log_config=self.config.file_log)
+            )
+            self._mkdocs_log_file_handler.addFilter(loggers.ProjectPathFileFilter(file_log_config=self.config.file_log))
+            self._mkdocs_log_file_handler.setLevel(logging._nameToLevel[self.config.file_log.log_level.upper()])
+
+            mkdocs_logger.handlers.append(self._mkdocs_log_file_handler)
 
     @event_priority(100)  # Run after  all other plugins
     def on_shutdown(self) -> None:
