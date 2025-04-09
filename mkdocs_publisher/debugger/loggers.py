@@ -53,8 +53,8 @@ class DatedFileHandler(logging.FileHandler):
 
 
 class ProjectPathStreamFormatter(logging.Formatter):
-    def __init__(self, console_config: _DebuggerConsoleConfig):
-        self._console_config: _DebuggerConsoleConfig = console_config
+    def __init__(self, console_log_config: _DebuggerConsoleConfig):
+        self._console_log_config: _DebuggerConsoleConfig = console_log_config
 
         super().__init__()
 
@@ -69,9 +69,9 @@ class ProjectPathStreamFormatter(logging.Formatter):
         except ValueError:
             record.project_path = str(path)
 
-        fmt = "%(project_path)s:%(lineno)d " if self._console_config.show_code_link else ""
+        fmt = "%(project_path)s:%(lineno)d " if self._console_log_config.show_code_link else ""
 
-        if self._console_config.show_entry_time:
+        if self._console_log_config.show_entry_time:
             fmt = f"{fmt}{colorama.Fore.MAGENTA}%(asctime)s{colorama.Fore.RESET} "
 
         fmt = (
@@ -79,19 +79,24 @@ class ProjectPathStreamFormatter(logging.Formatter):
             f"%(levelname)-5.5s{colorama.Fore.RESET}] %(message)s"
         )
 
-        if self._console_config.show_logger_name:
+        if self._console_log_config.show_logger_name:
             fmt = f"{fmt} {colorama.Fore.CYAN}[%(name)s]{colorama.Fore.RESET}"
 
-        self._style._fmt = fmt
-        self.datefmt = str(self._console_config.entry_time_format).replace("%f", str(record.msecs)[0:3])
+        self._style._fmt = fmt  # noqa: SLF001
+        self.datefmt = str(self._console_log_config.entry_time_format).replace("%f", str(record.msecs)[0:3])
 
-        if self._console_config.show_entry_time:
+        if self._console_log_config.show_entry_time:
             record.msg = re.sub(LIVERELOAD_MSG_RE, self._livereload_msg_strip_time, str(record.msg))
 
         return super().format(record=record)
 
 
 class ProjectPathFileFormatter(logging.Formatter):
+    def __init__(self, file_log_config: _DebuggerFileConfig):
+        self._file_log_config: _DebuggerFileConfig = file_log_config
+
+        super().__init__(fmt=self._file_log_config.log_format, datefmt=self._file_log_config.time_format)
+
     def format(self, record: logging.LogRecord) -> str:
         project_file_path = Path(record.pathname)
         try:
@@ -103,28 +108,32 @@ class ProjectPathFileFormatter(logging.Formatter):
         except ValueError:
             record.project_path = str(project_file_path)
 
+        self.datefmt = str(self._file_log_config.time_format).replace("%f", str(record.msecs)[0:3])
+
         return super().format(record=record)
 
 
 class ProjectPathConsoleFilter(logging.Filter):
-    def __init__(self, console_config: _DebuggerConsoleConfig):
-        self._console_config: _DebuggerConsoleConfig = console_config
+    def __init__(self, console_log_config: _DebuggerConsoleConfig):
+        self._console_log_config: _DebuggerConsoleConfig = console_log_config
         super().__init__()
 
     def filter(self, record):
         if (
-            not self._console_config.show_deprecation_warnings
+            not self._console_log_config.show_deprecation_warnings
             and isinstance(record.msg, str)
             and re.findall(DEPRECATION_MSG_RE, record.msg)
         ):
             return None
-        return record if record.name not in self._console_config.filter_logger_names else None
+        # TODO: add per plugin log level
+        return record if record.name not in self._console_log_config.filter_logger_names else None
 
 
 class ProjectPathFileFilter(logging.Filter):
-    def __init__(self, file_config: _DebuggerFileConfig):
-        self._file_config: _DebuggerFileConfig = file_config
+    def __init__(self, file_log_config: _DebuggerFileConfig):
+        self._file_log_config: _DebuggerFileConfig = file_log_config
         super().__init__()
 
     def filter(self, record):
-        return record if record.name not in self._file_config.filter_logger_names else None
+        # TODO: add per plugin log level
+        return record if record.name not in self._file_log_config.filter_logger_names else None

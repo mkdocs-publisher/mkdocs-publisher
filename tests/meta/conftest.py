@@ -23,7 +23,7 @@
 from pathlib import Path
 
 import pytest
-from _pytest.fixtures import SubRequest
+from _pytest.fixtures import SubRequest  # pyright: ignore [reportPrivateImportUsage]
 from mkdocs.config.defaults import MkDocsConfig
 
 from mkdocs_publisher.meta.meta_files import MetaFiles

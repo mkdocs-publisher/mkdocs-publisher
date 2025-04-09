@@ -505,7 +505,7 @@ def test_generate_redirect_page(
     if expected_result is None:
         check.equal(expected_result, generated_file)
     else:
-        check.is_in(expected_result, generated_file)
+        check.is_in(expected_result, generated_file)  # type: ignore
 
 
 @pytest.mark.parametrize(
