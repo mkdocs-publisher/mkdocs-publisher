@@ -125,6 +125,7 @@ class ProjectPathConsoleFilter(logging.Filter):
             and re.findall(DEPRECATION_MSG_RE, record.msg)
         ):
             return None
+        # TODO: add per plugin log level
         return record if record.name not in self._console_log_config.filter_logger_names else None
 
 
@@ -134,4 +135,5 @@ class ProjectPathFileFilter(logging.Filter):
         super().__init__()
 
     def filter(self, record):
+        # TODO: add per plugin log level
         return record if record.name not in self._file_log_config.filter_logger_names else None
