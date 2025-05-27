@@ -7,8 +7,6 @@ on:
 
 jobs:
   pre-commit:
-    env:
-      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     runs-on: ubuntu-latest
     name: Pre-commit
     steps:
@@ -21,7 +19,7 @@ jobs:
         with:
           version: '>=0.7.8'
           enable-cache: true
-          cache-suffix: 'v${{ matrix.python-version }}'
+          cache-suffix: python3.9
       - name: Install Python 3.9
         run: uv python install 3.9
       - name: Install Python dependencies
@@ -31,8 +29,6 @@ jobs:
           SKIP: no-commit-to-branch,pytest-check,update-coverage,check-readme-md
         uses: pre-commit/action@v3.0.1
   unittests:
-    env:
-      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -49,10 +45,10 @@ jobs:
         with:
           version: '>=0.7.8'
           enable-cache: true
-          cache-suffix: 'v${{ matrix.python-version }}'
+          cache-suffix: 'python${{ matrix.python-version }}'
       - name: Install Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
       - name: Install Python dependencies
         run: uv sync --group test --no-install-project
-      - name: Run unittests
+      - name: Run unit tests
         run: uv run pytest --no-header --no-cov

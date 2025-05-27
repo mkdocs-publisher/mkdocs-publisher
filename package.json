@@ -1,6 +1,6 @@
 {
   "name": "mkdocs-publisher",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "Publisher for MkDocs - set of plugins for content creators",
   "directories": {
     "doc": "docs"
@@ -27,10 +27,10 @@
   "author": "Maciej \"maQ\" Kusz",
   "license": "MIT License",
   "dependencies": {
-    "cssnano": "^7.0.6",
+    "cssnano": "^7.0.7",
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1",
-    "postcss-svgo": "^7.0.1",
+    "postcss-svgo": "^7.0.2",
     "svgo": "^3.3.2",
     "uglify-js": "^3.19.3"
   }
