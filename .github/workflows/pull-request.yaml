@@ -10,18 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     name: Pre-commit
     steps:
-      - name: Install uv
-        run: pipx install uv
       - name: Checkout git repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Install Python
-        uses: actions/setup-python@v5
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v6
         with:
-          python-version: '3.9'
-          architecture: 'x64'
-          cache: 'uv'
+          enable-cache: true
+          cache-suffix: 'v${{ matrix.python-version }}'
+      - name: Install Python 3.9
+        run: uv python install 3.9
       - name: Install Python dependencies
         run: "uv pip install --dependencies=<(uv export --no-group=test)"
       - name: Pre-commit tests
@@ -36,19 +35,17 @@ jobs:
       fail-fast: false
     name: Unittests (Python v${{ matrix.python-version }})
     steps:
-      - name: Install uv
-        run: pipx install uv
       - name: Checkout git repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Install Python
-        uses: actions/setup-python@v5
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v6
         with:
-          python-version: '${{ matrix.python-version }}'
-          architecture: 'x64'
-          cache: 'uv'
-          allow-prereleases: true
+          enable-cache: true
+          cache-suffix: 'v${{ matrix.python-version }}'
+      - name: Install Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
       - name: Install Python dependencies
         run: "uv pip install --dependencies=<(uv export --no-group=dev)"
       - name: Run unittests

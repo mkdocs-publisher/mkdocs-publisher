@@ -1,7 +1,7 @@
 # Publisher for MkDocs
 
 [![License type](https://img.shields.io/github/license/mkdocs-publisher/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=License)](https://opensource.org/license/mit/)
-[![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=PyPi)
+[![PyPI version](https://img.shields.io/pypi/v/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=PyPi)](https://pypi.org/project/mkdocs-publisher/)
 [![PyPI - Python Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmkdocs-publisher%2Fmkdocs-publisher%2Fmain%2Fpyproject.toml&query=%24.tool.poetry.dependencies.python&logo=python&logoColor=white&style=plastic&label=Python)](https://www.python.org)
 [![PyPI Downloads last month](https://img.shields.io/pypi/dm/mkdocs-publisher?logo=pypi&logoColor=white&style=plastic&label=Downloads)](https://pypistats.org/search/mkdocs-publisher)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mkdocs-publisher/mkdocs-publisher?logo=github&logoColor=white&style=plastic&label=Last%20commit)](https://github.com/mkusz/mkdocs-publisher/commits/main)
