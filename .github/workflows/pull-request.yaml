@@ -19,12 +19,13 @@ jobs:
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v6
         with:
+          version: '>=0.7.8'
           enable-cache: true
           cache-suffix: 'v${{ matrix.python-version }}'
       - name: Install Python 3.9
         run: uv python install 3.9
       - name: Install Python dependencies
-        run: uv sync --extra dev
+        run: uv sync --group dev
       - name: Pre-commit tests
         env:
           SKIP: no-commit-to-branch,pytest-check,update-coverage,check-readme-md
@@ -46,11 +47,12 @@ jobs:
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v6
         with:
+          version: '>=0.7.8'
           enable-cache: true
           cache-suffix: 'v${{ matrix.python-version }}'
       - name: Install Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
       - name: Install Python dependencies
-        run: uv sync --extra test
+        run: uv sync --group test
       - name: Run unittests
         run: uv run pytest --no-header --no-cov

@@ -45,9 +45,9 @@ classifiers = [
 ]
 dependencies = [
     "mkdocs~=1.0,>=1.6.1",
-    "pymdown-extensions~=10.0,>=10.7",
-    "beautifulsoup4~=4.0,>=4.13.3",
-    "mkdocs-material~=9.0,>=9.6.11"
+    "pymdown-extensions~=10.0,>=10.15",
+    "beautifulsoup4~=4.0,>=4.13.4",
+    "mkdocs-material~=9.0,>=9.6.14"
 ]
 
 [project.urls]
@@ -58,15 +58,15 @@ Documentation = "https://mkdocs-publisher.github.io/"
 
 [dependency-groups]
 dev = [
-    "yamllint~=1.0,>=1.37.0",
-    "ruff>=0.5.7,<2.0",
-    "pyright~=1.0,>=1.1.398",
+    "yamllint~=1.0,>=1.37.1",
+    "ruff>=0.11.11,<2.0",
+    "pyright~=1.0,>=1.1.401",
 ]
 test = [
-    "coverage~=7.0,>=7.6.4",
+    "coverage~=7.0,>=7.8.2",
     "pytest~=7.0,>=7.4.4",
     "pytest-cov~=4.0,>=4.1.0",
-    "pytest-check~=2.0,>=2.5.2",
+    "pytest-check~=2.0,>=2.5.3",
 ]
 
 [tool.hatch.build]
