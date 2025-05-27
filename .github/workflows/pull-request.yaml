@@ -25,7 +25,7 @@ jobs:
       - name: Install Python 3.9
         run: uv python install 3.9
       - name: Install Python dependencies
-        run: uv sync --group dev
+        run: uv sync --group dev --no-install-project
       - name: Pre-commit tests
         env:
           SKIP: no-commit-to-branch,pytest-check,update-coverage,check-readme-md
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
       fail-fast: false
     name: Unittests (Python v${{ matrix.python-version }})
     steps:
@@ -53,6 +53,6 @@ jobs:
       - name: Install Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
       - name: Install Python dependencies
-        run: uv sync --group test
+        run: uv sync --group test --no-install-project
       - name: Run unittests
         run: uv run pytest --no-header --no-cov
