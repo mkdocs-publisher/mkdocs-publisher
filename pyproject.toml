@@ -55,6 +55,7 @@ Homepage = "https://mkdocs-publisher.github.io/"
 Repository = "https://github.com/mkdocs-publisher/mkdocs-publisher"
 Documentation = "https://mkdocs-publisher.github.io/"
 "Bug Tracker" = "https://github.com/mkdocs-publisher/mkdocs-publisher/issues"
+
 [dependency-groups]
 dev = [
     "yamllint~=1.0,>=1.37.0",
