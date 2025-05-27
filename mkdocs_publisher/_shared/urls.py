@@ -60,7 +60,7 @@ def create_slug(
         slug = slugify(text=file_name)
 
         if warn_on_missing:
-            log.warning(f'No slug for file "{file_name}" ' f"(mode: {slug_mode}). Fallback to file name.")
+            log.warning(f'No slug for file "{file_name}" (mode: {slug_mode}). Fallback to file name.')
 
     log.debug(f'Slug for file "{file_name}" is: "{slug}"')
     return slug

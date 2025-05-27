@@ -144,7 +144,7 @@ class LinkMatch:
         else:
             link = self.link if self.link else ""
 
-        link_extra = f'{{{" ".join(extra)}}}' if extra else ""
+        link_extra = f"{{{' '.join(extra)}}}" if extra else ""
         final_link = f"[{self.text}]({link}{anchor}{title}){link_extra}"
         log.debug(final_link)
         return final_link
@@ -161,7 +161,7 @@ class LinkMatch:
         title = f' "{self.title}"' if self.title else ""
         link = self.link if self.link else ""
 
-        link_extra = f'{{{" ".join(extra)}}}' if extra else ""
+        link_extra = f"{{{' '.join(extra)}}}" if extra else ""
         final_link = f"[{self.text}]({link}{anchor}{title}){link_extra}"
         log.debug(final_link)
         return final_link
@@ -193,7 +193,7 @@ class WikiEmbedLinkMatch:
                 extra.append(self.anchor)
             self.anchor = None
 
-        link_extra = f'{{{" ".join(extra)}}}' if extra else ""
+        link_extra = f"{{{' '.join(extra)}}}" if extra else ""
         final_link = f"![{self.link.split('/')[-1]}]({self.link}){link_extra}"
         log.debug(final_link)
         return final_link
@@ -213,7 +213,7 @@ class MdEmbedLinkMatch:
 
         if self.is_loading_lazy and "loading=lazy" not in extra:
             extra.append("loading=lazy")
-        link_extra = f'{{{" ".join(extra)}}}' if extra else ""
+        link_extra = f"{{{' '.join(extra)}}}" if extra else ""
         final_link = f"![{self.text}]({self.link}{title}){link_extra}"
         log.debug(final_link)
         return final_link

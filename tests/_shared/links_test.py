@@ -128,7 +128,7 @@ def test_link_match_dataclass(link: str, text: str, anchor: str, title: str, is_
             "title value",
             "",
             "#84d6d9cdfc51cbf2e88592d12c53d5a4",
-            '[Link text](../file.md#anchor-value "title value")' "{#84d6d9cdfc51cbf2e88592d12c53d5a4}",
+            '[Link text](../file.md#anchor-value "title value"){#84d6d9cdfc51cbf2e88592d12c53d5a4}',
         ),
         (
             "../file.md",
@@ -164,7 +164,7 @@ def test_link_match_dataclass(link: str, text: str, anchor: str, title: str, is_
             "title value",
             "extra",
             "#84d6d9cdfc51cbf2e88592d12c53d5a4",
-            '[Link text](../file.md#anchor-value "title value")' "{extra #84d6d9cdfc51cbf2e88592d12c53d5a4}",
+            '[Link text](../file.md#anchor-value "title value"){extra #84d6d9cdfc51cbf2e88592d12c53d5a4}',
         ),
     },
 )

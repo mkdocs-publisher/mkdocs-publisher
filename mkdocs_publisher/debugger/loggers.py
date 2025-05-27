@@ -75,7 +75,7 @@ class ProjectPathStreamFormatter(logging.Formatter):
             fmt = f"{fmt}{colorama.Fore.MAGENTA}%(asctime)s{colorama.Fore.RESET} "
 
         fmt = (
-            f'{fmt}[{LOG_LEVEL_COLOR_MAPPING.get(record.levelno) or ""}'
+            f"{fmt}[{LOG_LEVEL_COLOR_MAPPING.get(record.levelno) or ''}"
             f"%(levelname)-5.5s{colorama.Fore.RESET}] %(message)s"
         )
 

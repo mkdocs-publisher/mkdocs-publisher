@@ -70,9 +70,9 @@ class MetaPlugin(BasePlugin[MetaPluginConfig]):
         self._meta_files.add_hidden_path(hidden_path=self._attachments_dir)
         self._meta_files.add_meta_files(ignored_dirs=self._ignored_dirs)
 
-        log.info(f"Ignored directories: " f"{[str(d.relative_to(config.docs_dir)) for d in self._ignored_dirs]}")
-        log.info(f"Draft files and directories: " f"{list(self._meta_files.drafts.keys())}")
-        log.info(f"Hidden files and directories: " f"{list(self._meta_files.hidden.keys())}")
+        log.info(f"Ignored directories: {[str(d.relative_to(config.docs_dir)) for d in self._ignored_dirs]}")
+        log.info(f"Draft files and directories: {list(self._meta_files.drafts.keys())}")
+        log.info(f"Hidden files and directories: {list(self._meta_files.hidden.keys())}")
 
         config.nav = self._meta_nav.build_nav(mkdocs_config=config)
 
