@@ -47,6 +47,6 @@ jobs:
       - name: Install Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
       - name: Install Python dependencies
-        run: "uv pip install --extra test
+        run: uv pip install --extra test
       - name: Run unittests
         run: uv run pytest --no-header --no-cov
