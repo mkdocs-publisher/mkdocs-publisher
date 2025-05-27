@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Pre-commit
     steps:
-      - name: Install poetry
-        run: pipx install poetry
+      - name: Install uv
+        run: pipx install uv
       - name: Checkout git repository
         uses: actions/checkout@v4
         with:
@@ -21,9 +21,9 @@ jobs:
         with:
           python-version: '3.9'
           architecture: 'x64'
-          cache: 'poetry'
+          cache: 'uv'
       - name: Install Python dependencies
-        run: poetry install -n --without=test
+        run: "uv pip install --dependencies=<(uv export --no-group=test)"
       - name: Pre-commit tests
         env:
           SKIP: no-commit-to-branch,pytest-check,update-coverage,check-readme-md
@@ -36,8 +36,8 @@ jobs:
       fail-fast: false
     name: Unittests (Python v${{ matrix.python-version }})
     steps:
-      - name: Install poetry
-        run: pipx install poetry
+      - name: Install uv
+        run: pipx install uv
       - name: Checkout git repository
         uses: actions/checkout@v4
         with:
@@ -47,9 +47,9 @@ jobs:
         with:
           python-version: '${{ matrix.python-version }}'
           architecture: 'x64'
-          cache: 'poetry'
+          cache: 'uv'
           allow-prereleases: true
       - name: Install Python dependencies
-        run: poetry install -n --without=dev
+        run: "uv pip install --dependencies=<(uv export --no-group=dev)"
       - name: Run unittests
-        run: poetry run pytest --no-header --no-cov
+        run: uv run pytest --no-header --no-cov

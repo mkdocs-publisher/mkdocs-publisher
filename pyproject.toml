@@ -1,9 +1,10 @@
-[tool.poetry]
+[project]
 name = "mkdocs-publisher"
 version = "1.4.7"
+requires-python = ">=3.9"
 description = "Publisher for MkDocs - set of plugins for content creators"
-authors = ["Maciej 'maQ' Kusz <maciej.kusz@gmail.com>"]
-license = "MIT License"
+authors = [{name="Maciej 'maQ' Kusz", email="maciej.kusz@gmail.com"}]
+license = "MIT"
 readme = "README.md"
 keywords = [
     "mkdocs",
@@ -20,9 +21,6 @@ keywords = [
     "obsidian",
     "publisher",
     "tags",
-]
-packages = [
-    {include = "mkdocs_publisher"}
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -45,34 +43,42 @@ classifiers = [
     "Topic :: Text Processing :: Markup :: Markdown",
     "Topic :: Utilities",
 ]
-homepage = "https://mkdocs-publisher.github.io/"
-repository = "https://github.com/mkdocs-publisher/mkdocs-publisher"
-documentation = "https://mkdocs-publisher.github.io/"
+dependencies = [
+    "mkdocs~=1.0,>=1.6.1",
+    "pymdown-extensions~=10.0,>=10.7",
+    "beautifulsoup4~=4.0,>=4.13.3",
+    "mkdocs-material~=9.0,>=9.6.11"
+]
 
-[tool.poetry.urls]
+[project.urls]
+Homepage = "https://mkdocs-publisher.github.io/"
+Repository = "https://github.com/mkdocs-publisher/mkdocs-publisher"
+Documentation = "https://mkdocs-publisher.github.io/"
 "Bug Tracker" = "https://github.com/mkdocs-publisher/mkdocs-publisher/issues"
+[dependency-groups]
+dev = [
+    "yamllint~=1.0,>=1.37.0",
+    "ruff>=0.5.7,<2.0",
+    "pyright~=1.0,>=1.1.398",
+]
+test = [
+    "coverage~=7.0,>=7.6.4",
+    "pytest~=7.0,>=7.4.4",
+    "pytest-cov~=4.0,>=4.1.0",
+    "pytest-check~=2.0,>=2.5.2",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-mkdocs = "^1.6.1"
-pymdown-extensions = "^10.7"
-beautifulsoup4 = "^4.13.3"
-mkdocs-material = "^9.6.11"
-
-[tool.poetry.group.dev.dependencies]
-yamllint = "^1.37.0"
-ruff = "^0.5.7"
-pyright = "^1.1.398"
-
-[tool.poetry.group.test.dependencies]
-coverage = "^7.6.4"
-pytest = "^7.4.4"
-pytest-cov = "^4.1.0"
-pytest-check = "^2.5.2"
+[tool.hatch.build]
+include = [
+    "mkdocs_publisher",
+]
+exclude = [
+    "tests",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.pyright]
 extraPaths = [
@@ -124,7 +130,7 @@ skip_covered = true
 [tool.coverage.json]
 pretty_print = true
 
-[tool.poetry.plugins."mkdocs.plugins"]
+[project.entry-points."mkdocs.plugins"]
 pub-blog = "mkdocs_publisher.blog.plugin:BlogPlugin"
 pub-debugger = "mkdocs_publisher.debugger.plugin:DebuggerPlugin"
 pub-meta = "mkdocs_publisher.meta.plugin:MetaPlugin"
@@ -132,5 +138,5 @@ pub-minifier = "mkdocs_publisher.minifier.plugin:MinifierPlugin"
 pub-obsidian = "mkdocs_publisher.obsidian.plugin:ObsidianPlugin"
 pub-social = "mkdocs_publisher.social.plugin:SocialPlugin"
 
-[tool.poetry.scripts]
+[project.scripts]
 mkdocs-pub = "mkdocs_publisher._cli.publisher:app"

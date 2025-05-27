@@ -83,14 +83,14 @@ repos:
       - id: lint-yaml
         name: lint YAML files
         description: Format and check YAML files.
-        entry: poetry run yamllint
+        entry: uv run yamllint
         language: system
         files: \.(yml|yaml)$
 
       - id: format
         name: format Python code
         description: Pre-format python code.
-        entry: poetry run ruff format --quiet
+        entry: uv run ruff format --quiet
         language: system
         types:
           - python
@@ -98,7 +98,7 @@ repos:
       - id: lint-python
         name: lint Python
         description: Lint python code.
-        entry: poetry run ruff check
+        entry: uv run ruff check
         args:
           - --fix
         language: system
@@ -108,19 +108,19 @@ repos:
       - id: type-check
         name: type check Python annotations
         description: Pyright type annotation checking.
-        entry: poetry run pyright
+        entry: uv run pyright
         language: system
         types:
           - python
 
       - id: pytest-check
         name: run unittests
-        entry: poetry run pytest
+        entry: uv run pytest
         language: system
         pass_filenames: false
 
       - id: update-coverage
         name: update cov.json
-        entry: poetry run mkdocs-pub dev update-cov
+        entry: uv run mkdocs-pub dev update-cov
         language: system
         pass_filenames: false
