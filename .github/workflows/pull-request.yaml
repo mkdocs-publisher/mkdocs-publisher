@@ -22,7 +22,7 @@ jobs:
       - name: Install Python 3.9
         run: uv python install 3.9
       - name: Install Python dependencies
-        run: uv pip install --extra dev
+        run: uv sync --extra dev --no-install-project
       - name: Pre-commit tests
         env:
           SKIP: no-commit-to-branch,pytest-check,update-coverage,check-readme-md
@@ -47,6 +47,6 @@ jobs:
       - name: Install Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
       - name: Install Python dependencies
-        run: uv pip install --extra test
+        run: uv sync --extra test --no-install-project
       - name: Run unittests
         run: uv run pytest --no-header --no-cov
