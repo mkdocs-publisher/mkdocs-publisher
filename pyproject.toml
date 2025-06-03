@@ -5,6 +5,7 @@ requires-python = ">=3.9"
 description = "Publisher for MkDocs - set of plugins for content creators"
 authors = [{name="Maciej 'maQ' Kusz", email="maciej.kusz@gmail.com"}]
 license = "MIT"
+license-files = ["LICENSE"]
 readme = "README.md"
 keywords = [
     "mkdocs",
@@ -23,7 +24,7 @@ keywords = [
     "tags",
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Environment :: Web Environment",
     "Intended Audience :: Education",
@@ -47,7 +48,9 @@ dependencies = [
     "mkdocs~=1.0,>=1.6.1",
     "pymdown-extensions~=10.0,>=10.15",
     "beautifulsoup4~=4.0,>=4.13.4",
-    "mkdocs-material~=9.0,>=9.6.14"
+    "mkdocs-material~=9.0,>=9.6.14",
+    "colorama>=0.4.6",
+    "jinja2>=3.1.6",
 ]
 
 [project.urls]
@@ -61,6 +64,7 @@ dev = [
     "yamllint~=1.0,>=1.37.1",
     "ruff>=0.11.11,<2.0",
     "pyright~=1.0,>=1.1.401",
+    "ty>=0.0.1a8",
 ]
 test = [
     "coverage~=7.0,>=7.8.2",
@@ -75,6 +79,7 @@ include = [
 ]
 exclude = [
     "tests",
+    ".github",
 ]
 
 [build-system]
@@ -106,6 +111,17 @@ markers = [
 testpaths = [
     "tests",
 ]
+
+[tool.ty.environment]
+python = "./.venv"
+
+[tool.ty.rules]
+missing-argument = "ignore"
+redundant-cast = "ignore"
+invalid-assignment = "ignore"
+possibly-unbound-attribute = "ignore"
+invalid-argument-type = "ignore"
+possibly-unbound-implicit-call = "ignore"
 
 [tool.ruff]
 target-version = "py39"
