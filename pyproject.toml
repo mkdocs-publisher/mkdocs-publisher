@@ -46,11 +46,9 @@ classifiers = [
 ]
 dependencies = [
     "mkdocs~=1.0,>=1.6.1",
-    "pymdown-extensions~=10.0,>=10.15",
     "beautifulsoup4~=4.0,>=4.13.4",
-    "mkdocs-material~=9.0,>=9.6.14",
+    "mkdocs-material~=9.0,>=9.6.15",
     "colorama>=0.4.6",
-    "jinja2>=3.1.6",
 ]
 
 [project.urls]
@@ -62,9 +60,9 @@ Documentation = "https://mkdocs-publisher.github.io/"
 [dependency-groups]
 dev = [
     "yamllint~=1.0,>=1.37.1",
-    "ruff>=0.11.11,<2.0",
-    "pyright~=1.0,>=1.1.401",
-    "ty>=0.0.1a8",
+    "ruff>=0.12.2,<2.0",
+    "pyright~=1.0,>=1.1.402",
+    "ty>=0.0.1a13",
 ]
 test = [
     "coverage~=7.0,>=7.8.2",
@@ -110,6 +108,9 @@ markers = [
     ]
 testpaths = [
     "tests",
+]
+pythonpath = [
+    ".",
 ]
 
 [tool.ty.environment]
