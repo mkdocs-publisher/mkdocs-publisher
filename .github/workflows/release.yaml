@@ -37,35 +37,33 @@ jobs:
           gpg_passphrase: ${{ secrets.GPG_PASS }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.PROJECT_VERSION }}
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ env.PROJECT_VERSION }}
+          make_latest: true
+          files: |
+            dist/mkdocs_publisher-*.tar.gz
+            dist/mkdocs_publisher-*.whl
+          body: |
+            # General
 
-      # - name: Create GitHub release
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     name: v1.4.8
-      #     make_latest: true
-      #     files: |
-      #       dist/mkdocs_publisher-*.tar.gz
-      #       dist/mkdocs_publisher-*.whl
-      #     body: |
-      #       # General
+            # Blog
 
-      #       # Blog
+            # Debugger
 
-      #       # Debugger
+            # Meta
 
-      #       # Meta
+            # Minifier
 
-      #       # Minifier
+            # Obsidian
 
-      #       # Obsidian
+            # Social
 
-      #       # Social
+            ---
 
-      #       ---
-
-      #       > [!note]
-      #       > ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed
-
+            > [!note]
+            > ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed
       - name: Publish to PyPI
         run: uv publish --index ${{ vars.UV_INDEX }} --token ${{ secrets.UV_PUBLISH_TOKEN }}
         # run: uv publish --token ${{ secrets.UV_PUBLISH_TOKEN }}
