@@ -1,4 +1,4 @@
-name: Release a new version
+name: Release
 
 on:
   workflow_dispatch:
@@ -8,7 +8,8 @@ permissions:
 
 jobs:
   release:
-    environment: release-test
+    environment: release
+    # environment: release-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
@@ -27,23 +28,45 @@ jobs:
         run: uv sync --group dev --no-install-project
       - name: Build a release
         run: uv build
+      - name: Read project version
+        run: echo "PROJECT_VERSION=v$(awk -F= '/^version/ { print $2 }' pyproject.toml | tr -d ' "')" >> "$GITHUB_ENV"
       - name: Create a new tag for the release
-        uses: tvdias/github-tagger@v0.0.1
+        uses: rickstaa/action-create-tag@v1
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          tag: "test"
-      # - name: Publish a release to PyPI
-      # - name: Config poetry
-      #   run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-      # - name: Create GitHub release
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     make_latest: true
-      #     fail_on_unmatched_files: false
-      #     files: |
-      #       dist/mkdocs_publisher-*.tar.gz
-      #       dist/mkdocs_publisher-*.whl
+          gpg_private_key: ${{ secrets.GPG_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASS }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.PROJECT_VERSION }}
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.PROJECT_VERSION }}
+          make_latest: true
+          files: |
+            dist/mkdocs_publisher-*.tar.gz
+            dist/mkdocs_publisher-*.whl
+          body: |
+            # General
 
+            # Blog
+
+            # Debugger
+
+            # Meta
+
+            # Minifier
+
+            # Obsidian
+
+            # Social
+
+            ---
+
+            > [!note]
+            > ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed
+      - name: Publish to PyPI
+        run: uv publish --token ${{ secrets.UV_PUBLISH_TOKEN }}
+        # run: uv publish --index ${{ vars.UV_INDEX }} --token ${{ secrets.UV_PUBLISH_TOKEN }}
       - name: Store build artifacts
         uses: actions/upload-artifact@v4
         with:
