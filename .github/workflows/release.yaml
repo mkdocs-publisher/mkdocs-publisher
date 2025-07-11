@@ -1,4 +1,4 @@
-name: Release a new version
+name: Release
 
 on:
   workflow_dispatch:
@@ -28,11 +28,11 @@ jobs:
       - name: Build a release
         run: uv build
 
-      - name: Create a new tag for the release
-        uses: tvdias/github-tagger@v0.0.1
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          tag: "test"
+      # - name: Create a new tag for the release
+      #   uses: tvdias/github-tagger@v0.0.1
+      #   with:
+      #     repo-token: "${{ secrets.GITHUB_TOKEN }}"
+      #     tag: "test"
 
       - name: Publish to PyPI (test)
         run: uv publish
