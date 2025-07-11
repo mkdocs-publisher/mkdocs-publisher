@@ -35,15 +35,10 @@ jobs:
       #     tag: "test"
 
       - name: Publish to PyPI (test)
-        run: uv publish
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.UV_PUBLISH_TOKEN }}
-          UV_INDEX: ${{ vars.UV_INDEX }}
+        run: uv publish --index ${{ vars.UV_INDEX }} --token ${{ secrets.UV_PUBLISH_TOKEN }}
 
       # - name: Publish to PyPI
-      #   run: uv publish
-      #   env:
-      #     UV_PUBLISH_TOKEN: ${{ secrets.UV_PUBLISH_TOKEN }}
+      #   run: uv publish --token ${{ secrets.UV_PUBLISH_TOKEN }}
 
       # - name: Create GitHub release
       #   uses: softprops/action-gh-release@v2
