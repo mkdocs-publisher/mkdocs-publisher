@@ -1,4 +1,4 @@
-name: Release a new version (test)
+name: Release a new version
 
 on:
   workflow_dispatch:
@@ -27,11 +27,14 @@ jobs:
         run: uv sync --group dev --no-install-project
       - name: Build a release
         run: uv build
-
+      - name: Create a new tag for the release
+        uses: tvdias/github-tagger@v0.0.1
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          tag: "test"
+      # - name: Publish a release to PyPI
       # - name: Config poetry
       #   run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-      # - name: Build and publish to PyPi
-      #   run: poetry publish -n --build
       # - name: Create GitHub release
       #   uses: softprops/action-gh-release@v2
       #   with:
