@@ -27,7 +27,7 @@ jobs:
         run: uv sync --group dev --no-install-project
       - name: Build a release
         run: uv build
-      
+
       # - name: Config poetry
       #   run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
       # - name: Build and publish to PyPi
@@ -40,7 +40,7 @@ jobs:
       #     files: |
       #       dist/mkdocs_publisher-*.tar.gz
       #       dist/mkdocs_publisher-*.whl
-      
+
       - name: Store build artifacts
         uses: actions/upload-artifact@v4
         with:
