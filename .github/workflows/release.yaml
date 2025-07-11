@@ -36,7 +36,7 @@ jobs:
         uses: tvdias/github-tagger@v0.0.1
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          tag: ${{ env.$PROJECT_VERSION }}
+          tag: ${{ env.PROJECT_VERSION }}
 
       - name: Publish to PyPI (test)
         run: uv publish --index ${{ vars.UV_INDEX }} --token ${{ secrets.UV_PUBLISH_TOKEN }}
