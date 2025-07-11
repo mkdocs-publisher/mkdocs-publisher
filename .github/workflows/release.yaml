@@ -33,6 +33,8 @@ jobs:
 
       - name: Create a new tag for the release
         uses: tvdias/github-tagger@v0.0.1
+        env:
+          PROJECT_VERSION: $PROJECT_VERSION
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           tag: ${{ env.PROJECT_VERSION }}
