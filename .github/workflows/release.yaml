@@ -29,13 +29,14 @@ jobs:
       - name: Build a release
         run: uv build
 
-      - run: echo "PROJECT_VERSION=v$(awk -F= '/^version/ { print $2 }' pyproject.toml | tr -d ' "')" >> "$GITHUB_ENV"
+      - name: Read project version
+        run: echo "PROJECT_VERSION=v$(awk -F= '/^version/ { print $2 }' pyproject.toml | tr -d ' "')" >> "$GITHUB_ENV"
 
       - name: Create a new tag for the release
         uses: tvdias/github-tagger@v0.0.1
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          tag: $PROJECT_VERSION
+          tag: ${{ env.$PROJECT_VERSION }}
 
       - name: Publish to PyPI (test)
         run: uv publish --index ${{ vars.UV_INDEX }} --token ${{ secrets.UV_PUBLISH_TOKEN }}
