@@ -106,8 +106,7 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
         (
             "Lorem ipsum dolor sit [amet](https://test.it/), consectetur adipiscing ![elit](elit.jpg).",
-            "Lorem ipsum dolor sit [amet](https://test.it/), "
-            "consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
+            "Lorem ipsum dolor sit [amet](https://test.it/), consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
         ),
     },
 )

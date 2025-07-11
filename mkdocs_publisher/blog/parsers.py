@@ -157,6 +157,4 @@ def create_blog_post_teaser(blog_config: BlogConfig):
             content.append(line)
         if not blog_config.blog_posts[date].is_teaser:
             blog_config.blog_posts[date].teaser = "\n".join(c for c in content)
-        log.debug(
-            f"Post: '{blog_config.blog_posts[date].title}' " f"is a teaser: {blog_config.blog_posts[date].is_teaser}"
-        )
+        log.debug(f"Post: '{blog_config.blog_posts[date].title}' is a teaser: {blog_config.blog_posts[date].is_teaser}")

@@ -136,7 +136,7 @@ class BaseMinifier:
         if new_file_size < old_file_size:
             return cached_file
 
-        log.debug(f"Minified file larger than original: " f"{cached_file.original_file_path} (removing cached file)")
+        log.debug(f"Minified file larger than original: {cached_file.original_file_path} (removing cached file)")
         new_file.unlink()
         return None
 

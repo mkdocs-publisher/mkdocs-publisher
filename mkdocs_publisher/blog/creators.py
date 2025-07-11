@@ -72,7 +72,7 @@ def create_blog_post_pages(
         index = (
             "index"
             if index < blog_config.plugin_config.posts_per_page
-            else f"index-{str(index//blog_config.plugin_config.posts_per_page)}"
+            else f"index-{str(index // blog_config.plugin_config.posts_per_page)}"
         )
         if index not in posts_chunks:
             posts_chunks[index] = []

@@ -92,7 +92,7 @@ class SocialPlugin(BasePlugin[SocialConfig]):
                     f"('{self.config.meta_keys.image_key}' meta key"
                     f" from '{page.file.src_path}' file.)"
                 )
-            image = f'{config.site_url}{image.replace("//", "/")}'
+            image = f"{config.site_url}{image.replace('//', '/')}"
         url = f"{config.site_url}{page.url}"
         site_name = config.site_name
 
