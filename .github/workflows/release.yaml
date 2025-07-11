@@ -32,6 +32,7 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           tag: "test"
+      
       # - name: Publish a release to PyPI
       # - name: Config poetry
       #   run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
