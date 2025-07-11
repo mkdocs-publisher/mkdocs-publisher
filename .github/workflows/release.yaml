@@ -33,9 +33,9 @@ jobs:
         run: echo "PROJECT_VERSION=v$(awk -F= '/^version/ { print $2 }' pyproject.toml | tr -d ' "')" >> "$GITHUB_ENV"
 
       - name: Create a new tag for the release
-        uses: tvdias/github-tagger@v0.0.1
+        uses: rickstaa/action-create-tag@v1
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          # repo-token: "${{ secrets.GITHUB_TOKEN }}"
           tag: "${{ env.PROJECT_VERSION }}"
 
       - name: Publish to PyPI (test)
