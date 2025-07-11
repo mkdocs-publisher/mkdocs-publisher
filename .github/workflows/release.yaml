@@ -33,7 +33,7 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           tag: "test"
-          
+
       - name: Publish to PyPI (test)
         run: uv publish
         env:
