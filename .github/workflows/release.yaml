@@ -28,20 +28,13 @@ jobs:
         run: uv sync --group dev --no-install-project
       - name: Build a release
         run: uv build
-
       - name: Read project version
         run: echo "PROJECT_VERSION=v$(awk -F= '/^version/ { print $2 }' pyproject.toml | tr -d ' "')" >> "$GITHUB_ENV"
-
       - name: Create a new tag for the release
         uses: rickstaa/action-create-tag@v1
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.PROJECT_VERSION }}
-
-      - name: Publish to PyPI (test)
-        run: uv publish --index ${{ vars.UV_INDEX }} --token ${{ secrets.UV_PUBLISH_TOKEN }}
-
-      # - name: Publish to PyPI
-      #   run: uv publish --token ${{ secrets.UV_PUBLISH_TOKEN }}
 
       # - name: Create GitHub release
       #   uses: softprops/action-gh-release@v2
@@ -71,12 +64,15 @@ jobs:
       #       > [!note]
       #       > ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed
 
-      # - name: Store build artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: mkdocs_publisher
-      #     if-no-files-found: ignore
-      #     retention-days: 7
-      #     path: |
-      #       dist/mkdocs_publisher-*.tar.gz
-      #       dist/mkdocs_publisher-*.whl
+      - name: Publish to PyPI
+        run: uv publish --index ${{ vars.UV_INDEX }} --token ${{ secrets.UV_PUBLISH_TOKEN }}
+        # run: uv publish --token ${{ secrets.UV_PUBLISH_TOKEN }}
+      - name: Store build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mkdocs_publisher
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            dist/mkdocs_publisher-*.tar.gz
+            dist/mkdocs_publisher-*.whl
