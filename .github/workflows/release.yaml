@@ -9,6 +9,7 @@ permissions:
 jobs:
   release:
     environment: release-test
+    # environment: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
@@ -28,6 +29,8 @@ jobs:
       - name: Build a release
         run: uv build
 
+      - run: awk -F'=' '/^version/ {gsub(/"/, "", $2); print $2}' pyproject.toml
+
       # - name: Create a new tag for the release
       #   uses: tvdias/github-tagger@v0.0.1
       #   with:
@@ -43,18 +46,37 @@ jobs:
       # - name: Create GitHub release
       #   uses: softprops/action-gh-release@v2
       #   with:
+      #     name: v1.4.8
       #     make_latest: true
-      #     fail_on_unmatched_files: false
       #     files: |
       #       dist/mkdocs_publisher-*.tar.gz
       #       dist/mkdocs_publisher-*.whl
+      #     body: |
+      #       # General
 
-      - name: Store build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: mkdocs_publisher
-          if-no-files-found: ignore
-          retention-days: 7
-          path: |
-            dist/mkdocs_publisher-*.tar.gz
-            dist/mkdocs_publisher-*.whl
+      #       # Blog
+
+      #       # Debugger
+
+      #       # Meta
+
+      #       # Minifier
+
+      #       # Obsidian
+
+      #       # Social
+
+      #       ---
+
+      #       > [!note]
+      #       > ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed
+
+      # - name: Store build artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: mkdocs_publisher
+      #     if-no-files-found: ignore
+      #     retention-days: 7
+      #     path: |
+      #       dist/mkdocs_publisher-*.tar.gz
+      #       dist/mkdocs_publisher-*.whl
