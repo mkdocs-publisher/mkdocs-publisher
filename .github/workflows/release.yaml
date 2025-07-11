@@ -8,8 +8,8 @@ permissions:
 
 jobs:
   release:
-    environment: release-test
-    # environment: release
+    environment: release
+    # environment: release-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
@@ -65,8 +65,8 @@ jobs:
             > [!note]
             > ❎ - added ✅ - fixed ♻️️ - changed 🚫 - removed
       - name: Publish to PyPI
-        run: uv publish --index ${{ vars.UV_INDEX }} --token ${{ secrets.UV_PUBLISH_TOKEN }}
-        # run: uv publish --token ${{ secrets.UV_PUBLISH_TOKEN }}
+        run: uv publish --token ${{ secrets.UV_PUBLISH_TOKEN }}
+        # run: uv publish --index ${{ vars.UV_INDEX }} --token ${{ secrets.UV_PUBLISH_TOKEN }}
       - name: Store build artifacts
         uses: actions/upload-artifact@v4
         with:
