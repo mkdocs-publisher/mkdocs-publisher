@@ -57,6 +57,12 @@ Repository = "https://github.com/mkdocs-publisher/mkdocs-publisher"
 Documentation = "https://mkdocs-publisher.github.io/"
 "Bug Tracker" = "https://github.com/mkdocs-publisher/mkdocs-publisher/issues"
 
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
+
 [dependency-groups]
 dev = [
     "yamllint~=1.0,>=1.37.1",
