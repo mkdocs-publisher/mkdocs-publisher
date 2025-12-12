@@ -91,12 +91,29 @@ class MarkdownLinks:
 
     def normalize_links(self, markdown: str, current_file_path: Path) -> str:
         self._current_file_path = current_file_path
+        
+        # Extract code blocks and replace them with placeholders
+        code_blocks = []
+        code_block_pattern = re.compile(r'(```[\s\S]*?```|`[^`\n]+`)', re.MULTILINE)
+        
+        def save_code_block(match):
+            code_blocks.append(match.group(0))
+            return f"___CODE_BLOCK_{len(code_blocks) - 1}___"
+        
+        markdown = code_block_pattern.sub(save_code_block, markdown)
+        
+        # Process links only in non-code sections
         if self._links_config is not None and self._links_config.links.wikilinks_enabled:
             markdown = re.sub(links.WIKI_LINK_RE, self._normalize_wiki_link, markdown)
             markdown = re.sub(links.WIKI_EMBED_LINK_RE, self._normalize_wiki_embed_link, markdown)
             markdown = re.sub(links.ANCHOR_LINK_RE, self._normalize_anchor_links, markdown)
         markdown = re.sub(links.MD_EMBED_LINK_RE, self._normalize_md_embed_link, markdown)
         markdown = re.sub(links.MD_LINK_RE, self._normalize_md_links, markdown)
+        
+        # Restore code blocks
+        for i, code_block in enumerate(code_blocks):
+            markdown = markdown.replace(f"___CODE_BLOCK_{i}___", code_block)
+        
         return markdown
 
     def normalize_relative_link(self, match: re.Match) -> str:

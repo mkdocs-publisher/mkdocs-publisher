@@ -37,6 +37,46 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
     "markdown,expected",
     {
         (
+            "```\n[[file]] link in code block\n```\nLorem ipsum",
+            "```\n[[file]] link in code block\n```\nLorem ipsum",
+        ),
+        (
+            "Text before\n```python\n[[link|display text]]\n```\nText after",
+            "Text before\n```python\n[[link|display text]]\n```\nText after",
+        ),
+        (
+            "Normal [[file]] and then `[[code_link]]` inline code",
+            "Normal [file](file.md) and then `[[code_link]]` inline code",
+        ),
+        (
+            "```markdown\n![[image.jpg]]\n```\n![[image.jpg]]",
+            "```markdown\n![[image.jpg]]\n```\n![image.jpg](image.jpg){loading=lazy}",
+        ),
+        (
+            "Text with [[link1]] before code\n```\n[[link2]]\n```\nThen [[link3]] after",
+            "Text with [link1](link1.md) before code\n```\n[[link2]]\n```\nThen [link3](link3.md) after",
+        ),
+    },
+)
+def test_code_blocks_excluded_from_link_processing(
+    markdown: str,
+    expected: str,
+    mkdocs_config: MkDocsConfig,
+    pub_obsidian_plugin: ObsidianPlugin,
+    pub_blog_plugin: BlogPlugin,
+):
+    """Test that links inside code blocks are not processed"""
+    mkdocs_config.plugins = cast(PluginCollection, {"pub-obsidian": pub_obsidian_plugin, "pub-blog": pub_blog_plugin})
+    markdown_links = md_links.MarkdownLinks(mkdocs_config=mkdocs_config)
+    markdown = markdown_links.normalize_links(markdown=markdown, current_file_path=Path("main.md"))
+
+    check.equal(expected, markdown, "Links in code blocks should not be processed")
+
+
+@pytest.mark.parametrize(
+    "markdown,expected",
+    {
+        (
             "Lorem ipsum dolor [sit](file.md) amet, consectetur adipiscing elit.",
             "Lorem ipsum dolor [sit](file.md) amet, consectetur adipiscing elit.",
         ),
