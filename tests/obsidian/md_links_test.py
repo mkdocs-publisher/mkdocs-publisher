@@ -105,6 +105,14 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
             "Lorem ipsum dolor sit ![amet.pdf](amet.pdf){.extra pdfjs loading=lazy}, consectetur adipiscing elit.",
         ),
         (
+            "Lorem ipsum dolor sit [[document.pdf|PDF Document]], consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [PDF Document](document.pdf), consectetur adipiscing elit.",
+        ),
+        (
+            "Lorem ipsum dolor sit [[reference.pdf]], consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [reference.pdf](relative/reference.pdf), consectetur adipiscing elit.",
+        ),
+        (
             "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing ![elit](elit.jpg).",
             "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing ![elit](elit.jpg){loading=lazy}.",
         ),

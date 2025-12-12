@@ -56,10 +56,14 @@ class MarkdownLinks:
         log.debug(f"Normalizing wiki embed link: {match.group(0)} > {wiki_embed_link}")
         return wiki_embed_link
 
-    @staticmethod
-    def _normalize_wiki_link(match: re.Match) -> str:
+    def _normalize_wiki_link(self, match: re.Match) -> str:
         wiki_link_obj = links.LinkMatch(**match.groupdict())
         wiki_link_obj.is_wiki = True
+        wiki_link_obj.relative_path_finder = links.RelativePathFinder(
+            current_file_path=cast(Path, self._current_file_path),
+            docs_dir=Path(self._mkdocs_config.docs_dir),
+            relative_path=Path(""),
+        )
         wiki_link = str(wiki_link_obj)
         log.debug(f"Normalizing wiki link: {match.group(0)} > {wiki_link}")
         return wiki_link
