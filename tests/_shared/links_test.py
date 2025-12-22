@@ -398,6 +398,46 @@ def test_blog_link_match_dataclass(
     "link,text,anchor,title,expected",
     {
         (
+            "document.pdf",
+            "PDF Document",
+            "",
+            "",
+            "[PDF Document](../document.pdf)",
+        ),
+        (
+            "reference.pdf",
+            "Reference PDF",
+            "",
+            "",
+            "[Reference PDF](reference.pdf)",
+        ),
+        (
+            "document.pdf",
+            "PDF with anchor",
+            "page=5",
+            "",
+            "[PDF with anchor](../document.pdf#page5)",
+        ),
+    },
+)
+def test_wiki_link_match_with_file_extensions(
+    link: str,
+    text: str,
+    anchor: str,
+    title: str,
+    expected: str,
+    relative_path_finder: links.RelativePathFinder,
+):
+    """Test LinkMatch with relative_path_finder for files with extensions (PDFs, etc)"""
+    link_obj = links.LinkMatch(link=link, text=text, anchor=anchor, title=title, is_wiki=True)
+    link_obj.relative_path_finder = relative_path_finder
+    assert expected == str(link_obj)
+
+
+@pytest.mark.parametrize(
+    "link,text,anchor,title,expected",
+    {
+        (
             "current/cur_sub/cur_sub_file.md",
             "Sub markdown",
             "",

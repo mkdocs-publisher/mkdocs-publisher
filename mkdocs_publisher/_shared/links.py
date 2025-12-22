@@ -98,7 +98,10 @@ class RelativePathFinder:
         if file_path is not None:
             current_file_parts = list(Path(self._current_file_path).parts)
             current_file_parts[0] = str(self._relative_path)
-            found_file_parts = list(file_path.relative_to(self._docs_dir).parts)
+            # Ensure both paths are resolved for proper relative_to calculation
+            docs_dir_resolved = self._docs_dir.resolve()
+            file_path_resolved = file_path.resolve()
+            found_file_parts = list(file_path_resolved.relative_to(docs_dir_resolved).parts)
             relative_file_parts = []
             relative_file_missing_pieces = found_file_parts[:]
 
@@ -114,7 +117,8 @@ class RelativePathFinder:
                     relative_file_parts.extend(relative_file_missing_pieces)
             if index < len(found_file_parts):
                 relative_file_parts.extend(relative_file_missing_pieces)
-            return str(Path(*relative_file_parts))
+            # Use forward slashes for web paths
+            return str(Path(*relative_file_parts)).replace('\\', '/')
         else:
             return None
 
@@ -127,6 +131,7 @@ class LinkMatch:
     link: Optional[str] = None
     title: Optional[str] = None
     is_wiki: bool = False
+    relative_path_finder: Optional[RelativePathFinder] = None
 
     def __repr__(self):
         anchor = f"#{slugify(self.anchor)}" if self.anchor else ""
@@ -140,7 +145,36 @@ class LinkMatch:
                 self.text = self.anchor
             elif self.text is None:
                 self.text = self.link
-            link = f"{self.link}.md" if self.link else ""
+            
+            # Process the link
+            if self.link:
+                # Check if link has any file extension (contains a dot in the last segment after the last slash)
+                link_name = self.link.split('/')[-1]
+                has_extension = '.' in link_name and not link_name.startswith('.')
+
+                # If we have a relative_path_finder, try to find the actual file location
+                if self.relative_path_finder is not None:
+                    # For links without extensions, append .md before searching
+                    search_path = Path(self.link) if has_extension else Path(f"{self.link}.md")
+
+                    # Search for the file in the docs directory
+                    file_path = self.relative_path_finder.get_full_file_path(file_path=search_path)
+                    if file_path is not None:
+                        # Calculate relative path from current file to found file
+                        relative_link = self.relative_path_finder.get_relative_file_path(file_path=file_path)
+                        if relative_link is not None:
+                            link = relative_link
+                        else:
+                            # Fallback: use standard format
+                            link = self.link if has_extension else f"{self.link}.md"
+                    else:
+                        # File not found, use standard behavior: add .md if no extension
+                        link = self.link if has_extension else f"{self.link}.md"
+                else:
+                    # No relative_path_finder: standard behavior, add .md if no extension
+                    link = self.link if has_extension else f"{self.link}.md"
+            else:
+                link = ""
         else:
             link = self.link if self.link else ""
 
