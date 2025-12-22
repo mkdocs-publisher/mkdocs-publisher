@@ -151,20 +151,27 @@ class LinkMatch:
                 # Check if link has any file extension (contains a dot in the last segment after the last slash)
                 link_name = self.link.split('/')[-1]
                 has_extension = '.' in link_name and not link_name.startswith('.')
-                
+
                 # If we have a relative_path_finder, try to find the actual file location
-                if self.relative_path_finder is not None and has_extension:
-                    # For files with extensions (like PDFs), search for them in the docs directory
-                    file_path = self.relative_path_finder.get_full_file_path(file_path=Path(self.link))
+                if self.relative_path_finder is not None:
+                    # For links without extensions, append .md before searching
+                    search_path = Path(self.link) if has_extension else Path(f"{self.link}.md")
+
+                    # Search for the file in the docs directory
+                    file_path = self.relative_path_finder.get_full_file_path(file_path=search_path)
                     if file_path is not None:
                         # Calculate relative path from current file to found file
                         relative_link = self.relative_path_finder.get_relative_file_path(file_path=file_path)
-                        link = relative_link if relative_link is not None else self.link
+                        if relative_link is not None:
+                            link = relative_link
+                        else:
+                            # Fallback: use standard format
+                            link = self.link if has_extension else f"{self.link}.md"
                     else:
-                        # File not found, keep original link
-                        link = self.link
+                        # File not found, use standard behavior: add .md if no extension
+                        link = self.link if has_extension else f"{self.link}.md"
                 else:
-                    # Standard behavior: add .md if no extension
+                    # No relative_path_finder: standard behavior, add .md if no extension
                     link = self.link if has_extension else f"{self.link}.md"
             else:
                 link = ""

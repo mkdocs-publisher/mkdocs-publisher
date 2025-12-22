@@ -46,7 +46,7 @@ from mkdocs_publisher.obsidian.plugin import ObsidianPlugin
         ),
         (
             "Normal [[file]] and then `[[code_link]]` inline code",
-            "Normal [file](file.md) and then `[[code_link]]` inline code",
+            "Normal [file](current/file.md) and then `[[code_link]]` inline code",
         ),
         (
             "```markdown\n![[image.jpg]]\n```\n![[image.jpg]]",
@@ -102,15 +102,15 @@ def test_code_blocks_excluded_from_link_processing(
         ),
         (
             "Lorem ipsum dolor sit [[file]] amet, consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [file](file.md) amet, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [file](current/file.md) amet, consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file]] amet, consectetur adipiscing elit. [[second_file]].",
-            "Lorem ipsum dolor sit [file](file.md) amet, consectetur adipiscing elit. [second_file](second_file.md).",
+            "Lorem ipsum dolor sit [file](current/file.md) amet, consectetur adipiscing elit. [second_file](second_file.md).",
         ),
         (
             "Lorem ipsum dolor sit [[file]]{ .some .extra } amet, consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [file](file.md){.some .extra} amet, consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [file](current/file.md){.some .extra} amet, consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file with space]] amet, consectetur adipiscing elit.",
@@ -126,11 +126,11 @@ def test_code_blocks_excluded_from_link_processing(
         ),
         (
             "Lorem ipsum dolor sit amet [[file#anchor part]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit amet [file > anchor part](file.md#anchor-part), consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit amet [file > anchor part](current/file.md#anchor-part), consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file|amet]], consectetur adipiscing elit.",
-            "Lorem ipsum dolor sit [amet](file.md), consectetur adipiscing elit.",
+            "Lorem ipsum dolor sit [amet](current/file.md), consectetur adipiscing elit.",
         ),
         (
             "Lorem ipsum dolor sit [[file with space|amet]], consectetur adipiscing elit.",
