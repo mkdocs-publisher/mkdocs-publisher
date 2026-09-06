@@ -44,6 +44,18 @@ def test_slugify(text, expected):
 
 
 @pytest.mark.parametrize(
+    "text,expected",
+    {
+        ("lorem ipsum dolor", "lorem-ipsum-dolor"),
+        ("ąćęłńóśżź", "ąćęłńóśżź"),
+        ("Соловушка", "соловушка"),
+    },
+)
+def test_slugify_keep_unicode(text, expected):
+    check.equal(expected, urls.slugify(text, keep_unicode=True))
+
+
+@pytest.mark.parametrize(
     "slug,title,slug_mode,warn_on_missing,expected,exp_log_level",
     {
         (
@@ -67,6 +79,7 @@ def test_slugify(text, expected):
         (None, None, SlugModeChoiceEnum.TITLE.name, True, "file_name_slug", logging.WARNING),
         (None, None, SlugModeChoiceEnum.TITLE.name, False, "file_name_slug", logging.DEBUG),
         (None, None, None, False, "file_name_slug", logging.DEBUG),
+        ("", "title_slug", SlugModeChoiceEnum.TITLE.name, False, "title_slug", logging.DEBUG),
     },
 )
 def test_slug_create(
@@ -82,6 +95,38 @@ def test_slug_create(
         expected,
         urls.create_slug(
             file_name="file_name_slug",
+            slug_mode=slug_mode,
+            slug=slug,
+            title=title,
+            warn_on_missing=warn_on_missing,
+        ),
+    )
+    check.equal(exp_log_level, caplog.records[0].levelno)
+
+
+@pytest.mark.parametrize(
+    "slug,title,slug_mode,warn_on_missing,expected,exp_log_level",
+    {
+        (None, "Соловушка", SlugModeChoiceEnum.TITLE.name, False, "соловушка", logging.DEBUG),
+        (None, "Соловушка", SlugModeChoiceEnum.TITLE.name, True, "соловушка", logging.WARNING),
+        (None, None, SlugModeChoiceEnum.FILENAME.name, False, "соловушка", logging.DEBUG),
+    },
+)
+def test_slug_create_non_ascii(
+    caplog: LogCaptureFixture,
+    slug: str,
+    title: str,
+    slug_mode: str,
+    warn_on_missing: bool,
+    expected: str,
+    exp_log_level: int,
+):
+    """Non-ASCII only names cannot end up with an empty slug (it breaks a site build)"""
+
+    check.equal(
+        expected,
+        urls.create_slug(
+            file_name="Соловушка",
             slug_mode=slug_mode,
             slug=slug,
             title=title,
