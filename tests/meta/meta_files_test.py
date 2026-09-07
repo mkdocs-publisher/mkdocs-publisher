@@ -572,6 +572,57 @@ def test_change_file_slug(
 
 
 @pytest.mark.parametrize(
+    "path,with_meta_file,file_slug,expected_url,expected_dest_uri",
+    [
+        (
+            "Соловушка.md",
+            True,
+            "соловушка",
+            "%D1%81%D0%BE%D0%BB%D0%BE%D0%B2%D1%83%D1%88%D0%BA%D0%B0/",
+            "соловушка/index.html",
+        ),
+        ("fake file.md", True, "fake-file", "fake-file/", "fake-file/index.html"),
+        ("fake file.jpeg", False, None, "fake%20file.jpeg", "fake file.jpeg"),
+    ],
+)
+def test_change_file_slug_encoding(
+    mkdocs_config: MkDocsConfig,
+    pub_meta_plugin: MetaPlugin,
+    patched_meta_files: MetaFiles,
+    path: str,
+    with_meta_file: bool,
+    file_slug: Optional[str],
+    expected_url: str,
+    expected_dest_uri: str,
+):
+    """An URL is percent encoded, but a destination URI (a file system path) is not"""
+
+    patched_meta_files.set_configs(mkdocs_config=mkdocs_config, meta_plugin_config=pub_meta_plugin.config)
+
+    if with_meta_file:
+        meta_file: MetaFile = MetaFile(
+            path=Path(path),
+            abs_path=Path(f"/Users/me/{path}"),
+            is_dir=False,
+        )
+        with patch.object(Path, "exists", return_value=True):
+            patched_meta_files[path] = meta_file
+        meta_file.slug = file_slug
+
+    file = File(
+        path=path,
+        src_dir="/Users",
+        dest_dir="/Users/out",
+        use_directory_urls=True,
+    )
+
+    patched_meta_files._change_file_slug(file=file, file_path=Path(path))
+
+    check.equal(expected_url, file.url)
+    check.equal(expected_dest_uri, file.dest_uri)
+
+
+@pytest.mark.parametrize(
     "pub_meta_plugin,path,with_meta_file,is_draft,ignored_dir,expected_url",
     [
         ({}, "fake_file.md", True, False, "/Users/me", "fake-file/"),

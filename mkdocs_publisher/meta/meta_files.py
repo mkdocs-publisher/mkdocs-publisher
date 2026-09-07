@@ -31,6 +31,7 @@ from pathlib import Path
 from typing import Any
 from typing import Optional
 from urllib.parse import quote
+from urllib.parse import unquote
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File
@@ -376,10 +377,11 @@ class MetaFiles(UserDict):
                 self[str(meta_link.path)] = meta_link
 
     def _change_file_slug(self, file: File, file_path: Path):
-        # Get URL parts
+        # Get URL parts (a file URL is percent encoded, while slugs are not, so all
+        # parts are decoded first to keep them in one, not encoded, representation)
         if file.url.endswith("/"):
             file.url = file.url[0:-1]
-        url_parts = file.url.split("/")
+        url_parts = [unquote(url_part) for url_part in file.url.split("/")]
 
         # Get abs file parts
         path_parts: list[Path] = []
@@ -397,11 +399,14 @@ class MetaFiles(UserDict):
 
         # Recreate file params based on URL with replaced parts
         if file.url != ".":  # Do not modify main index page
-            file.url = quote(f"{'/'.join(url_parts)}")
-            url_parts.append(file.dest_uri.split("/")[-1])
+            url = "/".join(url_parts)
+            url_parts.append(unquote(file.dest_uri.split("/")[-1]))
             if len(url_parts) >= 2 and url_parts[-1] == url_parts[-2]:
                 url_parts.pop(-1)
-            file.dest_uri = quote("/".join(url_parts))
+            # A destination URI is a file system path, so unlike an URL that points
+            # at it, it has to be stored with no percent encoding applied
+            file.dest_uri = "/".join(url_parts)
+            file.url = quote(url)
             if file.dest_uri.endswith("index.html"):
                 file.url = f"{file.url}/"
 
